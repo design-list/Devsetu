@@ -1,9 +1,9 @@
 import React from 'react'
 
-function page() {
+function Library() {
   return (
     <div>VIP Puja page</div>
   )
 }
 
-export default page
+export default Library
