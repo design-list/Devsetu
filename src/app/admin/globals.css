@@ -3,24 +3,49 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --black: #000000;
+  --orange: #f99724;
+
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --roboto: var(--roboto), sans-serif;
+  --primary: var(--black);
+  --secondary: var(--orange);
+  --container-padding: 1rem;
+  --container-margin: auto;
+  --container-max-sm: 640px;
+  --container-max-md: 768px;
+  --container-max-lg: 1024px;
+  --container-max-xl: 1280px;
+  --container-max-2xl: 1440px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #000000;
   }
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--primary);
+  font-family: "Roboto", sans-serif;
 }
+
+.container {
+  width: 100%;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+  margin-left: var(--container-margin);
+  margin-right: var(--container-margin);
+}
+
+@media (min-width: 640px) { .container { max-width: var(--container-max-sm); } }
+@media (min-width: 768px) { .container { max-width: var(--container-max-md); } }
+@media (min-width: 1024px) { .container { max-width: var(--container-max-lg); } }
+@media (min-width: 1280px) { .container { max-width: var(--container-max-xl); } }
+@media (min-width: 1536px) { .container { max-width: var(--container-max-2xl); } }

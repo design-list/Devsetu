@@ -4,7 +4,7 @@ const LazyImage = ({ src, alt, width, height, fill, className, priority }) => {
   if (fill) {
     return (
       <Image
-        src={src ? src : "/images/Sri Krishna.jpg"}
+        src={src ? src : "/images/herobanner.webp"}
         alt={alt || ""}
         fill
         priority={priority}
@@ -15,7 +15,7 @@ const LazyImage = ({ src, alt, width, height, fill, className, priority }) => {
 
   return (
     <Image
-      src={src ? src : "/images/Sri Krishna.jpg"}
+      src={src ? src : "/images/herobanner.webp"}
       alt={alt || ""}
       width={width || 600}
       height={height || 300}

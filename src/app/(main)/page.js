@@ -5,26 +5,25 @@ import Reviews from "../components/Review";
 import PlatformInfo from "../components/PlatformInfo";
 import Features from "../components/Features";
 import Chalisa from "../components/Chalisa";
-import PujaCard from "../components/cards/pujaCard";
+import PujaCard from "../components/Cards/pujaCard";
+import Main from '../components/Main';
+import Container from "../components/Container";
+import ContinuousSlider from "../components/Continuousslider";
+
+
 
 const slidesData = [
   {
-    title: "51,000 Pitru Gayatri Mantra Jaap",
-    highlight: "Til Tarpanam",
-    desc: "Bring peace to ancestors and resolve family disputes with the power of sacred chants.",
-    image: "/images/Sri Krishna.jpg", // replace with actual image in public/images
+    title: "Navratri  Special Puja",
+    // highlight: "Til Tarpanam",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    image: "/images/herobanner.webp", // replace with actual image in public/images
   },
   {
-    title: "Kashi-Rameshwaram Ghat",
-    highlight: "Pitru Shanti Puja",
-    desc: "Seek relief from ancestral curses and bless your family with harmony and prosperity.",
-    image: "/images/6 member.webp",
-  },
-  {
-    title: "Panch Tirth Pitru Dosha Nivaran",
-    highlight: "Special Puja",
-    desc: "Performed at the sacred Panch Tirth for removing obstacles and bringing peace to departed souls.",
-    image: "/images/4 member.webp",
+    title: "Dev Setu",
+    // highlight: "Til Tarpanam",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    image: "/images/herobanner.webp", // replace with actual image in public/images
   },
 ];
 
@@ -72,21 +71,21 @@ const pujas = [
   {
     title: "51,000 Pitru Gayatri Mantra Jaap and Til Tarpanam",
     desc: "For Peace of Ancestor’s souls and Resolving Family Disputes",
-    img: "/puja1.jpg",
+    img: "/images/herobanner.webp",
     place: "Dharmaranyam Vedi, Gaya, Bihar",
     date: "17 September, Wednesday, Krishna Ekadashi",
   },
   {
     title: "Kashi-Rameshwaram Ghat-Gokarna Pitru Shanti Puja",
     desc: "To Seek Relief from Ancestral Curses and Bring Peace to Departed Souls",
-    img: "/puja2.jpg",
+   img: "/images/herobanner.webp",
     place: "Pishach Mochan Kund, Gokarna Kshetra",
     date: "17 September, Wednesday, Krishna Ekadashi",
   },
   {
     title: "Panch Tirth Pitru Dosha Nivaran Puja",
     desc: "For Peace of Ancestor’s souls and Resolving Family Disputes",
-    img: "/puja3.jpg",
+     img: "/images/herobanner.webp",
     place: "Kashi, Rameshwaram, Gaya, Gokarna, Hardwar",
     date: "21 September, Sunday, Amavasya",
   },
@@ -95,72 +94,84 @@ const pujas = [
 
 export default function Home() {
   return (
-    <div className="font-sans grid items-center justify-items-center min-h-screen pb-20 gap-6">
+    <Main className="HomePage">
       <HeroBanner slides={slidesData} />
-
-      <section className="py-12 px-8 bg-gray-50">
-       <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
-         <h2 className="text-center text-3xl font-bold text-purple-700 mb-8">
-          Sri Mandir Special Pujas
-        </h2>
-       </div>
-        <PujaCard pujas={pujas} />
-      </section>
-
-      <section className="bg-white text-center">
-        <h2 className="text-2xl md:text-3xl font-bold mb-6">
-          Can a puja done on your behalf be effective?
-        </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-10">
-          Learn from trusted experts how a puja arranged from home with true
-          devotion is as effective as one attended in-person at a temple.
-        </p>
-        <Effectiveness />
-      </section>
-
-      <section className="py-16 bg-gray-50">
-        <h2 className="text-center text-3xl font-bold mb-10">Reviews & Ratings</h2>
-        <Reviews reviews={reviews} />
-      </section>
-
-      <section className="p-16 bg-teal-500 w-screen">
-        <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6">
-          {/* Left side */}
-          <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-            <h2 className="text-3xl font-bold mb-6">
-              India’s Largest Devotional Platform
+      <ContinuousSlider />
+      <Container>
+        <section className="py-8">
+          <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
+            <h2 className=" capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
+              Special pujas
             </h2>
-            <p className="text-white-600 max-w-3xl">
-              We are committed to building the most trusted destination that serves
-              the devotional needs of millions of devotees in India and abroad,
-              providing them the access they always wanted.
-            </p>
+            <p className="text-base">Connect with the divine from home. Get your puja performed in your name at India’s holy temples and invite peace, joy, and prosperity into your life.</p>
           </div>
+          <PujaCard pujas={pujas} />
 
-          {/* Right side */}
-          <div className="md:w-1/2 flex justify-center">
-            <PlatformInfo />
+        </section>
+
+        <section className="py-8">
+          <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
+            <h2 className=" capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
+           Special chadhavas
+            </h2>
+            <p className="text-base">Offer your devotion through special chadhavas and seek divine blessings for yourself and your loved ones.</p>
           </div>
-        </div>
-      </section>
+          <PujaCard pujas={pujas} />
 
+        </section>
 
+        <section className="bg-white text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6">
+            Can a puja done on your behalf be effective?
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto mb-10">
+            Learn from trusted experts how a puja arranged from home with true
+            devotion is as effective as one attended in-person at a temple.
+          </p>
+          <Effectiveness />
+        </section>
 
-      <section className="py-16 bg-gray-50">
-        <h2 className="text-center text-3xl font-bold mb-10">
-          One App for all your devotional needs
-        </h2>
-        <Features features={features} />
+        <section className="py-16 bg-gray-50">
+          <h2 className="text-center text-3xl font-bold mb-10">Reviews & Ratings</h2>
+          <Reviews reviews={reviews} />
+        </section>
 
-      </section>
+        <section className="p-16 bg-teal-500">
+          <div className=" flex-col md:flex-row items-center justify-between px-6">
+            {/* Left side */}
+            <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+              <h2 className="text-3xl font-bold mb-6">
+                India’s Largest Devotional Platform
+              </h2>
+              <p className="text-white-600 max-w-3xl">
+                We are committed to building the most trusted destination that serves
+                the devotional needs of millions of devotees in India and abroad,
+                providing them the access they always wanted.
+              </p>
+            </div>
 
-      <section className="py-16 bg-white">
-        <h2 className="text-center text-3xl font-bold mb-10">
-          Read interesting articles about upcoming fasts, festivals, and Sanatan Dharma
-        </h2>
-        <Chalisa chalisaItems={chalisaItems} />
-      </section>
+            {/* Right side */}
+            <div className="md:w-1/2 flex justify-center">
+              <PlatformInfo />
+            </div>
+          </div>
+        </section>
 
-    </div>
+        <section className="py-16 bg-gray-50">
+          <h2 className="text-center text-3xl font-bold mb-10">
+            One App for all your devotional needs
+          </h2>
+          <Features features={features} />
+
+        </section>
+
+        <section className="py-16 bg-white">
+          <h2 className="text-center text-3xl font-bold mb-10">
+            Read interesting articles about upcoming fasts, festivals, and Sanatan Dharma
+          </h2>
+          <Chalisa chalisaItems={chalisaItems} />
+        </section>
+      </Container>
+    </Main>
   );
 }

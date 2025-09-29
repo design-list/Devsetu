@@ -2,13 +2,13 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules"; // agar v9+
-import LazyImage from "../atom/LazyImage";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import LazyImage from "../Atom/LazyImage";
 
 
 const HeroBanner = ({ slides }) => {
   return (
-    <div className="relative w-screen overflow-hidden">
+    <div className="relative overflow-hidden">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation={{
@@ -16,37 +16,37 @@ const HeroBanner = ({ slides }) => {
           prevEl: ".swiper-button-prev",
         }}
         pagination={{ clickable: true }}
-        autoplay={{ delay: 5000 }}
+        // autoplay={{ delay: 5000 }}
+        autoplay={false}
         loop 
-        className="w-screen h-[600px] !mx-0 !px-0"  // ! to override any conflicting utility
       >
         {slides?.map((slide, index) => (
-          <SwiperSlide key={index} className="w-screen h-[600px] !mx-0 !px-0">
-            <div className="relative w-screen h-[600px] flex items-center justify-center bg-gradient-to-r from-[#601d0f] to-[#601d0f]/80 overflow-hidden">
+          <SwiperSlide key={index}>
+            <div className="h-[600px]">
               
               {/* Background Image */}
               <LazyImage
                 src={slide.image}
                 alt="Dev Setu Slide"
                 fill
-                className="object-cover absolute w-full h-full"
+                className="object-cover"
                 priority
               />
 
               {/* Centered Content */}
-              <div className="relative z-10 text-center text-white max-w-3xl px-4 sm:px-6 md:px-8">
-                <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-snug">
-                  {slide.title}{" "}
-                  <span className="text-yellow-400">{slide.highlight}</span>
+              <div className="relative top-60 text-left pl-28 z-10 text-[var(--secondary)]">
+                <h2 className="font-bold text-3xl md:text-4xl">
+                  {slide.title}
+                  <span className="text-[var(--orange)]">{slide.highlight}</span>
                 </h2>
-                <p className="mt-4 text-base sm:text-lg md:text-xl text-gray-200">
+                <p className="mt-4 text-base md:text-lg text-[var(--forcast)]">
                   {slide.desc}
                 </p>
-                <div className="mt-6 flex justify-center gap-4">
-                  <button className="px-6 py-2 border border-white rounded-md bg-white text-black font-medium hover:bg-gray-100 transition">
+                <div className="mt-6 flex justify-start gap-4">
+                  <button className=" cursor-pointer px-6 py-2 border border-[var(--forcast)] rounded-md bg-[var(--forcast)] text-black font-medium hover:bg-gray-100 transition">
                     Download App
                   </button>
-                  <button className="px-6 py-2 border border-white rounded-md font-medium hover:bg-white hover:text-black transition">
+                  <button className=" cursor-pointer px-6 py-2 border border-[var(--forcast)] rounded-md font-medium hover:bg-[var(--forcast)] hover:text-[var(--primary)] transition">
                     Explore More
                   </button>
                 </div>
