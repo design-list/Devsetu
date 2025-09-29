@@ -1,0 +1,21 @@
+export const regEx = {
+    // number: /^[0-9\b]+$/,
+    number: /^\d*$/,
+    panRegex: /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/,
+    userIdRegex: /^([a-zA-Z]){1}[0-9]*$/,
+    //number: /^[0-9]*$/,
+    mobileNumber: /^[6-9]\d{9}$/,
+    otpRegex: /^[0-9]*$/,
+    email: /^([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*@([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+){0,1}\.(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]){2,})$/i,
+    alphaNumeric: /^[a-zA-Z0-9]*$/,
+    alphaNumericWithSpace: /^[a-zA-Z0-9 ]*$/,
+    alphaNumericWithSingleSpace: /^[a-z|A-Z|0-9]+(?: [a-z|A-Z|0-9]+)*$/,
+    alphabates: /^[a-zA-Z]*$/,
+    alphabatesWithSpace: /^[a-zA-Z ]*$/,
+    float: /^\d+(\.\d+)?$/,
+    numberWithSingleDecimal: /^[0-9]*\.?[0-9]*$/,
+    alphaNumericWithHypen: /^[a-zA-Z0-9-]*$/,
+    alphaNumericAdd: /^[a-zA-Z0-9\s,-]*$/,
+    alphaNumericMandatory: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/,
+    emailOrMobileNumber: /^([_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,5}))|(\d+$)$/
+  }
