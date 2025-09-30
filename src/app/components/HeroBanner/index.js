@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules"; // agar v9+
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import LazyImage from "../Atom/LazyImage";
+import LazyImage from "../atom/LazyImage";
 
 
 const HeroBanner = ({ slides }) => {
@@ -66,15 +66,15 @@ const HeroBanner = ({ slides }) => {
       </Swiper>
 
       {/* Bottom Border Image */}
-      <div className="absolute bottom-0 left-0 w-full">
+      {/* <div className="absolute bottom-0 left-0 w-full">
         <LazyImage
-          src="/images/flower.webp" // आपका border image
+          src="/images/flower.webp"
           alt="Border decoration"
           width={1920}
           height={50}
           className="w-full h-auto"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -64,4 +64,35 @@ export default class fetchApi extends Api {
         }
     }
 
+    AddNewArticles(data) {
+        let url = this.buildUrl(endpoints.Articles.articles, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+
+    GetAllArticles(data) {
+        let url = this.buildUrl(endpoints.Articles.articles, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetArticlesDetails(data) {
+        console.log("GetChadhavaDetails", data)
+        let url = this.buildUrl(endpoints.Articles.articles, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
+    UpdeteArticles(data) {
+        let url = this.buildUrl(endpoints.Articles.articles, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
+        }
+    }
+
+    DeleteArticles(data) {
+        let url = this.buildUrl(endpoints.Articles.articles, "full")
+        if (data.id) {
+            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
+        }
+    }
+
 }

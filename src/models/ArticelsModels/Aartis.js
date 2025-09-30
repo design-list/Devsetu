@@ -1,5 +1,7 @@
+// src/models/ArticelsModels/Aartis.js
+
 export default (sequelize, DataTypes) => {
-  const pujaFaqs = sequelize.define("pujaFaqs", {
+  const Aartis = sequelize.define("Aartis", {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
@@ -8,18 +10,23 @@ export default (sequelize, DataTypes) => {
     },
     icon: {
       type: DataTypes.STRING,
-      allowNull: false,
-      field: "icon",
+      allowNull: true,
+      field: "image",
     },
-    question: {
+    title: {
       type: DataTypes.STRING,
-      allowNull: false,
-      field: "question",
+      allowNull: true,
+      field: "title",
     },
-    answer: {
+    aboutArticle: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "about_article",
+    },
+    Aartis: {
       type: DataTypes.TEXT,
       allowNull: true,
-      field: "answer",
+      field: "aartis",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -29,18 +36,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       field: "updated_at",
     },
-    pujaId: {
-      type: DataTypes.BIGINT,
-      allowNull: false, 
-      field: "puja_id",
-    },
   }, {
-    tableName: "puja_faqs",
+    tableName: "aartis",
   });
 
-  pujaFaqs.associate = (models) => {
-    pujaFaqs.belongsTo(models.pujas, { foreignKey: "pujaId" });
-  };
-
-  return pujaFaqs;
+  return Aartis;
 };

@@ -1,5 +1,7 @@
+// src/models/ArticelsModels/Horoscope.js
+
 export default (sequelize, DataTypes) => {
-  const pujaFaqs = sequelize.define("pujaFaqs", {
+  const Horoscope = sequelize.define("Horoscope", {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
@@ -9,17 +11,17 @@ export default (sequelize, DataTypes) => {
     icon: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: "icon",
+      field: "image",
     },
-    question: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
-      field: "question",
+      field: "title",
     },
-    answer: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: true,
-      field: "answer",
+      field: "horoscope",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -29,18 +31,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       field: "updated_at",
     },
-    pujaId: {
-      type: DataTypes.BIGINT,
-      allowNull: false, 
-      field: "puja_id",
-    },
   }, {
-    tableName: "puja_faqs",
+    tableName: "horoscope",
   });
 
-  pujaFaqs.associate = (models) => {
-    pujaFaqs.belongsTo(models.pujas, { foreignKey: "pujaId" });
-  };
-
-  return pujaFaqs;
+  return Horoscope;
 };

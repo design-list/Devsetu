@@ -5,7 +5,7 @@ import Reviews from "../components/Review";
 import PlatformInfo from "../components/PlatformInfo";
 import Features from "../components/Features";
 import Chalisa from "../components/Chalisa";
-import PujaCard from "../components/Cards/pujaCard";
+import PujaCard from "../components/cards/pujaCard";
 import Main from '../components/Main';
 import Container from "../components/Container";
 import ContinuousSlider from "../components/Continuousslider";
@@ -17,13 +17,13 @@ const slidesData = [
     title: "Navratri  Special Puja",
     // highlight: "Til Tarpanam",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/images/herobanner.webp", // replace with actual image in public/images
+    image: "/images/6 member.webp", // replace with actual image in public/images
   },
   {
     title: "Dev Setu",
     // highlight: "Til Tarpanam",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/images/herobanner.webp", // replace with actual image in public/images
+    image: "/images/6 member.webp", // replace with actual image in public/images
   },
 ];
 

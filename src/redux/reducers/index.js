@@ -3,11 +3,12 @@ import counter from './countReducer';
 import loader from './loader';
 import pujas from './pujaReduces'
 import chadhavas from './chadhavaReduces'
+import articels from './articelsReduces '
 
 export default combineReducers({
    count: counter,
    loader,
    pujas,
    chadhavas,
-
+   articels,
 })
