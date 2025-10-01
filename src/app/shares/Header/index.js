@@ -10,7 +10,7 @@ const menu = [
         {id : 1, title: "Home", path : "/"},
         {id : 2, title: "Puja", path : "/puja"},
         {id : 3, title: "Chadhava", path : "/chadhava"},
-        {id : 4, title: "VIP Puja", path : "/vip-puja"},
+        {id : 4, title: "Library", path : "/library"},
         // {id : 5, title: "Seva", path : "/seva"},
         {id : 6, title: "Library", path : "/library"},
         {id : 7, title: "About Us", path : "/about-us"},
