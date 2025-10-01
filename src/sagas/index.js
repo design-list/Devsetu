@@ -3,6 +3,8 @@ import { addNewPujaSaga, deletePujaSaga, fetchAllPujaSaga, pujaDetialSaga, updat
 import { addNewChadhavaSaga, deleteChadhavaSaga, fetchAllChadhavaSaga, chadhavaDetialSaga, updateChadhavaSaga } from './chadhavaSaga';
 import { ADD_NEW_PUJA_DATA_REQUEST, DELETE_PUJA_DATA_REQUEST, PUJA_DATA_REQUEST, PUJA_DETAILS_DATA_REQUEST, UPDATE_PUJA_DATA_REQUEST } from '@/redux/types/pujaTypes';
 import { ADD_NEW_CHADHAVA_DATA_REQUEST, DELETE_CHADHAVA_DATA_REQUEST, CHADHAVA_DATA_REQUEST, CHADHAVA_DETAILS_DATA_REQUEST, UPDATE_CHADHAVA_DATA_REQUEST } from '@/redux/types/chadhavaTypes';
+import { addNewArticelSaga, ArticelDetialSaga, deleteArticelSaga, fetchAllArticelSaga, updateArticelSaga } from './articelSaga';
+import { ADD_NEW_ARTICLES_DATA_REQUEST, ARTICLES_DATA_REQUEST, ARTICLES_DETAILS_DATA_REQUEST, UPDATE_ARTICLES_DATA_REQUEST } from '@/redux/types/articelsTypes';
 
 function* rootSaga() {
     yield all([
@@ -17,6 +19,11 @@ function* rootSaga() {
         takeLatest(CHADHAVA_DETAILS_DATA_REQUEST, chadhavaDetialSaga),
         takeLatest(UPDATE_CHADHAVA_DATA_REQUEST, updateChadhavaSaga),
         takeLatest(DELETE_CHADHAVA_DATA_REQUEST, deleteChadhavaSaga),
+
+        takeLatest(ARTICLES_DATA_REQUEST, fetchAllArticelSaga),
+        takeLatest(ADD_NEW_ARTICLES_DATA_REQUEST, addNewArticelSaga),
+        takeLatest(ARTICLES_DETAILS_DATA_REQUEST, ArticelDetialSaga),
+        takeLatest(UPDATE_ARTICLES_DATA_REQUEST, deleteArticelSaga),
     ]);
 }
 

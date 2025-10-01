@@ -1,15 +1,16 @@
 "use client";
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function PujaCard({ pujas }) {
+export default function PujaCard({ pujas, PujaName }) {
   return (
     <>
       <div className="grid md:grid-cols-3 gap-4">
         {pujas.map((puja, idx) => (
           <div
             key={idx}
-            className="flex flex-col bg-[var(--forcast)] justify-between shadow-sm border border-slate-200 rounded-lg my-6 w-96 mx-auto"
+            className="flex flex-col bg-[var(--forcast)] justify-between shadow-sm border border-slate-200 rounded-lg my-6"
           >
             <div>
               <div className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center">
@@ -35,7 +36,7 @@ export default function PujaCard({ pujas }) {
             </div>
             <div className="flex justify-center p-6 pt-2 gap-7">
                 <Link href={'#'}
-                className="min-w-32 text-lg rounded-md bg-[var(--secondary)] py-2 px-4 border border-transparent text-center text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                className="min-w-32 text-lg rounded-md bg-[var(--secondary)] py-2 px-4 border border-transparent text-center text-[var(--forcast)] transition-all shadow-md hover:shadow-lg focus:bg-[var(--primary)] focus:shadow-none active:bg-[var(--primary)] hover:bg-[var(--primary)] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
               >
                 Participate Now
@@ -46,8 +47,8 @@ export default function PujaCard({ pujas }) {
       </div>
 
       <div className="text-center mt-6">
-        <a href="#" className="text-orange-600 font-medium text-xl hover:underline">
-          View All Pujas →
+        <a href="#" className="flex justify-center text-[var(--secondary)] capitalize font-medium text-xl hover:underline">
+          View All {PujaName} <ArrowUpRight className="w-6 h-6" />
         </a>
       </div>
     </>

@@ -14,6 +14,9 @@ export const endpoints = {
     Chadhava: {
         chadhava: `${baseApiUrl}/chadhava`,
     },
+    Articles: {
+        articles: `${baseApiUrl}/articles`,
+    },
     FileUpload: {
         upload: `${baseApiUrl}/upload`,
     },

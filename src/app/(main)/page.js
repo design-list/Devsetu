@@ -5,10 +5,13 @@ import Reviews from "../components/Review";
 import PlatformInfo from "../components/PlatformInfo";
 import Features from "../components/Features";
 import Chalisa from "../components/Chalisa";
-import PujaCard from "../components/Cards/pujaCard";
+import PujaCard from "../components/cards/pujaCard";
 import Main from '../components/Main';
 import Container from "../components/Container";
 import ContinuousSlider from "../components/Continuousslider";
+import HowItWorks from "../components/Howitworks";
+import LibraryCards from "../components/LibraryCards";
+import StatsSection from "../components/Statssection";
 
 
 
@@ -17,13 +20,13 @@ const slidesData = [
     title: "Navratri  Special Puja",
     // highlight: "Til Tarpanam",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/images/herobanner.webp", // replace with actual image in public/images
+    // image: "/images/6 member.webp",
   },
   {
     title: "Dev Setu",
     // highlight: "Til Tarpanam",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/images/herobanner.webp", // replace with actual image in public/images
+    // image: "/images/6 member.webp",
   },
 ];
 
@@ -105,7 +108,7 @@ export default function Home() {
             </h2>
             <p className="text-base">Connect with the divine from home. Get your puja performed in your name at India’s holy temples and invite peace, joy, and prosperity into your life.</p>
           </div>
-          <PujaCard pujas={pujas} />
+          <PujaCard pujas={pujas} PujaName={'pujas'} />
 
         </section>
 
@@ -116,11 +119,23 @@ export default function Home() {
             </h2>
             <p className="text-base">Offer your devotion through special chadhavas and seek divine blessings for yourself and your loved ones.</p>
           </div>
-          <PujaCard pujas={pujas} />
+          <PujaCard pujas={pujas} PujaName={'chadhavas'} />
 
         </section>
 
-        <section className="bg-white text-center">
+        <HowItWorks />
+
+        <section className="py-8">
+          <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
+            <h2 className=" capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
+             Explore Knowledge
+            </h2>
+            <p className="text-base">Explore the wisdom of Sanatan Dharma through our curated articles, videos, and guides.</p>
+          </div>
+          <LibraryCards />
+        </section>
+
+        {/* <section className="bg-white text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
             Can a puja done on your behalf be effective?
           </h2>
@@ -129,16 +144,17 @@ export default function Home() {
             devotion is as effective as one attended in-person at a temple.
           </p>
           <Effectiveness />
-        </section>
+        </section> */}
 
         <section className="py-16 bg-gray-50">
           <h2 className="text-center text-3xl font-bold mb-10">Reviews & Ratings</h2>
           <Reviews reviews={reviews} />
         </section>
 
-        <section className="p-16 bg-teal-500">
+        <StatsSection />
+
+        {/* <section className="p-16 bg-teal-500">
           <div className=" flex-col md:flex-row items-center justify-between px-6">
-            {/* Left side */}
             <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
               <h2 className="text-3xl font-bold mb-6">
                 India’s Largest Devotional Platform
@@ -150,27 +166,25 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Right side */}
             <div className="md:w-1/2 flex justify-center">
               <PlatformInfo />
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <section className="py-16 bg-gray-50">
+        {/* <section className="py-16 bg-gray-50">
           <h2 className="text-center text-3xl font-bold mb-10">
             One App for all your devotional needs
           </h2>
           <Features features={features} />
+        </section> */}
 
-        </section>
-
-        <section className="py-16 bg-white">
+        {/* <section className="py-16 bg-white">
           <h2 className="text-center text-3xl font-bold mb-10">
             Read interesting articles about upcoming fasts, festivals, and Sanatan Dharma
           </h2>
           <Chalisa chalisaItems={chalisaItems} />
-        </section>
+        </section> */}
       </Container>
     </Main>
   );
