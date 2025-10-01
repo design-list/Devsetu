@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules"; // agar v9+
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import LazyImage from "../atom/LazyImage";
+import LazyImage from "../Atom/LazyImage";
 
 
 const HeroBanner = ({ slides }) => {

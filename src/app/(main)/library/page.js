@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 const Library = () => {
@@ -20,7 +19,7 @@ const Library = () => {
 
       {/* Popular Topics */}
       <section className="px-6 py-8">
-        <h2 className="text-lg font-semibold mb-4">See today's popular topics</h2>
+        <h2 className="text-lg font-semibold mb-4">See today&apos;s popular topics</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {[
             { title: "Aarti", count: "66", color: "bg-orange-50" },
