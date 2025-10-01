@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
   const wishes = [
@@ -34,8 +35,8 @@ const ArticleDetails = () => {
         </ol>
       </nav>
     <div className="py-4 mb-8">
-        <img
-          src="/images/chalisa.png"
+        <Image
+          src={"/images/chalisa.png"}
           alt="Meena Sankranti"
           className="w-full h-120 object-fill rounded-lg"
         />

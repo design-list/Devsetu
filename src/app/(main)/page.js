@@ -5,7 +5,7 @@ import Reviews from "../components/Review";
 import PlatformInfo from "../components/PlatformInfo";
 import Features from "../components/Features";
 import Chalisa from "../components/Chalisa";
-import PujaCard from "../components/cards/pujaCard";
+import PujaCard from "../components/Cards/pujaCard";
 import Main from '../components/Main';
 import Container from "../components/Container";
 import ContinuousSlider from "../components/Continuousslider";
