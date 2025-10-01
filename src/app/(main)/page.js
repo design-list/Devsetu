@@ -17,13 +17,13 @@ const slidesData = [
     title: "Navratri  Special Puja",
     // highlight: "Til Tarpanam",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/images/6 member.webp", // replace with actual image in public/images
+    // image: "/images/6 member.webp",
   },
   {
     title: "Dev Setu",
     // highlight: "Til Tarpanam",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    image: "/images/6 member.webp", // replace with actual image in public/images
+    // image: "/images/6 member.webp",
   },
 ];
 
