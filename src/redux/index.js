@@ -4,16 +4,24 @@ import { createStore, applyMiddleware, compose } from "redux";
 import reducers from "./reducers";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "../sagas";
-import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 
 const sagaMiddleware = createSagaMiddleware();
 
 const middlewares = [sagaMiddleware];
 
-const enhancers = [composeWithDevTools(applyMiddleware(...middlewares))];
+const composeEnhancers =
+  typeof window !== "undefined" &&
+  process.env.NODE_ENV !== "production" &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : compose;
 
-const store = createStore(reducers, {}, compose(...enhancers));
+// store create
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware(...middlewares))
+);
 
 sagaMiddleware.run(rootSaga);
 
@@ -24,3 +32,5 @@ export function ReduxProvider({ children }) {
 }
 
 export default ReduxProvider;
+
+
