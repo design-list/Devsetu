@@ -1,6 +1,8 @@
 "use client";
+
 import Iframe from "../Atom/Iframe";
 import LazyImage from "../Atom/LazyImage";
+
 
 const Effectiveness = () => {
     return (
