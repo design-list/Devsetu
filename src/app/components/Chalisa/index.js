@@ -1,4 +1,4 @@
-import LazyImage from "../atom/LazyImage";
+import LazyImage from "../Atom/LazyImage";
 
 const Chalisa = ({chalisaItems}) => {
     return (
