@@ -57,12 +57,12 @@ export default function LibraryCards() {
                             <div className="p-4 flex flex-col flex-grow">
                                 <h3 className="text-lg font-bold mb-2">{cat.title}</h3>
                                 <p className="text-gray-600 text-sm flex-grow">{cat.desc}</p>
-                                <a
+                                <Link
                                     href={cat.link}
                                     className="mt-4 text-orange-500 font-semibold hover:underline"
                                 >
                                     Read All
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         </Link>

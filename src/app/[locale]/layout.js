@@ -1,12 +1,15 @@
+// src/app/(main)/layout.js
+
 import { Roboto } from "next/font/google";
 import "react-datepicker/dist/react-datepicker.css";
 import ReduxProvider from "@/redux";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "./globals.css";
-import Header from "../shares/Header";
-import Footer from "../shares/Footer";
+import "../globals.css";
+import { LangProvider } from "../langProviders";
+import Header from "@/shares/Header";
+import Footer from "@/shares/Footer";
 
 
 // Roboto
@@ -27,9 +30,11 @@ export default function RootLayout({ children, mainClass }) {
       <body className={`${roboto.variable}`}
       >
         <ReduxProvider>
-          <Header />
-            {children}
-          <Footer />
+          <LangProvider>
+            <Header />
+              {children}
+            <Footer />
+          </LangProvider>
         </ReduxProvider>
       </body>
     </html>

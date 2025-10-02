@@ -2,8 +2,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import ReduxProvider from "../../redux";
 import "react-datepicker/dist/react-datepicker.css";
 import "./globals.css";
-import Header from "../shares/AdminHeader";
-import Sidebar from "../shares/AdminSidebar";
+import Header from "@/shares/AdminHeader";
+import Sidebar from "@/shares/AdminSidebar";
+
 
 
 

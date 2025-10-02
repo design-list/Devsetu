@@ -3,7 +3,7 @@
 import React from 'react'
 import Image from "next/image";
 import Link from "next/link";
-import HeroBanner from '@/app/components/HeroBanner';
+import HeroBanner from '@/components/HeroBanner';
 
 
 const slidesData = [
