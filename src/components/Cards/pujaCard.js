@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function PujaCard({ pujas, PujaName }) {
+export default function PujaCard({ pujas, viewmore, PujaName }) {
   return (
     <>
       <div className="grid md:grid-cols-3 gap-4">
@@ -35,7 +35,7 @@ export default function PujaCard({ pujas, PujaName }) {
               </div>
             </div>
             <div className="flex justify-center p-6 pt-2 gap-7">
-                <Link href={'#'}
+                <Link href={'/puja/slugs'}
                 className="min-w-32 text-lg rounded-md bg-[var(--secondary)] py-2 px-4 border border-transparent text-center text-[var(--forcast)] transition-all shadow-md hover:shadow-lg focus:bg-[var(--primary)] focus:shadow-none active:bg-[var(--primary)] hover:bg-[var(--primary)] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
               >
@@ -46,11 +46,11 @@ export default function PujaCard({ pujas, PujaName }) {
         ))}
       </div>
 
-      <div className="text-center mt-6">
+      {viewmore && <div className="text-center mt-6">
         <a href="#" className="flex justify-center text-[var(--secondary)] capitalize font-medium text-xl hover:underline">
           View All {PujaName} <ArrowUpRight className="w-6 h-6" />
         </a>
-      </div>
+      </div>}
     </>
   );
 }
