@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Header() {
@@ -8,7 +9,7 @@ export default function Header() {
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo + Org Name */}
         <div className="flex items-center space-x-2">
-          <img
+          <Image
             src="/logo.png" // 🔹 place your logo in public/logo.png
             alt="Dev Setu Logo"
             className="h-10 w-10 object-contain"
