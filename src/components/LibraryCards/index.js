@@ -39,8 +39,8 @@ export default function LibraryCards() {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                     {categories.map((cat) => (
-                        <Link href={'#'} key={cat.id}>
-                            <div
+                      
+                            <div key={cat.id}
                             className="flex flex-col bg-[var(--forcast)] rounded-lg overflow-hidden shadow hover:shadow-lg transition"
                         >
                             {/* Image */}
@@ -65,7 +65,7 @@ export default function LibraryCards() {
                                 </Link>
                             </div>
                         </div>
-                        </Link>
+                        
                     ))}
                 </div>
             </div>

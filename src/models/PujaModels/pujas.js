@@ -55,6 +55,18 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
       field: "temple_history",
     },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true,
+      field: "isActive",
+    },
+    isActiveOnHome: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "isActiveOnHome",
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: "created_at",

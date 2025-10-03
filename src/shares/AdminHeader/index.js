@@ -10,9 +10,11 @@ export default function Header() {
         {/* Logo + Org Name */}
         <div className="flex items-center space-x-2">
           <Image
-            src="/logo.png" // 🔹 place your logo in public/logo.png
+            src="/logo.png"
             alt="Dev Setu Logo"
             className="h-10 w-10 object-contain"
+            width={40}
+            height={40}
           />
           <span className="text-2xl font-bold text-indigo-600">
             Dev<span className="text-gray-800">Setu</span>

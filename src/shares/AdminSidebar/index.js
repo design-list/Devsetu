@@ -82,6 +82,24 @@ const Sidebar = () => {
                 {open && <span>Articles List</span>}
               </Link>
             </li>
+            <li>
+              <Link
+                href="/admin/testimonials"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
+              >
+                <Gift size={18} />
+                {open && <span>Testimonials</span>}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin/testimonials/list"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
+              >
+                <List size={18} />
+                {open && <span>Testimonials List</span>}
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
