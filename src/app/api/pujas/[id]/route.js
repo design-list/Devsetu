@@ -30,7 +30,7 @@ export async function PUT(req, context) {
     const body = await req.json();
     const { params } = context;
 
-    const pujaOfferingImages = body.offerings.offerimg || [];
+    // const pujaOfferingImages = body.offerings.offerimg || [];
 
     const updatedPujas = await pujas.findByPk(params.id);
 
@@ -41,6 +41,7 @@ export async function PUT(req, context) {
     // ✅ Update main table
     await updatedPujas.update({
       title: body.title,
+      subTitle: body.subTitle,
       slug: body.slug,
       ratingValue: body.ratingValue,
       ratingReviews: body.ratingReviews,
@@ -49,6 +50,8 @@ export async function PUT(req, context) {
       date: body.date,
       pujaDetails: body.pujaDetails,
       templeHistory: body.templeHistory,
+      isActive: body.isActive,
+      isActiveOnHome: body.isActiveOnHome,
     });
 
     // ✅ Update banners

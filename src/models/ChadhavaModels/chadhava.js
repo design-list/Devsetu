@@ -14,6 +14,11 @@ export default (sequelize, DataTypes) => {
       unique: true,
       field: "title",
     },
+    subTitle: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "sub_title",
+    },
     slug: {
       type: DataTypes.STRING,
       allowNull: false,

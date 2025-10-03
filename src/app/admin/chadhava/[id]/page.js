@@ -14,6 +14,7 @@ const EditChadhavaForm = () => {
 
   const [formData, setFormData] = useState({
     title: "",
+    subTitle: "",
     slug: "",
     ratingValue: "",
     ratingReviews: "",
@@ -22,6 +23,8 @@ const EditChadhavaForm = () => {
     date: new Date(),
     pujaDetails: "",
     templeHistory: "",
+    isActive: true,
+    isActiveOnHome: false,
     packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
     recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
     faqs: [{ icon: null, title: "", description: "" }],
@@ -60,6 +63,7 @@ const EditChadhavaForm = () => {
       setFormData({
         id : params.id,
         title: chadhavaDetail.title || "",
+        subTitle: chadhavaDetail.subTitle || "",
         slug: chadhavaDetail.slug || "",
         ratingValue: chadhavaDetail.ratingValue || "",
         ratingReviews: chadhavaDetail.ratingReviews || "",
@@ -68,6 +72,8 @@ const EditChadhavaForm = () => {
         date: chadhavaDetail.date ? new Date(chadhavaDetail.date) : new Date(),
         pujaDetails: chadhavaDetail.pujaDetails || "",
         templeHistory: chadhavaDetail.templeHistory || "",
+        isActive: chadhavaDetail.isActive,
+        isActiveOnHome: chadhavaDetail.isActiveOnHome,
 
         // Banners
         images: chadhavaDetail.chadhavaBanners
@@ -283,13 +289,13 @@ const EditChadhavaForm = () => {
     })
   };
 
-  console.log("chadhavaDetail", chadhavaDetail)
+  // console.log("chadhavaDetail", chadhavaDetail)
 
   return (
     <div className="flex-1 overflow-y-auto max-h-screen scrollbar-hide">
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="mx-auto shadow-md rounded-lg p-6 space-y-6 overflow-y-auto max-h-screen"
+        className="mx-auto shadow-md rounded-lg p-6 space-y-6 overflow-y-auto"
       >
         {/* <h1 className="text-2xl font-bold">Puja Form</h1> */}
 
@@ -311,6 +317,17 @@ const EditChadhavaForm = () => {
             type="text"
             name="slug"
             value={formData?.slug}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="block font-semibold">Sub Title</label>
+          <input
+            type="text"
+            name="sutTitle"
+            value={formData.subTitle}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
@@ -850,6 +867,51 @@ const EditChadhavaForm = () => {
             className="w-full border p-2 rounded mb-2"
           />
         </div>
+
+          {/* Toggle Switches */}
+      <div className="grid grid-cols-2 gap-6 mt-4">
+
+        {/* isActive */}
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Is Active</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, isActive: !prev.isActive }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isActive ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isActive ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
+
+        {/* isActiveOnHome */}
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Show on Home</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, isActiveOnHome: !prev.isActiveOnHome }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isActiveOnHome ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isActiveOnHome ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
+
+      </div>
 
         <button
           type="button"

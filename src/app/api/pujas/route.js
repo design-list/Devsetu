@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
-import models from "@/models/index.js"; // sequelize models load karega
+import models from "@/models/index.js"; 
 
 const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages } = models;
 
-//
-// ✅ GET /api/pujas → sab pujas fetch karo
-//
+
 export async function GET() {
   try {
     const allPujas = await pujas.findAll({
@@ -28,6 +26,7 @@ export async function POST(req) {
     const newPuja = await pujas.create(
       {
         title: body.title,
+        subTitle: body.subTitle,
         slug: body.slug,
         ratingValue: parseFloat(body.ratingValue),
         ratingReviews: parseInt(body.ratingReviews),
@@ -36,6 +35,8 @@ export async function POST(req) {
         date: new Date(body.date),
         pujaDetails: body.pujaDetails,
         templeHistory: body.templeHistory,
+        isActive: body.isActive,
+        isActiveOnHome: body.isActiveOnHome,
 
         pujaPackages: body.packages.map(pkg => ({
           packImg: pkg.packImg,

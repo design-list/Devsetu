@@ -11,6 +11,7 @@ const EditPujaForm = () => {
 
     const [formData, setFormData] = useState({
         title: "",
+        subTitle: "",
         slug: "",
         ratingValue: "",
         ratingReviews: "",
@@ -19,6 +20,8 @@ const EditPujaForm = () => {
         date: new Date(),
         pujaDetails: "",
         templeHistory: "",
+        isActive: true,
+        isActiveOnHome: false,
         packages: [{ packImg: null, packageType: "", packagePrice: "" }],
         offerings: { offerimg: [null], offers: [{ title: "", description: "" }] },
         faqs: [{ icon: null, title: "", description: "" }],
@@ -52,6 +55,7 @@ const EditPujaForm = () => {
             setFormData({
                 id: pujaDetail.id,
                 title: pujaDetail.title || "",
+                subTitle: pujaDetail.subTitle || "",
                 slug: pujaDetail.slug || "",
                 ratingValue: pujaDetail.ratingValue || "",
                 ratingReviews: pujaDetail.ratingReviews || "",
@@ -60,6 +64,8 @@ const EditPujaForm = () => {
                 date: pujaDetail.date ? new Date(pujaDetail.date) : new Date(),
                 pujaDetails: pujaDetail.pujaDetails || "",
                 templeHistory: pujaDetail.templeHistory || "",
+                isActive: pujaDetail.isActive,
+                isActiveOnHome: pujaDetail.isActiveOnHome,
 
                 packages: pujaDetail.pujaPackages?.length
                     ? pujaDetail.pujaPackages?.map((p) => ({
@@ -227,7 +233,7 @@ const EditPujaForm = () => {
     return (
         <div className="flex-1 p-6 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
             <form
-                onSubmit={handleSubmit} className="mx-auto shadow-md rounded-lg p-6 space-y-6 max-h-screen scrollbar-hide" >
+                onSubmit={handleSubmit} className="mx-auto shadow-md rounded-lg p-6 space-y-6 scrollbar-hide" >
                 {/* Title */}
                 <div>
                     <label className="block font-semibold">Title</label>
@@ -246,6 +252,17 @@ const EditPujaForm = () => {
                         type="text"
                         name="slug"
                         value={formData.slug}
+                        onChange={handleChange}
+                        className="w-full border p-2 rounded"
+                    />
+                </div>
+
+                 <div>
+                    <label className="block font-semibold">Sub Title</label>
+                    <input
+                        type="text"
+                        name="sutTitle"
+                        value={formData.subTitle}
                         onChange={handleChange}
                         className="w-full border p-2 rounded"
                     />
@@ -705,6 +722,46 @@ const EditPujaForm = () => {
                             + Add Image
                         </button>
                     </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6 mt-4">
+
+                    {/* isActive */}
+                    <div className="flex items-center justify-between border p-3 rounded">
+                        <label className="font-semibold">Is Active</label>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setFormData((prev) => ({ ...prev, isActive: !prev.isActive }))
+                            }
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${formData.isActive ? "bg-green-600" : "bg-gray-600"
+                                }`}
+                        >
+                            <span
+                                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.isActive ? "translate-x-6" : "translate-x-1"
+                                    }`}
+                            />
+                        </button>
+                    </div>
+
+                    {/* isActiveOnHome */}
+                    <div className="flex items-center justify-between border p-3 rounded">
+                        <label className="font-semibold">Show on Home</label>
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setFormData((prev) => ({ ...prev, isActiveOnHome: !prev.isActiveOnHome }))
+                            }
+                            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${formData.isActiveOnHome ? "bg-green-600" : "bg-gray-600"
+                                }`}
+                        >
+                            <span
+                                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.isActiveOnHome ? "translate-x-6" : "translate-x-1"
+                                    }`}
+                            />
+                        </button>
+                    </div>
+
                 </div>
 
                 {/* Submit */}

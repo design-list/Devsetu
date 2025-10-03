@@ -14,6 +14,7 @@ const ChadhavaForm = () => {
 
   const [formData, setFormData] = useState({
     title: "",
+    subTitle: "",
     slug: "",
     ratingValue: "",
     ratingReviews: "",
@@ -22,6 +23,8 @@ const ChadhavaForm = () => {
     date: new Date(),
     pujaDetails: "",
     templeHistory: "",
+    isActive: true,
+    isActiveOnHome: false,
     packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
     recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
     faqs: [{ icon: null, title: "", description: "" }],
@@ -179,8 +182,6 @@ const ChadhavaForm = () => {
   };
 
 
-  console.log("Submitting form data===:", formData);
-
   const slugify = (text) => {
     return text
       .toLowerCase()
@@ -313,7 +314,7 @@ const ChadhavaForm = () => {
     <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
       <form
         onSubmit={handleSubmit}
-        className="mx-auto shadow-md rounded-lg p-6 space-y-6 max-h-screen scrollbar-hide"
+        className="mx-auto shadow-md rounded-lg p-6 space-y-6 scrollbar-hide"
       >
         {/* <h1 className="text-2xl font-bold">Puja Form</h1> */}
 
@@ -334,6 +335,16 @@ const ChadhavaForm = () => {
             type="text"
             name="slug"
             value={formData?.slug}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+          />
+        </div>
+
+        <div>
+          <label className="block font-semibold">Sub Title</label>
+          <input
+            type="text"
+            name="sutTitle"
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
@@ -497,7 +508,7 @@ const ChadhavaForm = () => {
 
         {/* Puja Details */}
         <div>
-          <label className="block font-semibold">Puja Details</label>
+          <label className="block font-semibold">Chadhava Details</label>
           <textarea
             name="pujaDetails"
             rows="4"
@@ -898,6 +909,51 @@ const ChadhavaForm = () => {
           />
         </div>
 
+        {/* Toggle Switches */}
+      <div className="grid grid-cols-2 gap-6 mt-4">
+
+        {/* isActive */}
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Is Active</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, isActive: !prev.isActive }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isActive ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isActive ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
+
+        {/* isActiveOnHome */}
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Show on Home</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, isActiveOnHome: !prev.isActiveOnHome }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isActiveOnHome ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isActiveOnHome ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
+
+      </div>
+
 
         {/* Submit */}
         <button
@@ -907,13 +963,13 @@ const ChadhavaForm = () => {
           Submit
         </button>
 
-        <button
+        {/* <button
           type="button"
           onClick={(e) => exportStyledExcel(e)}
           className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
         >
           Excel
-        </button>
+        </button> */}
       </form>
     </div>
   );

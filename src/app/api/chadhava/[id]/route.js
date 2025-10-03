@@ -52,6 +52,7 @@ export async function PUT(req, context) {
     // ✅ Update main table
     await updatedChadhava.update({
       title: body.title,
+      subTitle: body.subTitle,
       slug: body.slug,
       ratingValue: body.ratingValue,
       ratingReviews: body.ratingReviews,
@@ -60,6 +61,8 @@ export async function PUT(req, context) {
       date: body.date,
       pujaDetails: body.pujaDetails,
       templeHistory: body.templeHistory,
+      isActive: body.isActive,
+      isActiveOnHome: body.isActiveOnHome,
     });
 
     // ✅ Update banners

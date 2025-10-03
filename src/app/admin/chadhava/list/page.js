@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteChadhavaAction, requestChadhavaAction } from "@/redux/actions/chadhavaAction";
+import { deleteChadhavaAction, requestChadhavaAction, updateChadhavaAction } from "@/redux/actions/chadhavaAction";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -35,23 +35,46 @@ export default function PujasPage() {
 
   const handleDelete = (id) => {
     console.log("handleDelete", id)
-      fetchWithWait({ dispatch, action: deleteChadhavaAction({"id": id}) }).then((res) => {
-        console.log("Response:", res);
+    fetchWithWait({ dispatch, action: deleteChadhavaAction({ "id": id }) }).then((res) => {
+      console.log("Response:", res);
+      if (res.status === 200) {
+        alert(res.message)
+        dispatch(requestChadhavaAction());
+      } else {
+        console.log("Error:", res.error);
+        alert(res.error)
+      }
+    }).catch((e) => {
+      console.log(`error`, e)
+    })
+  };
+
+
+  const handleToggle = (id, field, currentValue) => {
+    // field = "isActive" | "isActiveOnHome"
+    const payload = {
+      id,
+      [field]: !currentValue,
+    };
+
+    fetchWithWait({ dispatch, action: updateChadhavaAction(payload) })
+      .then((res) => {
         if (res.status === 200) {
-          alert(res.message)
+          // alert(res.message || `${field} updated successfully`);
           dispatch(requestChadhavaAction());
         } else {
-          console.log("Error:", res.error);
-          alert(res.error)
+          alert(res.error || "Something went wrong");
         }
-      }).catch((e) => {
-        console.log(`error`, e)
       })
-    };
+      .catch((e) => {
+        console.error("Toggle error:", e);
+      });
+  };
+
 
 
   return (
-     <div className="flex-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
+    <div className="flex-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
       {/* Page Content */}
       <div className="w-full">
         <div className="overflow-x-auto">
@@ -66,6 +89,8 @@ export default function PujasPage() {
                 <th className="p-2 border">Location</th>
                 <th className="p-2 border">Puja Details</th>
                 <th className="p-2 border">Temple History</th>
+                <th className="p-2 border">Is Active</th>
+                <th className="p-2 border">Active on home</th>
                 <th className="p-2 border">Packages</th>
                 <th className="p-2 border">Offerings</th>
                 <th className="p-2 border">FAQs</th>
@@ -93,6 +118,36 @@ export default function PujasPage() {
                   <td className="p-2 border max-w-xs truncate">
                     {chadhava.templeHistory}
                   </td>
+
+                  <td className="p-2 border max-w-xs truncate">
+                    <button
+                      type="button"
+                      onClick={() => handleToggle(chadhava.id, "isActive", chadhava.isActive)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${chadhava.isActive ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${chadhava.isActive ? "translate-x-6" : "translate-x-1"
+                          }`}
+                      />
+                    </button>
+                  </td>
+
+                  <td className="p-2 border max-w-xs truncate">
+                    <button
+                      type="button"
+                      onClick={() => handleToggle(chadhava.id, "isActiveOnHome", chadhava.isActiveOnHome)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${chadhava.isActiveOnHome ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${chadhava.isActiveOnHome ? "translate-x-6" : "translate-x-1"
+                          }`}
+                      />
+                    </button>
+                  </td>
+
+
                   <td
                     className="p-2 border cursor-pointer text-blue-600"
                     onMouseOver={() =>

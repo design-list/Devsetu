@@ -35,6 +35,7 @@ export async function POST(req) {
     const newChadhava = await chadhava.create(
       {
         title: body.title,
+        subTitle: body.subTitle,
         slug: body.slug,
         ratingValue: body.ratingValue,
         ratingReviews: body.ratingReviews,
@@ -43,6 +44,8 @@ export async function POST(req) {
         date: body.date,
         pujaDetails: body.pujaDetails,
         templeHistory: body.templeHistory,
+        isActive: body.isActive,
+        isActiveOnHome: body.isActiveOnHome,
 
         // ✅ Use correct association keys
         chadhavaPackages: body.packages || [],
