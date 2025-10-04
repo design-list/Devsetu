@@ -94,5 +94,8 @@ export default class fetchApi extends Api {
             return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
         }
     }
-
+    GetAllHome(data) {
+        let url = this.buildUrl(endpoints.Home.home, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
 }

@@ -55,11 +55,6 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
       field: "puja_details",
     },
-    templeHistory: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      field: "temple_history",
-    },
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
@@ -89,6 +84,7 @@ export default (sequelize, DataTypes) => {
     Puja.hasMany(models.pujaOfferings, { foreignKey: "pujaId", onDelete: "CASCADE" });
     Puja.hasMany(models.pujaFaqs, { foreignKey: "pujaId", onDelete: "CASCADE" });
     Puja.hasMany(models.pujaImages, { foreignKey: "pujaId", onDelete: "CASCADE" });
+    Puja.hasMany(models.templeHistory, { foreignKey: "pujaId", onDelete: "CASCADE" });
   };
 
   return Puja;

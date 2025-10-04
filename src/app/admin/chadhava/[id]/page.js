@@ -28,7 +28,7 @@ const EditChadhavaForm = () => {
     packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
     recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
     faqs: [{ icon: null, title: "", description: "" }],
-    images: [],
+    banners: [{imgUrl: null, type: "", position: 0}],
     pujaPerformedBy: { name: "", temple: "", pujaPerformerImg: "", bio: "" },
   });
 
@@ -76,9 +76,13 @@ const EditChadhavaForm = () => {
         isActiveOnHome: chadhavaDetail.isActiveOnHome,
 
         // Banners
-        images: chadhavaDetail.chadhavaBanners
-          ? chadhavaDetail.chadhavaBanners.map((b) => b.image_url)
-          : [],
+        banners: chadhavaDetail.chadhavaBanners
+          ? chadhavaDetail.chadhavaBanners.map((b) => ({
+              imgUrl: b.image_url || "",
+              type: b.type || "",
+              position: b.position || ""
+          }))
+          : [{imgUrl: null, type: "", position: 0}],
 
         // Packages
         packages: chadhavaDetail.chadhavaPackages
@@ -142,12 +146,11 @@ const EditChadhavaForm = () => {
 
       console.log("localPreview", localPreview)
 
-      if (name === "image") {
-        // Update images preview
+      if (name === "imgUrl") {
         setFormData((prev) => {
-          const updated = [...prev.images];
-          updated[index] = localPreview;
-          return { ...prev, images: updated };
+          const updated = [...prev.banners];
+          updated[index].imgUrl = localPreview.toString();
+          return { ...prev, banners: updated };
         });
       } else if (name === "recommendedImg") {
         // Update FAQ icon preview
@@ -185,20 +188,21 @@ const EditChadhavaForm = () => {
       uploadFormData.append("file", file);
 
       try {
-        const res = await fetch(`${baseAPIURL}/upload`, {
+        const res = await fetch(`${baseAPIURL}/uploads`, {
           method: "POST",
           body: uploadFormData,
         });
 
         const data = await res.json();
-        // console.log("datadatadata",data)
+
+        // console.log("datadatadata",data, data.storedAs)
 
         if (res.ok) {
-          if (name === "image") {
+          if (name === "imgUrl") {
             setFormData((prev) => {
-              const updated = [...prev.images];
-              updated[index] = (data.storedAs).toString(); // server path
-              return { ...prev, images: updated };
+              const updated = [...prev.banners];
+              updated[index].imgUrl = (data.storedAs).toString(); // server path
+              return { ...prev, banners: updated };
             });
           } else if (name === "recommendedImg") {
             setFormData((prev) => {
@@ -334,69 +338,95 @@ const EditChadhavaForm = () => {
         </div>
 
         {/* Images (File Upload) */}
-        <div>
-          <label className="block font-semibold mb-2">Banners</label>
-
-          <div className="flex flex-wrap gap-4">
-            {formData?.images.map((img, index) => (
-              <div key={index} className="relative">
-                {img ? (
-                  <div>
-                    <img
-                      src={img}
-                      alt={`Uploaded ${index}`}
-                      className="w-32 h-32 object-cover rounded border"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const updated = formData?.images.filter((_, i) => i !== index);
-                        setFormData({ ...formData, images: updated });
-                      }}
-                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                ) : (
-                  <>
-                    <input
-                      type="file"
-                      name="image"
-                      accept="image/*"
-                      onChange={(e) => handleChange(e, index)}
-                      className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const updated = formData?.images.filter((_, i) => i !== index);
-                        setFormData({ ...formData, images: updated });
-                      }}
-                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </>
-                )}
-              </div>
-            ))}
-
-            {/* Add Image Button */}
-            <button
-              type="button"
-              onClick={() =>
-                setFormData({
-                  ...formData,
-                  images: [...formData?.images, null],
-                })
-              }
-              className="w-32 h-32 border-2 border-dashed border-green-500 flex items-center justify-center rounded text-green-600 hover:bg-green-50 cursor-pointer"
-            >
-              + Add Banner
-            </button>
-          </div>
-        </div>
+         <div>
+                  <label className="block font-semibold mb-2">Banners</label>
+        
+                  {formData?.banners.map((item, index) => (
+                    <div key={index} className="border p-3 rounded mb-3 relative">
+                      {formData?.banners.length > 1 && <button
+                        type="button"
+                        onClick={() => {
+                          const updated = formData?.banners.filter((_, i) => i !== index);
+                          setFormData({ ...formData, banners: updated });
+                        }}
+                        className="absolute top-2 right-2 text-red-600 hover:text-red-800"
+                      >
+                        <Trash2 size={18} />
+                      </button>}
+        
+                      <div className="mb-3">
+                        <label className="block font-medium">Banner</label>
+                        {item.imgUrl ? (
+                          <div className="relative w-32 h-32">
+                            <img
+                              src={item.imgUrl}
+                              alt={`banner imgUrl ${index}`}
+                              className="w-32 h-32 object-cover rounded border cursor-pointer"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...formData?.banners];
+                                updated[index].imgUrl = null;
+                                setFormData({ ...formData, banners: updated });
+                              }}
+                              className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        ) : (
+                          <input
+                            type="file"
+                            name="imgUrl"
+                            accept="image/*"
+                            onChange={(e) => handleChange(e, index)} // ✅ index now works
+                            className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
+                          />
+                        )}
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                      <select
+                        value={item.type}
+                        onChange={(e) => {
+                          const updated = [...formData?.banners];
+                          updated[index].type = e.target.value;
+                          setFormData({ ...formData, banners: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                      >
+                        <option value="">Select</option>
+                        <option value="eng">English</option>
+                        <option value="hi">Hindi</option>
+                      </select>
+                      <input
+                        type="number"
+                        placeholder="Position"
+                        value={item.position}
+                        onChange={(e) => {
+                          const updated = [...formData?.banners];
+                          updated[index].position = e.target.value;
+                          setFormData({ ...formData, banners: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                      />
+                      </div>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        banners: [...formData?.banners, { imgUrl: "", type: "", position: "" }],
+                      })
+                    }
+                    className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
+                  >
+                    + Add Banners
+                  </button>
+        
+                </div>
 
         {/* Rating */}
         <div className="grid grid-cols-3 gap-3">

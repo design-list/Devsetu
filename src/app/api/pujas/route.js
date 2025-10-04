@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
-const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages } = models;
+const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory } = models;
 
 
 export async function GET() {
   try {
     const allPujas = await pujas.findAll({
-      include: [ pujaPackages, pujaOfferings, pujaFaqs, pujaImages ],
+      include: [ pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory ],
     });
     return NextResponse.json({data: allPujas,  status: 200 });
   } catch (error) {
@@ -34,7 +34,6 @@ export async function POST(req) {
         location: body.location,
         date: new Date(body.date),
         pujaDetails: body.pujaDetails,
-        templeHistory: body.templeHistory,
         isActive: body.isActive,
         isActiveOnHome: body.isActiveOnHome,
 
@@ -49,6 +48,12 @@ export async function POST(req) {
           Description: o.description,
           offerimg: commonOfferImages,
         })),
+
+        templeHistories: body.temple ? [{
+          templeImg: body.temple.templeImg,
+          templeName: body.temple.templeName,
+          templeHistory: body.temple.templeHistory
+        }] : [],
 
         pujaFaqs: body.faqs.map(f => ({
           question: f.title,
@@ -68,6 +73,7 @@ export async function POST(req) {
           { model: pujaOfferings },
           { model: pujaFaqs },
           { model: pujaImages },
+          { model: templeHistory }
         ],
       }
     );

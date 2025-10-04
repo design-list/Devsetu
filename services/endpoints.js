@@ -20,4 +20,8 @@ export const endpoints = {
     FileUpload: {
         upload: `${baseApiUrl}/upload`,
     },
+    
+    Home: {
+        home: `${baseApiUrl}/home`,
+    },
 }

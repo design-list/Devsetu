@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js";
 
-const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages } = models;
+const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory } = models;
 
 //
 // ✅ GET /api/pujas/:id
@@ -9,7 +9,7 @@ const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages } = models;
 export async function GET(req, { params }) {
   try {
     const puja = await pujas.findByPk(params.id, {
-      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaImages],
+      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory ], order: [["id", "DESC"]],
     });
     if (!puja) {
       return NextResponse.json({ error: "Puja not found" }, { status: 404 });
@@ -54,27 +54,24 @@ export async function PUT(req, context) {
       isActiveOnHome: body.isActiveOnHome,
     });
 
-    // ✅ Update banners
-    if (body.images) {
-      await pujaImages.destroy({ where: { pujaId: updatedPujas.id } });
-      await pujaImages.bulkCreate(
-        body.images.map((img) => ({
-          image_url: img,
-          pujaId: updatedPujas.id,
-        }))
-      );
+    if (body.temple) {
+      await templeHistory.destroy({ where: { pujaId: updatedPujas.id  } });
+      await templeHistory.create({
+        ...body.temple,
+        chadhavaId: updatedPujas.id,
+      });
     }
 
-if (body.images) {
-  await pujaImages.destroy({ where: { pujaId: updatedPujas.id } });
-  await pujaImages.bulkCreate(
-    body.banners?.map(banner => ({
-      imageUrl: banner.imgUrl,
-      type: banner.type,
-      position: banner.position ? parseInt(banner.position) : null,
-    }))
-  );
-}
+  if (body.images) {
+    await pujaImages.destroy({ where: { pujaId: updatedPujas.id } });
+    await pujaImages.bulkCreate(
+      body.banners?.map(banner => ({
+        imageUrl: banner.imgUrl,
+        type: banner.type,
+        position: banner.position ? parseInt(banner.position) : null,
+      }))
+    );
+  }
 
 
     // ✅ Update offerings (offers + offerimg)

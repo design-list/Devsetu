@@ -4,6 +4,7 @@ import loader from './loader';
 import pujas from './pujaReduces'
 import chadhavas from './chadhavaReduces'
 import articels from './articelsReduces '
+import home from './homeReduces'
 
 export default combineReducers({
    count: counter,
@@ -11,4 +12,5 @@ export default combineReducers({
    pujas,
    chadhavas,
    articels,
+   home
 })

@@ -81,6 +81,7 @@ export default function PujasPage() {
           <table className="min-w-full border border-gray-200 text-sm md:text-base">
             <thead>
               <tr className="bg-green-500 text-white">
+                <th className="p-2 border">ID</th>
                 <th className="p-2 border">Title</th>
                 <th className="p-2 border">Slug</th>
                 <th className="p-2 border">Date</th>
@@ -104,6 +105,7 @@ export default function PujasPage() {
                   key={chadhava.id}
                   className="text-center border hover:bg-gray-50 hover:text-blue-600 transition"
                 >
+                  <td className="p-2 border whitespace-nowrap">{chadhava.id}</td>
                   <td className="p-2 border whitespace-nowrap">{chadhava.title}</td>
                   <td className="p-2 border whitespace-nowrap">{chadhava.slug}</td>
                   <td className="p-2 border">{chadhava.date}</td>

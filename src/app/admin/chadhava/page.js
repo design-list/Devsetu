@@ -22,9 +22,9 @@ const ChadhavaForm = () => {
     location: "",
     date: new Date(),
     pujaDetails: "",
-    templeHistory: "",
     isActive: true,
     isActiveOnHome: false,
+    temple: { templeImg: null, templeName: "", templeHistory: "" },
     packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
     recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
     faqs: [{ icon: null, title: "", description: "" }],
@@ -96,6 +96,16 @@ const ChadhavaForm = () => {
             pujaPerformerImg: localPreview,
           },
         }));
+      } else if (name === "templeImg") {
+        setFormData((prev) => ({
+          ...prev,
+          temple: {
+            ...prev.temple,
+            templeImg: localPreview,
+          },
+        }));
+      } else {
+        alert("Upload failed: ");
       }
 
       // Upload to server
@@ -145,6 +155,14 @@ const ChadhavaForm = () => {
                 pujaPerformerImg: data.storedAs.toString(),
               },
             }));
+          } else if (name === "templeImg") {
+            setFormData((prev) => ({
+              ...prev,
+              temple: {
+                ...prev.temple,
+                templeImg: data.storedAs.toString(),
+              },
+            }));
           }
         } else {
           alert("Upload failed: " + data.error);
@@ -164,8 +182,16 @@ const ChadhavaForm = () => {
             [field]: value, // Dynamically set the correct nested field
           },
         }));
+      } else if (name.startsWith("temple.")) {
+        const field = name.split(".")[1];
+        setFormData((prev) => ({
+          ...prev,
+          temple: {
+            ...prev.temple,
+            [field]: value, // Dynamically set the correct nested field
+          },
+        }));
       } else {
-        // Handle top-level fields
         setFormData((prev) => ({
           ...prev,
           [name]: value,
@@ -352,8 +378,6 @@ const ChadhavaForm = () => {
 
         {/* Images (File Upload) */}
 
-         {/* Images (File Upload) */}
-        
                 <div>
                   <label className="block font-semibold mb-2">Banners</label>
         
@@ -518,13 +542,59 @@ const ChadhavaForm = () => {
         </div>
 
         {/* Temple History */}
-        <div>
+         <div>
           <label className="block font-semibold">Temple History</label>
-          <textarea
-            name="templeHistory"
-            rows="3"
+          <div className="mb-3">
+            <label className="block font-medium">Image</label>
+
+            {formData.temple.templeImg ? (
+              <div className="relative w-20 h-20">
+                <img
+                  src={formData.temple.templeImg}
+                  alt="temple image"
+                  className="w-20 h-20 object-cover rounded border"
+                />
+                <button
+                  type="button"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      temple: { ...prev.temple, templeImg: "" },
+                    }))
+                  }
+                  className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1"
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            ) : (
+              <input
+                type="file"
+                name={`templeImg`}
+                accept="image/*"
+                onChange={handleChange}
+                className="w-20 h-20 border rounded flex items-center justify-center text-sm p-2"
+              />
+            )}
+          </div>
+
+          <input
+            type="text"
+            name={`temple.templeName`}
+            placeholder="name"
+            value={formData.temple.templeName}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded mb-2"
+          />
+
+          <textarea
+            type="text"
+            name={`temple.templeHistory`}
+            placeholder="About temple"
+            rows={4}
+            value={formData.temple.templeHistory}
+            onChange={handleChange}
+            className="w-full border p-2 rounded mb-2"
           />
         </div>
 
@@ -777,38 +847,6 @@ const ChadhavaForm = () => {
               >
                 <Trash2 size={18} />
               </button>}
-
-              <div className="mb-3">
-                <label className="block font-medium">FAQ Icon</label>
-                {faq.icon ? (
-                  <div className="relative w-15 h-15">
-                    <img
-                      src={faq.icon}
-                      alt={`FAQ Icon ${index}`}
-                      className="w-15 h-15 object-cover rounded border"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const updated = [...formData?.faqs];
-                        updated[index].icon = null;
-                        setFormData({ ...formData, faqs: updated });
-                      }}
-                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1"
-                    >
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
-                ) : (
-                  <input
-                    type="file"
-                    name="icon"
-                    accept="image/*"
-                    onChange={(e) => handleChange(e, index)} // ✅ index now works
-                    className="w-15 h-15 border rounded flex items-center justify-center text-sm p-2"
-                  />
-                )}
-              </div>
 
               <input
                 type="text"

@@ -14,6 +14,8 @@ import pujaImages from './PujaModels/pujaImages.js';
 import pujaFaqs from './PujaModels/pujaFaqs.js'; 
 import pujaOfferings from './PujaModels/pujaOfferings.js'; 
 
+import templeHistory from './templeModels/templeHistory.js'; 
+
 import chadhava from './ChadhavaModels/chadhava.js';
 import chadhavaBanner from './ChadhavaModels/chadhavaBanner.js';
 import chadhavaFaqs from './ChadhavaModels/chadhavaFaqs.js';
@@ -54,6 +56,8 @@ db.pujaPackages = pujaPackages(sequelize, Sequelize.DataTypes);
 db.pujaImages  = pujaImages(sequelize, Sequelize.DataTypes);
 db.pujaFaqs = pujaFaqs(sequelize, Sequelize.DataTypes);
 db.pujaOfferings = pujaOfferings(sequelize, Sequelize.DataTypes);
+
+db.templeHistory = templeHistory(sequelize, Sequelize.DataTypes);
 
 db.chadhava = chadhava(sequelize, Sequelize.DataTypes);
 db.chadhavaBanner = chadhavaBanner(sequelize, Sequelize.DataTypes);
