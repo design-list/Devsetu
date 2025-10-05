@@ -304,7 +304,7 @@ const EditPujaForm = () => {
                     <label className="block font-semibold">Sub Title</label>
                     <input
                         type="text"
-                        name="sutTitle"
+                        name="subTitle"
                         value={formData.subTitle}
                         onChange={handleChange}
                         className="w-full border p-2 rounded"
@@ -871,7 +871,7 @@ const EditPujaForm = () => {
                     type="submit"
                     className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
                 >
-                    Submit
+                    Update
                 </button>
             </form>
         </div>

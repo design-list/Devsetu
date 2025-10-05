@@ -23,12 +23,11 @@ export async function GET(req, { params }) {
 
 //
 // ✅ PUT /api/pujas/:id
-export async function PUT(req, context) {
+export async function PUT(req, { params }) {
 
 
   try {
     const body = await req.json();
-    const { params } = context;
 
     // const pujaOfferingImages = body.offerings.offerimg || [];
 
@@ -49,7 +48,6 @@ export async function PUT(req, context) {
       location: body.location,
       date: body.date,
       pujaDetails: body.pujaDetails,
-      templeHistory: body.templeHistory,
       isActive: body.isActive,
       isActiveOnHome: body.isActiveOnHome,
     });
@@ -58,7 +56,7 @@ export async function PUT(req, context) {
       await templeHistory.destroy({ where: { pujaId: updatedPujas.id  } });
       await templeHistory.create({
         ...body.temple,
-        chadhavaId: updatedPujas.id,
+        pujaId: updatedPujas.id,
       });
     }
 
@@ -107,7 +105,7 @@ export async function PUT(req, context) {
 
     // ✅ Fetch back with associations
     const finalData = await pujas.findByPk(updatedPujas.id, {
-      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaImages],
+      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory],
     });
 
     return NextResponse.json({

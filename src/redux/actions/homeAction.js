@@ -1,6 +1,6 @@
 import { HOME_DATA_REQUEST } from "../types/homeTypes";
 
 
-export const requestPujaDataAction = (date) => ({
+export const requestHomePageAction = (date) => ({
     type: HOME_DATA_REQUEST,
 })

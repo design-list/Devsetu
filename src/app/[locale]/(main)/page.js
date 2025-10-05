@@ -15,6 +15,10 @@ import ContinuousSlider from "../../../components/Continuousslider";
 import HowItWorks from "../../../components/Howitworks";
 import LibraryCards from "../../../components/LibraryCards";
 import StatsSection from "../../../components/Statssection";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { requestHomePageAction } from "@/redux/actions/homeAction";
+import ChadhavaCard from "@/components/Cards/chadhavaCard";
 
 
 
@@ -100,11 +104,22 @@ const pujas = [
 
 const Home = () => {
 
+  const { heroBanner, pujaCard, chadhavaCard } = useSelector((state) => state.home)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(requestHomePageAction())
+  },[])
+
   const { lang, setLang, t } = useLang();
+
+
+  console.log("heroBanner, pujaCard, chadhavaCard", heroBanner, pujaCard, chadhavaCard)
 
   return (
     <Main className="HomePage">
-      <HeroBanner slides={slidesData} />
+      <HeroBanner slides={heroBanner} />
       <ContinuousSlider />
       <Container>
         <section className="py-8">
@@ -114,7 +129,7 @@ const Home = () => {
             </h2>
             <p className="text-base">Connect with the divine from home. Get your puja performed in your name at India’s holy temples and invite peace, joy, and prosperity into your life.</p>
           </div>
-          <PujaCard pujas={pujas} PujaName={'pujas'} />
+          <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true} />
 
         </section>
 
@@ -125,7 +140,7 @@ const Home = () => {
             </h2>
             <p className="text-base">Offer your devotion through special chadhavas and seek divine blessings for yourself and your loved ones.</p>
           </div>
-          <PujaCard pujas={pujas} PujaName={'chadhavas'} />
+          <ChadhavaCard chadhava={chadhavaCard} viewmore={true} />
 
         </section>
 

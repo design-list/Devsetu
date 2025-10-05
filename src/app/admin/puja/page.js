@@ -195,7 +195,7 @@ const PujaForm = () => {
     })
   };
 
-  // console.log("formData", formData)
+  console.log("formData", formData)
 
   return (
     <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
@@ -231,7 +231,7 @@ const PujaForm = () => {
           <label className="block font-semibold">Sub Title</label>
           <input
             type="text"
-            name="sutTitle"
+            name="subTitle"
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />

@@ -80,6 +80,7 @@ export default function PujasPage() {
               <tr className="bg-green-500 text-white">
                 <th className="p-2 border">ID</th>
                 <th className="p-2 border">Title</th>
+                <th className="p-2 border">Sub Title</th>
                 <th className="p-2 border">Slug</th>
                 <th className="p-2 border">Date</th>
                 <th className="p-2 border">Rating</th>
@@ -104,6 +105,7 @@ export default function PujasPage() {
                 >
                   <td className="p-2 border whitespace-nowrap">{puja.id}</td>
                   <td className="p-2 border whitespace-nowrap">{puja.title}</td>
+                  <td className="p-2 border whitespace-nowrap">{puja.subTitle}</td>
                   <td className="p-2 border whitespace-nowrap">{puja.slug}</td>
                   <td className="p-2 border">{puja.date}</td>
                   <td className="p-2 border">

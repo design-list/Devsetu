@@ -20,7 +20,7 @@ export async function GET() {
 
     const pujaCard = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "puja_details", "date"],
+      attributes: ["id", "title", "slug", "sub_title", "location", "date"],
       include: [
         {
           model: pujaImages,
@@ -64,20 +64,25 @@ export async function GET() {
       id: p.id,
       title: p.title,
       slug: p.slug,
-      banners: p.pujaImages || [], // rename here
+      banners: p.pujaImages || [],
+      type: "puja"
     }));
 
     const formattedChadhavaData = chadhavaData.map(c => ({
       id: c.id,
       title: c.title,
       slug: c.slug,
-      banners: c.chadhavaBanners || [], // rename here
+      banners: c.chadhavaBanners || [],
+      type: "chadhava"
     }));
 
     return NextResponse.json({
       status: 200,
       message: "Home page data fetched successfully",
-      data: [...formattedPujaData, ...formattedChadhavaData, {puja: pujaCard}, {chadhava: chadhavaCard}],
+      data: { heroBanner: [...formattedPujaData, ...formattedChadhavaData], 
+          pujaCard: pujaCard, 
+          chadhavaCard: chadhavaCard
+      },
     }, { status: 200 });
 
   } catch (error) {
