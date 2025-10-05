@@ -144,7 +144,7 @@ const EditChadhavaForm = () => {
       // Local preview
       const localPreview = URL.createObjectURL(file);
 
-      console.log("localPreview", localPreview)
+      // console.log("localPreview", localPreview)
 
       if (name === "imgUrl") {
         setFormData((prev) => {

@@ -23,11 +23,11 @@ const PageDetailHeroSlider = ({ heroSlides }) => {
         }}
         className="mx-auto rounded-lg shadow"
       >
-        {heroSlides.map((slide, index) => (
-          <SwiperSlide key={index}>
+        {heroSlides?.map((item) => (
+          <SwiperSlide key={item.id}>
               <LazyImage
-                src={slide.image}
-                alt="Dev Setu Slide"
+                src={item.imageUrl}
+                alt={item.id+ "puja image"}
                 className="object-cover"
                 width={600}
                 height={400}

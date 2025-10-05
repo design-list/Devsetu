@@ -1,6 +1,12 @@
+'use client'
+
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import PujaCard from "@/components/Cards/pujaCard";
 import Container from "@/components/Container";
 import PageHeroSlider from "@/components/HeroBanner/PageHeroSlider";
+import { requestPujaWebPageAction } from "@/redux/actions/pujaActions";
 
 const heroSlides = [
     {
@@ -54,6 +60,18 @@ const heroSlides = [
 ];
 
 const PujaPage = () => {
+
+  const dispatch = useDispatch();
+
+  const { heroBanner, pujaCard } = useSelector((state) => state.pujas)
+
+  useEffect(() => {
+    dispatch(requestPujaWebPageAction())
+  },[dispatch])
+
+
+  console.log("allWebPujaDataallWebPujaData",  heroBanner, pujaCard)
+
   return (
     <div className="font-sans text-gray-800">
       
@@ -70,7 +88,7 @@ const PujaPage = () => {
      <Container>
       <section className="py-12 px-6">
         <h2 className="text-xl font-bold text-center mb-10">Featured Pujas</h2>
-          <PujaCard pujas={pujas} PujaName={'pujas'} viewmore={false} />
+          <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore={false} />
       </section>
 
       {/* Testimonials */}

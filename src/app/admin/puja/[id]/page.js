@@ -107,8 +107,6 @@ const EditPujaForm = () => {
                 }))
                 : [{imgUrl: null, type: "", position: 0}],
 
-
-                
             });
         }
     }, [pujaDetail]);
@@ -123,134 +121,252 @@ const EditPujaForm = () => {
             .replace(/\s+/g, '-');
     }
 
-    const handleChange = async (e, index) => {
-        e.preventDefault();
+    // const handleChange = async (e, index) => {
+    // e.preventDefault();
 
-        const { name, value, files } = e.target;
+    // const { name, value, files } = e.target;
 
-        if (files && files[0]) {
-            const file = files[0];
+    // if (files && files[0]) {
+    //   const file = files[0];
 
-            // Local preview
-            const localPreview = URL.createObjectURL(file);
+    //   // Local preview
+    //   const localPreview = URL.createObjectURL(file);
 
-            if (name === "image") {
-                // Update images preview
-                setFormData((prev) => {
-                    const updated = [...prev.images];
-                    updated[index] = localPreview;
-                    return { ...prev, images: updated };
-                });
-            } else if (name === "icon") {
-                // Update FAQ icon preview
-                setFormData((prev) => {
-                    const updated = [...prev.faqs];
-                    updated[index].icon = localPreview.toString();
-                    return { ...prev, faqs: updated };
-                });
-            } else if (name === "packImg") {
-                // Update Package Image preview
-                setFormData((prev) => {
-                    const updated = [...prev.packages];
-                    updated[index].packImg = localPreview.toString();
-                    return { ...prev, packages: updated };
-                });
-            } else if (name === "offerimg") {
-                setFormData((prev) => {
-                    const updatedImgs = [...prev.offerings.offerimg];
-                    updatedImgs[index] = localPreview;
-                    return {
-                        ...prev,
-                        offerings: { ...prev.offerings, offerimg: updatedImgs },
-                    };
-                });
-            } else if (name === "templeImg") {
-                setFormData((prev) => ({
-                    ...prev,
-                    temple: {
-                        ...prev.temple,
-                        templeImg: localPreview,
-                    },
-                }));
-            } else {
-                alert("Upload failed: ");
-            }
+    //         if (name === "imgUrl") {
+    //             // Update images preview
+    //             setFormData((prev) => {
+    //             const updated = [...prev.banners];
+    //             updated[index].imgUrl = localPreview.toString();
+    //             return { ...prev, banners: updated };
+    //         });
+    //         } else if (name === "packImg") {
+    //             // Update Package Image preview
+    //             setFormData((prev) => {
+    //                 const updated = [...prev.packages];
+    //                 updated[index].packImg = localPreview.toString();
+    //                 return { ...prev, packages: updated };
+    //             });
+    //         } else if (name === "offerimg") {
+    //             setFormData((prev) => {
+    //                 const updatedImgs = [...prev.offerings.offerimg];
+    //                 updatedImgs[index] = localPreview;
+    //                 return {
+    //                     ...prev,
+    //                     offerings: { ...prev.offerings, offerimg: updatedImgs },
+    //                 };
+    //             });
+    //         } else if (name === "templeImg") {
+    //             setFormData((prev) => ({
+    //                 ...prev,
+    //                 temple: {
+    //                     ...prev.temple,
+    //                     templeImg: localPreview,
+    //                 },
+    //             }));
+    //         } else {
+    //             alert("Upload failed: ");
+    //         }
 
-            // Upload to server
-            const uploadFormData = new FormData();
-            uploadFormData.append("file", file);
+    //         // Upload to server
+    //         const uploadFormData = new FormData();
+    //         uploadFormData.append("file", file);
 
-            try {
-                const res = await fetch(`${baseAPIURL}/uploads`, {
-                    method: "POST",
-                    body: uploadFormData,
-                });
+    //         try {
+    //             const res = await fetch(`${baseAPIURL}/uploads`, {
+    //                 method: "POST",
+    //                 body: uploadFormData,
+    //             });
 
-                const data = await res.json();
-                console.log("datadatadata", data)
+    //             const data = await res.json();
+    //             // console.log("datadatadata", data)
 
-                if (res.ok) {
-                    if (name === "image") {
-                        setFormData((prev) => {
-                            const updated = [...prev.images];
-                            updated[index] = (data.storedAs).toString(); // server path
-                            return { ...prev, images: updated };
-                        });
-                    } else if (name === "icon") {
-                        setFormData((prev) => {
-                            const updated = [...prev.faqs];
-                            updated[index].icon = (data.storedAs).toString(); // server path
-                            return { ...prev, faqs: updated };
-                        });
-                    } else if (name === "packImg") {
-                        setFormData((prev) => {
-                            const updated = [...prev.packages];
-                            updated[index].packImg = (data.storedAs).toString(); // server path
-                            return { ...prev, packages: updated };
-                        });
-                    } else if (name === "offerimg") {
-                        setFormData((prev) => {
-                            const updatedImgs = [...prev.offerings.offerimg];
-                            updatedImgs[index] = (data.storedAs).toString(); // replace null with uploaded path
-                            return {
-                                ...prev,
-                                offerings: { ...prev.offerings, offerimg: updatedImgs },
-                            };
-                        });
-                    }
-                } else if (name === "templeImg") {
-                    setFormData((prev) => ({
-                        ...prev,
-                        temple: {
-                            ...prev.temple,
-                            templeImg: data.storedAs.toString(),
-                        },
-                    }));
-                } else {
-                    alert("Upload failed: " + data.error);
-                }
-            } catch (err) {
-                console.error("Upload error:", err);
-                alert("Error while uploading file");
-            }
-        } else if (name.startsWith("temple.")) {
-            const field = name.split(".")[1];
-            setFormData((prev) => ({
+    //             if (res.ok) {
+    //                 if (name === "imgUrl") {
+    //                         setFormData((prev) => {
+    //                         const updated = [...prev.banners];
+    //                         updated[index].imgUrl = (data.storedAs).toString(); // server path
+    //                         return { ...prev, banners: updated };
+    //                     });
+    //                 } else if (name === "icon") {
+    //                     setFormData((prev) => {
+    //                         const updated = [...prev.faqs];
+    //                         updated[index].icon = (data.storedAs).toString(); // server path
+    //                         return { ...prev, faqs: updated };
+    //                     });
+    //                 } else if (name === "packImg") {
+    //                     setFormData((prev) => {
+    //                         const updated = [...prev.packages];
+    //                         updated[index].packImg = (data.storedAs).toString(); // server path
+    //                         return { ...prev, packages: updated };
+    //                     });
+    //                 } else if (name === "offerimg") {
+    //                     setFormData((prev) => {
+    //                         const updatedImgs = [...prev.offerings.offerimg];
+    //                         updatedImgs[index] = (data.storedAs).toString(); // replace null with uploaded path
+    //                         return {
+    //                             ...prev,
+    //                             offerings: { ...prev.offerings, offerimg: updatedImgs },
+    //                         };
+    //                     });
+    //                 }
+    //             } else if (name === "templeImg") {
+    //                 setFormData((prev) => ({
+    //                     ...prev,
+    //                     temple: {
+    //                         ...prev.temple,
+    //                         templeImg: data.storedAs.toString(),
+    //                     },
+    //                 }));
+    //             } else {
+    //                 alert("Upload failed: " + data.error);
+    //             }
+    //         } catch (err) {
+    //             console.error("Upload error:", err);
+    //             alert("Error while uploading file");
+    //         }
+    //     } else if (name.startsWith("temple.")) {
+    //         const field = name.split(".")[1];
+    //         setFormData((prev) => ({
+    //             ...prev,
+    //             temple: {
+    //                 ...prev.temple,
+    //                 [field]: value, // Dynamically set the correct nested field
+    //             },
+    //         }));
+    //     } else {
+    //         setFormData((prev) => ({
+    //             ...prev,
+    //             [name]: value,
+    //         }));
+    //     }
+    // };
+
+const handleChange = async (e, index) => {
+    e.preventDefault();
+
+    const { name, value, files } = e.target;
+
+    if (files && files[0]) {
+      const file = files[0];
+
+      // Local preview
+      const localPreview = URL.createObjectURL(file);
+
+      if (name === "imgUrl") {
+        // Update images preview
+        setFormData((prev) => {
+          const updated = [...prev.banners];
+          updated[index].imgUrl = localPreview.toString();
+          return { ...prev, banners: updated };
+        });
+      } else if (name === "icon") {
+        // Update FAQ icon preview
+        setFormData((prev) => {
+          const updated = [...prev.faqs];
+          updated[index].icon = localPreview.toString();
+          return { ...prev, faqs: updated };
+        });
+      } else if (name === "packImg") {
+        // Update Package Image preview
+        setFormData((prev) => {
+          const updated = [...prev.packages];
+          updated[index].packImg = localPreview.toString();
+          return { ...prev, packages: updated };
+        });
+      } else if (name === "offerimg") {
+        setFormData((prev) => {
+          const updatedImgs = [...prev.offerings.offerimg];
+          updatedImgs[index] = localPreview;
+          return {
+            ...prev,
+            offerings: { ...prev.offerings, offerimg: updatedImgs },
+          };
+        });
+      } else if (name === "templeImg") {
+        setFormData((prev) => ({
+          ...prev,
+          temple: {
+            ...prev.temple,
+            templeImg: localPreview,
+          },
+        }));
+      } else {
+        alert("Upload failed: ");
+      }
+
+      // Upload to server
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", file);
+
+      try {
+        const res = await fetch(`${baseAPIURL}/uploads`, {
+          method: "POST",
+          body: uploadFormData,
+        });
+
+        const data = await res.json();
+        console.log("datadatadata", data)
+
+        if (res.ok) {
+          if (name === "imgUrl") {
+            setFormData((prev) => {
+              const updated = [...prev.banners];
+              updated[index].imgUrl = (data.storedAs).toString(); // server path
+              return { ...prev, banners: updated };
+            });
+          } else if (name === "icon") {
+            setFormData((prev) => {
+              const updated = [...prev.faqs];
+              updated[index].icon = (data.storedAs).toString(); // server path
+              return { ...prev, faqs: updated };
+            });
+          } else if (name === "packImg") {
+            setFormData((prev) => {
+              const updated = [...prev.packages];
+              updated[index].packImg = (data.storedAs).toString(); // server path
+              return { ...prev, packages: updated };
+            });
+          } else if (name === "offerimg") {
+            setFormData((prev) => {
+              const updatedImgs = [...prev.offerings.offerimg];
+              updatedImgs[index] = (data.storedAs).toString(); // replace null with uploaded path
+              return {
                 ...prev,
-                temple: {
-                    ...prev.temple,
-                    [field]: value, // Dynamically set the correct nested field
-                },
+                offerings: { ...prev.offerings, offerimg: updatedImgs },
+              };
+            });
+          } else if (name === "templeImg") {
+            setFormData((prev) => ({
+              ...prev,
+              temple: {
+                ...prev.temple,
+                templeImg: data.storedAs.toString(),
+              },
             }));
+          }
         } else {
-            setFormData((prev) => ({
-                ...prev,
-                [name]: value,
-            }));
+          alert("Upload failed: " + data.error);
         }
-    };
-
-
+      } catch (err) {
+        console.error("Upload error:", err);
+        alert("Error while uploading file");
+      }
+    } else if (name.startsWith("temple.")) {
+        const field = name.split(".")[1];
+        setFormData((prev) => ({
+          ...prev,
+          temple: {
+            ...prev.temple,
+            [field]: value, // Dynamically set the correct nested field
+          },
+        })); 
+      } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -258,7 +374,7 @@ const EditPujaForm = () => {
             console.log("Response:", res);
             if (res.status === 200) {
                 dispatch(requestPujaDataAction());
-                router.push("/admin/puja/list")
+                // router.push("/admin/puja/list")
             } else {
                 console.log("Error:", res.error);
                 alert(res.error)
@@ -373,96 +489,96 @@ const EditPujaForm = () => {
                 </div>
 
                  {/* Images (File Upload) */}
-                
-                        <div>
-                          <label className="block font-semibold mb-2">Banners</label>
-                
-                          {formData?.banners.map((item, index) => (
-                            <div key={index} className="border p-3 rounded mb-3 relative">
-                              {formData?.banners.length > 1 && <button
-                                type="button"
-                                onClick={() => {
-                                  const updated = formData?.banners.filter((_, i) => i !== index);
-                                  setFormData({ ...formData, banners: updated });
-                                }}
-                                className="absolute top-2 right-2 text-red-600 hover:text-red-800"
-                              >
-                                <Trash2 size={18} />
-                              </button>}
-                
-                              <div className="mb-3">
-                                <label className="block font-medium">Banner</label>
-                                {item.imgUrl ? (
-                                  <div className="relative w-32 h-32">
-                                    <img
-                                      src={item.imgUrl}
-                                      alt={`banner imgUrl ${index}`}
-                                      className="w-32 h-32 object-cover rounded border cursor-pointer"
-                                    />
-                                    <button
-                                      type="button"
-                                      onClick={() => {
-                                        const updated = [...formData?.banners];
-                                        updated[index].imgUrl = null;
-                                        setFormData({ ...formData, banners: updated });
-                                      }}
-                                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
-                                    >
-                                      <Trash2 size={14} />
-                                    </button>
-                                  </div>
-                                ) : (
-                                  <input
-                                    type="file"
-                                    name="imgUrl"
-                                    accept="image/*"
-                                    onChange={(e) => handleChange(e, index)} // ✅ index now works
-                                    className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
-                                  />
-                                )}
-                              </div>
-                              <div className="grid grid-cols-2 gap-4">
-                              <select
-                                value={item.type}
-                                onChange={(e) => {
-                                  const updated = [...formData?.banners];
-                                  updated[index].type = e.target.value;
-                                  setFormData({ ...formData, banners: updated });
-                                }}
-                                className="w-full border p-2 rounded mb-2"
-                              >
-                                <option value="">Select</option>
-                                <option value="eng">English</option>
-                                <option value="hi">Hindi</option>
-                              </select>
-                              <input
-                                type="number"
-                                placeholder="Position"
-                                value={item.position}
-                                onChange={(e) => {
-                                  const updated = [...formData?.banners];
-                                  updated[index].position = e.target.value;
-                                  setFormData({ ...formData, banners: updated });
-                                }}
-                                className="w-full border p-2 rounded mb-2"
-                              />
-                              </div>
-                            </div>
-                          ))}
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setFormData({
-                                ...formData,
-                                banners: [...formData?.banners, { imgUrl: "", type: "", position: "" }],
-                              })
-                            }
-                            className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
-                          >
-                            + Add Banners
-                          </button>
-                
-                        </div>
+
+        <div>
+          <label className="block font-semibold mb-2">Banners</label>
+
+          {formData?.banners.map((item, index) => (
+            <div key={index} className="border p-3 rounded mb-3 relative">
+              {formData?.banners.length > 1 && <button
+                type="button"
+                onClick={() => {
+                  const updated = formData?.banners.filter((_, i) => i !== index);
+                  setFormData({ ...formData, banners: updated });
+                }}
+                className="absolute top-2 right-2 text-red-600 hover:text-red-800"
+              >
+                <Trash2 size={18} />
+              </button>}
+
+              <div className="mb-3">
+                <label className="block font-medium">Banner</label>
+                {item.imgUrl ? (
+                  <div className="relative w-32 h-32">
+                    <img
+                      src={item.imgUrl}
+                      alt={`banner imgUrl ${index}`}
+                      className="w-32 h-32 object-cover rounded border cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = [...formData?.banners];
+                        updated[index].imgUrl = null;
+                        setFormData({ ...formData, banners: updated });
+                      }}
+                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <input
+                    type="file"
+                    name="imgUrl"
+                    accept="image/*"
+                    onChange={(e) => handleChange(e, index)} // ✅ index now works
+                    className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
+                  />
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+              <select
+                value={item.type}
+                onChange={(e) => {
+                  const updated = [...formData?.banners];
+                  updated[index].type = e.target.value;
+                  setFormData({ ...formData, banners: updated });
+                }}
+                className="w-full border p-2 rounded mb-2"
+              >
+                <option value="">Select</option>
+                <option value="eng">English</option>
+                <option value="hi">Hindi</option>
+              </select>
+              <input
+                type="number"
+                placeholder="Position"
+                value={item.position}
+                onChange={(e) => {
+                  const updated = [...formData?.banners];
+                  updated[index].position = e.target.value;
+                  setFormData({ ...formData, banners: updated });
+                }}
+                className="w-full border p-2 rounded mb-2"
+              />
+              </div>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() =>
+              setFormData({
+                ...formData,
+                banners: [...formData?.banners, { imgUrl: "", type: "", position: "" }],
+              })
+            }
+            className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
+          >
+            + Add Banners
+          </button>
+
+        </div>
 
                 {/* Puja Details */}
                 <div>

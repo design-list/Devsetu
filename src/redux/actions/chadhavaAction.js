@@ -1,8 +1,12 @@
-import { ADD_NEW_CHADHAVA_DATA_REQUEST, DELETE_CHADHAVA_DATA_REQUEST, CHADHAVA_DATA_REQUEST, CHADHAVA_DETAILS_DATA_REQUEST, UPDATE_CHADHAVA_DATA_REQUEST } from "../types/chadhavaTypes"
+import { ADD_NEW_CHADHAVA_DATA_REQUEST, DELETE_CHADHAVA_DATA_REQUEST, CHADHAVA_DATA_REQUEST, CHADHAVA_DETAILS_DATA_REQUEST, UPDATE_CHADHAVA_DATA_REQUEST, CHADHAVA_WEB_DATA_REQUEST, CHADHAVA_WEB_DETAILS_DATA_REQUEST } from "../types/chadhavaTypes"
 
 
 export const requestChadhavaAction = (date) => ({
     type: CHADHAVA_DATA_REQUEST,
+})
+
+export const requestWebChadhavaAction = (date) => ({
+    type: CHADHAVA_WEB_DATA_REQUEST,
 })
 
 export const addNewChadhavaAction = (data) => ({
@@ -12,6 +16,11 @@ export const addNewChadhavaAction = (data) => ({
 
 export const fetchChadhavaDetailAction = (data) => ({
     type: CHADHAVA_DETAILS_DATA_REQUEST,
+    payload: data
+})
+
+export const fetchChadhavaWebDetailAction = (data) => ({
+    type: CHADHAVA_WEB_DETAILS_DATA_REQUEST,
     payload: data
 })
 

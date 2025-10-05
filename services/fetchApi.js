@@ -15,6 +15,11 @@ export default class fetchApi extends Api {
         return this.fetch(url, "GET", null, data).then(response => response)
     }
 
+    GetAllWebPuja(data) {
+        let url = this.buildUrl(endpoints.Web.puja, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
     GetPujaDetails(data) {
         let url = this.buildUrl(endpoints.Pujas.puja, "full")
         return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
@@ -44,8 +49,17 @@ export default class fetchApi extends Api {
         return this.fetch(url, "GET", null, data).then(response => response)
     }
 
+    GetAllWebChadhava(data) {
+        let url = this.buildUrl(endpoints.Web.chadhava, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetChadhavaWebDetails(data) {
+        let url = this.buildUrl(endpoints.Web.chadhava, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
     GetChadhavaDetails(data) {
-        console.log("GetChadhavaDetails", data)
         let url = this.buildUrl(endpoints.Chadhava.chadhava, "full")
         return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
     }

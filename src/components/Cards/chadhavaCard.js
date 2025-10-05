@@ -4,8 +4,12 @@ import React from 'react'
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from '../Atom/LazyImage';
+import { useWithLang } from '../../../helper/useWithLang';
 
 function ChadhavaCard({ chadhava, viewmore }) {
+
+  const withLang = useWithLang();
+
   return (
     <>
       <div className="grid md:grid-cols-3 gap-4">
@@ -29,14 +33,14 @@ function ChadhavaCard({ chadhava, viewmore }) {
               {card.title}
             </h2>
             <p className="text-gray-600 text-sm mt-2 flex-grow">{card.chadhava_details.substring(0,400)+ "..."}</p>
-            <Link href={`/chadhava/${card.slug}`} className="mt-4 text-center bg-green-600 hover:bg-green-700 text-white py-2 rounded-md">
+            <Link href={withLang(`/chadhava/${card.slug}`)} className="mt-4 text-center bg-green-600 hover:bg-green-700 text-white py-2 rounded-md">
               Book Your Chadhava
             </Link>
           </div>
         ))}
       </div>
       {viewmore && <div className="text-center mt-6">
-        <Link href={"/chadhava"} className="flex justify-center text-[var(--secondary)] capitalize font-medium text-xl hover:underline">
+        <Link href={withLang("/chadhava")} className="flex justify-center text-[var(--secondary)] capitalize font-medium text-xl hover:underline">
           View All Chadhava <ArrowUpRight className="w-6 h-6" />
         </Link>
       </div>}

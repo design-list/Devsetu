@@ -1,95 +1,59 @@
 "use client";
 
 import Container from "@/components/Container";
-import PageDetailHeroSlider from "@/components/HeroBanner/PageDetailHeroSlider";
 import LazyImage from "@/components/Atom/LazyImage";
+import { useParams, usePathname } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchChadhavaWebDetailAction } from "@/redux/actions/chadhavaAction";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import ChadhavaDetailHeroSlider from "@/components/HeroBanner/ChadhavaDetailHeroSlider";
 
-const pujaData = {
 
-    "faq": [
-        {
-            "q": "How will the puja be performed?",
-            "a": "Both Online & Offline participation available."
-        },
-        { "q": "Will I receive Prasad?", "a": "Yes, Prasad will be couriered to your home." },
-        {
-            "q": "Can I include family names?",
-            "a": "Yes, family member names can be included in Sankalpa."
-        }
-    ]
-}
-
-const data = [
-    {
-        title: "Wednesday Special",
-        image: "/images/pujadetail.webp",
-    },
-    {
-        title: "Friday Puja",
-        image: "/images/pujadetail1.webp",
-    },
-    {
-        title: "Special Occasion",
-        image: "/images/chalisa.png",
-    }
-]
 
 const ChadhavaDetailsPage = () => {
 
-    const offerings = [
-        {
-            id: 1,
-            title: "Offer Oil to Shani Dev",
-            desc: "On this grand occasion, pacify the Lord of Karma, Shani Dev, by offering oil at the Shri Navagraha Shani Temple. Appeasing Saturn helps in balancing the influence of all other planets, bringing stability and peace to your life.",
-            price: "₹70",
-            img: "/images/chalisa.png",
-        },
-        {
-            id: 2,
-            title: "Special Combo Chadhava",
-            desc: "Tel & 1 Havan Ahuti • Shani Trayodashi Havan Ahuti Shri Navgrah Shani Temple • 4 October, Saturday • Oil • Shani Trayodashi Chadhava & Deepdaan Shri Navgrah Shani Temple • 4 October, Saturday",
-            price: "₹121",
-            img: "/images/chalisa.png",
-            highlight: true, // special styling
-        },
-        {
-            id: 3,
-            title: "Black Urad Dal Seva",
-            desc: "Black Urad Dal is specifically offered to pacify the doshas of the two most powerful karmic planets, Shani (Saturn) and Rahu. This service helps mitigate sudden obstacles, delays, and hidden problems.",
-            price: "₹51",
-            img: "/images/chalisa.png",
-        },
-        {
-            id: 4,
-            title: "Brahmin Bhojan",
-            desc: "Offering Brahmin Bhojan is considered very auspicious and removes karmic obstacles, providing blessings of prosperity and peace in life.",
-            price: "₹201",
-            img: "/images/chalisa.png",
-        },
-    ];
+    const params = useParams();
+    const pathname = usePathname();
+    const dispatch = useDispatch();
+     const [openFaqIndex, setOpenFaqIndex] = useState(null);
+
+    const { chadhavaWebDetail } = useSelector((state) => state.chadhavas);
+
+    useEffect(() => {
+        const { slugs } = params
+        if (slugs) {
+            dispatch(fetchChadhavaWebDetailAction(slugs))
+        }
+    }, [params])
+
+    const toggleFaq = (index) => {
+        setOpenFaqIndex(openFaqIndex === index ? null : index);
+    };
+
+    // console.log("chadhavaWebDetail", chadhavaWebDetail)
 
     return (
         <div className="w-full font-sans">
+            <Breadcrumbs pathname={pathname} />
             <Container>
                 <div className="bg-gray-50 p-4 lg:p-8 flex flex-col lg:flex-row gap-6">
                     <div className="flex-1 w-[600px] h-[400px] relative">
-                        <PageDetailHeroSlider heroSlides={data} />
+                        <ChadhavaDetailHeroSlider heroSlides={chadhavaWebDetail?.['chadhavaBanners']} />
                     </div>
                     <div>
                         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-                            Shani Trayodashi Special Chadava, Hawan, Deepdaan Mahaseva
+                            {chadhavaWebDetail?.['title']}
                         </h2>
-                        <p className="text-gray-600 mb-3">
+                        { chadhavaWebDetail?.['subTitle'] && <p className="text-gray-600 mb-3">
                             <span className="mr-2">🕉</span>
-                            On Shani Trayodashi, take this chance to attain peace from Shani
-                            doshas with the powerful Ujjain Chadava!
-                        </p>
+                            {chadhavaWebDetail?.['subTitle']}
+                        </p>}
 
                         <p className="text-gray-700 font-medium mb-4">
                             🌟 <span className="font-bold">According to sacred scriptures</span>,
-                            Shani Dev is revered as the divine Karmfal Data - the cosmic dispenser
-                            of justice who ensures every soul receives the fruits of their actions.
-                            <a href="#" className="text-blue-600 underline ml-1">Read more</a>
+                           {chadhavaWebDetail?.['pujaDetails']}
+                            {/* <a href="#" className="text-blue-600 underline ml-1">Read more</a> */}
                         </p>
 
                         {/* People Avatars + Count */}
@@ -121,7 +85,7 @@ const ChadhavaDetailsPage = () => {
 
                         {/* Offerings List */}
                         <div className="space-y-6">
-                            {offerings.map((item) => (
+                            {chadhavaWebDetail?.['chadhavaPackages'].map((item) => (
                                 <div
                                     key={item.id}
                                     className={`flex items-start justify-between rounded-lg border p-4 ${item.highlight
@@ -131,20 +95,23 @@ const ChadhavaDetailsPage = () => {
                                 >
                                     {/* Left Content */}
                                     <div className="pr-4">
-                                        <h2
-                                            className={`text-lg font-semibold ${item.highlight ? "text-pink-600" : "text-gray-800"
+                                        {item.tags && <h2
+                                            className={`text-lg font-semibold ${item.tags ? "text-pink-600" : "text-gray-800"
                                                 }`}
                                         >
+                                            {item.tags}
+                                        </h2>}
+                                        <h2 className={`text-lg font-semibold text-gray-800 }`} >
                                             {item.title}
                                         </h2>
-                                        <p className="text-gray-600 text-sm mt-1">{item.desc}</p>
+                                        <p className="text-gray-600 text-sm mt-1">{item.description}</p>
                                         <p className="text-green-600 font-bold mt-2">{item.price}</p>
                                     </div>
 
                                     {/* Right Image + Button */}
                                     <div className="flex flex-col items-center">
                                         <LazyImage
-                                            src={item.img}
+                                            src={item.packImg}
                                             alt={item.title}
                                             width={80}
                                             height={80}
@@ -161,13 +128,23 @@ const ChadhavaDetailsPage = () => {
 
                     {/* FAQ */}
                     <section>
-                        <h2 className="text-xl font-semibold mb-3">Frequently asked Questions</h2>
+                        <h2 className="text-xl font-semibold mb-3">Frequently Asked Questions</h2>
                         <div className="space-y-3">
-                            {pujaData.faq.map((faq, i) => (
-                                <details key={i} className="border rounded-lg p-3">
-                                    <summary className="cursor-pointer font-medium">{faq.q}</summary>
-                                    <p className="mt-2 text-gray-600">{faq.a}</p>
-                                </details>
+                            {chadhavaWebDetail?.["chadhavaFaqs"]?.map((faq, i) => (
+                                <div
+                                    key={i}
+                                    className="border rounded-lg p-3 bg-white shadow-sm"
+                                >
+                                    <button
+                                        onClick={() => toggleFaq(i)}
+                                        className="w-full text-left font-medium text-gray-800 cursor-pointer"
+                                    >
+                                        {faq.question}
+                                    </button>
+                                    {openFaqIndex === i && (
+                                        <p className="mt-2 text-gray-700">{faq.answer}</p>
+                                    )}
+                                </div>
                             ))}
                         </div>
                     </section>

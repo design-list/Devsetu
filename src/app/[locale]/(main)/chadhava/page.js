@@ -2,7 +2,10 @@
 
 "use client";
 import ChadhavaCard from "@/components/Cards/chadhavaCard";
+import { requestWebChadhavaAction } from "@/redux/actions/chadhavaAction";
 import Image from "next/image";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const cards = [
   {
@@ -43,7 +46,18 @@ const cards = [
   }
 ];
 
-export default function ChadhavaPage() {
+const ChadhavaPage = () => {
+
+  const dispatch = useDispatch(); 
+
+  const { heroBanner,chadhavaCard } = useSelector((state) => state.chadhavas)
+
+  useEffect(() => {
+    dispatch(requestWebChadhavaAction())
+  },[dispatch])
+
+  console.log("heroBanner,chadhavaCard ", heroBanner,chadhavaCard )
+
   return (
     <main className="bg-gray-50">
       {/* ✅ Banner Section */}
@@ -98,10 +112,12 @@ export default function ChadhavaPage() {
         </p>
 
         {/* ✅ Card Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ChadhavaCard cards={cards} />
+        <div className="py-8">
+          <ChadhavaCard chadhava={chadhavaCard} viewmore={false} />
         </div>
       </section>
     </main>
   );
 }
+
+export default ChadhavaPage;

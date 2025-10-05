@@ -115,8 +115,6 @@ const Home = () => {
   const { lang, setLang, t } = useLang();
 
 
-  console.log("heroBanner, pujaCard, chadhavaCard", heroBanner, pujaCard, chadhavaCard)
-
   return (
     <Main className="HomePage">
       <HeroBanner slides={heroBanner} />
@@ -129,7 +127,7 @@ const Home = () => {
             </h2>
             <p className="text-base">Connect with the divine from home. Get your puja performed in your name at India’s holy temples and invite peace, joy, and prosperity into your life.</p>
           </div>
-          <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true} />
+          <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true}  />
 
         </section>
 

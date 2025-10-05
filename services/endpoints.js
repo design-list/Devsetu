@@ -24,4 +24,8 @@ export const endpoints = {
     Home: {
         home: `${baseApiUrl}/home`,
     },
+    Web: {
+        puja:`${baseApiUrl}/web/pujas`,
+        chadhava:`${baseApiUrl}/web/chadhavas`
+    },
 }
