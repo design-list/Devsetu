@@ -12,6 +12,7 @@ import { fetchPujaDetailPageAction } from "@/redux/actions/pujaActions";
 import CountdownTimer from "@/components/CountdownTimer";
 import LazyImage from "@/components/Atom/LazyImage";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
+import PujaPackages from "@/components/PujaPackages.js";
 
 
 const pujaData = {
@@ -62,6 +63,8 @@ export default function PujaDetailsPage() {
     const [activeTab, setActiveTab] = useState("about");
 
     const [openFaqIndex, setOpenFaqIndex] = useState(null);
+    const [cartItem, setCartItem] = useState(null);
+
 
     const tabs = [
         { id: "about", label: "About Puja", ref: aboutRef },
@@ -112,6 +115,11 @@ export default function PujaDetailsPage() {
 
     const toggleFaq = (index) => {
         setOpenFaqIndex(openFaqIndex === index ? null : index);
+    };
+
+
+    const handleAddToCart = (pkg) => {
+        setCartItem(pkg);
     };
 
     const formattedDate = moment(pujaDetailPage?.['date']).format("D MMMM");
@@ -238,22 +246,7 @@ export default function PujaDetailsPage() {
                     {/* Packages */}
                     <section ref={packagesRef}>
                         <h2 className="text-xl font-semibold mb-3">Select Puja Package</h2>
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {pujaDetailPage?.['pujaPackages'].map((pkg) => (
-                                <div key={pkg.id} className="p-6 border rounded-xl shadow hover:shadow-lg">
-                                    <LazyImage
-                                        src={pkg.packImg}
-                                        alt={pkg.packageType}
-                                        height={100}
-                                    />
-                                    <h3 className="text-lg font-semibold">{pkg.packageType}</h3>
-                                    <p className="text-orange-600 text-xl font-bold mt-2">{pkg.packagePrice}</p>
-                                    <button className="mt-4 w-full bg-orange-600 text-white py-2 rounded-lg">
-                                        Participate →
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
+                        <PujaPackages pujaPackages={pujaDetailPage?.['pujaPackages']} onAddToCart={handleAddToCart}  />
                     </section>
 
                     {/* Reviews */}
@@ -293,6 +286,24 @@ export default function PujaDetailsPage() {
 
                 </div>
             </Container>
+
+            <div className="space-y-10">
+      {/* Add to Cart Button */}
+      {cartItem && (
+        <div className="sticky bottom-0 bg-white border-t shadow-md p-4 flex justify-between items-center">
+          <div>
+            <p className="font-semibold">{cartItem.packageType}</p>
+            <p className="text-green-600 font-bold">₹{cartItem.packagePrice}</p>
+          </div>
+          <button
+            className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700"
+            onClick={() => alert(`Added ${cartItem.packageType} to cart!`)}
+          >
+            Added to Cart
+          </button>
+        </div>
+      )}
+    </div>
         </div>
     );
 }
