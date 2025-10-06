@@ -1,6 +1,7 @@
 // src/app/chadhava/page.js
 
 "use client";
+import SectionLoader from "@/components/Atom/loader/sectionLoader";
 import ChadhavaCard from "@/components/Cards/chadhavaCard";
 import { requestWebChadhavaAction } from "@/redux/actions/chadhavaAction";
 import Image from "next/image";
@@ -51,12 +52,11 @@ const ChadhavaPage = () => {
   const dispatch = useDispatch(); 
 
   const { heroBanner,chadhavaCard } = useSelector((state) => state.chadhavas)
+  const { isLoading } = useSelector((state) => state.loader)
 
   useEffect(() => {
     dispatch(requestWebChadhavaAction())
   },[dispatch])
-
-  console.log("heroBanner,chadhavaCard ", heroBanner,chadhavaCard )
 
   return (
     <main className="bg-gray-50">
@@ -113,7 +113,7 @@ const ChadhavaPage = () => {
 
         {/* ✅ Card Grid */}
         <div className="py-8">
-          <ChadhavaCard chadhava={chadhavaCard} viewmore={false} />
+          { isLoading ? <SectionLoader /> : <ChadhavaCard chadhava={chadhavaCard} viewmore={false} />}
         </div>
       </section>
     </main>

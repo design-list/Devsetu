@@ -1,0 +1,144 @@
+.formRe {
+  position: relative;
+  width: 100%;
+}
+
+.txtbox {
+  width: 100% !important;
+  height: 38px ;
+  box-shadow: none;
+  color: #21295a;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  border: 0px;
+
+  border-bottom: 1px solid #bfc3ce;
+  width: 100%;
+  padding: 5px 7px 7px 5px;
+  outline: none;
+}
+.txtbox ~ .focus-border {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #3399ff;
+  transition: 0.4s;
+}
+.paymentdetails .txtbox ~ .focus-border  {
+  bottom: 0;
+}
+
+.lbl2 .lbl{
+  display: none
+}
+.txtbox:focus ~ .focus-border {
+  width: 100%;
+  transition: 0.4s;
+}
+.cashflow-sec .biginput ~ i.pencil-iconsec{display: none;}
+.biginput ~ i.pencil-iconsec{
+  display: inline-block;
+  position: absolute;
+  right: 55px;
+      bottom: 27px;
+    font-size: 18px;
+    color: #b7b9bf;
+}
+.sidebar-icon-only .biginput ~ i.pencil-iconsec{
+  right: 110px;
+}
+.swpfrm-sec .biginput ~ i.pencil-iconsec,
+.stp-sec .biginput ~ i.pencil-iconsec,
+.redmption-mainsec .biginput ~ i.pencil-iconsec{
+  right: 5px;
+}
+
+.sidebar-icon-only .switchfrm-sec .biginput ~ i.pencil-iconsec {
+  right: 180px;
+}
+.sidebar-icon-only .redmption-mainsec .biginput ~ i.pencil-iconsec {
+  right: 55px;
+}
+
+.iconPadd {
+  padding-left: 40px;
+}
+
+.txtbox:hover,
+.txtbox:focus {
+  outline: none;
+
+  box-shadow: none;
+}
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+.nobgtxt {
+  background-color: transparent;
+}
+
+.search_icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+  background: url("../../../assets/images/searchicon.png") no-repeat center
+    center;
+  background-position: 100% 100%;
+  background-size: contain;
+  position: absolute;
+  top: 14px;
+  right: -6px;
+}
+
+.useIcon {
+  background: url("../../../assets/images/contact/user.png") no-repeat center
+    left;
+}
+
+.emailIcon {
+  background: url("../../../assets/images/contact/mail.png") no-repeat center
+    left;
+}
+
+.mobileIcon {
+  background: url("../../../assets/images/contact/smartphone.png") no-repeat
+    center left;
+}
+
+.cityIcon {
+  background: url("../../../assets/images/contact/building_icon.png") no-repeat
+    center left;
+}
+
+.useIcon,
+.emailIcon,
+.mobileIcon,
+.cityIcon {
+  text-indent: 24px;
+}
+
+.biginput {
+  font-size: 32px;
+  color: #21295a;
+  font-family: 'Roboto';
+  font-weight: 700;
+}
+/* .txtBlock_input {
+  display: block !important;
+} */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  input[type="text"]::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+@media screen and (max-width: 767px) {
+
+  .biginput ~ i.pencil-iconsec, .sidebar-icon-only .biginput ~ i.pencil-iconsec,
+  .sidebar-icon-only .redmption-mainsec .biginput ~ i.pencil-iconsec, .sidebar-icon-only .switchfrm-sec .biginput ~ i.pencil-iconsec
+  {right: 20px;}
+}

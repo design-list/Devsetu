@@ -1,13 +1,8 @@
 'use client'
 
-import Image from "next/image";
 import { useLang } from "../../langProviders";
 import HeroBanner from "../../../components/HeroBanner";
-import Effectiveness from "../../../components/Effectiveness";
 import Reviews from "../../../components/Review";
-import PlatformInfo from "../../../components/PlatformInfo";
-import Features from "../../../components/Features";
-import Chalisa from "../../../components/Chalisa";
 import PujaCard from "../../../components/Cards/pujaCard";
 import Main from '../../../components/Main';
 import Container from "../../../components/Container";
@@ -19,23 +14,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestHomePageAction } from "@/redux/actions/homeAction";
 import ChadhavaCard from "@/components/Cards/chadhavaCard";
+import PageLaoder from "@/components/Atom/loader/pageLaoder";
+import SectionLoader from "@/components/Atom/loader/sectionLoader";
 
 
-
-const slidesData = [
-  {
-    title: "Navratri  Special Puja",
-    // highlight: "Til Tarpanam",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    // image: "/images/6 member.webp",
-  },
-  {
-    title: "Dev Setu",
-    // highlight: "Til Tarpanam",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    // image: "/images/6 member.webp",
-  },
-];
 
 const reviews = [
   {
@@ -61,50 +43,10 @@ const reviews = [
 ];
 
 
-const features = [
-  { title: "Divine Temple", src: "/svg/ic_feature_01.svg", desc: "Set up your temple on your phone, dedicated to your beloved deity." },
-  { title: "Hindu Literature", src: "/svg/ic_feature_02.svg", desc: "Get specially curated books, articles and videos based on Sanatan Dharma." },
-  { title: "Devotional Music", src: "/svg/ic_feature_03.svg", desc: "Get access to 5000+ Ad-Free Devotional Music, Bhajans, Chalisas, Aartis." },
-  { title: "Panchang, Horoscope & Festivals", src: "/svg/ic_feature_04.svg", desc: "Get regular updates on daily Horoscope, Panchang, important Vrat-Festivals." },
-  { title: "Puja and Chadhava Seva", src: "/svg/ic_feature_05.svg", desc: "Book personalised Puja and Chadhava Seva in your and your family’s name." },
-  { title: "Sanatani Community", src: "/svg/ic_feature_06.svg", desc: "Be a part of India’s largest devotional community and connect with Sanatanis." },
-];
-
-const chalisaItems = [
-  { title: "Aarti", src: "/images/aarti_article.webp", desc: "Find complete Aartis of all the famous Aartis and easily worship your beloved God." },
-  { title: "Chalisa", src: "/images/mantra_article.webp", desc: "You will get complete Chalisas of all the deities. Read Chalisa during Puja." },
-  { title: "Mantra", src: "/images/chaalisa_article.webp", desc: "Here you will find all the powerful mantras for peace of mind and removal of obstacles." },
-  { title: "Ayurvedic & Home Remedies", src: "/images/ayurvedic_article.webp", desc: "We have brought the precious knowledge of Ayurveda for you." },
-];
-
-const pujas = [
-  {
-    title: "51,000 Pitru Gayatri Mantra Jaap and Til Tarpanam",
-    desc: "For Peace of Ancestor’s souls and Resolving Family Disputes",
-    img: "/images/herobanner.webp",
-    place: "Dharmaranyam Vedi, Gaya, Bihar",
-    date: "17 September, Wednesday, Krishna Ekadashi",
-  },
-  {
-    title: "Kashi-Rameshwaram Ghat-Gokarna Pitru Shanti Puja",
-    desc: "To Seek Relief from Ancestral Curses and Bring Peace to Departed Souls",
-   img: "/images/herobanner.webp",
-    place: "Pishach Mochan Kund, Gokarna Kshetra",
-    date: "17 September, Wednesday, Krishna Ekadashi",
-  },
-  {
-    title: "Panch Tirth Pitru Dosha Nivaran Puja",
-    desc: "For Peace of Ancestor’s souls and Resolving Family Disputes",
-     img: "/images/herobanner.webp",
-    place: "Kashi, Rameshwaram, Gaya, Gokarna, Hardwar",
-    date: "21 September, Sunday, Amavasya",
-  },
-];
-
-
 const Home = () => {
 
   const { heroBanner, pujaCard, chadhavaCard } = useSelector((state) => state.home)
+  const { isLoading } = useSelector((state) => state.loader)
 
   const dispatch = useDispatch();
 
@@ -114,6 +56,9 @@ const Home = () => {
 
   const { lang, setLang, t } = useLang();
 
+  // if(isLoading){
+  //   return <PageLaoder />
+  // }
 
   return (
     <Main className="HomePage">
@@ -127,7 +72,7 @@ const Home = () => {
             </h2>
             <p className="text-base">Connect with the divine from home. Get your puja performed in your name at India’s holy temples and invite peace, joy, and prosperity into your life.</p>
           </div>
-          <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true}  />
+          {isLoading ? <SectionLoader /> : <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true}  />}
 
         </section>
 
@@ -138,7 +83,7 @@ const Home = () => {
             </h2>
             <p className="text-base">Offer your devotion through special chadhavas and seek divine blessings for yourself and your loved ones.</p>
           </div>
-          <ChadhavaCard chadhava={chadhavaCard} viewmore={true} />
+          {isLoading ? <SectionLoader /> : <ChadhavaCard chadhava={chadhavaCard} viewmore={true} />}
 
         </section>
 

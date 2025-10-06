@@ -1,0 +1,68 @@
+.range-heading {
+  font-size: 14px;
+  line-height: 18px;
+  margin: 0 0 15px;
+  font-family: "Roboto";
+  font-weight: 400;
+  color: #9c9c9c;
+  text-align: left;
+}
+
+.lbl {
+  color: #6a738a;
+  font-family: "Roboto";
+  font-weight: 400;
+  font-size: 13px;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.input-lable {
+  color: #6a738a !important;
+  font-size: 11px !important;
+  font-family: "Roboto";
+  font-weight: 400 !important;
+  text-transform: uppercase;
+  padding-left: 0px !important;
+  font-weight: 500;
+}
+.color-redSCHEME {
+  color: #e63946 !important;
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .range-heading {
+    text-align: center;
+    margin-top: 25px;
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .range-heading {
+    margin-top: 25px;
+    width: 100%;
+  }
+}
+
+/* form-group label:before {
+    content: "";
+    -webkit-appearance: none;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #fb4d4d;
+    padding: 9px;
+    display: inline-block;
+    position: relative;
+    vertical-align: text-top;
+    cursor: pointer;
+    margin-right: 7px;
+    border-radius: 3px;
+    margin-top: 4px;
+    position: absolute;
+    left: 0;
+} */
+
+.red_text {
+  color: #ff1111;
+}

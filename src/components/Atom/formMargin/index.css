@@ -1,0 +1,18 @@
+.nonBGtext .css-yk16xz-control,
+.nonBGtext .txtbox {
+  background: transparent;
+}
+
+.nobottomMrg {
+  margin-bottom: 0px;
+}
+.formMargin {
+  position: relative;
+}
+.noMrnoHe {
+  margin-bottom: 0px;
+  min-height: auto;
+}
+.noMarg {
+  margin-bottom: 3px;
+}

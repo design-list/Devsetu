@@ -11,7 +11,6 @@ export function* fetchAllPujaSaga({ payload, resolve }) {
         yield put({ type: START_LOADING, isLoading: true })
         let response = yield api.GetAllPuja(payload);
 
-        console.log("fetchAllPujaSaga", response)
         const {data, status} = response;
 
         if (status === 200) {
@@ -20,7 +19,6 @@ export function* fetchAllPujaSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("PUJA_DATA_FAILED", data);
             yield put({ type: PUJA_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -37,7 +35,6 @@ export function* fetchAllWebPujaSaga({ payload, resolve }) {
         yield put({ type: START_LOADING, isLoading: true })
         let response = yield api.GetAllWebPuja(payload);
 
-        console.log("fetchAllPujaDataSaga", response)
         const {data, status} = response;
 
         if (status === 200) {
@@ -46,7 +43,6 @@ export function* fetchAllWebPujaSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("PUJA_PAGE_DATA_FAILED", data);
             yield put({ type: PUJA_PAGE_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -70,7 +66,6 @@ export function* addNewPujaSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("ADD_NEW_PUJA_DATA_FAILED", data);
             yield put({ type: ADD_NEW_PUJA_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -95,7 +90,6 @@ export function* pujaDetialSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("PUJA_DETAILS_DATA_FAILED", data);
             yield put({ type: PUJA_DETAILS_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -119,7 +113,6 @@ export function* pujaDetialPageSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("PUJA_DETAILS_BY_SLUG_FAILED", data);
             yield put({ type: PUJA_DETAILS_BY_SLUG_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -144,7 +137,6 @@ export function* updatePujaSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("UPDATE_PUJA_DATA_FAILED", data);
             yield put({ type: UPDATE_PUJA_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -168,7 +160,6 @@ export function* deletePujaSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("DELETE_PUJA_DATA_FAILED", data);
             yield put({ type: DELETE_PUJA_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })

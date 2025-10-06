@@ -4,10 +4,17 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from "../Atom/LazyImage";
 import { useWithLang } from "../../../helper/useWithLang";
+import { useRouter } from "next/navigation";
 
 export default function PujaCard({ pujas, viewmore, PujaName }) {
 
   const withLang = useWithLang();
+
+  const router = useRouter();
+
+  const handlaRedirect = (slug) => {
+    router.push(withLang(`/puja/${slug}`))
+  }
 
   return (
     <>
@@ -21,13 +28,14 @@ export default function PujaCard({ pujas, viewmore, PujaName }) {
             <>
               {
                 pujaImages?.map((item) => {
-                  return <div key={item.id} className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center">
+                  return <div key={item.id}  onClick={() => handlaRedirect(puja.slug)} className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center cursor-pointer">
                     <LazyImage
                       src={item.image_url || "/images/herobanner.webp"}
                       alt={puja.title}
                       width={400}
                       height={320}
                       className="w-full h-full object-cover"
+                     
                     />
                   </div>
                 })

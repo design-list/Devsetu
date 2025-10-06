@@ -1,0 +1,33 @@
+.body_loader {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.75);
+}
+.section_loader{
+    width:100%;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.loading_div {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    /* border: 1px solid red; */
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 999;
+    display: block;
+    bottom: 0;
+    /* background: url('../../images/Loader.gif') no-repeat center center;
+*/
+}

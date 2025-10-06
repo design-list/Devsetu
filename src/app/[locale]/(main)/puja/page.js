@@ -7,6 +7,7 @@ import PujaCard from "@/components/Cards/pujaCard";
 import Container from "@/components/Container";
 import PageHeroSlider from "@/components/HeroBanner/PageHeroSlider";
 import { requestPujaWebPageAction } from "@/redux/actions/pujaActions";
+import SectionLoader from "@/components/Atom/loader/sectionLoader";
 
 const heroSlides = [
     {
@@ -63,14 +64,14 @@ const PujaPage = () => {
 
   const dispatch = useDispatch();
 
-  const { heroBanner, pujaCard } = useSelector((state) => state.pujas)
+  const { pujaCard } = useSelector((state) => state.pujas)
+  const { isLoading } = useSelector((state) => state.loader)
 
   useEffect(() => {
     dispatch(requestPujaWebPageAction())
   },[dispatch])
 
 
-  console.log("allWebPujaDataallWebPujaData",  heroBanner, pujaCard)
 
   return (
     <div className="font-sans text-gray-800">
@@ -81,7 +82,7 @@ const PujaPage = () => {
         <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
           Perform Puja as per Vedic rituals at Famous Hindu Temples in India
         </h1>
-        <PageHeroSlider heroSlides={heroSlides} />
+        {isLoading ? <SectionLoader /> : <PageHeroSlider heroSlides={heroSlides} />}
       </section>
 
      {/* Featured Puja */}

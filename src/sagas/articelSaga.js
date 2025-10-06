@@ -11,7 +11,6 @@ export function* fetchAllArticelSaga({ payload, resolve }) {
         yield put({ type: START_LOADING, isLoading: true })
         let response = yield api.GetAllArticles(payload);
 
-        console.log("fetchAllArticelSaga", response)
         const {data, status} = response;
 
         if (status === 200) {
@@ -20,7 +19,6 @@ export function* fetchAllArticelSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("ARTICLES_DATA_FAILED", data);
             yield put({ type: ARTICLES_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -44,7 +42,6 @@ export function* addNewArticelSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("ADD_NEW_ARTICLES_DATA_FAILED", data);
             yield put({ type: ADD_NEW_ARTICLES_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -69,7 +66,6 @@ export function* ArticelDetialSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("ARTICLES_DETAILS_DATA_FAILED", data);
             yield put({ type: ARTICLES_DETAILS_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -94,7 +90,6 @@ export function* updateArticelSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("UPDATE_ARTICLES_DATA_FAILED", data);
             yield put({ type: UPDATE_ARTICLES_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
@@ -118,7 +113,6 @@ export function* deleteArticelSaga({ payload, resolve }) {
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            console.log("DELETE_ARTICLES_DATA_FAILED", data);
             yield put({ type: DELETE_ARTICLES_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })

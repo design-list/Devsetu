@@ -1,0 +1,149 @@
+.txtSelect .css-1okebmr-indicatorSeparator {
+  display: none;
+}
+
+.txtSelect .css-g1d714-ValueContainer {
+  padding-left: 0px;
+  color: #323b6d;
+  font-family: 'Roboto';
+  font-weight: 400;
+  height: 38px;
+  font-size: 14px;
+}
+
+.txtSelect .css-2b097c-container {
+  outline: none;
+}
+
+.txtSelect.css-1pahdxg-control:hover {
+  border-color: transparent !important;
+}
+
+.txtSelect .css-1pahdxg-control {
+  outline: none !important;
+  border: 0px;
+  border-color: transparent;
+  border-bottom: 1px solid #bfc3ce;
+  border-radius: 0;
+}
+
+.txtSelect .css-1n7v3ny-option,
+.txtSelect .css-yt9ioa-option {
+  color: #323b6d;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.txtSelect .css-9gakcf-option {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  color: #fff;
+}
+
+.txtSelect .css-26l3qy-menu {
+  margin-top: 2px;
+}
+
+.txtSelect .css-tlfecz-indicatorContainer {
+  color: #1a294e;
+}
+
+.txtSelect .css-yk16xz-control,
+.txtSelect .css-yk16xz-control:focus {
+  border-radius: 0px;
+  border: 0px;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 16px;
+  color: #323b6d;
+  border-radius: 0px;
+  outline: none;
+  border-bottom: 1px solid #bfc3ce;
+}
+
+/* .css-yk16xz-control { height: 38px;} */
+.filter-status .formMargin {
+  margin-bottom: 0;
+  min-height: 100%;
+}
+.filter-status .css-yk16xz-control,
+.txtSelect .css-yk16xz-control:focus {
+  height: 25px;
+  min-height: 25px;
+}
+.filter-status .txtSelect .css-g1d714-ValueContainer {
+  height: 22px;
+  font-size: 12px;
+}
+.filter-status .css-1hb7zxy-IndicatorsContainer {
+  -webkit-align-items: start;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: start;
+}
+.filter-status .css-tlfecz-indicatorContainer {
+  padding: 0 8px;
+}
+.txtSelect .css-26l3qy-menu,
+.txtSelect .css-26l3qy-menu:focus {
+  font-size: 12px;
+}
+
+/* .css-1uccc91-singleValue {
+    color: #323b6d !important
+} */
+
+/* normal select start */
+.txtbox {
+  width: 100%;
+  height: 38px;
+  border: 0px;
+  box-shadow: none;
+  border-bottom: 1px solid #bfc3ce;
+  font-size: 14px;
+  color: #323b6d;
+  font-family: 'Roboto';
+  font-weight: 400;
+}
+
+select.txtbox {
+  padding-right: 25px;
+  -webkit-appearance: menulist;
+  border-radius: 0px;
+}
+
+.txtbox:hover,
+.txtbox:focus {
+  outline: none;
+  box-shadow: none;
+}
+.bigtxt .css-1uccc91-singleValue {
+  font-size: 25px;
+  color: #09327f;
+}
+.bigtxt .css-yk16xz-control {
+  min-height: auto !important;
+  height: auto !important;
+}
+/* normal select start */
+
+.textCapitalize {
+  text-transform: capitalize;
+}
+.txtSelect .css-b8ldur-Input input {
+  width: 100% !important;
+}
+.txtSelect .css-1g6gooi input {
+  width: 100% !important;
+}
+
+.css-4ljt47-MenuList {
+  overflow-y: scroll !important;
+}
+@media screen and (max-width: 767px) {
+.bigtxt .css-1uccc91-singleValue {
+  font-size: 15px;
+}
+}

@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPujaDetailPageAction } from "@/redux/actions/pujaActions";
 import CountdownTimer from "@/components/CountdownTimer";
 import LazyImage from "@/components/Atom/LazyImage";
+import PageLaoder from "@/components/Atom/loader/pageLaoder";
+
 
 const pujaData = {
     "benefits": [
@@ -46,6 +48,7 @@ export default function PujaDetailsPage() {
 
 
     const { pujaDetailPage } = useSelector((state) => state.pujas);
+    const { isLoading } = useSelector((state) => state.loader)
 
     // Create refs for each section
     const aboutRef = useRef(null);
@@ -77,6 +80,8 @@ export default function PujaDetailsPage() {
             dispatch(fetchPujaDetailPageAction(slugs))
         }
     }, [params])
+
+    console.log("isLoadingisLoading",isLoading)
 
 
     // ScrollSpy: active tab on scroll
@@ -118,9 +123,9 @@ export default function PujaDetailsPage() {
             <Container>
                 {/* Banner */}
                 <div className="bg-gray-50 p-4 lg:p-8 flex flex-col lg:flex-row gap-6">
-                    <div className="flex-1 w-[600px] h-[400px] relative">
+                   {isLoading ? <PageLaoder /> : <div className="flex-1 w-[600px] h-[400px] relative">
                         <PageDetailHeroSlider heroSlides={pujaDetailPage?.['pujaImages']} />
-                    </div>
+                    </div>}
                     <div className="flex-1 space-y-3">
                         <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">
                             {pujaDetailPage?.['title']}
@@ -211,7 +216,7 @@ export default function PujaDetailsPage() {
                         <div className="flex flex-col md:flex-row items-start gap-6">
                             {/* Image Section */}
                             <div className="w-full md:w-1/2">
-                                <Image
+                                <LazyImage
                                     src={pujaDetailPage?.['templeHistories'][0]?.['templeImg']}
                                     alt="Temple"
                                     width={800}
