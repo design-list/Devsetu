@@ -14,7 +14,7 @@ const PujaPackages = ({ pujaPackages = [], onAddToCart }) => {
 
   return (
     <section id="packages" className="py-8">
-      <h2 className="text-xl font-semibold mb-4">Puja Packages</h2>
+      <h2 className="text-xl font-semibold mb-4">Select Puja Packages</h2>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
         {pujaPackages.map((pkg, index) => {

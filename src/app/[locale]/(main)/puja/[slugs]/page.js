@@ -84,8 +84,6 @@ export default function PujaDetailsPage() {
         }
     }, [params])
 
-    console.log("isLoadingisLoading",isLoading)
-
 
     // ScrollSpy: active tab on scroll
     useEffect(() => {
@@ -140,10 +138,10 @@ export default function PujaDetailsPage() {
                         </h1>
                         <p className="text-2xl text-gray-600">{pujaDetailPage?.['subTitle']}</p>
 
-                        <p className="text-2xl font-semibold text-orange-600">
+                        <p className="text-[18px] font-semibold">
                             {pujaDetailPage?.['location']}
                         </p>
-                        <p className="text-2xl font-semibold text-orange-600">
+                        <p className="text-[18px] font-semibold text-orange-600">
                             {`${formattedDate}, ${pujaDetailPage?.['specialDay']}`}
                         </p>
 
@@ -151,14 +149,16 @@ export default function PujaDetailsPage() {
 
                         <div className="flex items-center mb-2">
                             <div className="flex -space-x-3">
-                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={35} className="rounded-full border-3 border-white" />
-                                <LazyImage src="/images/couple.webp" alt="devotee" width={35} height={35} className="rounded-full border-3 border-white" />
-                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={35} className="rounded-full border-3 border-white" />
-                                <LazyImage src="/images/couple.webp" alt="devotee" width={35} height={35} className="rounded-full border-3 border-white" />
-                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={35} className="rounded-full border-3 border-white" />
+                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={25} className="rounded-full border-3 border-white" />
+                                <LazyImage src="/images/couple.webp" alt="devotee" width={35} height={25} className="rounded-full border-3 border-white" />
+                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={25} className="rounded-full border-3 border-white" />
+                                <LazyImage src="/images/couple.webp" alt="devotee" width={35} height={25} className="rounded-full border-3 border-white" />
+                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={25} className="rounded-full border-3 border-white" />
                             </div>
                         </div>
-
+                        <span className="text-2xl">
+                            Till now <strong className="text-orange-600">3,00,000+ Devoteeshave</strong> participated in Pujas conducted by Sri Mandir Puja Seva.
+                        </span>
                         <div className="flex items-center gap-4">
 
                             <button className="bg-orange-600 hover:bg-orange-700 text-white px-5 py-2 rounded-lg">
@@ -245,7 +245,7 @@ export default function PujaDetailsPage() {
 
                     {/* Packages */}
                     <section ref={packagesRef}>
-                        <h2 className="text-xl font-semibold mb-3">Select Puja Package</h2>
+                        {/* <h2 className="text-xl font-semibold mb-3">Select Puja Package</h2> */}
                         <PujaPackages pujaPackages={pujaDetailPage?.['pujaPackages']} onAddToCart={handleAddToCart}  />
                     </section>
 

@@ -113,4 +113,36 @@ export default class fetchApi extends Api {
         let url = this.buildUrl(endpoints.Home.home, "full")
         return this.fetch(url, "GET", null, data).then(response => response)
     }
+
+    // ============================ CART ============================
+    
+    // AddNewCart(data) {
+    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
+    //     return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response);
+    // }
+
+    // GetAllCart(data) {
+    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
+    //     return this.fetch(url, "GET", null, data).then(response => response);
+    // }
+
+    // GetCartDetails(data) {
+    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
+    //     return this.fetchParams(url, "GET", null, `/${data}`).then(response => response);
+    // }
+
+    // UpdateCart(data) {
+    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
+    //     if (data.id) {
+    //         return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+    //     }
+    // }
+
+    // DeleteCart(data) {
+    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
+    //     if (data.id) {
+    //         return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response);
+    //     }
+    // }
+
 }

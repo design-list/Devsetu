@@ -374,7 +374,7 @@ const handleChange = async (e, index) => {
             console.log("Response:", res);
             if (res.status === 200) {
                 dispatch(requestPujaDataAction());
-                // router.push("/admin/puja/list")
+                router.push("/admin/puja/list")
             } else {
                 console.log("Error:", res.error);
                 alert(res.error)

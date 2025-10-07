@@ -31,11 +31,11 @@ const CountdownTimer = ({date, CountdownHeading}) => {
   }, [date]);
 
   return (
-    <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-6 max-w-md mx-auto text-center shadow-md">
+    <div className="rounded-lg max-w-md">
       <h2 className="text-xl font-bold text-yellow-800 mb-4">
         {CountdownHeading}
       </h2>
-      <div className="flex justify-center gap-4 text-lg font-semibold text-gray-800">
+      <div className="flex justify-start gap-4 text-lg font-semibold text-gray-800">
         <div className="flex flex-col items-center">
           <span className="text-3xl font-bold text-red-600">{timeLeft.days}</span>
           <span className="text-sm">Day</span>

@@ -31,6 +31,10 @@ import Horoscopes from './ArticelsModels/Horoscopes.js';
 
 import testimonials from './testimonialModels/testimonials.js';
 
+import cart from './CartModels/cart.js';
+import cartAddOn from './CartModels/cartAddOn.js';
+import cartPackage from './CartModels/cartPackage.js';
+
 const env = process.env.NODE_ENV || 'development';
 const config = configFile[env];
 const db = {};
@@ -73,6 +77,10 @@ db.Wishes = Wishes(sequelize, Sequelize.DataTypes);
 db.Horoscopes = Horoscopes(sequelize, Sequelize.DataTypes);
 
 db.testimonials = testimonials(sequelize, Sequelize.DataTypes);
+
+db.cart = cart(sequelize, Sequelize.DataTypes);
+db.cartAddOn = cartAddOn(sequelize, Sequelize.DataTypes);
+db.cartPackage = cartPackage(sequelize, Sequelize.DataTypes);
 
 // This part for setting up associations remains the same and will work correctly
 Object.keys(db).forEach((modelName) => {

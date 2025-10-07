@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { fetchChadhavaWebDetailAction } from "@/redux/actions/chadhavaAction";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ChadhavaDetailHeroSlider from "@/components/HeroBanner/ChadhavaDetailHeroSlider";
+import PageLaoder from "@/components/Atom/loader/pageLaoder";
 
 
 
@@ -19,6 +20,7 @@ const ChadhavaDetailsPage = () => {
      const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     const { chadhavaWebDetail } = useSelector((state) => state.chadhavas);
+    const { isLoading } = useSelector((state) => state.loader)
 
     useEffect(() => {
         const { slugs } = params
@@ -31,7 +33,11 @@ const ChadhavaDetailsPage = () => {
         setOpenFaqIndex(openFaqIndex === index ? null : index);
     };
 
-    // console.log("chadhavaWebDetail", chadhavaWebDetail)
+
+
+    if(isLoading){
+        return<PageLaoder />
+    }
 
     return (
         <div className="w-full font-sans">

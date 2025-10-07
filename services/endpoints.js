@@ -24,6 +24,11 @@ export const endpoints = {
     Home: {
         home: `${baseApiUrl}/home`,
     },
+
+    // Cart: {
+    //     cart: "cart", // 👈 Add this line
+    // },
+    
     Web: {
         puja:`${baseApiUrl}/web/pujas`,
         chadhava:`${baseApiUrl}/web/chadhavas`

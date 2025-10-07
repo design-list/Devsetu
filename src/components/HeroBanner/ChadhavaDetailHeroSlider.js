@@ -29,7 +29,7 @@ const ChadhavaDetailHeroSlider = ({ heroSlides }) => {
                 src={item.image_url}
                 alt={item.id+ "Chadhava image"}
                 className="object-cover"
-                width={600}
+                width={660}
                 height={400}
               />
           </SwiperSlide>

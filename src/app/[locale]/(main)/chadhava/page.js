@@ -1,6 +1,7 @@
 // src/app/chadhava/page.js
 
 "use client";
+import PageLaoder from "@/components/Atom/loader/pageLaoder";
 import SectionLoader from "@/components/Atom/loader/sectionLoader";
 import ChadhavaCard from "@/components/Cards/chadhavaCard";
 import { requestWebChadhavaAction } from "@/redux/actions/chadhavaAction";
@@ -57,6 +58,11 @@ const ChadhavaPage = () => {
   useEffect(() => {
     dispatch(requestWebChadhavaAction())
   },[dispatch])
+
+
+  if(isLoading){
+    return<PageLaoder />
+  }
 
   return (
     <main className="bg-gray-50">

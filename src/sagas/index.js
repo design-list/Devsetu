@@ -7,6 +7,8 @@ import { addNewArticelSaga, ArticelDetialSaga, deleteArticelSaga, fetchAllArtice
 import { ADD_NEW_ARTICLES_DATA_REQUEST, ARTICLES_DATA_REQUEST, ARTICLES_DETAILS_DATA_REQUEST, UPDATE_ARTICLES_DATA_REQUEST } from '@/redux/types/articelsTypes';
 import { fetchAllHomeSaga } from './homeSaga';
 import { HOME_DATA_REQUEST } from '@/redux/types/homeTypes';
+import { ADD_NEW_CART_REQUEST, CART_DATA_REQUEST, CART_DETAILS_REQUEST, DELETE_CART_REQUEST, UPDATE_CART_REQUEST } from '@/redux/types/cartTypes';
+import { addNewCartSaga, deleteCartSaga, fetchAllCartSaga, fetchCartDetailSaga, updateCartSaga } from './cartSaga';
 
 function* rootSaga() {
     yield all([
@@ -32,6 +34,12 @@ function* rootSaga() {
         takeLatest(UPDATE_ARTICLES_DATA_REQUEST, deleteArticelSaga),
 
         takeLatest(HOME_DATA_REQUEST, fetchAllHomeSaga),
+
+        // takeLatest(CART_DATA_REQUEST, fetchAllCartSaga),
+        // takeLatest(CART_DETAILS_REQUEST, fetchCartDetailSaga),
+        // takeLatest(ADD_NEW_CART_REQUEST, addNewCartSaga),
+        // takeLatest(UPDATE_CART_REQUEST, updateCartSaga),
+        // takeLatest(DELETE_CART_REQUEST, deleteCartSaga),
     ]);
 }
 

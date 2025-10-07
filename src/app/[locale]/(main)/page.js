@@ -56,9 +56,9 @@ const Home = () => {
 
   const { lang, setLang, t } = useLang();
 
-  // if(isLoading){
-  //   return <PageLaoder />
-  // }
+  if(isLoading){
+    return <PageLaoder />
+  }
 
   return (
     <Main className="HomePage">
