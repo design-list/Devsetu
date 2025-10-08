@@ -1,31 +1,26 @@
-// src/models/puja_offerings.js
+// src/models/pujaBanners.js
 export default (sequelize, DataTypes) => {
-  const pujaOfferings = sequelize.define("pujaOfferings", {
+  const pujaBanners = sequelize.define("pujaBanners", {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
       field: "id",
     },
-    offerimg: {
-      type: DataTypes.TEXT, 
-      allowNull: true,
-      field: "offerimg",
-    },
-    title: {
+    imageUrl: {
       type: DataTypes.STRING,
       allowNull: true,
-      field: "title",
+      field: "image_url",
     },
-    description: {
-      type: DataTypes.TEXT,
+    type: {
+      type: DataTypes.STRING,
       allowNull: true,
-      field: "description",
+      field: "type",
     },
-    price: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-      field: "price",
+    position: {
+      type: DataTypes.BIGINT,
+      allowNull: true,
+      field: "position",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -41,12 +36,12 @@ export default (sequelize, DataTypes) => {
       field: "puja_id",
     },
   }, {
-    tableName: "puja_offerings",
+    tableName: "puja_images",
   });
 
-  pujaOfferings.associate = (models) => {
-    pujaOfferings.belongsTo(models.pujas, { foreignKey: "pujaId" });
+    pujaBanners.associate = (models) => {
+    pujaBanners.belongsTo(models.pujas, { foreignKey: "pujaId" });
   };
 
-  return pujaOfferings;
+  return pujaBanners;
 };

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js";
 
-const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory } = models;
+const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory } = models;
 
 // ✅ GET /api/pujas/:id
 
@@ -14,7 +14,7 @@ export async function GET(req, { params }) {
 
     const puja = await pujas.findOne({
       where: isId ? { id: id } : { slug: id }, 
-      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory],
+      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory],
       order: [["id", "DESC"]],
     });
 
@@ -36,8 +36,6 @@ export async function PUT(req, { params }) {
 
   try {
     const body = await req.json();
-
-    // const pujaOfferingImages = body.offerings.offerimg || [];
 
     const updatedPujas = await pujas.findByPk(params.id);
 
@@ -69,9 +67,9 @@ export async function PUT(req, { params }) {
     }
 
       if (body.banners && Array.isArray(body.banners)) {
-      await pujaImages.destroy({ where: { pujaId: updatedPujas.id } });
+      await pujaBanners.destroy({ where: { pujaId: updatedPujas.id } });
 
-      await pujaImages.bulkCreate(
+      await pujaBanners.bulkCreate(
         body.banners.map((banner) => ({
           imageUrl: banner.imgUrl,
           type: banner.type,
@@ -96,16 +94,16 @@ export async function PUT(req, { params }) {
 
 
     // ✅ Update offerings (offers + offerimg)
-    if (body.offerings && (body.offerings.offers || body.offerings.offerimg)) {
+    if (body.offerings) {
       await pujaOfferings.destroy({ where: { pujaId: updatedPujas.id } });
 
-      // combine offers array with offerimg array
-      const offersArray = body.offerings.offers || [];
+      const offersArray = body.offerings || [];
 
       await pujaOfferings.bulkCreate(
         offersArray.map((r) => ({
-          offerimg: body.offerings.offerimg || [], // array will be stored as JSON
+          offerimg: r.offerimg,
           title: r.title,
+          price: r.price,
           description: r.description,
           pujaId: updatedPujas.id,
         }))
@@ -128,7 +126,7 @@ export async function PUT(req, { params }) {
 
     // ✅ Fetch back with associations
     const finalData = await pujas.findByPk(updatedPujas.id, {
-      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory],
+      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory],
     });
 
     return NextResponse.json({

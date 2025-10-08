@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
-const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory } = models;
+const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory } = models;
 
 
 export async function GET() {
   try {
     const allPujas = await pujas.findAll({
-      include: [ pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory ],
+      include: [ pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory ],
     });
     return NextResponse.json({data: allPujas,  status: 200 });
   } catch (error) {
@@ -20,8 +20,6 @@ export async function GET() {
 export async function POST(req) {
   try {
     const body = await req.json();
-
-    const commonOfferImages = body.offerings.offerimg || [];
 
     const newPuja = await pujas.create(
       {
@@ -43,10 +41,11 @@ export async function POST(req) {
           packagePrice: parseFloat(pkg.packagePrice),
         })),
 
-        pujaOfferings: body.offerings.offers.map(o => ({
+        pujaOfferings: body.offerings.map(o => ({
           title: o.title,
-          Description: o.description,
-          offerimg: commonOfferImages,
+          description: o.description,
+          offerimg: o.offerimg,
+          price: o.price,
         })),
 
         templeHistories: body.temple ? [{
@@ -58,10 +57,9 @@ export async function POST(req) {
         pujaFaqs: body.faqs.map(f => ({
           question: f.title,
           answer: f.description,
-          icon: f.icon ?? "",
         })),
 
-        pujaImages: body.banners?.map(banner => ({
+        pujaBanners: body.banners?.map(banner => ({
           imageUrl: banner.imgUrl,
           type: banner.type,
           position: banner.position ? parseInt(banner.position) : null,
@@ -72,7 +70,7 @@ export async function POST(req) {
           { model: pujaPackages },
           { model: pujaOfferings },
           { model: pujaFaqs },
-          { model: pujaImages },
+          { model: pujaBanners },
           { model: templeHistory }
         ],
       }

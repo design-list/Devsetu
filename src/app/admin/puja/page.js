@@ -23,7 +23,7 @@ const PujaForm = () => {
     isActive: true,
     isActiveOnHome: false,
     packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-    offerings: { offerimg: [null], offers: [{ title: "", description: "" }] },
+    offerings: [{ offerimg: null, title: "", description: "", price: "" }],
     faqs: [{ icon: null, title: "", description: "" }],
     temple: { templeImg: null, templeName: "", templeHistory: "" },
     banners: [{imgUrl: null, type: "", position: 0}],
@@ -78,12 +78,9 @@ const PujaForm = () => {
         });
       } else if (name === "offerimg") {
         setFormData((prev) => {
-          const updatedImgs = [...prev.offerings.offerimg];
-          updatedImgs[index] = localPreview;
-          return {
-            ...prev,
-            offerings: { ...prev.offerings, offerimg: updatedImgs },
-          };
+          const updated = [...prev.offerings];
+          updated[index].offerimg = localPreview.toString();
+          return { ...prev, offerings: updated };
         });
       } else if (name === "templeImg") {
         setFormData((prev) => ({
@@ -130,13 +127,10 @@ const PujaForm = () => {
               return { ...prev, packages: updated };
             });
           } else if (name === "offerimg") {
-            setFormData((prev) => {
-              const updatedImgs = [...prev.offerings.offerimg];
-              updatedImgs[index] = (data.storedAs).toString(); // replace null with uploaded path
-              return {
-                ...prev,
-                offerings: { ...prev.offerings, offerimg: updatedImgs },
-              };
+             setFormData((prev) => {
+              const updated = [...prev.offerings];
+              updated[index].offerimg = (data.storedAs).toString(); // server path
+              return { ...prev, offerings: updated };
             });
           } else if (name === "templeImg") {
             setFormData((prev) => ({
@@ -539,151 +533,101 @@ const PujaForm = () => {
           </button>
         </div>
 
-        {/* Offerings */}
 
         <div>
           <label className="block font-semibold">Offerings</label>
-
-          {/* Upload Images */}
-          <div className="mb-4">
-
-            {/* Images (File Upload) */}
-            <div>
-              <label className="block font-semibold mb-2">Images</label>
-
-              <div className="flex flex-wrap gap-4">
-                {formData.offerings.offerimg?.map((img, index) => (
-                  <div key={index} className="relative">
-                    {img ? (
-                      <div>
-                        <img
-                          src={img}
-                          alt={`Uploaded ${index}`}
-                          className="w-32 h-32 object-cover rounded border cursor-pointer"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const updated = formData?.offerings.offerimg.filter((_, i) => i !== index);
-                            setFormData({ ...formData, offerings: { ...formData.offerings, offerimg: updated } });
-                          }}
-                          className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </div>
-                    ) : (
-                      <input
-                        type="file"
-                        name="offerimg"
-                        accept="image/*"
-                        onChange={(e) => handleChange(e, index)}
-                        className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
-                      />
-                    )}
-                  </div>
-                ))}
-
-                {/* Add Image Button */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    setFormData({
-                      ...formData,
-                      offerings: {
-                        ...formData.offerings,
-                        offerimg: [...formData.offerings.offerimg, null]
-                      }
-                    })
-                  }
-                  className="w-32 h-32 border-2 border-dashed border-green-500 flex items-center justify-center rounded text-green-600 hover:bg-green-50 cursor-pointer"
-                >
-                  + Add Image
-                </button>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Offers List */}
-          {formData?.offerings?.offers.map((offering, index) => (
+          {formData?.offerings.map((offering, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
-              {formData?.offerings?.offers.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    const updatedOffers = formData.offerings.offers.filter(
-                      (_, i) => i !== index
-                    );
-                    setFormData({
-                      ...formData,
-                      offerings: {
-                        ...formData.offerings,
-                        offers: updatedOffers,
-                      },
-                    });
-                  }}
-                  className="absolute top-2 right-2 text-red-600 hover:text-red-800"
-                >
-                  <Trash2 size={18} />
-                </button>
-              )}
+              {formData?.offerings.length > 1 && <button
+                type="button"
+                onClick={() => {
+                  const updated = formData?.offerings.filter((_, i) => i !== index);
+                  setFormData({ ...formData, offerings: updated });
+                }}
+                className="absolute top-2 right-2 text-red-600 hover:text-red-800 cursor-pointer"
+              >
+                <Trash2 size={18} />
+              </button>}
+
+              <div className="mb-3">
+                <label className="block font-medium">Offering Image</label>
+                {offering.offerimg ? (
+                  <div className="relative w-32 h-32">
+                    <img
+                      src={offering.offerimg}
+                      alt={`offering image ${index}`}
+                      className="w-32 h-32 object-cover rounded border cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = [...formData?.offerings];
+                        updated[index].offerimg = null;
+                        setFormData({ ...formData, offerings: updated });
+                      }}
+                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <input
+                    type="file"
+                    name="offerimg"
+                    accept="image/*"
+                    onChange={(e) => handleChange(e, index)}
+                    className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
+                  />
+                )}
+              </div>
 
               <input
                 type="text"
-                placeholder="Title"
+                placeholder="Offering Type"
                 value={offering.title}
                 onChange={(e) => {
-                  const updatedOffers = [...formData.offerings.offers];
-                  updatedOffers[index].title = e.target.value;
-                  setFormData({
-                    ...formData,
-                    offerings: {
-                      ...formData.offerings,
-                      offers: updatedOffers,
-                    },
-                  });
+                  const updated = [...formData?.offerings];
+                  updated[index].title = e.target.value;
+                  setFormData({ ...formData, offerings: updated });
+                }}
+                className="w-full border p-2 rounded mb-2"
+              />
+
+              <input
+                type="text"
+                placeholder="Offering Type"
+                value={offering.price}
+                onChange={(e) => {
+                  const updated = [...formData?.offerings];
+                  updated[index].price = e.target.value;
+                  setFormData({ ...formData, offerings: updated });
                 }}
                 className="w-full border p-2 rounded mb-2"
               />
 
               <textarea
-                placeholder="Description"
+                placeholder="Offering Price"
                 value={offering.description}
                 onChange={(e) => {
-                  const updatedOffers = [...formData.offerings.offers];
-                  updatedOffers[index].description = e.target.value;
-                  setFormData({
-                    ...formData,
-                    offerings: {
-                      ...formData.offerings,
-                      offers: updatedOffers,
-                    },
-                  });
+                  const updated = [...formData?.offerings];
+                  updated[index].description = e.target.value;
+                  setFormData({ ...formData, offerings: updated });
                 }}
                 className="w-full border p-2 rounded"
               />
             </div>
           ))}
-
-          {/* Add new Offer */}
           <button
             type="button"
             onClick={() =>
               setFormData({
                 ...formData,
-                offerings: {
-                  ...formData.offerings,
-                  offers: [
-                    ...formData.offerings.offers,
-                    { title: "", description: "" },
-                  ],
-                },
+                offerings: [...formData?.offerings, { packageType: "", packagePrice: "" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
           >
-            + Add Offering
+            + Add Package
           </button>
         </div>
 

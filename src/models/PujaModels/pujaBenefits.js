@@ -1,26 +1,27 @@
-// src/models/pujaImages.js
+// models/PujaModels/pujaBenefits.js
+
 export default (sequelize, DataTypes) => {
-  const pujaImages = sequelize.define("pujaImages", {
+  const pujaBenefits = sequelize.define("pujaBenefits", {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
       field: "id",
     },
-    imageUrl: {
+    icon: {
       type: DataTypes.STRING,
       allowNull: true,
-      field: "image_url",
+      field: "icon",
     },
-    type: {
+    title: {
       type: DataTypes.STRING,
       allowNull: true,
-      field: "type",
+      field: "title",
     },
-    position: {
-      type: DataTypes.BIGINT,
+    discription: {
+      type: DataTypes.TEXT,
       allowNull: true,
-      field: "position",
+      field: "discription",
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -32,16 +33,16 @@ export default (sequelize, DataTypes) => {
     },
     pujaId: {
       type: DataTypes.BIGINT,
-      allowNull: false,
+      allowNull: false, 
       field: "puja_id",
     },
   }, {
-    tableName: "puja_images",
+    tableName: "puja_benefits",
   });
 
-  pujaImages.associate = (models) => {
-    pujaImages.belongsTo(models.pujas, { foreignKey: "pujaId" });
+    pujaBenefits.associate = (models) => {
+    pujaBenefits.belongsTo(models.pujas, { foreignKey: "pujaId" });
   };
 
-  return pujaImages;
+  return pujaBenefits;
 };

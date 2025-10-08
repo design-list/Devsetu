@@ -83,8 +83,9 @@ export default (sequelize, DataTypes) => {
     Puja.hasMany(models.pujaPackages, { foreignKey: "pujaId", onDelete: "CASCADE" });
     Puja.hasMany(models.pujaOfferings, { foreignKey: "pujaId", onDelete: "CASCADE" });
     Puja.hasMany(models.pujaFaqs, { foreignKey: "pujaId", onDelete: "CASCADE" });
-    Puja.hasMany(models.pujaImages, { foreignKey: "pujaId", onDelete: "CASCADE" });
+    Puja.hasMany(models.pujaBanners, { foreignKey: "pujaId", onDelete: "CASCADE" });
     Puja.hasMany(models.templeHistory, { foreignKey: "pujaId", onDelete: "CASCADE" });
+    Puja.hasMany(models.pujaBenefits, { foreignKey: "pujaId", onDelete: "CASCADE" });
   };
 
   return Puja;
