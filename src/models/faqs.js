@@ -1,3 +1,5 @@
+// src/models/faqs.js
+
 export default (sequelize, DataTypes) => {
   const Faqs = sequelize.define("Faqs", {
     id: {

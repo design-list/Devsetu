@@ -5,6 +5,8 @@ import pujas from './pujaReduces'
 import chadhavas from './chadhavaReduces'
 import articels from './articelsReduces '
 import home from './homeReduces'
+import faqs from './faqsReduces'
+import offering from './offeringReduces'
 
 export default combineReducers({
    count: counter,
@@ -12,5 +14,7 @@ export default combineReducers({
    pujas,
    chadhavas,
    articels,
-   home
+   home,
+   offering,
+   faqs,
 })

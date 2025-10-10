@@ -145,4 +145,62 @@ export default class fetchApi extends Api {
     //     }
     // }
 
+    AddNewOffering(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllOffering(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetOfferingDetails(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
+    UpdeteOffering(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
+        }
+    }
+
+    DeleteOffering(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        if (data.id) {
+            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
+        }
+    }
+
+    AddNewFaqs(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllFaqs(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetFaqsDetails(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
+    UpdeteFaqs(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
+        }
+    }
+
+    DeleteFaqs(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        if (data.id) {
+            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
+        }
+    }
+
 }

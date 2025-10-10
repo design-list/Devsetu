@@ -1,11 +1,17 @@
-// src/models/puja_offerings.js
+// src/models/offerings.js
+
 export default (sequelize, DataTypes) => {
-  const pujaOfferings = sequelize.define("pujaOfferings", {
+  const offerings = sequelize.define("offerings", {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
       field: "id",
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "type",
     },
     offerimg: {
       type: DataTypes.TEXT, 
@@ -35,18 +41,10 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       field: "updated_at",
     },
-    pujaId: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      field: "puja_id",
-    },
+    
   }, {
-    tableName: "puja_offerings",
+    tableName: "offerings",
   });
 
-  pujaOfferings.associate = (models) => {
-    pujaOfferings.belongsTo(models.pujas, { foreignKey: "pujaId" });
-  };
-
-  return pujaOfferings;
+  return offerings;
 };

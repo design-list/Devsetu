@@ -19,7 +19,7 @@ export default function PujasPage() {
 
   useEffect(() => {
     dispatch(requestPujaDataAction());
-  }, [dispatch]);
+  }, []);
 
   const handleEdit = (id) => {
     router.push(`/admin/puja/${id}`)

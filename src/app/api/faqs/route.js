@@ -39,3 +39,37 @@ export async function POST(req) {
     );
   }
 }
+
+// PUT methode for update the FAQs
+
+export async function PUT(req) {
+  try {
+    const body = await req.json();
+    const { id, type, question, answer } = body;
+
+    if (!id) {
+      return NextResponse.json(
+        { status: "error", message: "FAQ ID is required" },
+        { status: 400 }
+      );
+    }
+
+    const faq = await Faqs.findByPk(id);
+    if (!faq) {
+      return NextResponse.json(
+        { status: "error", message: "FAQ not found" },
+        { status: 404 }
+      );
+    }
+
+    await faq.update({ type, question, answer });
+
+    return NextResponse.json({ status: 200, data: faq });
+  } catch (error) {
+    console.error("Error updating FAQ:", error);
+    return NextResponse.json(
+      { status: "error", message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
