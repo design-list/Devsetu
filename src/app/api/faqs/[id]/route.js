@@ -30,9 +30,9 @@ export async function GET(req, { params }) {
 
 // DELETE (DELETE /api/faqs/:id)
 
-export async function DELETE(req, { params }) {
+export async function DELETE(req, context) {
   try {
-    const { id } = params;
+    const { id } = await context.params;
 
     const faq = await Faqs.findByPk(id);
     if (!faq) {

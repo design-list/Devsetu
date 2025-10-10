@@ -191,9 +191,7 @@ export default class fetchApi extends Api {
 
     UpdeteFaqs(data) {
         let url = this.buildUrl(endpoints.Faqs.faq, "full")
-        if (data.id) {
-            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
-        }
+        return this.fetchNormal(url, "PUT", JSON.stringify(data)).then(response => response)
     }
 
     DeleteFaqs(data) {

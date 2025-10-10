@@ -20,13 +20,12 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    const newFaqs = await Faqs.create({
-        Faqs: body.faqs.map(f => ({
-            type: f.type,
-            question: f.title,
-            answer: f.description,
-        })),
-      },
+    const newFaqs = await Faqs.bulkCreate(
+          body.faqs.map(f => ({
+          type: f.type,
+          question: f.title,
+          answer: f.description,
+      })),
     );
 
     return NextResponse.json({ status: 200, data: newFaqs });

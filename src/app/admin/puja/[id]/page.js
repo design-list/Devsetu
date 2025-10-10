@@ -918,6 +918,7 @@ const EditPujaForm = () => {
                         <input
                             type="text"
                             placeholder="Offering price"
+                            name="price"
                             value={offering.price}
                             onChange={(e) => {
                             const updated = [...formData?.offerings];
