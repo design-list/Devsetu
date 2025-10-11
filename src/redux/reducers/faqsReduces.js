@@ -3,7 +3,9 @@ import { ADD_NEW_FAQS_DATA_FAILED, ADD_NEW_FAQS_DATA_RESPONSE, FAQS_DATA_RESPONS
 
 
 const initialState = {
-    allFaqs: null,
+    allFaqs: [],
+    pujaFaqs: [],
+    chadhavaFaqs: [],
     addedFaqs: null,
     faqsDetail: null,
 }
@@ -12,7 +14,8 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
 
         case FAQS_DATA_RESPONSE:
-            return { ...state, allFaqs: action.payload }
+            return { ...state, allFaqs: action.payload, pujaFaqs: action.payload.filter(item => item.type === "puja"),
+                chadhavaFaqs: action.payload.filter(item => item.type === "chadhava" ) }
         case FAQS_DATA_FAILED:
             return { ...state, allFaqs: action.payload }
 

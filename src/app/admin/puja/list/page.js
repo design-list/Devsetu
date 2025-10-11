@@ -3,6 +3,7 @@
 import { deletePujaAction, requestPujaDataAction, updatePujaAction } from "@/redux/actions/pujaActions";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Trash,SquarePen } from "lucide-react";
 import { fetchWithWait } from "../../../../../helper/method";
 import { useRouter } from "next/navigation";
 
@@ -87,7 +88,9 @@ export default function PujasPage() {
                 <th className="p-2 border">Special Day</th>
                 <th className="p-2 border">Location</th>
                 <th className="p-2 border">Puja Details</th>
-                <th className="p-2 border">Temple History</th>
+                <th className="p-2 border">Common-Packages</th>
+                <th className="p-2 border">Common-Offerings</th>
+                <th className="p-2 border">Common-Faqs</th>
                 <th className="p-2 border">Is Active</th>
                 <th className="p-2 border">Active on home</th>
                 <th className="p-2 border">Packages</th>
@@ -117,7 +120,45 @@ export default function PujasPage() {
                     {puja.pujaDetails}
                   </td>
                   <td className="p-2 border max-w-xs truncate">
-                    {puja.templeHistory}
+                    <button
+                      type="button"
+                      onClick={() => handleToggle(puja.id, "isActive", puja.isActive)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.isActive ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.isActive ? "translate-x-6" : "translate-x-1"
+                          }`}
+                      />
+                    </button>
+                  </td>
+                  
+                  <td className="p-2 border max-w-xs truncate">
+                    <button
+                      type="button"
+                      onClick={() => handleToggle(puja.id, "isActive", puja.isActive)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.isActive ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.isActive ? "translate-x-6" : "translate-x-1"
+                          }`}
+                      />
+                    </button>
+                  </td>
+
+                  <td className="p-2 border max-w-xs truncate">
+                    <button
+                      type="button"
+                      onClick={() => handleToggle(puja.id, "isActive", puja.isActive)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.isActive ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.isActive ? "translate-x-6" : "translate-x-1"
+                          }`}
+                      />
+                    </button>
                   </td>
 
                  <td className="p-2 border max-w-xs truncate">
@@ -185,13 +226,13 @@ export default function PujasPage() {
                       className="bg-blue-500 text-white px-2 py-1 rounded text-sm cursor-pointer"
                       onClick={() => handleEdit(puja.id)}
                     >
-                      Edit
+                      <SquarePen width={18} hanging={18} />
                     </button>
                     <button
                       className="bg-red-500 text-white px-2 py-1 rounded text-sm cursor-pointer"
                       onClick={() => handleDelete(puja.id)}
                     >
-                      Delete
+                      <Trash width={18} hanging={18} />
                     </button>
                   </td>
                 </tr>

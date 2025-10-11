@@ -25,6 +25,9 @@ const EditChadhavaForm = () => {
     templeHistory: "",
     isActive: true,
     isActiveOnHome: false,
+    isRecommended: false,
+    commonFaqs: true,
+    isActivePandit: false,
     packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
     recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
     faqs: [{ icon: null, title: "", description: "" }],
@@ -74,6 +77,9 @@ const EditChadhavaForm = () => {
         templeHistory: chadhavaDetail.templeHistory || "",
         isActive: chadhavaDetail.isActive,
         isActiveOnHome: chadhavaDetail.isActiveOnHome,
+        isRecommended: chadhavaDetail.isRecommended,
+        isActivePandit: chadhavaDetail.isActiveOnHome,
+        commonFaqs: chadhavaDetail.isActiveOnHome,
 
         // Banners
         banners: chadhavaDetail.chadhavaBanners
@@ -97,7 +103,7 @@ const EditChadhavaForm = () => {
           : [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
 
         // Recommended Chadawas
-        recommendedChadawa: chadhavaDetail.recommendedChadawas
+        recommendedChadawa: chadhavaDetail.isRecommended && chadhavaDetail.recommendedChadawas
           ? chadhavaDetail.recommendedChadawas.map((r) => ({
             recommendedImg: r.recommendedImg || "",
             title: r.title || "",
@@ -110,7 +116,7 @@ const EditChadhavaForm = () => {
           : [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
 
         // FAQs
-        faqs: chadhavaDetail.chadhavaFaqs
+        faqs: !chadhavaDetail.commonFaqs && chadhavaDetail.chadhavaFaqs
           ? chadhavaDetail.chadhavaFaqs.map((f) => ({
             icon: f.icon || "",
             title: f.question || "",
@@ -119,7 +125,7 @@ const EditChadhavaForm = () => {
           : [{ icon: "", title: "", description: "" }],
 
         // Puja Performed By (assuming only one record)
-        pujaPerformedBy: chadhavaDetail.pujaPerformeds?.[0]
+        pujaPerformedBy: chadhavaDetail.isActivePandit && chadhavaDetail.pujaPerformeds?.[0]
           ? {
             name: chadhavaDetail.pujaPerformeds[0].name || "",
             temple: chadhavaDetail.pujaPerformeds[0].temple || "",
@@ -129,7 +135,7 @@ const EditChadhavaForm = () => {
           : { name: "", temple: "", pujaPerformerImg: "", bio: "" },
       });
     }
-  }, [chadhavaDetail]);
+  }, [chadhavaDetail, chadhavaDetail.isRecommended, chadhavaDetail.commonFaqs, chadhavaDetail.isActivePandit]);
 
 
 
@@ -627,9 +633,27 @@ const EditChadhavaForm = () => {
           </button>
         </div>
 
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Recommended Chadhava</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, isRecommended: !prev.isRecommended }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isRecommended ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isRecommended ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
 
         {/* Recommended Chadawa */}
-        <div>
+       { formData.isRecommended && <div>
           <label className="block font-semibold">Recommended Chadawa</label>
           {formData?.recommendedChadawa.map((item, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -746,13 +770,30 @@ const EditChadhavaForm = () => {
           >
             + Add Packages
           </button>
+        </div>}
+
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Common Faqs</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.commonFaqs ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.commonFaqs ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
         </div>
-
-
 
         {/* FAQs */}
 
-        <div>
+      { !formData.commonFaqs && <div>
           <label className="block font-semibold">FAQs</label>
           {formData?.faqs.map((faq, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -834,9 +875,29 @@ const EditChadhavaForm = () => {
           >
             + Add FAQ
           </button>
+        </div>}
+
+
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Puja Performed by Pandit.</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, isActivePandit: !prev.isActivePandit }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isActivePandit ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isActivePandit ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
         </div>
 
-        <div>
+      { formData.isActivePandit && <div>
           <label className="block font-semibold">Puja Performed By</label>
           <div className="mb-3">
             <label className="block font-medium">Image</label>
@@ -896,7 +957,7 @@ const EditChadhavaForm = () => {
             onChange={handleChange}
             className="w-full border p-2 rounded mb-2"
           />
-        </div>
+        </div>}
 
           {/* Toggle Switches */}
       <div className="grid grid-cols-2 gap-6 mt-4">

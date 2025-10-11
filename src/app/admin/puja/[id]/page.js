@@ -21,6 +21,9 @@ const EditPujaForm = () => {
         pujaDetails: "",
         isActive: true,
         isActiveOnHome: false,
+        commonOffer: true,
+        commonPack: true,
+        commonFaqs: true,
         temple: { templeImg: null, templeName: "", templeHistory: "" },
         packages: [{ packImg: null, packageType: "", packagePrice: "" }],
         offerings: [{ offerimg: null, title: "", description: "", price: "" }],
@@ -65,6 +68,9 @@ const EditPujaForm = () => {
                 pujaDetails: pujaDetail.pujaDetails || "",
                 isActive: pujaDetail.isActive,
                 isActiveOnHome: pujaDetail.isActiveOnHome,
+                commonPack: pujaDetail.commonPack,
+                commonOffer: pujaDetail.commonOffer,
+                commonFaqs: pujaDetail.commonFaqs,
 
                 temple: pujaDetail.templeHistories?.[0]
                     ? {
@@ -74,7 +80,7 @@ const EditPujaForm = () => {
                     }
                     : { templeImg: null, templeName: "", templeHistory: "" },
 
-                packages: pujaDetail.pujaPackages?.length
+                packages: !pujaDetail.commonPack && pujaDetail.pujaPackages?.length
                     ? pujaDetail.pujaPackages?.map((p) => ({
                         packImg: p.packImg || null,
                         packageType: p.packageType || "",
@@ -82,14 +88,14 @@ const EditPujaForm = () => {
                     }))
                     : [{ packImg: null, packageType: "", packagePrice: "" }],
 
-                offerings: pujaDetail.pujaOfferings.length 
+                offerings: !pujaDetail.commonOffer && pujaDetail.pujaOfferings.length 
                 ? pujaDetail.pujaOfferings?.map((o) => ({
                     offerimg: o.offerimg || null,
                     title: o.title || "",
                     description: o.Description || "",
                 })) : [{offerimg: null, title: "", description: "", price:"" }],
 
-                faqs: pujaDetail.pujaFaqs?.map((f) => ({
+                faqs: !pujaDetail.commonFaqs && pujaDetail.pujaFaqs?.map((f) => ({
                     title: f.question || "",
                     description: f.answer || "",
                 })) || [{ title: "", description: "" }],
@@ -105,7 +111,7 @@ const EditPujaForm = () => {
 
             });
         }
-    }, [pujaDetail]);
+    }, [pujaDetail, formData.commonFaqs, formData.commonOffer, formData.commonPack]);
 
 
 
@@ -769,8 +775,27 @@ const EditPujaForm = () => {
                     />
                 </div>
 
+                <div className="flex items-center justify-between border p-3 rounded">
+                    <label className="font-semibold">Common Packages</label>
+                    <button
+                        type="button"
+                        onClick={() =>
+                        setFormData((prev) => ({ ...prev, commonPack: !prev.commonPack }))
+                        }
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                        formData.commonPack ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                        <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            formData.commonPack ? "translate-x-6" : "translate-x-1"
+                        }`}
+                        />
+                    </button>
+                </div>
+
                 {/* Packages */}
-                <div>
+               { !formData.commonPack && <div>
                     <label className="block font-semibold">Packages</label>
                     {formData?.packages.map((packaging, index) => (
                         <div key={index} className="border p-3 rounded mb-3 relative">
@@ -852,110 +877,151 @@ const EditPujaForm = () => {
                     >
                         + Add Package
                     </button>
+                </div>}
+
+
+                <div className="flex items-center justify-between border p-3 rounded">
+                    <label className="font-semibold">Common Offerings</label>
+                    <button
+                        type="button"
+                        onClick={() =>
+                        setFormData((prev) => ({ ...prev, commonOffer: !prev.commonOffer }))
+                        }
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                        formData.commonOffer ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                        <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            formData.commonOffer ? "translate-x-6" : "translate-x-1"
+                        }`}
+                        />
+                    </button>
                 </div>
 
                 {/* Offerings */}
 
-                   <div>
-                    <label className="block font-semibold">Offerings</label>
-                    {formData?.offerings.map((offering, index) => (
-                        <div key={index} className="border p-3 rounded mb-3 relative">
-                        {formData?.offerings.length > 1 && <button
+                { !formData.commonOffer && <div>
+                <label className="block font-semibold">Offerings</label>
+                {formData?.offerings.map((offering, index) => (
+                    <div key={index} className="border p-3 rounded mb-3 relative">
+                    {formData?.offerings.length > 1 && <button
+                        type="button"
+                        onClick={() => {
+                        const updated = formData?.offerings.filter((_, i) => i !== index);
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="absolute top-2 right-2 text-red-600 hover:text-red-800 cursor-pointer"
+                    >
+                        <Trash2 size={18} />
+                    </button>}
+
+                    <div className="mb-3">
+                        <label className="block font-medium">Offering Image</label>
+                        {offering.offerimg  ? (
+                        <div className="relative w-32 h-32">
+                            <img
+                                src={offering.offerimg}
+                                alt={`offering image ${index}`}
+                                className="w-32 h-32 object-cover rounded border cursor-pointer"
+                            />
+                            <button
                             type="button"
                             onClick={() => {
-                            const updated = formData?.offerings.filter((_, i) => i !== index);
-                            setFormData({ ...formData, offerings: updated });
+                                const updated = [...formData?.offerings];
+                                updated[index].offerimg = null;
+                                setFormData({ ...formData, offerings: updated });
                             }}
-                            className="absolute top-2 right-2 text-red-600 hover:text-red-800 cursor-pointer"
-                        >
-                            <Trash2 size={18} />
-                        </button>}
-
-                        <div className="mb-3">
-                            <label className="block font-medium">Offering Image</label>
-                            {offering.offerimg  ? (
-                            <div className="relative w-32 h-32">
-                                <img
-                                    src={offering.offerimg}
-                                    alt={`offering image ${index}`}
-                                    className="w-32 h-32 object-cover rounded border cursor-pointer"
-                                />
-                                <button
-                                type="button"
-                                onClick={() => {
-                                    const updated = [...formData?.offerings];
-                                    updated[index].offerimg = null;
-                                    setFormData({ ...formData, offerings: updated });
-                                }}
-                                className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
-                                >
-                                <Trash2 size={14} />
-                                </button>
-                            </div>
-                            ) : (
-                            <input
-                                type="file"
-                                name="offerimg"
-                                accept="image/*"
-                                onChange={(e) => handleChange(e, index)}
-                                className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
-                            />
-                            )}
+                            className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
+                            >
+                            <Trash2 size={14} />
+                            </button>
                         </div>
-
+                        ) : (
                         <input
-                            type="text"
-                            placeholder="Offering Type"
-                            value={offering.title}
-                            onChange={(e) => {
-                            const updated = [...formData?.offerings];
-                            updated[index].title = e.target.value;
-                            setFormData({ ...formData, offerings: updated });
-                            }}
-                            className="w-full border p-2 rounded mb-2"
+                            type="file"
+                            name="offerimg"
+                            accept="image/*"
+                            onChange={(e) => handleChange(e, index)}
+                            className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
                         />
+                        )}
+                    </div>
 
-                        <input
-                            type="text"
-                            placeholder="Offering price"
-                            name="price"
-                            value={offering.price}
-                            onChange={(e) => {
-                            const updated = [...formData?.offerings];
-                            updated[index].price = e.target.value;
-                            setFormData({ ...formData, offerings: updated });
-                            }}
-                            className="w-full border p-2 rounded mb-2"
-                        />
+                    <input
+                        type="text"
+                        placeholder="Offering Type"
+                        value={offering.title}
+                        onChange={(e) => {
+                        const updated = [...formData?.offerings];
+                        updated[index].title = e.target.value;
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                    />
 
-                        <textarea
-                            placeholder="Offering decription"
-                            value={offering.description}
-                            onChange={(e) => {
-                            const updated = [...formData?.offerings];
-                            updated[index].description = e.target.value;
-                            setFormData({ ...formData, offerings: updated });
-                            }}
-                            className="w-full border p-2 rounded"
-                        />
-                        </div>
-                    ))}
+                    <input
+                        type="text"
+                        placeholder="Offering price"
+                        name="price"
+                        value={offering.price}
+                        onChange={(e) => {
+                        const updated = [...formData?.offerings];
+                        updated[index].price = e.target.value;
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                    />
+
+                    <textarea
+                        placeholder="Offering decription"
+                        value={offering.description}
+                        onChange={(e) => {
+                        const updated = [...formData?.offerings];
+                        updated[index].description = e.target.value;
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="w-full border p-2 rounded"
+                    />
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() =>
+                    setFormData({
+                        ...formData,
+                        offerings: [...formData?.offerings, { title: "", description: "", price: "" }],
+                    })
+                    }
+                    className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
+                >
+                    + Add Offerings
+                </button>
+                </div>}
+
+
+                <div className="flex items-center justify-between border p-3 rounded">
+                    <label className="font-semibold">Common Faqs</label>
                     <button
                         type="button"
                         onClick={() =>
-                        setFormData({
-                            ...formData,
-                            offerings: [...formData?.offerings, { title: "", description: "", price: "" }],
-                        })
+                        setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs }))
                         }
-                        className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                        formData.commonFaqs ? "bg-green-600" : "bg-gray-600"
+                        }`}
                     >
-                        + Add Offerings
+                        <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            formData.commonFaqs ? "translate-x-6" : "translate-x-1"
+                        }`}
+                        />
                     </button>
-                    </div>
+                </div>
+                
 
                 {/* FAQs */}
-                <div>
+                { !formData.commonFaqs && <div>
                     <label className="block font-semibold">FAQs</label>
                     {formData?.faqs.map((faq, index) => (
                         <div key={index} className="border p-3 rounded mb-3 relative">
@@ -1005,7 +1071,7 @@ const EditPujaForm = () => {
                     >
                         + Add FAQ
                     </button>
-                </div>
+                </div>}
 
                 <div className="grid grid-cols-2 gap-6 mt-4">
 

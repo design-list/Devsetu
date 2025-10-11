@@ -68,6 +68,24 @@ export default (sequelize, DataTypes) => {
       defaultValue: false,
       field: "isActiveOnHome",
     },
+    isRecommended: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "common_ecommended",
+    },
+    isActivePandit: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "isActive_andit",
+    },
+    commonFaqs: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "common_faqs",
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: "created_at",

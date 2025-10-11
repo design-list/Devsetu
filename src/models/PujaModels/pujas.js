@@ -67,6 +67,24 @@ export default (sequelize, DataTypes) => {
       defaultValue: false,
       field: "isActiveOnHome",
     },
+    commonPack: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "common_pack",
+    },
+    commonOffer: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "common_offer",
+    },
+    commonFaqs: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "common_faqs",
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: "created_at",

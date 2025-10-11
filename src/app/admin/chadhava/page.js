@@ -24,6 +24,9 @@ const ChadhavaForm = () => {
     pujaDetails: "",
     isActive: true,
     isActiveOnHome: false,
+    isRecommended: false,
+    commonFaqs: true,
+    isActivePandit: false,
     temple: { templeImg: null, templeName: "", templeHistory: "" },
     packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
     recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
@@ -708,6 +711,24 @@ const ChadhavaForm = () => {
           </button>
         </div>
 
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Recommended Chadhava</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, isRecommended: !prev.isRecommended }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isRecommended ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isRecommended ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
 
         {/* Recommended Chadawa */}
         <div>
@@ -833,7 +854,26 @@ const ChadhavaForm = () => {
 
         {/* FAQs */}
 
-        <div>
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Common Faqs</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.commonFaqs ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.commonFaqs ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
+
+       { !formData.commonFaqs && <div>
           <label className="block font-semibold">FAQs</label>
           {formData?.faqs.map((faq, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -883,9 +923,28 @@ const ChadhavaForm = () => {
           >
             + Add FAQ
           </button>
+        </div>}
+
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Puja Performed by Pandit.</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, isActivePandit: !prev.isActivePandit }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isActivePandit ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isActivePandit ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
         </div>
 
-        <div>
+       { formData.isActivePandit && <div>
           <label className="block font-semibold">Puja Performed By</label>
           <div className="mb-3">
             <label className="block font-medium">Image</label>
@@ -945,7 +1004,7 @@ const ChadhavaForm = () => {
             onChange={handleChange}
             className="w-full border p-2 rounded mb-2"
           />
-        </div>
+        </div>}
 
         {/* Toggle Switches */}
       <div className="grid grid-cols-2 gap-6 mt-4">

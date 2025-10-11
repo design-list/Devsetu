@@ -22,7 +22,7 @@ const PujaForm = () => {
   const [addNewFaq, setAddNewFaq] = useState('');
 
   const dispatch = useDispatch();
-  const { allFaqs } = useSelector((state) => state.faqs);
+  const { allFaqs, pujaFaqs, chadhavaFaqs } = useSelector((state) => state.faqs);
 
   useEffect(() => {
     dispatch(requestFaqsDataAction());
@@ -33,9 +33,9 @@ const PujaForm = () => {
         setFormData({
             faqs: [
                 {
-                    type: editId.type || "",
-                    title: editId.question || "",
-                    description: editId.answer || "",
+                  type: editId.type || "",
+                  title: editId.question || "",
+                  description: editId.answer || "",
                 },
             ],
         });
@@ -48,12 +48,12 @@ const PujaForm = () => {
 
     const { isValid, errors: validationErrors } = validateFields(
       formData.faqs,
-      ["type", "title", "description"]
+      ["type"]
     );
     setErrors(validationErrors);
 
     if (!isValid) {
-      alert("Please fill all FAQ fields before submitting.");
+      alert("Please select the FAQ type fields before submitting.");
       return;
     }
 
@@ -74,21 +74,11 @@ const PujaForm = () => {
       });
   };
 
+
   // ✏️ UPDATE
 
   const handleUpdate = (e) => {
     e.preventDefault();
-
-    const { isValid, errors: validationErrors } = validateFields(
-      formData.faqs,
-      ["type", "title", "description"]
-    );
-    setErrors(validationErrors);
-
-    if (!isValid) {
-      alert("Please fill all FAQ fields before updating.");
-      return;
-    }
 
     const updatedFaq = {
       id: editId.id,
@@ -131,16 +121,43 @@ const PujaForm = () => {
   };
 
 
-
   // 🧾 RENDER
-  if (!editId && !addNewFaq && Array.isArray(allFaqs) && allFaqs.length) {
+  if (!editId && !addNewFaq) {
     return (
       <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
-        <button className="cursor-pointer" onClick={() => setAddNewFaq('addNew')}>Add New FAQs</button>
-        <FAQs faqs={allFaqs} handleDelete={handleDelete} handleEdit={setEditId} />
+        <div className="flex justify-end items-center mb-4">
+          <button
+            className="bg-gradient-to-r from-green-500 to-green-600 text-white font-medium px-4 py-2 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-200 cursor-pointer"
+            onClick={() => setAddNewFaq("addNew")}
+          >
+            + Add New FAQs
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          {Array.isArray(pujaFaqs) && pujaFaqs.length > 0 && (
+            <FAQs
+              faqs={pujaFaqs}
+              handleDelete={handleDelete}
+              handleEdit={setEditId}
+              heading={"Puja FAQs"}
+            />
+          )}
+
+          {Array.isArray(chadhavaFaqs) && chadhavaFaqs.length > 0 && (
+            <FAQs
+              faqs={chadhavaFaqs}
+              handleDelete={handleDelete}
+              handleEdit={setEditId}
+              heading={"Chadhava FAQs"}
+            />
+          )}
+        </div>
       </div>
+
     );
   }
+
 
   return (
     <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
@@ -167,12 +184,13 @@ const PujaForm = () => {
 
               <select
                 value={faq.type}
+                disabled = {editId ? true : false}
                 onChange={(e) => {
                   const updated = [...formData.faqs];
                   updated[index].type = e.target.value;
                   setFormData({ ...formData, faqs: updated });
                 }}
-                className={`w-full border p-2 rounded mb-2 ${
+                className={`w-full border p-2 rounded mb-2 ${editId && "bg-gray-300"} ${
                   errors[index]?.type ? "border-red-500" : "border-gray-300"
                 }`}
               >
@@ -229,7 +247,7 @@ const PujaForm = () => {
         {addNewFaq && <button
           type="button"
           onClick={() => setAddNewFaq(null)}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
+          className="bg-red-600 text-white mr-2 px-6 py-2 rounded hover:bg-red-700 transition cursor-pointer"
         >
            Back
         </button>}
@@ -237,14 +255,14 @@ const PujaForm = () => {
         {editId && <button
           type="button"
           onClick={() => setEditId(null)}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
+          className="bg-red-600 text-white mr-2 px-6 py-2 rounded hover:bg-red-700 transition cursor-pointer"
         >
            Cancel
         </button>}
 
         <button
           type="submit"
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
+          className="bg-blue-600 text-white mr-2 px-6 py-2 rounded hover:bg-blue-700 transition cursor-pointer"
         >
           {editId ? "Update" : "Submit"}
         </button>

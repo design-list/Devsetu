@@ -21,6 +21,9 @@ const PujaForm = () => {
     date: new Date(),
     pujaDetails: "",
     isActive: true,
+    commonOffer: true,
+    commonPack: true,
+    commonFaqs: true,
     isActiveOnHome: false,
     packages: [{ packImg: null, packageType: "", packagePrice: "" }],
     offerings: [{ offerimg: null, title: "", description: "", price: "" }],
@@ -448,8 +451,27 @@ const PujaForm = () => {
           />
         </div>
 
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Common Packages</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, commonPack: !prev.commonPack }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.commonPack ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.commonPack ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
+
         {/* Packages */}
-        <div>
+       { !formData.commonPack && <div>
           <label className="block font-semibold">Packages</label>
           {formData?.packages.map((packaging, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -531,10 +553,28 @@ const PujaForm = () => {
           >
             + Add Package
           </button>
+        </div>}
+
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Common Offering</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, commonOffer: !prev.commonOffer }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.commonOffer ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.commonOffer ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
         </div>
 
-
-        <div>
+        { !formData.commonOffer && <div>
           <label className="block font-semibold">Offerings</label>
           {formData?.offerings.map((offering, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -629,10 +669,29 @@ const PujaForm = () => {
           >
             + Add Offerings
           </button>
+        </div>}
+
+         <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Common FAQs</label>
+          <button
+            type="button"
+            onClick={() =>
+              setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs }))
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.commonFaqs ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.commonFaqs ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
         </div>
 
         {/* FAQs */}
-        <div>
+        { !formData.commonFaqs && <div>
           <label className="block font-semibold">FAQs</label>
           {formData?.faqs.map((faq, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -682,7 +741,7 @@ const PujaForm = () => {
           >
             + Add FAQ
           </button>
-        </div>
+        </div>}
 
        {/* Toggle Switches */}
       <div className="grid grid-cols-2 gap-6 mt-4">

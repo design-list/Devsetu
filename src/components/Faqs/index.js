@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { Trash,SquarePen } from "lucide-react";
 
 const FAQs = ({ faqs, heading, handleDelete, handleEdit }) => {
 
@@ -17,7 +18,7 @@ const FAQs = ({ faqs, heading, handleDelete, handleEdit }) => {
                 {faqs?.map((faq) => {
                     return <div
                         key={faq.id}
-                        className="border rounded-lg p-3 bg-white shadow-sm"
+                        className="relative border rounded-lg p-3 bg-white shadow-sm"
                     >
                         <button
                             onClick={() => toggleFaq(faq.id)}
@@ -26,10 +27,12 @@ const FAQs = ({ faqs, heading, handleDelete, handleEdit }) => {
                             {faq.question}
                         </button>
                         {openFaqIndex === faq.id && (
-                            <p className="mt-2 text-gray-700">{faq.answer}</p>
+                            <p className="mt-2 text-gray-700"><hr />{faq.answer}</p>
                         )}
-                        <button className='bg-green-600 cursor-pointer rounded p-2 mx-1 text-white' onClick={() => handleEdit(faq.id)}>Edit</button>
-                        <button className='bg-red-600 cursor-pointer rounded p-2 mx-1 text-white' onClick={() => handleDelete(faq)}>Delete</button>
+                        <div className='absolute right-2 top-2'>
+                            <button className='bg-green-600 cursor-pointer rounded p-1 mx-1 text-white' onClick={() => handleEdit(faq)}><SquarePen width={18} hanging={18} /></button>
+                            <button className='bg-red-600 cursor-pointer rounded p-1 mx-1 text-white' onClick={() => handleDelete(faq)}><Trash width={18} hanging={18} /></button>
+                        </div>
                     </div>
                 })}
             </div>
