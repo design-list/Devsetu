@@ -109,6 +109,15 @@ const Sidebar = () => {
                 {open && <span>FAQs</span>}
               </Link>
             </li>
+            <li>
+              <Link
+                href="/admin/puja-package"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
+              >
+                <Gift size={18} />
+                {open && <span>Common Package</span>}
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>

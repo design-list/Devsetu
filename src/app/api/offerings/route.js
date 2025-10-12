@@ -20,15 +20,14 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    const newOfferings = await offerings.create({
-        offerings :body.offerings.map(o => ({
+    const newOfferings = await offerings.bulkCreate(
+        body.offerings.map(o => ({
           type: o.type,
           title: o.title,
           description: o.description,
           offerimg: o.offerimg,
           price: o.price,
         }))
-      },
     );
 
     return NextResponse.json({ status: 200,message:"New Offering added.", data: newOfferings });

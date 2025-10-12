@@ -13,6 +13,8 @@ import { ADD_NEW_FAQS_DATA_REQUEST, DELETE_FAQS_DATA_REQUEST, FAQS_DATA_REQUEST,
 import { addNewFaqsSaga, deleteFaqsSaga, FaqsDetialSaga, fetchAllFaqsSaga, updateFaqsSaga } from './faqsSaga';
 import { ADD_NEW_OFFERINGS_DATA_REQUEST, DELETE_OFFERINGS_DATA_REQUEST, OFFERINGS_DATA_REQUEST, OFFERINGS_DETAILS_DATA_REQUEST, UPDATE_OFFERINGS_DATA_REQUEST } from '@/redux/types/offeringTypes';
 import { addNewOfferingSaga, deleteOfferingSaga, fetchAllOfferingSaga, OfferingDetialSaga, updateOfferingSaga } from './offeringSaga';
+import { ADD_NEW_PACKAGE_DATA_REQUEST, DELETE_PACKAGE_DATA_REQUEST, PACKAGE_DATA_REQUEST, PACKAGE_DETAILS_DATA_REQUEST, UPDATE_PACKAGE_DATA_REQUEST } from '@/redux/types/packageTypes';
+import { addNewPackageSaga, deletePackageSaga, fetchAllPackageSaga, PackageDetialSaga, updatePackageSaga } from './packageSaga';
 
 function* rootSaga() {
     yield all([
@@ -42,6 +44,12 @@ function* rootSaga() {
         takeLatest(FAQS_DETAILS_DATA_REQUEST, FaqsDetialSaga),
         takeLatest(UPDATE_FAQS_DATA_REQUEST, updateFaqsSaga),
         takeLatest(DELETE_FAQS_DATA_REQUEST, deleteFaqsSaga),
+
+        takeLatest(PACKAGE_DATA_REQUEST, fetchAllPackageSaga),
+        takeLatest(ADD_NEW_PACKAGE_DATA_REQUEST, addNewPackageSaga),
+        takeLatest(PACKAGE_DETAILS_DATA_REQUEST, PackageDetialSaga),
+        takeLatest(UPDATE_PACKAGE_DATA_REQUEST, updatePackageSaga),
+        takeLatest(DELETE_PACKAGE_DATA_REQUEST, deletePackageSaga),
 
         takeLatest(OFFERINGS_DATA_REQUEST, fetchAllOfferingSaga),
         takeLatest(ADD_NEW_OFFERINGS_DATA_REQUEST, addNewOfferingSaga),

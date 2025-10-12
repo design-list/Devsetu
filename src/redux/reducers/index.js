@@ -7,6 +7,7 @@ import articels from './articelsReduces '
 import home from './homeReduces'
 import faqs from './faqsReduces'
 import offering from './offeringReduces'
+import packages from './packageReduces'
 
 export default combineReducers({
    count: counter,
@@ -17,4 +18,5 @@ export default combineReducers({
    home,
    offering,
    faqs,
+   packages
 })

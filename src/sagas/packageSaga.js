@@ -1,126 +1,124 @@
 import { put } from 'redux-saga/effects';
 import fetchApi from '../../services/fetchApi';
 import { RESET_LOADER, START_LOADING } from '@/redux/types/loader';
-import { ADD_NEW_OFFERINGS_DATA_FAILED, ADD_NEW_OFFERINGS_DATA_RESPONSE, DELETE_OFFERINGS_DATA_FAILED, DELETE_OFFERINGS_DATA_RESPONSE, 
-    OFFERINGS_DATA_FAILED, OFFERINGS_DATA_RESPONSE, OFFERINGS_DETAILS_DATA_FAILED, OFFERINGS_DETAILS_DATA_RESPONSE, UPDATE_OFFERINGS_DATA_FAILED, 
-    UPDATE_OFFERINGS_DATA_RESPONSE } from '@/redux/types/offeringTypes';
+import { ADD_NEW_PACKAGE_DATA_FAILED, ADD_NEW_PACKAGE_DATA_RESPONSE, DELETE_PACKAGE_DATA_FAILED, DELETE_PACKAGE_DATA_RESPONSE, 
+    PACKAGE_DATA_FAILED, PACKAGE_DATA_RESPONSE, PACKAGE_DETAILS_DATA_FAILED, PACKAGE_DETAILS_DATA_RESPONSE, UPDATE_PACKAGE_DATA_FAILED, 
+    UPDATE_PACKAGE_DATA_RESPONSE } from '@/redux/types/packageTypes';
 let api = new fetchApi();
 
-export function* fetchAllOfferingSaga({ payload, resolve }) {
+export function* fetchAllPackageSaga({ payload, resolve }) {
     try {
         yield put({ type: START_LOADING, isLoading: true })
-        let response = yield api.GetAllOffering(payload);
+        let response = yield api.GetAllPackage(payload);
 
         const {data, status} = response;
 
-        console.log("OFFERINGS_DATA_REQUEST", data)
-
         if (status === 200) {
-            yield put({ type: OFFERINGS_DATA_RESPONSE, payload: data })
+            yield put({ type: PACKAGE_DATA_RESPONSE, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            yield put({ type: OFFERINGS_DATA_FAILED, payload: data })
+            yield put({ type: PACKAGE_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
     } catch (e) {
-        yield put({ type: OFFERINGS_DATA_FAILED, payload: e })
+        yield put({ type: PACKAGE_DATA_FAILED, payload: e })
 
     }
 }
 
 
-export function* addNewOfferingSaga({ payload, resolve }) {
+export function* addNewPackageSaga({ payload, resolve }) {
     try {
         yield put({ type: START_LOADING, isLoading: true })
-        let response = yield api.AddNewOffering(payload);
+        let response = yield api.AddNewPackage(payload);
 
         const {data, status} = response;
 
         if (status === 200) {
-            yield put({ type: ADD_NEW_OFFERINGS_DATA_RESPONSE, payload: data })
+            yield put({ type: ADD_NEW_PACKAGE_DATA_RESPONSE, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            yield put({ type: ADD_NEW_OFFERINGS_DATA_FAILED, payload: data })
+            yield put({ type: ADD_NEW_PACKAGE_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
     } catch (e) {
-        yield put({ type: ADD_NEW_OFFERINGS_DATA_FAILED, payload: e })
+        yield put({ type: ADD_NEW_PACKAGE_DATA_FAILED, payload: e })
 
     }
 }
 
 
-export function* OfferingDetialSaga({ payload, resolve }) {
+export function* PackageDetialSaga({ payload, resolve }) {
     try {
         yield put({ type: START_LOADING, isLoading: true })
-        let response = yield api.GetOfferingDetails(payload);
+        let response = yield api.GetPackageDetails(payload);
 
         const {data, status} = response;
 
         if (status === 200) {
-            yield put({ type: OFFERINGS_DETAILS_DATA_RESPONSE, payload: data })
+            yield put({ type: PACKAGE_DETAILS_DATA_RESPONSE, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            yield put({ type: OFFERINGS_DETAILS_DATA_FAILED, payload: data })
+            yield put({ type: PACKAGE_DETAILS_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
     } catch (e) {
-        yield put({ type: OFFERINGS_DETAILS_DATA_FAILED, payload: e })
+        yield put({ type: PACKAGE_DETAILS_DATA_FAILED, payload: e })
 
     }
 }
 
-export function* updateOfferingSaga({ payload, resolve }) {
+export function* updatePackageSaga({ payload, resolve }) {
     try {
         yield put({ type: START_LOADING, isLoading: true })
-        let response = yield api.UpdeteOffering(payload);
+        let response = yield api.UpdetePackage(payload);
 
         const {data, status} = response;
 
         if (status === 200) {
-            yield put({ type: UPDATE_OFFERINGS_DATA_RESPONSE, payload: data })
+            yield put({ type: UPDATE_PACKAGE_DATA_RESPONSE, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            yield put({ type: UPDATE_OFFERINGS_DATA_FAILED, payload: data })
+            yield put({ type: UPDATE_PACKAGE_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
     } catch (e) {
-        yield put({ type: UPDATE_OFFERINGS_DATA_FAILED, payload: e })
+        yield put({ type: UPDATE_PACKAGE_DATA_FAILED, payload: e })
 
     }
 }
 
-export function* deleteOfferingSaga({ payload, resolve }) {
+export function* deletePackageSaga({ payload, resolve }) {
     try {
         yield put({ type: START_LOADING, isLoading: true })
-        let response = yield api.DeleteOffering(payload);
+        let response = yield api.DeletePackage(payload);
 
         const {data, status} = response;
 
         if (status === 200) {
-            yield put({ type: DELETE_OFFERINGS_DATA_RESPONSE, payload: data })
+            yield put({ type: DELETE_PACKAGE_DATA_RESPONSE, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
         else {
-            yield put({ type: DELETE_OFFERINGS_DATA_FAILED, payload: data })
+            yield put({ type: DELETE_PACKAGE_DATA_FAILED, payload: data })
             resolve && resolve(response)
             yield put({ type: RESET_LOADER, isLoading: false })
         }
     } catch (e) {
-        yield put({ type: DELETE_OFFERINGS_DATA_FAILED, payload: e })
+        yield put({ type: DELETE_PACKAGE_DATA_FAILED, payload: e })
 
     }
 }

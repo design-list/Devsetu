@@ -33,6 +33,8 @@ import Horoscopes from './ArticelsModels/Horoscopes.js';
 
 import testimonials from './testimonialModels/testimonials.js';
 
+import commonPujaPackage from './commonPujaPackage.js';
+
 import cart from './CartModels/cart.js';
 import cartAddOn from './CartModels/cartAddOn.js';
 import cartPackage from './CartModels/cartPackage.js';
@@ -91,6 +93,7 @@ db.cartPackage = cartPackage(sequelize, Sequelize.DataTypes);
 
 db.Faqs = Faqs(sequelize, Sequelize.DataTypes);
 db.offerings = offerings(sequelize, Sequelize.DataTypes);
+db.commonPujaPackage = commonPujaPackage(sequelize, Sequelize.DataTypes);
 
 // This part for setting up associations remains the same and will work correctly
 Object.keys(db).forEach((modelName) => {

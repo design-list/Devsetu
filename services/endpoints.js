@@ -36,6 +36,10 @@ export const endpoints = {
         faq: `${baseApiUrl}/faqs`,
     },
 
+    Packages: {
+        package: `${baseApiUrl}/packages`,
+    },
+
     // Cart: {
     //     cart: "cart", // 👈 Add this line
     // },

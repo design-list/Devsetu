@@ -12,7 +12,7 @@ import { fetchPujaDetailPageAction } from "@/redux/actions/pujaActions";
 import CountdownTimer from "@/components/CountdownTimer";
 import LazyImage from "@/components/Atom/LazyImage";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
-import PujaPackages from "@/components/PujaPackages.js";
+import PujaPackages from "@/components/PujaPackages/index.js";
 
 
 const pujaData = {

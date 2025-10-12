@@ -10,10 +10,10 @@ export async function GET(req, { params }) {
   const { id } = params;
 
   try {
-    const isId = !isNaN(Number(id));
+    // const isId = !isNaN(Number(id));
 
     const puja = await pujas.findOne({
-      where: isId ? { id: id } : { slug: id }, 
+      where: { id: id },
       include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits],
       order: [["id", "DESC"]],
     });

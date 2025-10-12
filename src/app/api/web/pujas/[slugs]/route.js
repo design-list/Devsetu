@@ -10,7 +10,8 @@ const {
   templeHistory,
   pujaBenefits,
   Faqs,
-  offerings
+  offerings,
+  commonPujaPackage
 } = models;
 
 // ✅ GET /api/pujas/:slug
@@ -47,12 +48,22 @@ export async function GET(req, { params }) {
 
     if (puja.commonOffer === true) {
       const offerData = await offerings.findAll({
-        where: { type: "puja" },
+        // where: { type: "puja" },
         // attributes: ["id", "question", "answer"],
         order: [["id", "ASC"]],
       });
 
       puja.dataValues.pujaOfferings = offerData;
+    }
+
+    if (puja.commonPack === true) {
+      const pujaPackages = await commonPujaPackage.findAll({
+        // where: { type: "puja" },
+        // attributes: ["id", "question", "answer"],
+        order: [["id", "ASC"]],
+      });
+
+      puja.dataValues.pujaPackages = pujaPackages;
     }
 
     return NextResponse.json({ data: puja, status: 200 });

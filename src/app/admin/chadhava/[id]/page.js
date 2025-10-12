@@ -8,6 +8,10 @@ import { useParams, useRouter } from "next/navigation";
 import { fetchWithWait } from "../../../../../helper/method";
 import { fetchChadhavaDetailAction, updateChadhavaAction, requestChadhavaAction } from "@/redux/actions/chadhavaAction";
 
+import Api from "../../../../../services/fetchApi";
+
+const api = new Api()
+
 const EditChadhavaForm = () => {
 
   // const [startDate, setStartDate] = useState(new Date());
@@ -294,20 +298,16 @@ const EditChadhavaForm = () => {
     })
   };
 
-  
   const handleToggle = (id, field, currentValue) => {
-    // field = "isActive" | "isActiveOnHome"
     const payload = {
       id,
-      [field]: !currentValue,
+      field,
+      value: !currentValue,
     };
-    
-    const data  = {...formData, ...payload}
 
-    fetchWithWait({ dispatch, action: updateChadhavaAction(data) })
+    api.UpdeteChadhavaFlags(payload)
       .then((res) => {
         if (res.status === 200) {
-          // alert(res.message || `${field} updated successfully`);
           dispatch(fetchChadhavaDetailAction(params.id))
         } else {
           alert(res.error || "Something went wrong");
@@ -317,6 +317,29 @@ const EditChadhavaForm = () => {
         console.error("Toggle error:", e);
       });
   };
+  
+  // const handleToggle = (id, field, currentValue) => {
+  //   // field = "isActive" | "isActiveOnHome"
+  //   const payload = {
+  //     id,
+  //     [field]: !currentValue,
+  //   };
+    
+  //   const data  = {...formData, ...payload}
+
+  //   fetchWithWait({ dispatch, action: updateChadhavaAction(data) })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         // alert(res.message || `${field} updated successfully`);
+  //         dispatch(fetchChadhavaDetailAction(params.id))
+  //       } else {
+  //         alert(res.error || "Something went wrong");
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       console.error("Toggle error:", e);
+  //     });
+  // };
 
   
   return (
