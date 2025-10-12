@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js";
 
-const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory } = models;
+const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits } = models;
 
 // ✅ GET /api/pujas/:id
 
@@ -14,7 +14,7 @@ export async function GET(req, { params }) {
 
     const puja = await pujas.findOne({
       where: isId ? { id: id } : { slug: id }, 
-      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory],
+      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits],
       order: [["id", "DESC"]],
     });
 
@@ -231,7 +231,6 @@ export async function GET(req, { params }) {
         await pujaFaqs.destroy({ where: { pujaId: updatedPujas.id } });
         await pujaFaqs.bulkCreate(
           body.faqs.map((f) => ({
-            icon: f.icon,
             question: f.title,
             answer: f.description,
             pujaId: updatedPujas.id,
@@ -239,9 +238,22 @@ export async function GET(req, { params }) {
         );
       }
 
+      // ✅ pujaBenefits  
+
+      if(body.pujaBenefits && Array.isArray(body.pujaBenefits)){
+       await pujaBenefits.destroy({ where: { pujaId: updatedPujas.id } });
+        await pujaBenefits.bulkCreate(
+          body.pujaBenefits.map((b) => ({
+            title: b.title,
+            description: b.description,
+            pujaId: updatedPujas.id,
+          }))
+        );
+      }
+     
       // ✅ Fetch updated data with associations
       const finalData = await pujas.findByPk(updatedPujas.id, {
-        include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory],
+        include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits],
       });
 
       return NextResponse.json({

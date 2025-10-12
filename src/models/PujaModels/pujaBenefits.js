@@ -8,20 +8,15 @@ export default (sequelize, DataTypes) => {
       primaryKey: true,
       field: "id",
     },
-    icon: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: "icon",
-    },
     title: {
       type: DataTypes.STRING,
       allowNull: true,
       field: "title",
     },
-    discription: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: true,
-      field: "discription",
+      field: "description",
     },
     createdAt: {
       type: DataTypes.DATE,

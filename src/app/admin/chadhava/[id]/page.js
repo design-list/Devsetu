@@ -78,8 +78,8 @@ const EditChadhavaForm = () => {
         isActive: chadhavaDetail.isActive,
         isActiveOnHome: chadhavaDetail.isActiveOnHome,
         isRecommended: chadhavaDetail.isRecommended,
-        isActivePandit: chadhavaDetail.isActiveOnHome,
-        commonFaqs: chadhavaDetail.isActiveOnHome,
+        isActivePandit: chadhavaDetail.isActivePandit,
+        commonFaqs: chadhavaDetail.commonFaqs,
 
         // Banners
         banners: chadhavaDetail.chadhavaBanners
@@ -135,14 +135,13 @@ const EditChadhavaForm = () => {
           : { name: "", temple: "", pujaPerformerImg: "", bio: "" },
       });
     }
-  }, [chadhavaDetail, chadhavaDetail.isRecommended, chadhavaDetail.commonFaqs, chadhavaDetail.isActivePandit]);
+  }, [chadhavaDetail]);
 
 
 
   const handleChange = async (e, index) => {
     const { name, value, files } = e.target;
 
-    // console.log("handleChangehandleChange",  name, value)
 
     if (files && files[0]) {
       const file = files[0];
@@ -150,7 +149,6 @@ const EditChadhavaForm = () => {
       // Local preview
       const localPreview = URL.createObjectURL(file);
 
-      // console.log("localPreview", localPreview)
 
       if (name === "imgUrl") {
         setFormData((prev) => {
@@ -201,7 +199,6 @@ const EditChadhavaForm = () => {
 
         const data = await res.json();
 
-        // console.log("datadatadata",data, data.storedAs)
 
         if (res.ok) {
           if (name === "imgUrl") {
@@ -217,7 +214,6 @@ const EditChadhavaForm = () => {
               return { ...prev, recommendedChadawa: updated };
             });
           } else if (name === "icon") {
-            console.log("added faqs icons", data)
             setFormData((prev) => {
               const updated = [...prev.faqs];
               updated[index].icon = (data.storedAs).toString(); // server path
@@ -286,7 +282,6 @@ const EditChadhavaForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWithWait({ dispatch, action: updateChadhavaAction(formData) }).then((res) => {
-      console.log("Response:", res);
       if (res.status === 200) {
         dispatch(requestChadhavaAction()); // Fetch updated puja data
         router.push('/admin/chadhava/list')
@@ -299,8 +294,31 @@ const EditChadhavaForm = () => {
     })
   };
 
-  // console.log("chadhavaDetail", chadhavaDetail)
+  
+  const handleToggle = (id, field, currentValue) => {
+    // field = "isActive" | "isActiveOnHome"
+    const payload = {
+      id,
+      [field]: !currentValue,
+    };
+    
+    const data  = {...formData, ...payload}
 
+    fetchWithWait({ dispatch, action: updateChadhavaAction(data) })
+      .then((res) => {
+        if (res.status === 200) {
+          // alert(res.message || `${field} updated successfully`);
+          dispatch(fetchChadhavaDetailAction(params.id))
+        } else {
+          alert(res.error || "Something went wrong");
+        }
+      })
+      .catch((e) => {
+        console.error("Toggle error:", e);
+      });
+  };
+
+  
   return (
     <div className="flex-1 overflow-y-auto max-h-screen scrollbar-hide">
       <form
@@ -637,8 +655,12 @@ const EditChadhavaForm = () => {
           <label className="font-semibold">Recommended Chadhava</label>
           <button
             type="button"
-            onClick={() =>
-              setFormData((prev) => ({ ...prev, isRecommended: !prev.isRecommended }))
+            onClick={() =>{
+              setFormData((prev) => ({ ...prev, isRecommended: !prev.isRecommended })),
+
+              handleToggle(chadhavaDetail.id, "isRecommended", chadhavaDetail.isRecommended)
+              
+              }
             }
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
               formData.isRecommended ? "bg-green-600" : "bg-gray-600"
@@ -776,8 +798,12 @@ const EditChadhavaForm = () => {
           <label className="font-semibold">Common Faqs</label>
           <button
             type="button"
-            onClick={() =>
-              setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs }))
+            onClick={() =>{
+              setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs })),
+
+              handleToggle(chadhavaDetail.id, "commonFaqs", chadhavaDetail.commonFaqs)
+              
+              }
             }
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
               formData.commonFaqs ? "bg-green-600" : "bg-gray-600"
@@ -882,8 +908,10 @@ const EditChadhavaForm = () => {
           <label className="font-semibold">Puja Performed by Pandit.</label>
           <button
             type="button"
-            onClick={() =>
-              setFormData((prev) => ({ ...prev, isActivePandit: !prev.isActivePandit }))
+            onClick={() =>{
+                setFormData((prev) => ({ ...prev, isActivePandit: !prev.isActivePandit }))
+                handleToggle(chadhavaDetail.id, "isActivePandit", chadhavaDetail.isActivePandit)
+              }
             }
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
               formData.isActivePandit ? "bg-green-600" : "bg-gray-600"

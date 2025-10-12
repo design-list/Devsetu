@@ -7,6 +7,10 @@ import { fetchWithWait } from "../../../../../helper/method";
 import { addNewPujaDataAction, fetchPujaDetailAction, requestPujaDataAction, updatePujaAction } from "@/redux/actions/pujaActions";
 import { useParams, useRouter } from "next/navigation";
 
+import Api from "../../../../../services/fetchApi";
+
+const api = new Api()
+
 const EditPujaForm = () => {
 
     const [formData, setFormData] = useState({
@@ -39,11 +43,12 @@ const EditPujaForm = () => {
 
     const { pujaDetail } = useSelector((state) => state.pujas);
 
-    // console.log("pujaDetail", pujaDetail)
 
     useEffect(() => {
         dispatch(fetchPujaDetailAction(params.id))
     }, [params.id]);
+
+
 
     useEffect(() => {
         setFormData((prev) => ({
@@ -51,6 +56,59 @@ const EditPujaForm = () => {
             slug: slugify(prev.title),
         }));
     }, [formData?.title]);
+
+    
+
+    // useEffect(() => {
+    //     if (pujaDetail) {
+    //         setFormData({
+    //         title: pujaDetail.title || "",
+    //         subTitle: pujaDetail.subTitle || "",
+    //         description: pujaDetail.description || "",
+    //         price: pujaDetail.price || "",
+    //         offerPrice: pujaDetail.offerPrice || "",
+    //         discountPercent: pujaDetail.discountPercent || "",
+    //         samagriPrice: pujaDetail.samagriPrice || "",
+    //         onlinePrice: pujaDetail.onlinePrice || "",
+    //         isActive: pujaDetail.isActive || false,
+    //         image: pujaDetail.image || "",
+    //         otherImages: pujaDetail.otherImages || [],
+    //         location: pujaDetail.location || "",
+    //         metaTitle: pujaDetail.metaTitle || "",
+    //         metaDescription: pujaDetail.metaDescription || "",
+    //         metaKeyword: pujaDetail.metaKeyword || "",
+    //         commonPack: pujaDetail.commonPack || false,
+    //         commonOffer: pujaDetail.commonOffer || false,
+    //         commonFaqs: pujaDetail.commonFaqs || false,
+
+    //         // ✅ FIXED PART — अब पुराना data नहीं मिटेगा
+    //         packages:
+    //             pujaDetail.pujaPackages?.length
+    //             ? pujaDetail.pujaPackages.map((p) => ({
+    //                 name: p.name || "",
+    //                 price: p.price || "",
+    //                 description: p.description || "",
+    //                 }))
+    //             : formData.packages,
+
+    //         offerings:
+    //             pujaDetail.pujaOfferings?.length
+    //             ? pujaDetail.pujaOfferings.map((o) => ({
+    //                 name: o.name || "",
+    //                 description: o.description || "",
+    //                 }))
+    //             : formData.offerings,
+
+    //         faqs:
+    //             pujaDetail.pujaFaqs?.length
+    //             ? pujaDetail.pujaFaqs.map((f) => ({
+    //                 title: f.question || "",
+    //                 description: f.answer || "",
+    //                 }))
+    //             : formData.faqs,
+    //         });
+    //     }
+    // }, [pujaDetail]);
 
 
     useEffect(() => {
@@ -80,25 +138,31 @@ const EditPujaForm = () => {
                     }
                     : { templeImg: null, templeName: "", templeHistory: "" },
 
-                packages: !pujaDetail.commonPack && pujaDetail.pujaPackages?.length
-                    ? pujaDetail.pujaPackages?.map((p) => ({
-                        packImg: p.packImg || null,
-                        packageType: p.packageType || "",
-                        packagePrice: p.packagePrice || "",
-                    }))
-                    : [{ packImg: null, packageType: "", packagePrice: "" }],
+                packages:
+                    pujaDetail.pujaPackages?.length
+                    ? pujaDetail.pujaPackages.map((p) => ({
+                        name: p.name || "",
+                        price: p.price || "",
+                        description: p.description || "",
+                        }))
+                    : formData.packages,
 
-                offerings: !pujaDetail.commonOffer && pujaDetail.pujaOfferings.length 
-                ? pujaDetail.pujaOfferings?.map((o) => ({
-                    offerimg: o.offerimg || null,
-                    title: o.title || "",
-                    description: o.Description || "",
-                })) : [{offerimg: null, title: "", description: "", price:"" }],
+                offerings:
+                    pujaDetail.pujaOfferings?.length
+                    ? pujaDetail.pujaOfferings.map((o) => ({
+                        name: o.name || "",
+                        description: o.description || "",
+                        }))
+                    : formData.offerings,
 
-                faqs: !pujaDetail.commonFaqs && pujaDetail.pujaFaqs?.map((f) => ({
-                    title: f.question || "",
-                    description: f.answer || "",
-                })) || [{ title: "", description: "" }],
+                faqs:
+                    pujaDetail.pujaFaqs?.length
+                    ? pujaDetail.pujaFaqs.map((f) => ({
+                        title: f.question || "",
+                        description: f.answer || "",
+                        }))
+                    : formData.faqs,
+
 
                  // Banners
                 banners: pujaDetail.pujaBanners
@@ -111,7 +175,7 @@ const EditPujaForm = () => {
 
             });
         }
-    }, [pujaDetail, formData.commonFaqs, formData.commonOffer, formData.commonPack]);
+    }, [pujaDetail]);
 
 
 
@@ -431,7 +495,6 @@ const EditPujaForm = () => {
             });
 
             const data = await res.json();
-            console.log("datadatadata", data)
 
             if (res.ok) {
             if (name === "imgUrl") {
@@ -495,7 +558,6 @@ const EditPujaForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         fetchWithWait({ dispatch, action: updatePujaAction(formData) }).then((res) => {
-            console.log("Response:", res);
             if (res.status === 200) {
                 dispatch(requestPujaDataAction());
                 router.push("/admin/puja/list")
@@ -513,7 +575,52 @@ const EditPujaForm = () => {
         router.push("/admin/puja/list")
     }
 
-    console.log("pujaDetailpujaDetail", pujaDetail)
+
+    const handleToggle = (id, field, currentValue) => {
+        const payload = {
+            id,
+            field,
+            value: !currentValue,
+        };
+    
+        api.UpdetePujaFlags(payload)
+            .then((res) => {
+            if (res.status === 200) {
+                dispatch(fetchPujaDetailAction(params.id))
+            } else {
+                alert(res.error || "Something went wrong");
+            }
+            })
+            .catch((e) => {
+            console.error("Toggle error:", e);
+        });
+    };
+
+    // const handleToggle = (id, field, currentValue) => {
+    //     // field = "isActive" | "isActiveOnHome"
+    //     const payload = {
+    //       id,
+    //       [field]: !currentValue,
+    //     };
+        
+    //     // const data  = {...formData, ...payload}
+
+    //     // console.log("handleToggle", data)
+    //     // console.log("!currentValue", !currentValue)
+
+    //     fetchWithWait({ dispatch, action: updatePujaAction(payload) })
+    //       .then((res) => {
+    //         if (res.status === 200) {
+    //           // alert(res.message || `${field} updated successfully`);
+    //           dispatch(fetchPujaDetailAction(params.id))
+    //         } else {
+    //           alert(res.error || "Something went wrong");
+    //         }
+    //       })
+    //       .catch((e) => {
+    //         console.error("Toggle error:", e);
+    //       });
+    //   };
 
     return (
         <div className="flex-1 p-6 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
@@ -779,8 +886,10 @@ const EditPujaForm = () => {
                     <label className="font-semibold">Common Packages</label>
                     <button
                         type="button"
-                        onClick={() =>
-                        setFormData((prev) => ({ ...prev, commonPack: !prev.commonPack }))
+                        onClick={() =>{
+                            setFormData((prev) => ({ ...prev, commonPack: !prev.commonPack })),
+
+                            handleToggle(pujaDetail.id, "commonPack", pujaDetail.commonPack)}
                         }
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
                         formData.commonPack ? "bg-green-600" : "bg-gray-600"
@@ -884,8 +993,10 @@ const EditPujaForm = () => {
                     <label className="font-semibold">Common Offerings</label>
                     <button
                         type="button"
-                        onClick={() =>
-                        setFormData((prev) => ({ ...prev, commonOffer: !prev.commonOffer }))
+                        onClick={() =>{
+                            setFormData((prev) => ({ ...prev, commonOffer: !prev.commonOffer })),
+
+                            handleToggle(pujaDetail.id, "commonOffer", pujaDetail.commonOffer)}
                         }
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
                         formData.commonOffer ? "bg-green-600" : "bg-gray-600"
@@ -1004,8 +1115,10 @@ const EditPujaForm = () => {
                     <label className="font-semibold">Common Faqs</label>
                     <button
                         type="button"
-                        onClick={() =>
-                        setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs }))
+                        onClick={() =>{
+                            setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs })),
+
+                            handleToggle(pujaDetail.id, "commonFaqs", pujaDetail.commonFaqs)}
                         }
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
                         formData.commonFaqs ? "bg-green-600" : "bg-gray-600"

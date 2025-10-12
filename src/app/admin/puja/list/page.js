@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Trash,SquarePen } from "lucide-react";
 import { fetchWithWait } from "../../../../../helper/method";
 import { useRouter } from "next/navigation";
+import Api from "../../../../../services/fetchApi";
+
+const api = new Api()
 
 export default function PujasPage() {
   const [packages, setPackages] = useState(null);
@@ -35,9 +38,7 @@ export default function PujasPage() {
 
 
   const handleDelete = (id) => {
-    console.log("handleDelete", id)
       fetchWithWait({ dispatch, action: deletePujaAction({"id": id}) }).then((res) => {
-        console.log("Response:", res);
         if (res.status === 200) {
           alert(res.message)
           dispatch(requestPujaDataAction());
@@ -50,26 +51,25 @@ export default function PujasPage() {
       })
     };
 
-      const handleToggle = (id, field, currentValue) => {
-        // field = "isActive" | "isActiveOnHome"
-        const payload = {
-          id,
-          [field]: !currentValue,
-        };
-    
-        fetchWithWait({ dispatch, action: updatePujaAction(payload) })
-          .then((res) => {
-            if (res.status === 200) {
-              // alert(res.message || `${field} updated successfully`);
-              dispatch(requestPujaDataAction());
-            } else {
-              alert(res.error || "Something went wrong");
-            }
-          })
-          .catch((e) => {
-            console.error("Toggle error:", e);
-          });
+    const handleToggle = (id, field, currentValue) => {
+      const payload = {
+        id,
+        field,
+        value: !currentValue,
       };
+  
+      api.UpdetePujaFlags(payload)
+        .then((res) => {
+          if (res.status === 200) {
+            dispatch(requestPujaDataAction());
+          } else {
+            alert(res.error || "Something went wrong");
+          }
+        })
+        .catch((e) => {
+          console.error("Toggle error:", e);
+        });
+    };
     
 
   return (
@@ -119,29 +119,16 @@ export default function PujasPage() {
                   <td className="p-2 border max-w-xs truncate">
                     {puja.pujaDetails}
                   </td>
+
                   <td className="p-2 border max-w-xs truncate">
                     <button
                       type="button"
-                      onClick={() => handleToggle(puja.id, "isActive", puja.isActive)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.isActive ? "bg-green-600" : "bg-gray-600"
+                      onClick={() => handleToggle(puja.id, "commonPack", puja.commonPack)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.commonPack ? "bg-green-600" : "bg-gray-600"
                         }`}
                     >
                       <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.isActive ? "translate-x-6" : "translate-x-1"
-                          }`}
-                      />
-                    </button>
-                  </td>
-                  
-                  <td className="p-2 border max-w-xs truncate">
-                    <button
-                      type="button"
-                      onClick={() => handleToggle(puja.id, "isActive", puja.isActive)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.isActive ? "bg-green-600" : "bg-gray-600"
-                        }`}
-                    >
-                      <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.isActive ? "translate-x-6" : "translate-x-1"
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.commonPack ? "translate-x-6" : "translate-x-1"
                           }`}
                       />
                     </button>
@@ -150,12 +137,26 @@ export default function PujasPage() {
                   <td className="p-2 border max-w-xs truncate">
                     <button
                       type="button"
-                      onClick={() => handleToggle(puja.id, "isActive", puja.isActive)}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.isActive ? "bg-green-600" : "bg-gray-600"
+                      onClick={() => handleToggle(puja.id, "commonOffer", puja.commonOffer)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.commonOffer ? "bg-green-600" : "bg-gray-600"
                         }`}
                     >
                       <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.isActive ? "translate-x-6" : "translate-x-1"
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.commonOffer ? "translate-x-6" : "translate-x-1"
+                          }`}
+                      />
+                    </button>
+                  </td>
+
+                  <td className="p-2 border max-w-xs truncate">
+                    <button
+                      type="button"
+                      onClick={() => handleToggle(puja.id, "commonFaqs", puja.commonFaqs)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${puja.commonFaqs ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${puja.commonFaqs ? "translate-x-6" : "translate-x-1"
                           }`}
                       />
                     </button>

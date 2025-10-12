@@ -25,6 +25,17 @@ export default class fetchApi extends Api {
         return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
     }
 
+    GetPujaBySlug(data) {
+        let url = this.buildUrl(endpoints.Web.puja, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
+    UpdetePujaFlags(data) {
+        console.log("id, field, currentValue", data)
+        let url = this.buildUrl(`${endpoints.Pujas.puja}/${data.id}/flags`, "full")
+        return this.fetch(url, "PUT", JSON.stringify(data), null).then(response => response)
+    }
+
     UpdetePuja(data) {
         let url = this.buildUrl(endpoints.Pujas.puja, "full")
         if (data.id) {
@@ -90,7 +101,6 @@ export default class fetchApi extends Api {
     }
 
     GetArticlesDetails(data) {
-        console.log("GetChadhavaDetails", data)
         let url = this.buildUrl(endpoints.Articles.articles, "full")
         return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
     }

@@ -103,7 +103,7 @@ export function* pujaDetialSaga({ payload, resolve }) {
 export function* pujaDetialPageSaga({ payload, resolve }) {
     try {
         yield put({ type: START_LOADING, isLoading: true })
-        let response = yield api.GetPujaDetails(payload);
+        let response = yield api.GetPujaBySlug(payload);
 
         const {data, status} = response;
 

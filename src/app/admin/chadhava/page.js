@@ -53,7 +53,6 @@ const ChadhavaForm = () => {
   const handleChange = async (e, index) => {
     const { name, value, files } = e.target;
 
-    // console.log("handleChangehandleChange",  name, value)
 
     if (files && files[0]) {
       const file = files[0];
@@ -61,7 +60,6 @@ const ChadhavaForm = () => {
       // Local preview
       const localPreview = URL.createObjectURL(file);
 
-      // console.log("localPreview", localPreview)
 
       if (name === "imgUrl") {
         // Update images preview
@@ -122,7 +120,6 @@ const ChadhavaForm = () => {
         });
 
         const data = await res.json();
-        // console.log("datadatadata",data)
 
         if (res.ok) {
           if (name === "imgUrl") {
@@ -138,7 +135,6 @@ const ChadhavaForm = () => {
               return { ...prev, recommendedChadawa: updated };
             });
           } else if (name === "icon") {
-            console.log("added faqs icons", data)
             setFormData((prev) => {
               const updated = [...prev.faqs];
               updated[index].icon = (data.storedAs).toString(); // server path
@@ -223,7 +219,6 @@ const ChadhavaForm = () => {
     e.preventDefault();
     // console.log("Submitting form data===:", formData);
     fetchWithWait({ dispatch, action: addNewChadhavaAction(formData) }).then((res) => {
-      console.log("Response:", res);
       if (res.status === 200) {
         dispatch(requestChadhavaAction()); // Fetch updated puja data
       } else {
@@ -731,7 +726,7 @@ const ChadhavaForm = () => {
         </div>
 
         {/* Recommended Chadawa */}
-        <div>
+      {!formData.isRecommended &&  <div>
           <label className="block font-semibold">Recommended Chadawa</label>
           {formData?.recommendedChadawa.map((item, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -849,7 +844,7 @@ const ChadhavaForm = () => {
             + Add Packages
           </button>
         </div>
-
+}
 
 
         {/* FAQs */}

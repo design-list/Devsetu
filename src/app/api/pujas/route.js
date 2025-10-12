@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
-const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory } = models;
+const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits } = models;
 
 
 export async function GET() {
   try {
     const allPujas = await pujas.findAll({
-      include: [ pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory ],
+      include: [ pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits ],
     });
     return NextResponse.json({data: allPujas,  status: 200 });
   } catch (error) {
@@ -158,6 +158,13 @@ export async function POST(req) {
             }))
           : [],
 
+        // ✅ pujaBenefits  
+        pujaBenefits: body.pujaBenefits?.map(b => ({
+              title: b.title,
+              description: b.description,
+            }))
+          || [],
+
         // Temple history (no condition here)
         templeHistories: body.temple
           ? [
@@ -186,6 +193,7 @@ export async function POST(req) {
           { model: pujaFaqs },
           { model: pujaBanners },
           { model: templeHistory },
+          { model: pujaBenefits },
         ],
       }
     );

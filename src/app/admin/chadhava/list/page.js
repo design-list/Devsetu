@@ -34,9 +34,7 @@ export default function PujasPage() {
 
 
   const handleDelete = (id) => {
-    console.log("handleDelete", id)
     fetchWithWait({ dispatch, action: deleteChadhavaAction({ "id": id }) }).then((res) => {
-      console.log("Response:", res);
       if (res.status === 200) {
         alert(res.message)
         dispatch(requestChadhavaAction());

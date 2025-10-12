@@ -27,7 +27,8 @@ const PujaForm = () => {
     isActiveOnHome: false,
     packages: [{ packImg: null, packageType: "", packagePrice: "" }],
     offerings: [{ offerimg: null, title: "", description: "", price: "" }],
-    faqs: [{ icon: null, title: "", description: "" }],
+    faqs: [{ title: "", description: "" }],
+    pujaBenefits: [{ title: "", description: "" }],
     temple: { templeImg: null, templeName: "", templeHistory: "" },
     banners: [{imgUrl: null, type: "", position: 0}],
   });
@@ -108,7 +109,6 @@ const PujaForm = () => {
         });
 
         const data = await res.json();
-        console.log("datadatadata", data)
 
         if (res.ok) {
           if (name === "imgUrl") {
@@ -180,7 +180,6 @@ const PujaForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWithWait({ dispatch, action: addNewPujaDataAction(formData) }).then((res) => {
-      console.log("Response:", res);
       if (res.status === 200) {
         dispatch(requestPujaDataAction());
       } else {
@@ -192,7 +191,6 @@ const PujaForm = () => {
     })
   };
 
-  console.log("formData", formData)
 
   return (
     <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
@@ -451,6 +449,58 @@ const PujaForm = () => {
           />
         </div>
 
+        <div>
+          <label className="block font-semibold">Puja Benefits</label>
+          {formData?.pujaBenefits.map((faq, index) => (
+            <div key={index} className="border p-3 rounded mb-3 relative">
+              {formData?.pujaBenefits.length > 1 && <button
+                type="button"
+                onClick={() => {
+                  const updated = formData?.pujaBenefits.filter((_, i) => i !== index);
+                  setFormData({ ...formData, pujaBenefits: updated });
+                }}
+                className="absolute top-2 right-2 text-red-600 hover:text-red-800 cursor-pointer"
+              >
+                <Trash2 size={18} />
+              </button>}
+
+              <input
+                type="text"
+                placeholder="Title"
+                value={faq.title}
+                onChange={(e) => {
+                  const updated = [...formData?.pujaBenefits];
+                  updated[index].title = e.target.value;
+                  setFormData({ ...formData, pujaBenefits: updated });
+                }}
+                className="w-full border p-2 rounded mb-2"
+              />
+              <textarea
+                placeholder="Description"
+                value={faq.description}
+                onChange={(e) => {
+                  const updated = [...formData?.pujaBenefits];
+                  updated[index].description = e.target.value;
+                  setFormData({ ...formData, pujaBenefits: updated });
+                }}
+                className="w-full border p-2 rounded"
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={() =>
+              setFormData({
+                ...formData,
+                pujaBenefits: [...formData?.pujaBenefits, { title: "", discription: "" }],
+              })
+            }
+            className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
+          >
+            + Add Benefits
+          </button>
+        </div>
+
         <div className="flex items-center justify-between border p-3 rounded">
           <label className="font-semibold">Common Packages</label>
           <button
@@ -635,7 +685,7 @@ const PujaForm = () => {
 
               <input
                 type="text"
-                placeholder="Offering Type"
+                placeholder="Offering price"
                 value={offering.price}
                 onChange={(e) => {
                   const updated = [...formData?.offerings];
@@ -646,7 +696,7 @@ const PujaForm = () => {
               />
 
               <textarea
-                placeholder="Offering Price"
+                placeholder="Offering description"
                 value={offering.description}
                 onChange={(e) => {
                   const updated = [...formData?.offerings];
@@ -734,7 +784,7 @@ const PujaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                faqs: [...formData?.faqs, { icon: "", title: "", description: "" }],
+                faqs: [...formData?.faqs, { title: "", description: "" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"

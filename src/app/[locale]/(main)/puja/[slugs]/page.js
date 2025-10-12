@@ -130,7 +130,7 @@ export default function PujaDetailsPage() {
                 {/* Banner */}
                 <div className="bg-gray-50 p-4 lg:p-8 flex flex-col lg:flex-row gap-6">
                    {isLoading ? <PageLaoder /> : <div className="flex-1 w-[600px] h-[400px] relative">
-                        <PageDetailHeroSlider heroSlides={pujaDetailPage?.['pujaImages']} />
+                        <PageDetailHeroSlider heroSlides={pujaDetailPage?.['pujaBanners']} />
                     </div>}
                     <div className="flex-1 space-y-3">
                         <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">
@@ -196,9 +196,10 @@ export default function PujaDetailsPage() {
                     <section ref={benefitsRef}>
                         <h2 className="text-xl font-semibold mb-3">Puja Benefits</h2>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {pujaData.benefits.map((b, i) => (
-                                <div key={i} className="p-4 border rounded-lg shadow-sm">
-                                    🙏 {b}
+                            {pujaDetailPage?.['pujaBenefits'].map((b) => (
+                                <div key={b.id} className="p-4 border rounded-lg shadow-sm">
+                                    <strong>🙏 {b.title}</strong>
+                                    <p>{b.description}</p>
                                 </div>
                             ))}
                         </div>
