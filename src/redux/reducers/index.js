@@ -8,6 +8,9 @@ import home from './homeReduces'
 import faqs from './faqsReduces'
 import offering from './offeringReduces'
 import packages from './packageReduces'
+import cart from './cartReducer'
+import userDetails from './userDetialsReduces'
+import payment from './paymentReduces'
 
 export default combineReducers({
    count: counter,
@@ -18,5 +21,8 @@ export default combineReducers({
    home,
    offering,
    faqs,
-   packages
+   packages,
+   cart,
+   userDetails,
+   payment
 })

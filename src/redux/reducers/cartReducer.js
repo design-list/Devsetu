@@ -1,44 +1,75 @@
-import { 
-  CART_DATA_RESPONSE, CART_DATA_FAILED,
-  CART_DETAILS_RESPONSE, CART_DETAILS_FAILED,
-  ADD_NEW_CART_RESPONSE, ADD_NEW_CART_FAILED,
-  UPDATE_CART_RESPONSE, UPDATE_CART_FAILED,
-  DELETE_CART_RESPONSE, DELETE_CART_FAILED
+import {
+  ADD_PACKAGE_REQUEST,
+  ADD_OFFERING_REQUEST,
+  UPDATE_OFFERING_COUNT_REQUEST,
+  DELETE_CART_RESPONSE,
+  DELETE_CART_FAILED,
 } from "../types/cartTypes";
 
 const initialState = {
-  allCarts: null,
-  cartDetail: null,
-  addedCart: null,
-  updatedCart: null,
-  deletedCart: null,
+  allCarts: {
+    store_id: "",
+    package: null,
+    add_ons: [],
+    tip_amount: null,
+    other_charges: {
+      service_charge: 0,
+      pandit_charge: 0,
+      media_handling_charge: 0,
+    },
+    coupon_code: null,
+    grand_total: 0,
+  },
 };
+
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case ADD_PACKAGE_REQUEST: {
+      const updatedCart = {
+        ...state.allCarts,
+        package: { ...action.payload, quantity: 1 },
+      };
+      return updateCart(state, updatedCart);
+    }
 
-    case CART_DATA_RESPONSE:
-      return { ...state, allCarts: action.payload };
-    case CART_DATA_FAILED:
-      return { ...state, allCarts: action.payload };
+    case ADD_OFFERING_REQUEST: {
+      const existing = state.allCarts.add_ons.find(
+        (item) => item.id === action.payload.id
+      );
 
-    case CART_DETAILS_RESPONSE:
-      return { ...state, cartDetail: action.payload };
-    case CART_DETAILS_FAILED:
-      return { ...state, cartDetail: action.payload };
+      const updatedAddOns = existing
+        ? state.allCarts.add_ons.map((item) =>
+            item.id === action.payload.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        : [...state.allCarts.add_ons, { ...action.payload, quantity: 1 }];
 
-    case ADD_NEW_CART_RESPONSE:
-      return { ...state, addedCart: action.payload };
-    case ADD_NEW_CART_FAILED:
-      return { ...state, addedCart: action.payload };
+      return updateCart(state, { ...state.allCarts, add_ons: updatedAddOns });
+    }
 
-    case UPDATE_CART_RESPONSE:
-      return { ...state, updatedCart: action.payload };
-    case UPDATE_CART_FAILED:
-      return { ...state, updatedCart: action.payload };
+    case UPDATE_OFFERING_COUNT_REQUEST: {
+      const { id, changeType } = action.payload;
+
+      let updatedAddOns = state.allCarts.add_ons.map((item) => {
+        if (item.id === id) {
+          const newQty =
+            changeType === "increment"
+              ? item.quantity + 1
+              : Math.max(item.quantity - 1, 0);
+          return { ...item, quantity: newQty };
+        }
+        return item;
+      });
+
+      // Remove items with quantity 0
+      updatedAddOns = updatedAddOns.filter((item) => item.quantity > 0);
+
+      return updateCart(state, { ...state.allCarts, add_ons: updatedAddOns });
+    }
 
     case DELETE_CART_RESPONSE:
-      return { ...state, deletedCart: action.payload };
     case DELETE_CART_FAILED:
       return { ...state, deletedCart: action.payload };
 
@@ -46,6 +77,37 @@ export default function reducer(state = initialState, action) {
       return state;
   }
 }
+
+
+// Helper: calculate grand total
+const calculateGrandTotal = (cart) => {
+  const packageTotal = cart.package
+    ? cart.package.packagePrice * (cart.package.quantity || 1)
+    : 0;
+
+  const addOnsTotal = cart.add_ons.reduce(
+    (sum, item) => sum + item.price * (item.quantity || 1),
+    0
+  );
+
+  const otherChargesTotal = Object.values(cart.other_charges || {}).reduce(
+    (sum, charge) => sum + (charge || 0),
+    0
+  );
+
+  const tip = cart.tip_amount || 0;
+
+  return packageTotal + addOnsTotal + otherChargesTotal + tip;
+};
+
+// Helper: update cart and recalc grand_total
+const updateCart = (state, updatedCart) => ({
+  ...state,
+  allCarts: {
+    ...updatedCart,
+    grand_total: calculateGrandTotal(updatedCart),
+  },
+});
 
 
 

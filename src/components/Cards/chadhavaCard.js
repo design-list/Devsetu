@@ -9,10 +9,9 @@ import { useRouter } from 'next/navigation';
 
 function ChadhavaCard({ chadhava, viewmore }) {
 
-  const withLang = useWithLang();
 
   const router = useRouter();
-
+  const withLang = useWithLang();
   const handlaRedirect = (slug) => {
     router.push(withLang(`/chadhava/${slug}`))
   }

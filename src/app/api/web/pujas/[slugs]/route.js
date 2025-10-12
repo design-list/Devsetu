@@ -59,7 +59,7 @@ export async function GET(req, { params }) {
     if (puja.commonPack === true) {
       const pujaPackages = await commonPujaPackage.findAll({
         // where: { type: "puja" },
-        // attributes: ["id", "question", "answer"],
+        attributes: ["id", "packImg", "packagePrice", "packageType"],
         order: [["id", "ASC"]],
       });
 

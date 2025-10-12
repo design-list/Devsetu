@@ -15,6 +15,10 @@ import { ADD_NEW_OFFERINGS_DATA_REQUEST, DELETE_OFFERINGS_DATA_REQUEST, OFFERING
 import { addNewOfferingSaga, deleteOfferingSaga, fetchAllOfferingSaga, OfferingDetialSaga, updateOfferingSaga } from './offeringSaga';
 import { ADD_NEW_PACKAGE_DATA_REQUEST, DELETE_PACKAGE_DATA_REQUEST, PACKAGE_DATA_REQUEST, PACKAGE_DETAILS_DATA_REQUEST, UPDATE_PACKAGE_DATA_REQUEST } from '@/redux/types/packageTypes';
 import { addNewPackageSaga, deletePackageSaga, fetchAllPackageSaga, PackageDetialSaga, updatePackageSaga } from './packageSaga';
+import { addNewUserDetailSaga, fetchAllUserDetailSaga } from './userDetailSaga';
+import { ADD_NEW_USER_DETAILS_REQUEST, USER_DETAILS_REQUEST } from '@/redux/types/userDetailsTypes';
+import { paymentOrderSaga, paymentOrderVerifySaga } from './paymentSaga';
+import { PAYMENT_OREDR_REQUEST, PAYMENT_OREDR_VERIFY_REQUEST } from '@/redux/types/paymentTypes';
 
 function* rootSaga() {
     yield all([
@@ -59,11 +63,17 @@ function* rootSaga() {
 
         takeLatest(HOME_DATA_REQUEST, fetchAllHomeSaga),
 
-        // takeLatest(CART_DATA_REQUEST, fetchAllCartSaga),
-        // takeLatest(CART_DETAILS_REQUEST, fetchCartDetailSaga),
-        // takeLatest(ADD_NEW_CART_REQUEST, addNewCartSaga),
-        // takeLatest(UPDATE_CART_REQUEST, updateCartSaga),
-        // takeLatest(DELETE_CART_REQUEST, deleteCartSaga),
+        takeLatest(USER_DETAILS_REQUEST, fetchAllUserDetailSaga),
+        takeLatest(ADD_NEW_USER_DETAILS_REQUEST, addNewUserDetailSaga),
+
+        takeLatest(CART_DATA_REQUEST, fetchAllCartSaga),
+        takeLatest(CART_DETAILS_REQUEST, fetchCartDetailSaga),
+        takeLatest(ADD_NEW_CART_REQUEST, addNewCartSaga),
+        takeLatest(UPDATE_CART_REQUEST, updateCartSaga),
+        takeLatest(DELETE_CART_REQUEST, deleteCartSaga),
+
+        takeLatest(PAYMENT_OREDR_REQUEST, paymentOrderSaga),
+        takeLatest(PAYMENT_OREDR_VERIFY_REQUEST, paymentOrderVerifySaga),
     ]);
 }
 

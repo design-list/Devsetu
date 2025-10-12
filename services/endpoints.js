@@ -40,9 +40,18 @@ export const endpoints = {
         package: `${baseApiUrl}/packages`,
     },
 
-    // Cart: {
-    //     cart: "cart", // 👈 Add this line
-    // },
+    UserDetail: {
+        userdetail: `${baseApiUrl}/user_details`,
+    },
+
+    Cart: {
+        cart: `${baseApiUrl}/cart`,
+    },
+
+    Payment: {
+        Order: "order",
+        Verify: "verify",
+    },
     
     Web: {
         puja:`${baseApiUrl}/web/pujas`,

@@ -25,6 +25,9 @@ export const metadata = {
 };
 
 export default function RootLayout({ children, mainClass }) {
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   return (
     <html lang="en">
       <body className={`${roboto.variable}`}

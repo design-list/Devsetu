@@ -55,10 +55,10 @@ export function* fetchCartDetailSaga({ payload, resolve }) {
 export function* addNewCartSaga({ payload, resolve }) {
   try {
     yield put({ type: START_LOADING, isLoading: true });
-    let response = yield api.AddCart(payload);
+    let response = yield api.AddNewCart(payload);
     const { data, status } = response;
 
-    if (status === 201) {
+    if (status === 200) {
       yield put({ type: ADD_NEW_CART_RESPONSE, payload: data });
     } else {
       yield put({ type: ADD_NEW_CART_FAILED, payload: data });

@@ -41,6 +41,7 @@ import cartPackage from './CartModels/cartPackage.js';
 
 import Faqs from './faqs.js';
 import offerings from './offerings.js';
+import UserDetails from './CartModels/UserDetails.js';
 
 const env = process.env.NODE_ENV || 'development';
 const config = configFile[env];
@@ -94,6 +95,7 @@ db.cartPackage = cartPackage(sequelize, Sequelize.DataTypes);
 db.Faqs = Faqs(sequelize, Sequelize.DataTypes);
 db.offerings = offerings(sequelize, Sequelize.DataTypes);
 db.commonPujaPackage = commonPujaPackage(sequelize, Sequelize.DataTypes);
+db.UserDetails = UserDetails(sequelize, Sequelize.DataTypes);
 
 // This part for setting up associations remains the same and will work correctly
 Object.keys(db).forEach((modelName) => {

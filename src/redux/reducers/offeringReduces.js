@@ -3,7 +3,7 @@ import { ADD_NEW_OFFERINGS_DATA_FAILED, ADD_NEW_OFFERINGS_DATA_RESPONSE, OFFERIN
 
 
 const initialState = {
-    allOffering: null,
+    allOffering: [],
     addedOffring: null,
     OffringDetail: null,
 }

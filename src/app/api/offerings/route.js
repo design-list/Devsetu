@@ -6,7 +6,9 @@ const { offerings } = models;
 
 export async function GET() {
   try {
-    const allOfferings = await offerings.findAll();
+    const allOfferings = await offerings.findAll({
+      attributes: ["id", "offerimg", "title", "type", "description", "price"],
+    });
 
     return NextResponse.json({data: allOfferings,  status: 200 });
   } catch (error) {

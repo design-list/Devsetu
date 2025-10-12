@@ -13,6 +13,9 @@ import CountdownTimer from "@/components/CountdownTimer";
 import LazyImage from "@/components/Atom/LazyImage";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
 import PujaPackages from "@/components/PujaPackages/index.js";
+import { useWithLang } from "../../../../../../helper/useWithLang";
+import { useRouter } from "next/navigation";
+import { addNewCartAction, addPackageAction } from "@/redux/actions/cartActions";
 
 
 const pujaData = {
@@ -47,6 +50,14 @@ export default function PujaDetailsPage() {
     const pathname = usePathname();
     const dispatch = useDispatch();
 
+    
+    const router = useRouter();
+    const withLang = useWithLang();
+
+    const handlaRedirect = (slug) => {
+    router.push(withLang(`/puja-cart/`))
+    }
+    
 
     const { pujaDetailPage } = useSelector((state) => state.pujas);
     const { isLoading } = useSelector((state) => state.loader)
@@ -116,8 +127,9 @@ export default function PujaDetailsPage() {
     };
 
 
-    const handleAddToCart = (pkg) => {
-        setCartItem(pkg);
+    const handleAddPackages = (pkg) => {
+        dispatch(addPackageAction(pkg));
+        setCartItem(pkg)
     };
 
     const formattedDate = moment(pujaDetailPage?.['date']).format("D MMMM");
@@ -247,7 +259,7 @@ export default function PujaDetailsPage() {
                     {/* Packages */}
                     <section ref={packagesRef}>
                         {/* <h2 className="text-xl font-semibold mb-3">Select Puja Package</h2> */}
-                        <PujaPackages pujaPackages={pujaDetailPage?.['pujaPackages']} onAddToCart={handleAddToCart}  />
+                        <PujaPackages pujaPackages={pujaDetailPage?.['pujaPackages']} onAddToCart={handleAddPackages}  />
                     </section>
 
                     {/* Reviews */}
@@ -297,10 +309,10 @@ export default function PujaDetailsPage() {
             <p className="text-green-600 font-bold">₹{cartItem.packagePrice}</p>
           </div>
           <button
-            className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700"
-            onClick={() => alert(`Added ${cartItem.packageType} to cart!`)}
+            className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 cursor-pointer"
+            onClick={handlaRedirect}
           >
-            Added to Cart
+            Participate now
           </button>
         </div>
       )}

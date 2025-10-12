@@ -13,7 +13,6 @@ export function* fetchAllOfferingSaga({ payload, resolve }) {
 
         const {data, status} = response;
 
-        console.log("OFFERINGS_DATA_REQUEST", data)
 
         if (status === 200) {
             yield put({ type: OFFERINGS_DATA_RESPONSE, payload: data })
