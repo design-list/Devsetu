@@ -1,3 +1,4 @@
+import Link from "next/link";
 import LazyImage from "../Atom/LazyImage";
 
 const Chalisa = ({chalisaItems}) => {
@@ -9,9 +10,9 @@ const Chalisa = ({chalisaItems}) => {
                     <LazyImage src={c.src} />
                     <h3 className="font-bold text-lg mb-2">{c.title}</h3>
                     <p className="text-sm text-gray-600 mb-4">{c.desc}</p>
-                    <a href="#" className="text-orange-600 font-medium text-sm">
+                    <Link href="#" className="text-orange-600 font-medium text-sm">
                         Read All →
-                    </a>
+                    </Link>
                 </div>
             ))}
         </div>
