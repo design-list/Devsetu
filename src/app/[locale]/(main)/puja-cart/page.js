@@ -1,19 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, Trash } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestOfferingDataAction } from "@/redux/actions/offeringActions";
 import LazyImage from "@/components/Atom/LazyImage";
-import { addOfferingAction, updateOfferingCountAction } from "@/redux/actions/cartActions";
+import { addOfferingAction, removePackageAction, updateOfferingCountAction } from "@/redux/actions/cartActions";
 import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
 
 const PujaCart = () => {
 
   const dispatch = useDispatch();
-
-
 
   const { allCarts } = useSelector((state) => state.cart)
   const { allOffering } = useSelector((state) => state.offering)
@@ -26,9 +24,6 @@ const PujaCart = () => {
     dispatch(requestOfferingDataAction())
   }, [])
 
-  // console.log("all cart data", allCarts)
-  // console.log("all allPackage data", allOffering)
-
   const hanldeAddOtherOffers = (item) => {
     dispatch(addOfferingAction(item))
   }
@@ -38,9 +33,15 @@ const PujaCart = () => {
     dispatch(updateOfferingCountAction(id, changeType))
   }
 
-    const handlaRedirect = () => {
-      router.push(withLang('/add-personal-details'))
-    }
+  const handleRemovePackages = () => {
+      dispatch(removePackageAction());
+  };
+
+  const handlaRedirect = () => {
+    router.push(withLang('/add-personal-details'))
+  }
+
+  console.log("CART data", allCarts)
   
 
   return (
@@ -50,15 +51,20 @@ const PujaCart = () => {
         <h2 className="text-lg font-semibold mb-4">Review Booking</h2>
         <div className="space-y-4">
 
-          <div
+          { allCarts?.['package'] !== null && <div
             className="border rounded-lg p-4 shadow-sm bg-white"
           >
-            <h3 className="font-medium">{allCarts?.['package']?.packageType}</h3>
+            <div className="flex justify-between items-center">
+              <h3 className="font-medium">{allCarts?.['package']?.packageType}</h3> 
+              <button onClick={handleRemovePackages} className="bg-red-600 p-1 rounded text-white hover:bg-red-700 cursor-pointer">
+                <Trash height={14} width={14} />
+              </button>
+            </div>
             {/* {item.type && <p className="text-gray-500 text-sm">{item.type}</p>} */}
             <div className="flex justify-between items-center mt-2">
               <span className="font-semibold text-gray-700">₹{allCarts?.['package']?.packagePrice}</span>
             </div>
-          </div>
+          </div>}
 
           {
             allCarts?.['add_ons'].map((item) => {
@@ -106,7 +112,7 @@ const PujaCart = () => {
                   key={item.id}
                   className="flex justify-between text-gray-700"
                 >
-                  <span>{item.title.split(" ")[0]}</span>
+                  <span>{item.title.split(" ").slice(0, 2).join(" ")}</span>
                   <span>₹{(item.price) * (item.quantity)}</span>
                 </div>
               ))}
@@ -151,12 +157,20 @@ const PujaCart = () => {
               </div>
               <div className="flex justify-between items-center mt-3">
                 <span className="text-green-600 font-bold">₹{off.price}</span>
-                <button
-                  onClick={() => hanldeAddOtherOffers(off)}
+                {allCarts?.add_ons?.some(add => add.id === off.id) ? (
+                  <button
                   className="border border-green-500 text-green-600 text-sm px-3 py-1 rounded-md flex items-center gap-1 hover:bg-green-50"
                 >
-                  <Plus size={14} /> Add
+                  Added
                 </button>
+                ) : (
+                  <button
+                    onClick={() => hanldeAddOtherOffers(off)}
+                    className="border border-green-500 text-green-600 text-sm px-3 py-1 rounded-md flex items-center gap-1 hover:bg-green-50"
+                  >
+                    <Plus size={14} /> Add
+                  </button>
+                )}
               </div>
             </div>
           ))}

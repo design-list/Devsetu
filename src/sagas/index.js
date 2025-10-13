@@ -7,7 +7,7 @@ import { addNewArticelSaga, ArticelDetialSaga, deleteArticelSaga, fetchAllArtice
 import { ADD_NEW_ARTICLES_DATA_REQUEST, ARTICLES_DATA_REQUEST, ARTICLES_DETAILS_DATA_REQUEST, UPDATE_ARTICLES_DATA_REQUEST } from '@/redux/types/articelsTypes';
 import { fetchAllHomeSaga } from './homeSaga';
 import { HOME_DATA_REQUEST } from '@/redux/types/homeTypes';
-import { ADD_NEW_CART_REQUEST, CART_DATA_REQUEST, CART_DETAILS_REQUEST, DELETE_CART_REQUEST, UPDATE_CART_REQUEST } from '@/redux/types/cartTypes';
+import { ADD_NEW_CART_REQUEST, CART_DATA_REQUEST, CART_DETAILS_REQUEST, UPDATE_CART_REQUEST } from '@/redux/types/cartTypes';
 import { addNewCartSaga, deleteCartSaga, fetchAllCartSaga, fetchCartDetailSaga, updateCartSaga } from './cartSaga';
 import { ADD_NEW_FAQS_DATA_REQUEST, DELETE_FAQS_DATA_REQUEST, FAQS_DATA_REQUEST, FAQS_DETAILS_DATA_REQUEST, UPDATE_FAQS_DATA_REQUEST } from '@/redux/types/faqTypes';
 import { addNewFaqsSaga, deleteFaqsSaga, FaqsDetialSaga, fetchAllFaqsSaga, updateFaqsSaga } from './faqsSaga';
@@ -70,7 +70,6 @@ function* rootSaga() {
         takeLatest(CART_DETAILS_REQUEST, fetchCartDetailSaga),
         takeLatest(ADD_NEW_CART_REQUEST, addNewCartSaga),
         takeLatest(UPDATE_CART_REQUEST, updateCartSaga),
-        takeLatest(DELETE_CART_REQUEST, deleteCartSaga),
 
         takeLatest(PAYMENT_OREDR_REQUEST, paymentOrderSaga),
         takeLatest(PAYMENT_OREDR_VERIFY_REQUEST, paymentOrderVerifySaga),
