@@ -1,6 +1,5 @@
 "use client";
 
-import { addNewUserDetailsAction } from "@/redux/actions/userDetailsActions";
 import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +27,9 @@ export default function CheckoutPage() {
 
   const { allCarts } = useSelector((state) => state.cart);
 
+  console.log("NEXT_PUBLIC_RAZORPAY_KEY_ID ID:", process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID);
+
+
 
   // generate once when component mounts
     useEffect(() => {
@@ -45,111 +47,111 @@ export default function CheckoutPage() {
     setMembers(updated);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
 
-    // Step 1: Validate form
-    const { isValid, errors: validationErrors } = validateFields([form], [
-      "whatsapp",
-      "name",
-      "address",
-      "postalCode",
-      "city",
-      "state",
-    ]);
+  //   // Step 1: Validate form
+  //   const { isValid, errors: validationErrors } = validateFields([form], [
+  //     "whatsapp",
+  //     "name",
+  //     "address",
+  //     "postalCode",
+  //     "city",
+  //     "state",
+  //   ]);
 
-    const fieldErrorObj = validationErrors[0];
-    setErrors(fieldErrorObj);
+  //   const fieldErrorObj = validationErrors[0];
+  //   setErrors(fieldErrorObj);
 
-    if (!isValid) {
-      return; 
-    }
+  //   if (!isValid) {
+  //     return; 
+  //   }
 
-    const userDetails = { ...form, members };
-    const payload = {
-        ...allCarts,
-        store_id: storeId,
-        userDetails
-    }
+  //   const userDetails = { ...form, members };
+  //   const payload = {
+  //       ...allCarts,
+  //       store_id: storeId,
+  //       userDetails
+  //   }
 
-    console.log("payload", payload)
+  //   console.log("payload", payload)
 
-      fetchWithWait({ dispatch, action: addNewCartAction(payload) })
-          .then((res) => {
+  //     fetchWithWait({ dispatch, action: addNewCartAction(payload) })
+  //         .then((res) => {
 
-            const {data, status} = res
+  //           const {data, status} = res
 
-              if (status === 200) {
-                const orderPayload = {
-                    amount: data.grand_total,
-                    currency: "INR",
-                    receipt: `cart_${data.cart_id}`,
-                    cart_id: data.cart_id,
-                }
-                fetchWithWait({ dispatch, action: requestPaymentOrderAction(orderPayload) })
-                    .then((res) => {
-                        if (res.status === 200) {
+  //             if (status === 200) {
+  //               const orderPayload = {
+  //                   amount: data.grand_total,
+  //                   currency: "INR",
+  //                   receipt: `cart_${data.cart_id}`,
+  //                   cart_id: data.cart_id,
+  //               }
+  //               fetchWithWait({ dispatch, action: requestPaymentOrderAction(orderPayload) })
+  //                   .then((res) => {
+  //                       if (res.status === 200) {
 
-                           // Step 5: Open Razorpay Checkout
-                        const options = {
-                            key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-                            amount: orderRes.order.amount,
-                            currency: "INR",
-                            name: allCarts?.['package']?.packageType,
-                            description: "Checkout Payment",
-                            order_id: orderRes.order.id,
-                            handler: async (response) => {
-                                try {
-                                const verifyPayload = {
-                                    ...response,
-                                    cart_id: cartRes.cart_id,
-                                };
+  //                          // Step 5: Open Razorpay Checkout
+  //                       const options = {
+  //                           key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+  //                           amount: orderRes.order.amount,
+  //                           currency: "INR",
+  //                           name: allCarts?.['package']?.packageType,
+  //                           description: "Checkout Payment",
+  //                           order_id: orderRes.order.id,
+  //                           handler: async (response) => {
+  //                               try {
+  //                               const verifyPayload = {
+  //                                   ...response,
+  //                                   cart_id: cartRes.cart_id,
+  //                               };
 
-                                const verifyRes = await fetchWithWait({
-                                    dispatch,
-                                    action: paymentVerifyAction(verifyPayload),
-                                });
+  //                               const verifyRes = await fetchWithWait({
+  //                                   dispatch,
+  //                                   action: paymentVerifyAction(verifyPayload),
+  //                               });
 
-                                if (verifyRes.status === 200) {
-                                    alert("✅ Payment Successful!");
-                                    // Optionally: redirect to success page
-                                    // router.push(`/payment-success/${cartRes.cart_id}`);
-                                } else {
-                                    alert(verifyRes.message || "Payment verification failed.");
-                                }
-                                } catch (err) {
-                                console.error("Verification error:", err);
-                                alert("Error verifying payment.");
-                                }
-                            },
-                            theme: { color: "#D32F2F" },
-                            };
+  //                               if (verifyRes.status === 200) {
+  //                                   alert("✅ Payment Successful!");
+  //                                   // Optionally: redirect to success page
+  //                                   // router.push(`/payment-success/${cartRes.cart_id}`);
+  //                               } else {
+  //                                   alert(verifyRes.message || "Payment verification failed.");
+  //                               }
+  //                               } catch (err) {
+  //                               console.error("Verification error:", err);
+  //                               alert("Error verifying payment.");
+  //                               }
+  //                           },
+  //                           theme: { color: "#D32F2F" },
+  //                           };
 
                             
-                            const rzp = new window.Razorpay(options);
-                            rzp.open();
+  //                           const rzp = new window.Razorpay(options);
+  //                           rzp.open();
 
-                            rzp.on("payment.failed", (response) => {
-                            alert("❌ Payment Failed. Please try again.");
-                            console.error("Payment Failed:", response.error);
-                            });
+  //                           rzp.on("payment.failed", (response) => {
+  //                           alert("❌ Payment Failed. Please try again.");
+  //                           console.error("Payment Failed:", response.error);
+  //                           });
 
-                        } else {
-                            alert(res.message || "Something went wrong.verify");
-                        }
-                    })
-                    .catch((e) => {
-                        console.error("Error:", e);
-                        alert("Error while saving user details.");
-                    });
-            } else {
-                alert(res.message || "Something went wrong.order");
-            }
-        }) .catch((e) => {
-            console.error("Error:", e);
-            alert("Error while saving user details.");
-        });
-  };
+  //                       } else {
+  //                           alert(res.message || "Something went wrong.verify");
+  //                       }
+  //                   })
+  //                   .catch((e) => {
+  //                       console.error("Error:", e);
+  //                       alert("Error while saving user details.");
+  //                   });
+  //           } else {
+  //               alert(res.message || "Something went wrong.order");
+  //           }
+  //       }) .catch((e) => {
+  //           console.error("Error:", e);
+  //           alert("Error while saving user details.");
+  //       });
+  // };
 
 
 //    setMembers([""]);
@@ -162,6 +164,123 @@ export default function CheckoutPage() {
 //             state: "",
 //           });
 //           setErrors({});
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // 1️⃣ Validate form
+  const { isValid, errors: validationErrors } = validateFields([form], [
+    "whatsapp",
+    "name",
+    "address",
+    "postalCode",
+    "city",
+    "state",
+  ]);
+
+  const fieldErrorObj = validationErrors[0];
+  setErrors(fieldErrorObj);
+
+  if (!isValid) return;
+
+  // 2️⃣ Prepare payload for saving cart/user details
+  const userDetails = { ...form, members };
+  const payload = {
+    ...allCarts,
+    store_id: storeId,
+    userDetails,
+  };
+
+  try {
+    // 3️⃣ Save cart and get order amount
+    const cartRes = await fetchWithWait({ dispatch, action: addNewCartAction(payload) });
+
+    if (cartRes.status !== 200) {
+      alert(cartRes.message || "Error saving cart.");
+      return;
+    }
+
+    const orderPayload = {
+      amount: cartRes.data.grand_total,
+      currency: "INR",
+      receipt: `cart_${cartRes.data.cart_id}`,
+      cart_id: cartRes.data.cart_id,
+    };
+
+    // 4️⃣ Request Razorpay order from backend
+    const orderRes = await fetchWithWait({ dispatch, action: requestPaymentOrderAction(orderPayload) });
+
+    if (orderRes.status !== 200) {
+      alert(orderRes.message || "Error creating payment order.");
+      return;
+    }
+
+    // 5️⃣ Load Razorpay SDK
+    const loadScript = (src) => new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+
+    const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+    if (!res) {
+      alert("Razorpay SDK failed to load.");
+      return;
+    }
+
+    // 6️⃣ Open Razorpay Checkout
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      amount: orderRes.data.order.amount,
+      currency: "INR",
+      name: allCarts?.package?.packageType || "Checkout Payment",
+      description: "Payment for your cart",
+      order_id: orderRes.data.order.id,
+      handler: async (response) => {
+        try {
+          // Verify payment
+          const verifyPayload = {
+            ...response,
+            cart_id: cartRes.data.cart_id,
+          };
+
+          const verifyRes = await fetchWithWait({
+            dispatch,
+            action: paymentVerifyAction(verifyPayload),
+          });
+
+          if (verifyRes.status === 200) {
+            alert("✅ Payment Successful!");
+            // Optional: redirect to success page
+            // router.push(`/payment-success/${cartRes.data.cart_id}`);
+          } else {
+            alert(verifyRes.message || "Payment verification failed.");
+          }
+        } catch (err) {
+          console.error("Verification error:", err);
+          alert("Error verifying payment.");
+        }
+      },
+      theme: { color: "#D32F2F" },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+
+    rzp.on("payment.failed", (response) => {
+      console.error("Payment Failed:", response.error);
+      alert("❌ Payment Failed. Please try again.");
+    });
+
+  } catch (error) {
+    console.error("Error in payment flow:", error);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
 
 
   return (

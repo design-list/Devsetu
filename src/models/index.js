@@ -33,7 +33,7 @@ import Horoscopes from './ArticelsModels/Horoscopes.js';
 
 import testimonials from './TestimonialModels/testimonials.js';
 
-import commonPujaPackage from './CommonPujaPackage.js';
+import commonPujaPackage from './commonPujaPackage.js';
 
 import cart from './CartModels/cart.js';
 import cartAddOn from './CartModels/cartAddOn.js';
