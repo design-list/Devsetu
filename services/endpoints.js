@@ -49,8 +49,8 @@ export const endpoints = {
     },
 
     Payment: {
-        Order: "order",
-        Verify: "verify",
+        Order: `${baseApiUrl}/payment/order`,
+        Verify: `${baseApiUrl}/payment/verify`,
     },
     
     Web: {

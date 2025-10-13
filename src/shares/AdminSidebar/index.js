@@ -115,7 +115,7 @@ const Sidebar = () => {
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <Gift size={18} />
-                {open && <span>Common Package</span>}
+                {open && <span>Common Packages & Offerings</span>}
               </Link>
             </li>
           </ul>

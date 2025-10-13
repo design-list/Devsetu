@@ -81,13 +81,14 @@ export async function POST(request) {
       });
     }
 
-    return NextResponse.json(
-      {
-        success: true,
-        cart_id: newCart.id,
-        grand_total: body.grand_total,
+    return NextResponse.json({
+        data : {
+          success: true,
+          cart_id: newCart.id,
+          grand_total: body.grand_total,
+        },
+        status: 200 
       },
-      { status: 201 }
     );
   } catch (error) {
     console.error("POST /api/cart error:", error);

@@ -2,13 +2,16 @@
 
 import Container from "@/components/Container";
 import LazyImage from "@/components/Atom/LazyImage";
-import { useParams, usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { Plus, Minus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchChadhavaWebDetailAction } from "@/redux/actions/chadhavaAction";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ChadhavaDetailHeroSlider from "@/components/HeroBanner/ChadhavaDetailHeroSlider";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
+import { addOfferingAction, updateOfferingCountAction } from "@/redux/actions/cartActions";
+import { useWithLang } from "../../../../../../helper/useWithLang";
 
 
 
@@ -17,9 +20,14 @@ const ChadhavaDetailsPage = () => {
     const params = useParams();
     const pathname = usePathname();
     const dispatch = useDispatch();
-     const [openFaqIndex, setOpenFaqIndex] = useState(null);
+
+    const router = useRouter();
+    const withLang = useWithLang();
+
+    const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
     const { chadhavaWebDetail } = useSelector((state) => state.chadhavas);
+    const { allCarts } = useSelector((state) => state.cart)
     const { isLoading } = useSelector((state) => state.loader)
 
     useEffect(() => {
@@ -29,11 +37,25 @@ const ChadhavaDetailsPage = () => {
         }
     }, [params])
 
+
+
     const toggleFaq = (index) => {
         setOpenFaqIndex(openFaqIndex === index ? null : index);
     };
 
+    const hanldeAddChadhava = (item) => {
+        dispatch(addOfferingAction(item))
+    }
 
+    const handleQuantityChange = (id, changeType) => {
+        dispatch(updateOfferingCountAction(id, changeType))
+    }
+
+    const handlaRedirect = () => {
+        router.push(withLang(`/puja-cart`))
+    }
+
+    console.log("allCarts", allCarts)
 
     if(isLoading){
         return<PageLaoder />
@@ -123,9 +145,46 @@ const ChadhavaDetailsPage = () => {
                                             height={80}
                                             className="rounded-md object-cover"
                                         />
-                                        <button className="mt-3 border border-green-600 text-green-600 px-3 py-1 rounded-lg hover:bg-green-50">
+                                    {(() => {
+                                        // current item का add_on entry खोजो
+                                        const matchedAddOn = allCarts?.add_ons?.find(add => add.id === item.id);
+
+                                        // अगर मिला तो quantity वाला UI दिखाओ
+                                        if (matchedAddOn) {
+                                            return (
+                                            <div className="flex items-center border rounded-lg px-2 py-1">
+                                                <button
+                                                onClick={() => handleQuantityChange(item.id, "decrement")}
+                                                className="text-gray-600 hover:text-black"
+                                                >
+                                                <Minus size={14} />
+                                                </button>
+
+                                                <span className="mx-2 text-sm font-semibold">
+                                                {matchedAddOn.quantity ?? 1}
+                                                </span>
+
+                                                <button
+                                                onClick={() => handleQuantityChange(item.id, "increment")}
+                                                className="text-gray-600 hover:text-black"
+                                                >
+                                                <Plus size={14} />
+                                                </button>
+                                            </div>
+                                            );
+                                        }
+
+                                        // अगर नहीं मिला तो +Add button दिखाओ
+                                        return (
+                                            <button
+                                            onClick={() => hanldeAddChadhava(item)}
+                                            className="mt-3 border border-green-600 text-green-600 px-3 py-1 rounded-lg hover:bg-green-50"
+                                            >
                                             + Add
-                                        </button>
+                                            </button>
+                                        );
+                                        })()}
+
                                     </div>
                                 </div>
                             ))}
@@ -155,6 +214,22 @@ const ChadhavaDetailsPage = () => {
                         </div>
                     </section>
 
+                </div>
+                <div className="space-y-10">
+                    {/* Add to Cart Button */}
+                    {allCarts?.["add_ons"].length > 0 && (
+                        <div className="sticky bottom-0 bg-green-600 rounded text-white border-t shadow-md p-4 flex justify-between items-center">
+                            <div>
+                                <p className="font-semibold">{`${allCarts?.["add_ons"].length} : Offerings . ₹ ${allCarts?.['grand_total']}`}</p>
+                            </div>
+                            <button
+                                className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 cursor-pointer"
+                                onClick={handlaRedirect}
+                            >
+                                Cart Review →
+                            </button>
+                        </div>
+                    )}
                 </div>
             </Container>
         </div>

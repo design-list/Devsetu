@@ -50,14 +50,14 @@ export default function PujaDetailsPage() {
     const pathname = usePathname();
     const dispatch = useDispatch();
 
-    
+
     const router = useRouter();
     const withLang = useWithLang();
 
     const handlaRedirect = (slug) => {
-    router.push(withLang(`/puja-cart/`))
+        router.push(withLang(`/puja-cart/`))
     }
-    
+
 
     const { pujaDetailPage } = useSelector((state) => state.pujas);
     const { isLoading } = useSelector((state) => state.loader)
@@ -141,7 +141,7 @@ export default function PujaDetailsPage() {
             <Container>
                 {/* Banner */}
                 <div className="bg-gray-50 p-4 lg:p-8 flex flex-col lg:flex-row gap-6">
-                   {isLoading ? <PageLaoder /> : <div className="flex-1 w-[600px] h-[400px] relative">
+                    {isLoading ? <PageLaoder /> : <div className="flex-1 w-[600px] h-[400px] relative">
                         <PageDetailHeroSlider heroSlides={pujaDetailPage?.['pujaBanners']} />
                     </div>}
                     <div className="flex-1 space-y-3">
@@ -259,7 +259,7 @@ export default function PujaDetailsPage() {
                     {/* Packages */}
                     <section ref={packagesRef}>
                         {/* <h2 className="text-xl font-semibold mb-3">Select Puja Package</h2> */}
-                        <PujaPackages pujaPackages={pujaDetailPage?.['pujaPackages']} onAddToCart={handleAddPackages}  />
+                        <PujaPackages pujaPackages={pujaDetailPage?.['pujaPackages']} onAddToCart={handleAddPackages} />
                     </section>
 
                     {/* Reviews */}
@@ -301,22 +301,22 @@ export default function PujaDetailsPage() {
             </Container>
 
             <div className="space-y-10">
-      {/* Add to Cart Button */}
-      {cartItem && (
-        <div className="sticky bottom-0 bg-white border-t shadow-md p-4 flex justify-between items-center">
-          <div>
-            <p className="font-semibold">{cartItem.packageType}</p>
-            <p className="text-green-600 font-bold">₹{cartItem.packagePrice}</p>
-          </div>
-          <button
-            className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 cursor-pointer"
-            onClick={handlaRedirect}
-          >
-            Participate now
-          </button>
-        </div>
-      )}
-    </div>
+                {/* Add to Cart Button */}
+                {cartItem && (
+                    <div className="sticky bottom-0 bg-white border-t shadow-md p-4 flex justify-between items-center">
+                        <div>
+                            <p className="font-semibold">{cartItem.packageType}</p>
+                            <p className="text-green-600 font-bold">₹{cartItem.packagePrice}</p>
+                        </div>
+                        <button
+                            className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 cursor-pointer"
+                            onClick={handlaRedirect}
+                        >
+                            Participate now
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

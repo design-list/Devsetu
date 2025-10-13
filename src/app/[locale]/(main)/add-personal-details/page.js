@@ -76,12 +76,15 @@ export default function CheckoutPage() {
 
       fetchWithWait({ dispatch, action: addNewCartAction(payload) })
           .then((res) => {
-              if (res.status === 200) {
+
+            const {data, status} = res
+
+              if (status === 200) {
                 const orderPayload = {
-                    amount: res.grand_total,
+                    amount: data.grand_total,
                     currency: "INR",
-                    receipt: `cart_${res.cart_id}`,
-                    cart_id: res.cart_id,
+                    receipt: `cart_${data.cart_id}`,
+                    cart_id: data.cart_id,
                 }
                 fetchWithWait({ dispatch, action: requestPaymentOrderAction(orderPayload) })
                     .then((res) => {
@@ -142,8 +145,7 @@ export default function CheckoutPage() {
             } else {
                 alert(res.message || "Something went wrong.order");
             }
-        })
-        .catch((e) => {
+        }) .catch((e) => {
             console.error("Error:", e);
             alert("Error while saving user details.");
         });
