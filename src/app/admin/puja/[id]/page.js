@@ -7,6 +7,10 @@ import { fetchWithWait } from "../../../../../helper/method";
 import { addNewPujaDataAction, fetchPujaDetailAction, requestPujaDataAction, updatePujaAction } from "@/redux/actions/pujaActions";
 import { useParams, useRouter } from "next/navigation";
 
+import Api from "../../../../../services/fetchApi";
+
+const api = new Api()
+
 const EditPujaForm = () => {
 
     const [formData, setFormData] = useState({
@@ -21,9 +25,12 @@ const EditPujaForm = () => {
         pujaDetails: "",
         isActive: true,
         isActiveOnHome: false,
+        commonOffer: true,
+        commonPack: true,
+        commonFaqs: true,
         temple: { templeImg: null, templeName: "", templeHistory: "" },
         packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-        offerings: { offerimg: [null], offers: [{ title: "", description: "" }] },
+        offerings: [{ offerimg: null, title: "", description: "", price: "" }],
         faqs: [{ title: "", description: "" }],
         banners: [{imgUrl: null, type: "", position: 0}],
     });
@@ -36,11 +43,12 @@ const EditPujaForm = () => {
 
     const { pujaDetail } = useSelector((state) => state.pujas);
 
-    // console.log("pujaDetail", pujaDetail)
 
     useEffect(() => {
         dispatch(fetchPujaDetailAction(params.id))
     }, [params.id]);
+
+
 
     useEffect(() => {
         setFormData((prev) => ({
@@ -48,6 +56,59 @@ const EditPujaForm = () => {
             slug: slugify(prev.title),
         }));
     }, [formData?.title]);
+
+    
+
+    // useEffect(() => {
+    //     if (pujaDetail) {
+    //         setFormData({
+    //         title: pujaDetail.title || "",
+    //         subTitle: pujaDetail.subTitle || "",
+    //         description: pujaDetail.description || "",
+    //         price: pujaDetail.price || "",
+    //         offerPrice: pujaDetail.offerPrice || "",
+    //         discountPercent: pujaDetail.discountPercent || "",
+    //         samagriPrice: pujaDetail.samagriPrice || "",
+    //         onlinePrice: pujaDetail.onlinePrice || "",
+    //         isActive: pujaDetail.isActive || false,
+    //         image: pujaDetail.image || "",
+    //         otherImages: pujaDetail.otherImages || [],
+    //         location: pujaDetail.location || "",
+    //         metaTitle: pujaDetail.metaTitle || "",
+    //         metaDescription: pujaDetail.metaDescription || "",
+    //         metaKeyword: pujaDetail.metaKeyword || "",
+    //         commonPack: pujaDetail.commonPack || false,
+    //         commonOffer: pujaDetail.commonOffer || false,
+    //         commonFaqs: pujaDetail.commonFaqs || false,
+
+    //         // ✅ FIXED PART — अब पुराना data नहीं मिटेगा
+    //         packages:
+    //             pujaDetail.pujaPackages?.length
+    //             ? pujaDetail.pujaPackages.map((p) => ({
+    //                 name: p.name || "",
+    //                 price: p.price || "",
+    //                 description: p.description || "",
+    //                 }))
+    //             : formData.packages,
+
+    //         offerings:
+    //             pujaDetail.pujaOfferings?.length
+    //             ? pujaDetail.pujaOfferings.map((o) => ({
+    //                 name: o.name || "",
+    //                 description: o.description || "",
+    //                 }))
+    //             : formData.offerings,
+
+    //         faqs:
+    //             pujaDetail.pujaFaqs?.length
+    //             ? pujaDetail.pujaFaqs.map((f) => ({
+    //                 title: f.question || "",
+    //                 description: f.answer || "",
+    //                 }))
+    //             : formData.faqs,
+    //         });
+    //     }
+    // }, [pujaDetail]);
 
 
     useEffect(() => {
@@ -65,6 +126,9 @@ const EditPujaForm = () => {
                 pujaDetails: pujaDetail.pujaDetails || "",
                 isActive: pujaDetail.isActive,
                 isActiveOnHome: pujaDetail.isActiveOnHome,
+                commonPack: pujaDetail.commonPack,
+                commonOffer: pujaDetail.commonOffer,
+                commonFaqs: pujaDetail.commonFaqs,
 
                 temple: pujaDetail.templeHistories?.[0]
                     ? {
@@ -74,33 +138,35 @@ const EditPujaForm = () => {
                     }
                     : { templeImg: null, templeName: "", templeHistory: "" },
 
-                packages: pujaDetail.pujaPackages?.length
-                    ? pujaDetail.pujaPackages?.map((p) => ({
-                        packImg: p.packImg || null,
-                        packageType: p.packageType || "",
-                        packagePrice: p.packagePrice || "",
-                    }))
-                    : [{ packImg: null, packageType: "", packagePrice: "" }],
+                packages:
+                    pujaDetail.pujaPackages?.length
+                    ? pujaDetail.pujaPackages.map((p) => ({
+                        name: p.name || "",
+                        price: p.price || "",
+                        description: p.description || "",
+                        }))
+                    : formData.packages,
 
-                offerings: {
-                    offerimg:
-                        pujaDetail.pujaOfferings?.[0]?.offerimg?.length > 0
-                            ? pujaDetail.pujaOfferings[0].offerimg
-                            : [null],
-                    offers: pujaDetail.pujaOfferings?.map((o) => ({
-                        title: o.title || "",
-                        description: o.Description || "",
-                    })) || [{ title: "", description: "" }],
-                },
+                offerings:
+                    pujaDetail.pujaOfferings?.length
+                    ? pujaDetail.pujaOfferings.map((o) => ({
+                        name: o.name || "",
+                        description: o.description || "",
+                        }))
+                    : formData.offerings,
 
-                faqs: pujaDetail.pujaFaqs?.map((f) => ({
-                    title: f.question || "",
-                    description: f.answer || "",
-                })) || [{ title: "", description: "" }],
+                faqs:
+                    pujaDetail.pujaFaqs?.length
+                    ? pujaDetail.pujaFaqs.map((f) => ({
+                        title: f.question || "",
+                        description: f.answer || "",
+                        }))
+                    : formData.faqs,
+
 
                  // Banners
-                banners: pujaDetail.pujaImages
-                    ? pujaDetail.pujaImages.map((b) => ({
+                banners: pujaDetail.pujaBanners
+                    ? pujaDetail.pujaBanners.map((b) => ({
                     imgUrl: b.imageUrl || "",
                     type: b.type || "",
                     position: b.position || ""
@@ -241,137 +307,257 @@ const EditPujaForm = () => {
     //     }
     // };
 
-const handleChange = async (e, index) => {
-    e.preventDefault();
+    // const handleChange = async (e, index) => {
+    // e.preventDefault();
 
-    const { name, value, files } = e.target;
+    // const { name, value, files } = e.target;
 
-    if (files && files[0]) {
-      const file = files[0];
+    // if (files && files[0]) {
+    //   const file = files[0];
 
-      // Local preview
-      const localPreview = URL.createObjectURL(file);
+    //   // Local preview
+    //   const localPreview = URL.createObjectURL(file);
 
-      if (name === "imgUrl") {
-        // Update images preview
-        setFormData((prev) => {
-          const updated = [...prev.banners];
-          updated[index].imgUrl = localPreview.toString();
-          return { ...prev, banners: updated };
-        });
-      } else if (name === "icon") {
-        // Update FAQ icon preview
-        setFormData((prev) => {
-          const updated = [...prev.faqs];
-          updated[index].icon = localPreview.toString();
-          return { ...prev, faqs: updated };
-        });
-      } else if (name === "packImg") {
-        // Update Package Image preview
-        setFormData((prev) => {
-          const updated = [...prev.packages];
-          updated[index].packImg = localPreview.toString();
-          return { ...prev, packages: updated };
-        });
-      } else if (name === "offerimg") {
-        setFormData((prev) => {
-          const updatedImgs = [...prev.offerings.offerimg];
-          updatedImgs[index] = localPreview;
-          return {
-            ...prev,
-            offerings: { ...prev.offerings, offerimg: updatedImgs },
-          };
-        });
-      } else if (name === "templeImg") {
-        setFormData((prev) => ({
-          ...prev,
-          temple: {
-            ...prev.temple,
-            templeImg: localPreview,
-          },
-        }));
-      } else {
-        alert("Upload failed: ");
-      }
+    //   if (name === "imgUrl") {
+    //     // Update images preview
+    //     setFormData((prev) => {
+    //       const updated = [...prev.banners];
+    //       updated[index].imgUrl = localPreview.toString();
+    //       return { ...prev, banners: updated };
+    //     });
+    //   } else if (name === "icon") {
+    //     // Update FAQ icon preview
+    //     setFormData((prev) => {
+    //       const updated = [...prev.faqs];
+    //       updated[index].icon = localPreview.toString();
+    //       return { ...prev, faqs: updated };
+    //     });
+    //   } else if (name === "packImg") {
+    //     // Update Package Image preview
+    //     setFormData((prev) => {
+    //       const updated = [...prev.packages];
+    //       updated[index].packImg = localPreview.toString();
+    //       return { ...prev, packages: updated };
+    //     });
+    //   } else if (name === "offerimg") {
+    //     setFormData((prev) => {
+    //       const updatedImgs = [...prev.offerings.offerimg];
+    //       updatedImgs[index] = localPreview;
+    //       return {
+    //         ...prev,
+    //         offerings: { ...prev.offerings, offerimg: updatedImgs },
+    //       };
+    //     });
+    //   } else if (name === "templeImg") {
+    //     setFormData((prev) => ({
+    //       ...prev,
+    //       temple: {
+    //         ...prev.temple,
+    //         templeImg: localPreview,
+    //       },
+    //     }));
+    //   } else {
+    //     alert("Upload failed: ");
+    //   }
 
-      // Upload to server
-      const uploadFormData = new FormData();
-      uploadFormData.append("file", file);
+    //   // Upload to server
+    //   const uploadFormData = new FormData();
+    //   uploadFormData.append("file", file);
 
-      try {
-        const res = await fetch(`${baseAPIURL}/uploads`, {
-          method: "POST",
-          body: uploadFormData,
-        });
+    //   try {
+    //     const res = await fetch(`${baseAPIURL}/uploads`, {
+    //       method: "POST",
+    //       body: uploadFormData,
+    //     });
 
-        const data = await res.json();
-        console.log("datadatadata", data)
+    //     const data = await res.json();
+    //     console.log("datadatadata", data)
 
-        if (res.ok) {
-          if (name === "imgUrl") {
+    //     if (res.ok) {
+    //       if (name === "imgUrl") {
+    //         setFormData((prev) => {
+    //           const updated = [...prev.banners];
+    //           updated[index].imgUrl = (data.storedAs).toString(); // server path
+    //           return { ...prev, banners: updated };
+    //         });
+    //       } else if (name === "icon") {
+    //         setFormData((prev) => {
+    //           const updated = [...prev.faqs];
+    //           updated[index].icon = (data.storedAs).toString(); // server path
+    //           return { ...prev, faqs: updated };
+    //         });
+    //       } else if (name === "packImg") {
+    //         setFormData((prev) => {
+    //           const updated = [...prev.packages];
+    //           updated[index].packImg = (data.storedAs).toString(); // server path
+    //           return { ...prev, packages: updated };
+    //         });
+    //       } else if (name === "offerimg") {
+    //         setFormData((prev) => {
+    //           const updatedImgs = [...prev.offerings.offerimg];
+    //           updatedImgs[index] = (data.storedAs).toString(); // replace null with uploaded path
+    //           return {
+    //             ...prev,
+    //             offerings: { ...prev.offerings, offerimg: updatedImgs },
+    //           };
+    //         });
+    //       } else if (name === "templeImg") {
+    //         setFormData((prev) => ({
+    //           ...prev,
+    //           temple: {
+    //             ...prev.temple,
+    //             templeImg: data.storedAs.toString(),
+    //           },
+    //         }));
+    //       }
+    //     } else {
+    //       alert("Upload failed: " + data.error);
+    //     }
+    //   } catch (err) {
+    //     console.error("Upload error:", err);
+    //     alert("Error while uploading file");
+    //   }
+    // } else if (name.startsWith("temple.")) {
+    //     const field = name.split(".")[1];
+    //     setFormData((prev) => ({
+    //       ...prev,
+    //       temple: {
+    //         ...prev.temple,
+    //         [field]: value, // Dynamically set the correct nested field
+    //       },
+    //     })); 
+    //   } else {
+    //   setFormData((prev) => ({
+    //     ...prev,
+    //     [name]: value,
+    //   }));
+    // }
+    // };
+
+    const handleChange = async (e, index) => {
+        e.preventDefault();
+
+        const { name, value, files } = e.target;
+
+        if (files && files[0]) {
+        const file = files[0];
+
+        // Local preview
+        const localPreview = URL.createObjectURL(file);
+
+        if (name === "imgUrl") {
+            // Update images preview
             setFormData((prev) => {
-              const updated = [...prev.banners];
-              updated[index].imgUrl = (data.storedAs).toString(); // server path
-              return { ...prev, banners: updated };
+            const updated = [...prev.banners];
+            updated[index].imgUrl = localPreview.toString();
+            return { ...prev, banners: updated };
             });
-          } else if (name === "icon") {
+        } else if (name === "icon") {
+            // Update FAQ icon preview
             setFormData((prev) => {
-              const updated = [...prev.faqs];
-              updated[index].icon = (data.storedAs).toString(); // server path
-              return { ...prev, faqs: updated };
+            const updated = [...prev.faqs];
+            updated[index].icon = localPreview.toString();
+            return { ...prev, faqs: updated };
             });
-          } else if (name === "packImg") {
+        } else if (name === "packImg") {
+            // Update Package Image preview
             setFormData((prev) => {
-              const updated = [...prev.packages];
-              updated[index].packImg = (data.storedAs).toString(); // server path
-              return { ...prev, packages: updated };
+            const updated = [...prev.packages];
+            updated[index].packImg = localPreview.toString();
+            return { ...prev, packages: updated };
             });
-          } else if (name === "offerimg") {
+        } else if (name === "offerimg") {
             setFormData((prev) => {
-              const updatedImgs = [...prev.offerings.offerimg];
-              updatedImgs[index] = (data.storedAs).toString(); // replace null with uploaded path
-              return {
-                ...prev,
-                offerings: { ...prev.offerings, offerimg: updatedImgs },
-              };
+            const updated = [...prev.offerings];
+            updated[index].offerimg = localPreview.toString();
+            return { ...prev, offerings: updated };
             });
-          } else if (name === "templeImg") {
+        } else if (name === "templeImg") {
             setFormData((prev) => ({
-              ...prev,
-              temple: {
+            ...prev,
+            temple: {
                 ...prev.temple,
-                templeImg: data.storedAs.toString(),
-              },
+                templeImg: localPreview,
+            },
             }));
-          }
         } else {
-          alert("Upload failed: " + data.error);
+            alert("Upload failed: ");
         }
-      } catch (err) {
-        console.error("Upload error:", err);
-        alert("Error while uploading file");
-      }
-    } else if (name.startsWith("temple.")) {
-        const field = name.split(".")[1];
+
+        // Upload to server
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", file);
+
+        try {
+            const res = await fetch(`${baseAPIURL}/uploads`, {
+            method: "POST",
+            body: uploadFormData,
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+            if (name === "imgUrl") {
+                setFormData((prev) => {
+                const updated = [...prev.banners];
+                updated[index].imgUrl = (data.storedAs).toString(); // server path
+                return { ...prev, banners: updated };
+                });
+            } else if (name === "icon") {
+                setFormData((prev) => {
+                const updated = [...prev.faqs];
+                updated[index].icon = (data.storedAs).toString(); // server path
+                return { ...prev, faqs: updated };
+                });
+            } else if (name === "packImg") {
+                setFormData((prev) => {
+                const updated = [...prev.packages];
+                updated[index].packImg = (data.storedAs).toString(); // server path
+                return { ...prev, packages: updated };
+                });
+            } else if (name === "offerimg") {
+                setFormData((prev) => {
+                const updated = [...prev.offerings];
+                updated[index].offerimg = (data.storedAs).toString(); // server path
+                return { ...prev, offerings: updated };
+                });
+            } else if (name === "templeImg") {
+                setFormData((prev) => ({
+                ...prev,
+                temple: {
+                    ...prev.temple,
+                    templeImg: data.storedAs.toString(),
+                },
+                }));
+            }
+            } else {
+            alert("Upload failed: " + data.error);
+            }
+        } catch (err) {
+            console.error("Upload error:", err);
+            alert("Error while uploading file");
+        }
+        } else if (name.startsWith("temple.")) {
+            const field = name.split(".")[1];
+            setFormData((prev) => ({
+            ...prev,
+            temple: {
+                ...prev.temple,
+                [field]: value, // Dynamically set the correct nested field
+            },
+            })); 
+        } else {
         setFormData((prev) => ({
-          ...prev,
-          temple: {
-            ...prev.temple,
-            [field]: value, // Dynamically set the correct nested field
-          },
-        })); 
-      } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
+            ...prev,
+            [name]: value,
+        }));
+        }
+    };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         fetchWithWait({ dispatch, action: updatePujaAction(formData) }).then((res) => {
-            console.log("Response:", res);
             if (res.status === 200) {
                 dispatch(requestPujaDataAction());
                 router.push("/admin/puja/list")
@@ -388,6 +574,53 @@ const handleChange = async (e, index) => {
     const handleCancel = () => {
         router.push("/admin/puja/list")
     }
+
+
+    const handleToggle = (id, field, currentValue) => {
+        const payload = {
+            id,
+            field,
+            value: !currentValue,
+        };
+    
+        api.UpdetePujaFlags(payload)
+            .then((res) => {
+            if (res.status === 200) {
+                dispatch(fetchPujaDetailAction(params.id))
+            } else {
+                alert(res.error || "Something went wrong");
+            }
+            })
+            .catch((e) => {
+            console.error("Toggle error:", e);
+        });
+    };
+
+    // const handleToggle = (id, field, currentValue) => {
+    //     // field = "isActive" | "isActiveOnHome"
+    //     const payload = {
+    //       id,
+    //       [field]: !currentValue,
+    //     };
+        
+    //     // const data  = {...formData, ...payload}
+
+    //     // console.log("handleToggle", data)
+    //     // console.log("!currentValue", !currentValue)
+
+    //     fetchWithWait({ dispatch, action: updatePujaAction(payload) })
+    //       .then((res) => {
+    //         if (res.status === 200) {
+    //           // alert(res.message || `${field} updated successfully`);
+    //           dispatch(fetchPujaDetailAction(params.id))
+    //         } else {
+    //           alert(res.error || "Something went wrong");
+    //         }
+    //       })
+    //       .catch((e) => {
+    //         console.error("Toggle error:", e);
+    //       });
+    //   };
 
     return (
         <div className="flex-1 p-6 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
@@ -649,8 +882,29 @@ const handleChange = async (e, index) => {
                     />
                 </div>
 
+                <div className="flex items-center justify-between border p-3 rounded">
+                    <label className="font-semibold">Common Packages</label>
+                    <button
+                        type="button"
+                        onClick={() =>{
+                            setFormData((prev) => ({ ...prev, commonPack: !prev.commonPack })),
+
+                            handleToggle(pujaDetail.id, "commonPack", pujaDetail.commonPack)}
+                        }
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                        formData.commonPack ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                        <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            formData.commonPack ? "translate-x-6" : "translate-x-1"
+                        }`}
+                        />
+                    </button>
+                </div>
+
                 {/* Packages */}
-                <div>
+               { !formData.commonPack && <div>
                     <label className="block font-semibold">Packages</label>
                     {formData?.packages.map((packaging, index) => (
                         <div key={index} className="border p-3 rounded mb-3 relative">
@@ -732,158 +986,155 @@ const handleChange = async (e, index) => {
                     >
                         + Add Package
                     </button>
+                </div>}
+
+
+                <div className="flex items-center justify-between border p-3 rounded">
+                    <label className="font-semibold">Common Offerings</label>
+                    <button
+                        type="button"
+                        onClick={() =>{
+                            setFormData((prev) => ({ ...prev, commonOffer: !prev.commonOffer })),
+
+                            handleToggle(pujaDetail.id, "commonOffer", pujaDetail.commonOffer)}
+                        }
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                        formData.commonOffer ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                        <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            formData.commonOffer ? "translate-x-6" : "translate-x-1"
+                        }`}
+                        />
+                    </button>
                 </div>
 
                 {/* Offerings */}
 
-                <div>
-                    <label className="block font-semibold">Offerings</label>
+                { !formData.commonOffer && <div>
+                <label className="block font-semibold">Offerings</label>
+                {formData?.offerings.map((offering, index) => (
+                    <div key={index} className="border p-3 rounded mb-3 relative">
+                    {formData?.offerings.length > 1 && <button
+                        type="button"
+                        onClick={() => {
+                        const updated = formData?.offerings.filter((_, i) => i !== index);
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="absolute top-2 right-2 text-red-600 hover:text-red-800 cursor-pointer"
+                    >
+                        <Trash2 size={18} />
+                    </button>}
 
-                    {/* Upload Images */}
-                    <div className="mb-4">
-
-                        {/* Images (File Upload) */}
-                        <div>
-                            <label className="block font-semibold mb-2">Images</label>
-
-                            <div className="flex flex-wrap gap-4">
-                                {formData.offerings.offerimg?.map((img, index) => (
-                                    <div key={index} className="relative">
-                                        {img ? (
-                                            <div>
-                                                <img
-                                                    src={img}
-                                                    alt={`Uploaded ${index}`}
-                                                    className="w-32 h-32 object-cover rounded border"
-                                                />
-                                                <button
-                                                    type="button"
-                                                    onClick={() => {
-                                                        const updated = formData?.offerings.offerimg.filter((_, i) => i !== index);
-                                                        setFormData({ ...formData, offerings: { ...formData.offerings, offerimg: updated } });
-                                                    }}
-                                                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1"
-                                                >
-                                                    <Trash2 size={16} />
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <input
-                                                type="file"
-                                                name="offerimg"
-                                                accept="image/*"
-                                                onChange={(e) => handleChange(e, index)}
-                                                className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2"
-                                            />
-                                        )}
-                                    </div>
-                                ))}
-
-                                {/* Add Image Button */}
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        setFormData({
-                                            ...formData,
-                                            offerings: {
-                                                ...formData.offerings,
-                                                offerimg: [...formData.offerings.offerimg, null]
-                                            }
-                                        })
-                                    }
-                                    className="w-32 h-32 border-2 border-dashed border-green-500 flex items-center justify-center rounded text-green-600 hover:bg-green-50"
-                                >
-                                    + Add Image
-                                </button>
-                            </div>
+                    <div className="mb-3">
+                        <label className="block font-medium">Offering Image</label>
+                        {offering.offerimg  ? (
+                        <div className="relative w-32 h-32">
+                            <img
+                                src={offering.offerimg}
+                                alt={`offering image ${index}`}
+                                className="w-32 h-32 object-cover rounded border cursor-pointer"
+                            />
+                            <button
+                            type="button"
+                            onClick={() => {
+                                const updated = [...formData?.offerings];
+                                updated[index].offerimg = null;
+                                setFormData({ ...formData, offerings: updated });
+                            }}
+                            className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
+                            >
+                            <Trash2 size={14} />
+                            </button>
                         </div>
-
+                        ) : (
+                        <input
+                            type="file"
+                            name="offerimg"
+                            accept="image/*"
+                            onChange={(e) => handleChange(e, index)}
+                            className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
+                        />
+                        )}
                     </div>
 
-                    {/* Offers List */}
-                    {formData?.offerings?.offers.map((offering, index) => (
-                        <div key={index} className="border p-3 rounded mb-3 relative">
-                            {formData?.offerings?.offers.length > 1 && (
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        const updatedOffers = formData.offerings.offers.filter(
-                                            (_, i) => i !== index
-                                        );
-                                        setFormData({
-                                            ...formData,
-                                            offerings: {
-                                                ...formData.offerings,
-                                                offers: updatedOffers,
-                                            },
-                                        });
-                                    }}
-                                    className="absolute top-2 right-2 text-red-600 hover:text-red-800"
-                                >
-                                    <Trash2 size={18} />
-                                </button>
-                            )}
+                    <input
+                        type="text"
+                        placeholder="Offering Type"
+                        value={offering.title}
+                        onChange={(e) => {
+                        const updated = [...formData?.offerings];
+                        updated[index].title = e.target.value;
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                    />
 
-                            <input
-                                type="text"
-                                placeholder="Title"
-                                value={offering.title}
-                                onChange={(e) => {
-                                    const updatedOffers = [...formData.offerings.offers];
-                                    updatedOffers[index].title = e.target.value;
-                                    setFormData({
-                                        ...formData,
-                                        offerings: {
-                                            ...formData.offerings,
-                                            offers: updatedOffers,
-                                        },
-                                    });
-                                }}
-                                className="w-full border p-2 rounded mb-2"
-                            />
+                    <input
+                        type="text"
+                        placeholder="Offering price"
+                        name="price"
+                        value={offering.price}
+                        onChange={(e) => {
+                        const updated = [...formData?.offerings];
+                        updated[index].price = e.target.value;
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                    />
 
-                            <textarea
-                                placeholder="Description"
-                                value={offering.description}
-                                onChange={(e) => {
-                                    const updatedOffers = [...formData.offerings.offers];
-                                    updatedOffers[index].description = e.target.value;
-                                    setFormData({
-                                        ...formData,
-                                        offerings: {
-                                            ...formData.offerings,
-                                            offers: updatedOffers,
-                                        },
-                                    });
-                                }}
-                                className="w-full border p-2 rounded"
-                            />
-                        </div>
-                    ))}
+                    <textarea
+                        placeholder="Offering decription"
+                        value={offering.description}
+                        onChange={(e) => {
+                        const updated = [...formData?.offerings];
+                        updated[index].description = e.target.value;
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="w-full border p-2 rounded"
+                    />
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() =>
+                    setFormData({
+                        ...formData,
+                        offerings: [...formData?.offerings, { title: "", description: "", price: "" }],
+                    })
+                    }
+                    className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
+                >
+                    + Add Offerings
+                </button>
+                </div>}
 
-                    {/* Add new Offer */}
+
+                <div className="flex items-center justify-between border p-3 rounded">
+                    <label className="font-semibold">Common Faqs</label>
                     <button
                         type="button"
-                        onClick={() =>
-                            setFormData({
-                                ...formData,
-                                offerings: {
-                                    ...formData.offerings,
-                                    offers: [
-                                        ...formData.offerings.offers,
-                                        { title: "", description: "" },
-                                    ],
-                                },
-                            })
+                        onClick={() =>{
+                            setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs })),
+
+                            handleToggle(pujaDetail.id, "commonFaqs", pujaDetail.commonFaqs)}
                         }
-                        className="bg-green-500 text-white px-4 py-1 rounded"
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                        formData.commonFaqs ? "bg-green-600" : "bg-gray-600"
+                        }`}
                     >
-                        + Add Offering
+                        <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            formData.commonFaqs ? "translate-x-6" : "translate-x-1"
+                        }`}
+                        />
                     </button>
                 </div>
+                
 
                 {/* FAQs */}
-                <div>
+                { !formData.commonFaqs && <div>
                     <label className="block font-semibold">FAQs</label>
                     {formData?.faqs.map((faq, index) => (
                         <div key={index} className="border p-3 rounded mb-3 relative">
@@ -933,7 +1184,7 @@ const handleChange = async (e, index) => {
                     >
                         + Add FAQ
                     </button>
-                </div>
+                </div>}
 
                 <div className="grid grid-cols-2 gap-6 mt-4">
 

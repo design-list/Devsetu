@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { fetchWithWait } from "../../../../../helper/method";
 
+import Api from "../../../../../services/fetchApi";
+
+const api = new Api()
+
 export default function PujasPage() {
   const [packages, setPackages] = useState(null);
   const [offering, setOffering] = useState(null);
@@ -34,9 +38,7 @@ export default function PujasPage() {
 
 
   const handleDelete = (id) => {
-    console.log("handleDelete", id)
     fetchWithWait({ dispatch, action: deleteChadhavaAction({ "id": id }) }).then((res) => {
-      console.log("Response:", res);
       if (res.status === 200) {
         alert(res.message)
         dispatch(requestChadhavaAction());
@@ -51,16 +53,15 @@ export default function PujasPage() {
 
 
   const handleToggle = (id, field, currentValue) => {
-    // field = "isActive" | "isActiveOnHome"
     const payload = {
       id,
-      [field]: !currentValue,
+      field,
+      value: !currentValue,
     };
 
-    fetchWithWait({ dispatch, action: updateChadhavaAction(payload) })
+    api.UpdeteChadhavaFlags(payload)
       .then((res) => {
         if (res.status === 200) {
-          // alert(res.message || `${field} updated successfully`);
           dispatch(requestChadhavaAction());
         } else {
           alert(res.error || "Something went wrong");
@@ -89,7 +90,8 @@ export default function PujasPage() {
                 <th className="p-2 border">Special Day</th>
                 <th className="p-2 border">Location</th>
                 <th className="p-2 border">Puja Details</th>
-                <th className="p-2 border">Temple History</th>
+                <th className="p-2 border">CommonFaqs</th>
+                {/* <th className="p-2 border">RecommendedChadava</th> */}
                 <th className="p-2 border">Is Active</th>
                 <th className="p-2 border">Active on home</th>
                 <th className="p-2 border">Packages</th>
@@ -118,7 +120,17 @@ export default function PujasPage() {
                     {chadhava.pujaDetails}
                   </td>
                   <td className="p-2 border max-w-xs truncate">
-                    {chadhava.templeHistory}
+                    <button
+                      type="button"
+                      onClick={() => handleToggle(chadhava.id, "commonFaqs", chadhava.commonFaqs)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${chadhava.commonFaqs ? "bg-green-600" : "bg-gray-600"
+                        }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${chadhava.commonFaqs ? "translate-x-6" : "translate-x-1"
+                          }`}
+                      />
+                    </button>
                   </td>
 
                   <td className="p-2 border max-w-xs truncate">

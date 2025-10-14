@@ -7,7 +7,7 @@ import db from "./models/index.js";
     console.log("✅ DB Connected");
 
     // await db.sequelize.sync({ force: true });
-    await db.sequelize.sync({ alert: true });
+    await db.sequelize.sync({ alter: true });
     console.log("✅ Tables synced successfully");
 
     process.exit(0);

@@ -47,7 +47,7 @@ export default (sequelize, DataTypes) => {
   });
 
   chadhavaPackages.associate = (models) => {
-    chadhavaPackages.belongsTo(models.pujas, { foreignKey: "chadhavaId" });
+    chadhavaPackages.belongsTo(models.chadhava, { foreignKey: "chadhavaId" });
   };
 
   return chadhavaPackages;

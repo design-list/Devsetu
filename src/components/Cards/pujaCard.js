@@ -20,14 +20,14 @@ export default function PujaCard({ pujas, viewmore, PujaName }) {
     <>
       <div className="grid md:grid-cols-3 gap-4">
         {pujas?.map((puja) => {
-          const { pujaImages } = puja
+          const { pujaBanners } = puja
           return <div
             key={puja.id}
             className="flex flex-col bg-[var(--forcast)] justify-between shadow-sm border border-slate-200 rounded-lg my-6"
           >
             <>
               {
-                pujaImages?.map((item) => {
+                pujaBanners?.map((item) => {
                   return <div key={item.id}  onClick={() => handlaRedirect(puja.slug)} className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center cursor-pointer">
                     <LazyImage
                       src={item.image_url || "/images/herobanner.webp"}

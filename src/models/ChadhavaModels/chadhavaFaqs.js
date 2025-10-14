@@ -31,7 +31,7 @@ export default (sequelize, DataTypes) => {
   });
 
   chadhavaFaqs.associate = (models) => {
-    chadhavaFaqs.belongsTo(models.pujas, { foreignKey: "chadhavaId" });
+    chadhavaFaqs.belongsTo(models.chadhava, { foreignKey: "chadhavaId" });
   };
 
   return chadhavaFaqs;

@@ -69,9 +69,9 @@ const HeroBanner = ({ slides }) => {
                   {/* <button className=" cursor-pointer px-6 py-2 border border-[var(--forcast)] rounded-md bg-[var(--forcast)] text-black font-medium hover:bg-gray-100 transition">
                     Download App
                   </button> */}
-                  <button onClick={() => handleExplore(type, slug)} className=" cursor-pointer px-6 py-2 border border-[var(--forcast)] rounded-md font-medium hover:bg-[var(--forcast)] hover:text-[var(--primary)] transition">
+                  {/* <button onClick={() => handleExplore(type, slug)} className=" cursor-pointer px-6 py-2 border border-[var(--forcast)] rounded-md font-medium hover:bg-[var(--forcast)] hover:text-[var(--primary)] transition">
                     Explore More
-                  </button>
+                  </button> */}
                 </div>
               </div>
 

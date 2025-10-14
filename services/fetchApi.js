@@ -25,6 +25,16 @@ export default class fetchApi extends Api {
         return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
     }
 
+    GetPujaBySlug(data) {
+        let url = this.buildUrl(endpoints.Web.puja, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
+    UpdetePujaFlags(data) {
+        let url = this.buildUrl(`${endpoints.Pujas.puja}/${data.id}/flags`, "full")
+        return this.fetch(url, "PUT", JSON.stringify(data), null).then(response => response)
+    }
+
     UpdetePuja(data) {
         let url = this.buildUrl(endpoints.Pujas.puja, "full")
         if (data.id) {
@@ -64,6 +74,11 @@ export default class fetchApi extends Api {
         return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
     }
 
+    UpdeteChadhavaFlags(data) {
+        let url = this.buildUrl(`${endpoints.Chadhava.chadhava}/${data.id}/flags`, "full")
+        return this.fetch(url, "PUT", JSON.stringify(data), null).then(response => response)
+    }
+
     UpdeteChadhava(data) {
         let url = this.buildUrl(endpoints.Chadhava.chadhava, "full")
         if (data.id) {
@@ -90,7 +105,6 @@ export default class fetchApi extends Api {
     }
 
     GetArticlesDetails(data) {
-        console.log("GetChadhavaDetails", data)
         let url = this.buildUrl(endpoints.Articles.articles, "full")
         return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
     }
@@ -116,33 +130,138 @@ export default class fetchApi extends Api {
 
     // ============================ CART ============================
     
-    // AddNewCart(data) {
-    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
-    //     return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response);
-    // }
+    AddNewCart(data) {
+        let url = this.buildUrl(endpoints.Cart.cart, "full");
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response);
+    }
 
-    // GetAllCart(data) {
-    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
-    //     return this.fetch(url, "GET", null, data).then(response => response);
-    // }
+    GetAllCart(data) {
+        let url = this.buildUrl(endpoints.Cart.cart, "full");
+        return this.fetch(url, "GET", null, data).then(response => response);
+    }
 
-    // GetCartDetails(data) {
-    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
-    //     return this.fetchParams(url, "GET", null, `/${data}`).then(response => response);
-    // }
+    GetCartDetails(data) {
+        let url = this.buildUrl(endpoints.Cart.cart, "full");
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response);
+    }
 
-    // UpdateCart(data) {
-    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
-    //     if (data.id) {
-    //         return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
-    //     }
-    // }
+    UpdateCart(data) {
+        let url = this.buildUrl(endpoints.Cart.cart, "full");
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
 
-    // DeleteCart(data) {
-    //     let url = this.buildUrl(endpoints.Cart.cart, "full");
-    //     if (data.id) {
-    //         return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response);
-    //     }
-    // }
+    DeleteCart(data) {
+        let url = this.buildUrl(endpoints.Cart.cart, "full");
+        if (data.id) {
+            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response);
+        }
+    }
+
+    AddNewOffering(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllOffering(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetOfferingDetails(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
+    UpdeteOffering(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
+        }
+    }
+
+    DeleteOffering(data) {
+        let url = this.buildUrl(endpoints.Offerings.offering, "full")
+        if (data.id) {
+            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
+        }
+    }
+
+    AddNewFaqs(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllFaqs(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetFaqsDetails(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
+    UpdeteFaqs(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        return this.fetchNormal(url, "PUT", JSON.stringify(data)).then(response => response)
+    }
+
+    DeleteFaqs(data) {
+        let url = this.buildUrl(endpoints.Faqs.faq, "full")
+        if (data.id) {
+            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
+        }
+    }
+
+
+    GetAllPackage(data) {
+        let url = this.buildUrl(endpoints.Packages.package, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    AddNewPackage(data) {
+        let url = this.buildUrl(endpoints.Packages.package, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetPackageDetails(data) {
+        let url = this.buildUrl(endpoints.Packages.package, "full")
+        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    }
+
+    UpdetePackage(data) {
+        let url = this.buildUrl(endpoints.Packages.package, "full")
+        return this.fetchNormal(url, "PUT", JSON.stringify(data)).then(response => response)
+    }
+
+    DeletePackage(data) {
+        let url = this.buildUrl(endpoints.Packages.package, "full")
+        if (data.id) {
+            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
+        }
+    }
+
+    GetAllUserDetail(data) {
+        let url = this.buildUrl(endpoints.UserDetail.userdetail, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    AddNewUserDetail(data) {
+        let url = this.buildUrl(endpoints.UserDetail.userdetail, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    PaymentOrder(data) {
+        let url = this.buildUrl(endpoints.Payment.Order, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    PaymentVerify(data) {
+        let url = this.buildUrl(endpoints.Payment.Verify, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+    
 
 }

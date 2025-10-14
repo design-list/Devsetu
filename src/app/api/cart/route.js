@@ -1,17 +1,23 @@
 // src/app/api/cart/route.js
-
 import { NextResponse } from "next/server";
-import { Cart, CartPackage, CartAddOn } from "@/models"; // adjust import path
+import models from "@/models/index.js";
 
-export async function GET(request) {
+const { cart, cartAddOn, cartPackage, UserDetails } = models;
+
+// =========================
+// GET ALL CARTS
+// =========================
+export async function GET() {
   try {
-    const carts = await Cart.findAll({
+    const carts = await cart.findAll({
       include: [
-        { model: CartPackage, as: "package" },
-        { model: CartAddOn, as: "add_ons" },
+        { model: cartPackage, as: "package" },
+        { model: cartAddOn, as: "add_ons" },
+        { model: UserDetails, as: "user_details" },
       ],
       order: [["createdAt", "DESC"]],
     });
+
     return NextResponse.json({ data: carts }, { status: 200 });
   } catch (error) {
     console.error("GET /api/cart error:", error);
@@ -19,61 +25,73 @@ export async function GET(request) {
   }
 }
 
+
+
 export async function POST(request) {
   try {
     const body = await request.json();
 
-    // Create the Cart
-    const newCart = await Cart.create({
+    // 1️⃣ Create main cart
+    const newCart = await cart.create({
       storeId: body.store_id,
-      tipAmount: body.tip_amount,
-      otherCharges: body.other_charges,
-      couponCode: body.coupon_code,
+      tipAmount: body.tip_amount || 0,
+      otherCharges: body.other_charges || {},
+      couponCode: body.coupon_code || null,
+      paymentStatus: "PENDING",
     });
 
-    // Create CartPackage
+    // 2️⃣ Insert package
     if (body.package) {
-      await CartPackage.create({
+      await cartPackage.create({
         cartId: newCart.id,
         packageId: body.package.id,
-        name: body.package.name,
-        hsnCode: body.package.hsn_code,
-        sId: body.package.s_id,
-        basePrice: body.package.base_price,
-        price: body.package.price,
+        name: body.package.packageType,
+        basePrice: body.package.packagePrice,
+        price: body.package.packagePrice,
         quantity: body.package.quantity,
-        unitTaxRate: body.package.unit_tax_rate,
       });
     }
 
-    // Create CartAddOns
+    // 3️⃣ Insert add-ons
     if (Array.isArray(body.add_ons)) {
       for (const addon of body.add_ons) {
-        await CartAddOn.create({
+        await cartAddOn.create({
           cartId: newCart.id,
           addOnId: addon.id,
-          name: addon.name,
-          hsnCode: addon.hsn_code,
-          sId: addon.s_id,
-          basePrice: addon.base_price,
+          name: addon.title,
+          basePrice: addon.price,
           price: addon.price,
-          quantity: addon.quantity,
-          unitTaxRate: addon.unit_tax_rate,
+          quantity: addon.quantity || 1,
         });
       }
     }
 
-    // Fetch with associations to return
-    const cartWithRelations = await Cart.findByPk(newCart.id, {
-      include: [
-        { model: CartPackage, as: "package" },
-        { model: CartAddOn, as: "add_ons" },
-      ],
-    });
+    // 4️⃣ Insert user details
+    if (body.userDetails) {
+      const user = body.userDetails;
+      await UserDetails.create({
+        cartId: newCart.id,
+        whatsapp: user.whatsapp,
+        name: user.name,
+        address: user.address,
+        postalCode: user.postalCode,
+        city: user.city,
+        state: user.state,
+        members: user.members || [],
+      });
+    }
 
-    return NextResponse.json({ data: cartWithRelations }, { status: 201 });
+    return NextResponse.json({
+        data : {
+          success: true,
+          cart_id: newCart.id,
+          grand_total: body.grand_total,
+        },
+        status: 200 
+      },
+    );
   } catch (error) {
     console.error("POST /api/cart error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }

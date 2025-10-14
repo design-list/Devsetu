@@ -10,11 +10,12 @@ import configFile from '../../config/config.json' assert { type: 'json' };
 
 import pujas from './PujaModels/pujas.js';
 import pujaPackages from './PujaModels/pujaPackages.js';
-import pujaImages from './PujaModels/pujaImages.js'; 
+import pujaBanners from './PujaModels/pujaBanners.js'; 
 import pujaFaqs from './PujaModels/pujaFaqs.js'; 
 import pujaOfferings from './PujaModels/pujaOfferings.js'; 
+import pujaBenefits from './PujaModels/pujaBenefits.js'; 
 
-import templeHistory from './templeModels/templeHistory.js'; 
+import templeHistory from './TempleModels/templeHistory.js'; 
 
 import chadhava from './ChadhavaModels/chadhava.js';
 import chadhavaBanner from './ChadhavaModels/chadhavaBanner.js';
@@ -22,6 +23,7 @@ import chadhavaFaqs from './ChadhavaModels/chadhavaFaqs.js';
 import chadhavaPackages from './ChadhavaModels/chadhavaPackages.js';
 import recommendedChadawa from './ChadhavaModels/recommendedChadawa.js';
 import pujaPerformed from './ChadhavaModels/pujaPerformed.js';
+import chadhavaOfferings from './ChadhavaModels/chadhavaOfferings.js';
 
 import Aartis from './ArticelsModels/Aartis.js';
 import Chalisas from './ArticelsModels/Chalisas.js';
@@ -29,11 +31,17 @@ import Festivals from './ArticelsModels/Festivals.js';
 import Wishes from './ArticelsModels/Wishes.js';
 import Horoscopes from './ArticelsModels/Horoscopes.js';
 
-import testimonials from './testimonialModels/testimonials.js';
+import testimonials from './TestimonialModels/testimonials.js';
+
+import commonPujaPackage from './commonPujaPackage.js';
 
 import cart from './CartModels/cart.js';
 import cartAddOn from './CartModels/cartAddOn.js';
 import cartPackage from './CartModels/cartPackage.js';
+
+import Faqs from './faqs.js';
+import offerings from './offerings.js';
+import UserDetails from './CartModels/UserDetails.js';
 
 const env = process.env.NODE_ENV || 'development';
 const config = configFile[env];
@@ -57,9 +65,10 @@ if (config.use_env_variable) {
 // Initialize each model and add it to the 'db' object
 db.pujas = pujas(sequelize, Sequelize.DataTypes);
 db.pujaPackages = pujaPackages(sequelize, Sequelize.DataTypes);
-db.pujaImages  = pujaImages(sequelize, Sequelize.DataTypes);
+db.pujaBanners  = pujaBanners(sequelize, Sequelize.DataTypes);
 db.pujaFaqs = pujaFaqs(sequelize, Sequelize.DataTypes);
 db.pujaOfferings = pujaOfferings(sequelize, Sequelize.DataTypes);
+db.pujaBenefits = pujaBenefits(sequelize, Sequelize.DataTypes);
 
 db.templeHistory = templeHistory(sequelize, Sequelize.DataTypes);
 
@@ -69,6 +78,7 @@ db.chadhavaFaqs = chadhavaFaqs(sequelize, Sequelize.DataTypes);
 db.chadhavaPackages = chadhavaPackages(sequelize, Sequelize.DataTypes);
 db.recommendedChadawa = recommendedChadawa(sequelize, Sequelize.DataTypes);
 db.pujaPerformed = pujaPerformed(sequelize, Sequelize.DataTypes);
+db.chadhavaOfferings = chadhavaOfferings(sequelize, Sequelize.DataTypes);
 
 db.Aartis = Aartis(sequelize, Sequelize.DataTypes);
 db.Chalisas = Chalisas(sequelize, Sequelize.DataTypes);
@@ -81,6 +91,11 @@ db.testimonials = testimonials(sequelize, Sequelize.DataTypes);
 db.cart = cart(sequelize, Sequelize.DataTypes);
 db.cartAddOn = cartAddOn(sequelize, Sequelize.DataTypes);
 db.cartPackage = cartPackage(sequelize, Sequelize.DataTypes);
+
+db.Faqs = Faqs(sequelize, Sequelize.DataTypes);
+db.offerings = offerings(sequelize, Sequelize.DataTypes);
+db.commonPujaPackage = commonPujaPackage(sequelize, Sequelize.DataTypes);
+db.UserDetails = UserDetails(sequelize, Sequelize.DataTypes);
 
 // This part for setting up associations remains the same and will work correctly
 Object.keys(db).forEach((modelName) => {

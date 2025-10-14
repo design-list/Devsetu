@@ -67,6 +67,24 @@ export default (sequelize, DataTypes) => {
       defaultValue: false,
       field: "isActiveOnHome",
     },
+    commonPack: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "common_pack",
+    },
+    commonOffer: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "common_offer",
+    },
+    commonFaqs: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "common_faqs",
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: "created_at",
@@ -83,8 +101,9 @@ export default (sequelize, DataTypes) => {
     Puja.hasMany(models.pujaPackages, { foreignKey: "pujaId", onDelete: "CASCADE" });
     Puja.hasMany(models.pujaOfferings, { foreignKey: "pujaId", onDelete: "CASCADE" });
     Puja.hasMany(models.pujaFaqs, { foreignKey: "pujaId", onDelete: "CASCADE" });
-    Puja.hasMany(models.pujaImages, { foreignKey: "pujaId", onDelete: "CASCADE" });
+    Puja.hasMany(models.pujaBanners, { foreignKey: "pujaId", onDelete: "CASCADE" });
     Puja.hasMany(models.templeHistory, { foreignKey: "pujaId", onDelete: "CASCADE" });
+    Puja.hasMany(models.pujaBenefits, { foreignKey: "pujaId", onDelete: "CASCADE" });
   };
 
   return Puja;

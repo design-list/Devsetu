@@ -9,25 +9,23 @@ export default (sequelize, DataTypes) => {
     },
     offerimg: {
       type: DataTypes.TEXT, 
-      allowNull: false,
+      allowNull: true,
       field: "offerimg",
-      get() {
-        const rawValue = this.getDataValue('offerimg');
-        return rawValue ? JSON.parse(rawValue) : [];
-      },
-      set(value) {
-        this.setDataValue('offerimg', JSON.stringify(value));
-      }
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "title",
     },
-    Description: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: true,
       field: "description",
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: true,
+      field: "price",
     },
     createdAt: {
       type: DataTypes.DATE,

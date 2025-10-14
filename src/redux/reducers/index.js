@@ -5,6 +5,12 @@ import pujas from './pujaReduces'
 import chadhavas from './chadhavaReduces'
 import articels from './articelsReduces '
 import home from './homeReduces'
+import faqs from './faqsReduces'
+import offering from './offeringReduces'
+import packages from './packageReduces'
+import cart from './cartReducer'
+import userDetails from './userDetialsReduces'
+import payment from './paymentReduces'
 
 export default combineReducers({
    count: counter,
@@ -12,5 +18,11 @@ export default combineReducers({
    pujas,
    chadhavas,
    articels,
-   home
+   home,
+   offering,
+   faqs,
+   packages,
+   cart,
+   userDetails,
+   payment
 })

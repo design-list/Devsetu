@@ -2,6 +2,7 @@
 
 import { Roboto } from "next/font/google";
 import "react-datepicker/dist/react-datepicker.css";
+import Script from "next/script";
 import ReduxProvider from "@/redux";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -25,10 +26,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children, mainClass }) {
+
   return (
     <html lang="en">
       <body className={`${roboto.variable}`}
       >
+        {/* ✅ Razorpay Script load */}
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
+
         <ReduxProvider>
           <LangProvider>
             <Header />

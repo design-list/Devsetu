@@ -95,7 +95,6 @@ const ArticalsForm = () => {
         } 
 
         fetchWithWait({ dispatch, action: addNewArticlesDataAction(data) }).then((res) => {
-            console.log("Response:", res);
             if (res.status === 200) {
                 alert("Articles added successfully!");
                 // Reset form

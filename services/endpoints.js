@@ -11,12 +11,15 @@ export const endpoints = {
     Pujas: {
         puja:`${baseApiUrl}/pujas`
     },
+    
     Chadhava: {
         chadhava: `${baseApiUrl}/chadhava`,
     },
+
     Articles: {
         articles: `${baseApiUrl}/articles`,
     },
+
     FileUpload: {
         upload: `${baseApiUrl}/upload`,
     },
@@ -25,9 +28,30 @@ export const endpoints = {
         home: `${baseApiUrl}/home`,
     },
 
-    // Cart: {
-    //     cart: "cart", // 👈 Add this line
-    // },
+    Offerings: {
+        offering: `${baseApiUrl}/offerings`,
+    },
+
+    Faqs: {
+        faq: `${baseApiUrl}/faqs`,
+    },
+
+    Packages: {
+        package: `${baseApiUrl}/packages`,
+    },
+
+    UserDetail: {
+        userdetail: `${baseApiUrl}/user_details`,
+    },
+
+    Cart: {
+        cart: `${baseApiUrl}/cart`,
+    },
+
+    Payment: {
+        Order: `${baseApiUrl}/payment/order`,
+        Verify: `${baseApiUrl}/payment/verify`,
+    },
     
     Web: {
         puja:`${baseApiUrl}/web/pujas`,

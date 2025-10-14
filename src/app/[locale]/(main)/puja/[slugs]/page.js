@@ -12,7 +12,10 @@ import { fetchPujaDetailPageAction } from "@/redux/actions/pujaActions";
 import CountdownTimer from "@/components/CountdownTimer";
 import LazyImage from "@/components/Atom/LazyImage";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
-import PujaPackages from "@/components/PujaPackages.js";
+import PujaPackages from "@/components/PujaPackages/index.js";
+import { useWithLang } from "../../../../../../helper/useWithLang";
+import { useRouter } from "next/navigation";
+import { addNewCartAction, addPackageAction } from "@/redux/actions/cartActions";
 
 
 const pujaData = {
@@ -46,6 +49,14 @@ export default function PujaDetailsPage() {
     const params = useParams();
     const pathname = usePathname();
     const dispatch = useDispatch();
+
+
+    const router = useRouter();
+    const withLang = useWithLang();
+
+    const handlaRedirect = (slug) => {
+        router.push(withLang(`/puja-cart/`))
+    }
 
 
     const { pujaDetailPage } = useSelector((state) => state.pujas);
@@ -116,8 +127,9 @@ export default function PujaDetailsPage() {
     };
 
 
-    const handleAddToCart = (pkg) => {
-        setCartItem(pkg);
+    const handleAddPackages = (pkg) => {
+        dispatch(addPackageAction(pkg));
+        setCartItem(pkg)
     };
 
     const formattedDate = moment(pujaDetailPage?.['date']).format("D MMMM");
@@ -129,8 +141,8 @@ export default function PujaDetailsPage() {
             <Container>
                 {/* Banner */}
                 <div className="bg-gray-50 p-4 lg:p-8 flex flex-col lg:flex-row gap-6">
-                   {isLoading ? <PageLaoder /> : <div className="flex-1 w-[600px] h-[400px] relative">
-                        <PageDetailHeroSlider heroSlides={pujaDetailPage?.['pujaImages']} />
+                    {isLoading ? <PageLaoder /> : <div className="flex-1 w-[600px] h-[400px] relative">
+                        <PageDetailHeroSlider heroSlides={pujaDetailPage?.['pujaBanners']} />
                     </div>}
                     <div className="flex-1 space-y-3">
                         <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">
@@ -196,9 +208,10 @@ export default function PujaDetailsPage() {
                     <section ref={benefitsRef}>
                         <h2 className="text-xl font-semibold mb-3">Puja Benefits</h2>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {pujaData.benefits.map((b, i) => (
-                                <div key={i} className="p-4 border rounded-lg shadow-sm">
-                                    🙏 {b}
+                            {pujaDetailPage?.['pujaBenefits'].map((b) => (
+                                <div key={b.id} className="p-4 border rounded-lg shadow-sm">
+                                    <strong>🙏 {b.title}</strong>
+                                    <p>{b.description}</p>
                                 </div>
                             ))}
                         </div>
@@ -246,7 +259,7 @@ export default function PujaDetailsPage() {
                     {/* Packages */}
                     <section ref={packagesRef}>
                         {/* <h2 className="text-xl font-semibold mb-3">Select Puja Package</h2> */}
-                        <PujaPackages pujaPackages={pujaDetailPage?.['pujaPackages']} onAddToCart={handleAddToCart}  />
+                        <PujaPackages pujaPackages={pujaDetailPage?.['pujaPackages']} onAddToCart={handleAddPackages} />
                     </section>
 
                     {/* Reviews */}
@@ -288,22 +301,22 @@ export default function PujaDetailsPage() {
             </Container>
 
             <div className="space-y-10">
-      {/* Add to Cart Button */}
-      {cartItem && (
-        <div className="sticky bottom-0 bg-white border-t shadow-md p-4 flex justify-between items-center">
-          <div>
-            <p className="font-semibold">{cartItem.packageType}</p>
-            <p className="text-green-600 font-bold">₹{cartItem.packagePrice}</p>
-          </div>
-          <button
-            className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700"
-            onClick={() => alert(`Added ${cartItem.packageType} to cart!`)}
-          >
-            Added to Cart
-          </button>
-        </div>
-      )}
-    </div>
+                {/* Add to Cart Button */}
+                {cartItem && (
+                    <div className="sticky bottom-0 bg-white border-t shadow-md p-4 flex justify-between items-center">
+                        <div>
+                            <p className="font-semibold">{cartItem.packageType}</p>
+                            <p className="text-green-600 font-bold">₹{cartItem.packagePrice}</p>
+                        </div>
+                        <button
+                            className="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 cursor-pointer"
+                            onClick={handlaRedirect}
+                        >
+                            Participate now
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

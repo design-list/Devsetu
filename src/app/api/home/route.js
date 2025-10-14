@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
-const { pujas, pujaImages, chadhava, chadhavaBanner } = models;
+const { pujas, pujaBanners, chadhava, chadhavaBanner } = models;
 
 export async function GET() {
   try {
@@ -11,7 +11,7 @@ export async function GET() {
       attributes: ["id", "title", "slug"],
       include: [
         {
-          model: pujaImages,
+          model: pujaBanners,
           where: { position: 1 },
           attributes: ["id", "image_url", "position", "type"],
         },
@@ -23,7 +23,7 @@ export async function GET() {
       attributes: ["id", "title", "slug", "sub_title", "location", "date"],
       include: [
         {
-          model: pujaImages,
+          model: pujaBanners,
           where: { position: 1 },
           attributes: ["id", "image_url", "position", "type"],
         },
@@ -59,12 +59,12 @@ export async function GET() {
         order: [["date", "DESC"]],
     });
 
-    // Map data and rename pujaImages / chadhavaBanners to banners
+    // Map data and rename pujaBanners / chadhavaBanners to banners
     const formattedPujaData = pujaData.map(p => ({
       id: p.id,
       title: p.title,
       slug: p.slug,
-      banners: p.pujaImages || [],
+      banners: p.pujaBanners || [],
       type: "puja"
     }));
 

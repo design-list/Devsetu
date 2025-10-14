@@ -8,6 +8,10 @@ import { useParams, useRouter } from "next/navigation";
 import { fetchWithWait } from "../../../../../helper/method";
 import { fetchChadhavaDetailAction, updateChadhavaAction, requestChadhavaAction } from "@/redux/actions/chadhavaAction";
 
+import Api from "../../../../../services/fetchApi";
+
+const api = new Api()
+
 const EditChadhavaForm = () => {
 
   // const [startDate, setStartDate] = useState(new Date());
@@ -25,6 +29,9 @@ const EditChadhavaForm = () => {
     templeHistory: "",
     isActive: true,
     isActiveOnHome: false,
+    isRecommended: false,
+    commonFaqs: true,
+    isActivePandit: false,
     packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
     recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
     faqs: [{ icon: null, title: "", description: "" }],
@@ -74,6 +81,9 @@ const EditChadhavaForm = () => {
         templeHistory: chadhavaDetail.templeHistory || "",
         isActive: chadhavaDetail.isActive,
         isActiveOnHome: chadhavaDetail.isActiveOnHome,
+        isRecommended: chadhavaDetail.isRecommended,
+        isActivePandit: chadhavaDetail.isActivePandit,
+        commonFaqs: chadhavaDetail.commonFaqs,
 
         // Banners
         banners: chadhavaDetail.chadhavaBanners
@@ -97,7 +107,7 @@ const EditChadhavaForm = () => {
           : [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
 
         // Recommended Chadawas
-        recommendedChadawa: chadhavaDetail.recommendedChadawas
+        recommendedChadawa: chadhavaDetail.isRecommended && chadhavaDetail.recommendedChadawas
           ? chadhavaDetail.recommendedChadawas.map((r) => ({
             recommendedImg: r.recommendedImg || "",
             title: r.title || "",
@@ -110,7 +120,7 @@ const EditChadhavaForm = () => {
           : [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
 
         // FAQs
-        faqs: chadhavaDetail.chadhavaFaqs
+        faqs: !chadhavaDetail.commonFaqs && chadhavaDetail.chadhavaFaqs
           ? chadhavaDetail.chadhavaFaqs.map((f) => ({
             icon: f.icon || "",
             title: f.question || "",
@@ -119,7 +129,7 @@ const EditChadhavaForm = () => {
           : [{ icon: "", title: "", description: "" }],
 
         // Puja Performed By (assuming only one record)
-        pujaPerformedBy: chadhavaDetail.pujaPerformeds?.[0]
+        pujaPerformedBy: chadhavaDetail.isActivePandit && chadhavaDetail.pujaPerformeds?.[0]
           ? {
             name: chadhavaDetail.pujaPerformeds[0].name || "",
             temple: chadhavaDetail.pujaPerformeds[0].temple || "",
@@ -136,7 +146,6 @@ const EditChadhavaForm = () => {
   const handleChange = async (e, index) => {
     const { name, value, files } = e.target;
 
-    // console.log("handleChangehandleChange",  name, value)
 
     if (files && files[0]) {
       const file = files[0];
@@ -144,7 +153,6 @@ const EditChadhavaForm = () => {
       // Local preview
       const localPreview = URL.createObjectURL(file);
 
-      // console.log("localPreview", localPreview)
 
       if (name === "imgUrl") {
         setFormData((prev) => {
@@ -195,7 +203,6 @@ const EditChadhavaForm = () => {
 
         const data = await res.json();
 
-        // console.log("datadatadata",data, data.storedAs)
 
         if (res.ok) {
           if (name === "imgUrl") {
@@ -211,7 +218,6 @@ const EditChadhavaForm = () => {
               return { ...prev, recommendedChadawa: updated };
             });
           } else if (name === "icon") {
-            console.log("added faqs icons", data)
             setFormData((prev) => {
               const updated = [...prev.faqs];
               updated[index].icon = (data.storedAs).toString(); // server path
@@ -280,7 +286,6 @@ const EditChadhavaForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWithWait({ dispatch, action: updateChadhavaAction(formData) }).then((res) => {
-      console.log("Response:", res);
       if (res.status === 200) {
         dispatch(requestChadhavaAction()); // Fetch updated puja data
         router.push('/admin/chadhava/list')
@@ -293,8 +298,50 @@ const EditChadhavaForm = () => {
     })
   };
 
-  // console.log("chadhavaDetail", chadhavaDetail)
+  const handleToggle = (id, field, currentValue) => {
+    const payload = {
+      id,
+      field,
+      value: !currentValue,
+    };
 
+    api.UpdeteChadhavaFlags(payload)
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(fetchChadhavaDetailAction(params.id))
+        } else {
+          alert(res.error || "Something went wrong");
+        }
+      })
+      .catch((e) => {
+        console.error("Toggle error:", e);
+      });
+  };
+  
+  // const handleToggle = (id, field, currentValue) => {
+  //   // field = "isActive" | "isActiveOnHome"
+  //   const payload = {
+  //     id,
+  //     [field]: !currentValue,
+  //   };
+    
+  //   const data  = {...formData, ...payload}
+
+  //   fetchWithWait({ dispatch, action: updateChadhavaAction(data) })
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         // alert(res.message || `${field} updated successfully`);
+  //         dispatch(fetchChadhavaDetailAction(params.id))
+  //       } else {
+  //         alert(res.error || "Something went wrong");
+  //       }
+  //     })
+  //     .catch((e) => {
+  //       console.error("Toggle error:", e);
+  //     });
+  // };
+
+  
   return (
     <div className="flex-1 overflow-y-auto max-h-screen scrollbar-hide">
       <form
@@ -627,9 +674,31 @@ const EditChadhavaForm = () => {
           </button>
         </div>
 
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Recommended Chadhava</label>
+          <button
+            type="button"
+            onClick={() =>{
+              setFormData((prev) => ({ ...prev, isRecommended: !prev.isRecommended })),
+
+              handleToggle(chadhavaDetail.id, "isRecommended", chadhavaDetail.isRecommended)
+              
+              }
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isRecommended ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isRecommended ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
 
         {/* Recommended Chadawa */}
-        <div>
+       { formData.isRecommended && <div>
           <label className="block font-semibold">Recommended Chadawa</label>
           {formData?.recommendedChadawa.map((item, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -746,13 +815,34 @@ const EditChadhavaForm = () => {
           >
             + Add Packages
           </button>
+        </div>}
+
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Common Faqs</label>
+          <button
+            type="button"
+            onClick={() =>{
+              setFormData((prev) => ({ ...prev, commonFaqs: !prev.commonFaqs })),
+
+              handleToggle(chadhavaDetail.id, "commonFaqs", chadhavaDetail.commonFaqs)
+              
+              }
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.commonFaqs ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.commonFaqs ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
         </div>
-
-
 
         {/* FAQs */}
 
-        <div>
+      { !formData.commonFaqs && <div>
           <label className="block font-semibold">FAQs</label>
           {formData?.faqs.map((faq, index) => (
             <div key={index} className="border p-3 rounded mb-3 relative">
@@ -834,9 +924,31 @@ const EditChadhavaForm = () => {
           >
             + Add FAQ
           </button>
+        </div>}
+
+
+        <div className="flex items-center justify-between border p-3 rounded">
+          <label className="font-semibold">Puja Performed by Pandit.</label>
+          <button
+            type="button"
+            onClick={() =>{
+                setFormData((prev) => ({ ...prev, isActivePandit: !prev.isActivePandit }))
+                handleToggle(chadhavaDetail.id, "isActivePandit", chadhavaDetail.isActivePandit)
+              }
+            }
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+              formData.isActivePandit ? "bg-green-600" : "bg-gray-600"
+            }`}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                formData.isActivePandit ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
         </div>
 
-        <div>
+      { formData.isActivePandit && <div>
           <label className="block font-semibold">Puja Performed By</label>
           <div className="mb-3">
             <label className="block font-medium">Image</label>
@@ -896,7 +1008,7 @@ const EditChadhavaForm = () => {
             onChange={handleChange}
             className="w-full border p-2 rounded mb-2"
           />
-        </div>
+        </div>}
 
           {/* Toggle Switches */}
       <div className="grid grid-cols-2 gap-6 mt-4">

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js";
 
-const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory } = models;
+const { pujas, pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits } = models;
 
 // ✅ GET /api/pujas/:id
 
@@ -10,11 +10,11 @@ export async function GET(req, { params }) {
   const { id } = params;
 
   try {
-    const isId = !isNaN(Number(id));
+    // const isId = !isNaN(Number(id));
 
     const puja = await pujas.findOne({
-      where: isId ? { id: id } : { slug: id }, 
-      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory],
+      where: { id: id },
+      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits],
       order: [["id", "DESC"]],
     });
 
@@ -31,116 +31,242 @@ export async function GET(req, { params }) {
 
 
 // ✅ PUT /api/pujas/:id
-export async function PUT(req, { params }) {
+
+// export async function PUT(req, { params }) {
 
 
-  try {
-    const body = await req.json();
+//   try {
+//     const body = await req.json();
 
-    // const pujaOfferingImages = body.offerings.offerimg || [];
+//     const updatedPujas = await pujas.findByPk(params.id);
 
-    const updatedPujas = await pujas.findByPk(params.id);
+//     if (!updatedPujas) {
+//       return NextResponse.json({ error: "Puja not found" }, { status: 404 });
+//     }
 
-    if (!updatedPujas) {
-      return NextResponse.json({ error: "Puja not found" }, { status: 404 });
-    }
+//     // ✅ Update main table
+//     await updatedPujas.update({
+//       title: body.title,
+//       subTitle: body.subTitle,
+//       slug: body.slug,
+//       ratingValue: body.ratingValue,
+//       ratingReviews: body.ratingReviews,
+//       specialDay: body.specialDay,
+//       location: body.location,
+//       date: body.date,
+//       pujaDetails: body.pujaDetails,
+//       isActive: body.isActive,
+//       isActiveOnHome: body.isActiveOnHome,
 
-    // ✅ Update main table
-    await updatedPujas.update({
-      title: body.title,
-      subTitle: body.subTitle,
-      slug: body.slug,
-      ratingValue: body.ratingValue,
-      ratingReviews: body.ratingReviews,
-      specialDay: body.specialDay,
-      location: body.location,
-      date: body.date,
-      pujaDetails: body.pujaDetails,
-      isActive: body.isActive,
-      isActiveOnHome: body.isActiveOnHome,
-    });
+//       // Flags
+//       commonOffer: body.commonOffer,
+//       commonPack: body.commonPack,
+//       commonFaqs: body.commonFaqs,
 
-    if (body.temple) {
-      await templeHistory.destroy({ where: { pujaId: updatedPujas.id  } });
-      await templeHistory.create({
-        ...body.temple,
-        pujaId: updatedPujas.id,
+//     });
+
+//     if (body.temple) {
+//       await templeHistory.destroy({ where: { pujaId: updatedPujas.id  } });
+//       await templeHistory.create({
+//         ...body.temple,
+//         pujaId: updatedPujas.id,
+//       });
+//     }
+
+//       if (body.banners && Array.isArray(body.banners)) {
+//       await pujaBanners.destroy({ where: { pujaId: updatedPujas.id } });
+
+//       await pujaBanners.bulkCreate(
+//         body.banners.map((banner) => ({
+//           imageUrl: banner.imgUrl,
+//           type: banner.type,
+//           position: banner.position ? parseInt(banner.position) : null,
+//           pujaId: updatedPujas.id,
+//         }))
+//       );
+//     }
+
+//     // 🧩 4️⃣ Update Packages
+//     if (body.packages) {
+//       await pujaPackages.destroy({ where: { pujaId: updatedPujas.id } });
+//       await pujaPackages.bulkCreate(
+//         body.packages.map((pkg) => ({
+//           packImg: pkg.packImg,
+//           packageType: pkg.packageType,
+//           packagePrice: parseFloat(pkg.packagePrice),
+//           pujaId: updatedPujas.id,
+//         }))
+//       );
+//     }
+
+
+//     // ✅ Update offerings (offers + offerimg)
+//     if (body.offerings) {
+//       await pujaOfferings.destroy({ where: { pujaId: updatedPujas.id } });
+
+//       const offersArray = body.offerings || [];
+
+//       await pujaOfferings.bulkCreate(
+//         offersArray.map((r) => ({
+//           offerimg: r.offerimg,
+//           title: r.title,
+//           price: r.price,
+//           description: r.description,
+//           pujaId: updatedPujas.id,
+//         }))
+//       );
+//     }
+
+
+//     // ✅ Update FAQs
+//     if (body.faqs) {
+//       await pujaFaqs.destroy({ where: { pujaId: updatedPujas.id } });
+//       await pujaFaqs.bulkCreate(
+//         body.faqs.map((f) => ({
+//           icon: f.icon,
+//           question: f.title,
+//           answer: f.description,
+//           pujaId: updatedPujas.id,
+//         }))
+//       );
+//     }
+
+//     // ✅ Fetch back with associations
+//     const finalData = await pujas.findByPk(updatedPujas.id, {
+//       include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory],
+//     });
+
+//     return NextResponse.json({
+//       data: finalData,
+//       status: 200,
+//       message: "Puja updated successfully",
+//     });
+//   } catch (error) {
+//     console.error("PUT Error:", error);
+//     return NextResponse.json({ error: error.message }, { status: 500 });
+//   }
+// }
+
+
+  export async function PUT(req, { params }) {
+    try {
+      const body = await req.json();
+      const updatedPujas = await pujas.findByPk(params.id);
+
+      if (!updatedPujas) {
+        return NextResponse.json({ error: "Puja not found" }, { status: 404 });
+      }
+
+      // ✅ Update main puja table
+      await updatedPujas.update({
+        title: body.title,
+        subTitle: body.subTitle,
+        slug: body.slug,
+        ratingValue: parseFloat(body.ratingValue),
+        ratingReviews: parseInt(body.ratingReviews),
+        specialDay: body.specialDay,
+        location: body.location,
+        date: new Date(body.date),
+        pujaDetails: body.pujaDetails,
+        isActive: body.isActive,
+        isActiveOnHome: body.isActiveOnHome,
+
+        // Flags
+        commonOffer: body.commonOffer,
+        commonPack: body.commonPack,
+        commonFaqs: body.commonFaqs,
       });
-    }
 
-      if (body.banners && Array.isArray(body.banners)) {
-      await pujaImages.destroy({ where: { pujaId: updatedPujas.id } });
-
-      await pujaImages.bulkCreate(
-        body.banners.map((banner) => ({
-          imageUrl: banner.imgUrl,
-          type: banner.type,
-          position: banner.position ? parseInt(banner.position) : null,
+      // ✅ Update temple (always if provided)
+      if (body.temple) {
+        await templeHistory.destroy({ where: { pujaId: updatedPujas.id } });
+        await templeHistory.create({
+          ...body.temple,
           pujaId: updatedPujas.id,
-        }))
-      );
+        });
+      }
+
+      // ✅ Update banners (always)
+      if (Array.isArray(body.banners)) {
+        await pujaBanners.destroy({ where: { pujaId: updatedPujas.id } });
+        await pujaBanners.bulkCreate(
+          body.banners.map((banner) => ({
+            imageUrl: banner.imgUrl,
+            type: banner.type,
+            position: banner.position ? parseInt(banner.position) : null,
+            pujaId: updatedPujas.id,
+          }))
+        );
+      }
+
+      // ✅ Update Packages only if commonPack is false
+      if (!body.commonPack && Array.isArray(body.packages)) {
+        await pujaPackages.destroy({ where: { pujaId: updatedPujas.id } });
+        await pujaPackages.bulkCreate(
+          body.packages.map((pkg) => ({
+            packImg: pkg.packImg,
+            packageType: pkg.packageType,
+            packagePrice: parseFloat(pkg.packagePrice),
+            pujaId: updatedPujas.id,
+          }))
+        );
+      }
+
+      // ✅ Update Offerings only if commonOffer is false
+      if (!body.commonOffer && Array.isArray(body.offerings)) {
+        await pujaOfferings.destroy({ where: { pujaId: updatedPujas.id } });
+        await pujaOfferings.bulkCreate(
+          body.offerings.map((r) => ({
+            offerimg: r.offerimg,
+            title: r.title,
+            price: r.price,
+            description: r.description,
+            pujaId: updatedPujas.id,
+          }))
+        );
+      }
+
+      // ✅ Update FAQs only if commonFaqs is false
+      if (!body.commonFaqs && Array.isArray(body.faqs)) {
+        await pujaFaqs.destroy({ where: { pujaId: updatedPujas.id } });
+        await pujaFaqs.bulkCreate(
+          body.faqs.map((f) => ({
+            question: f.title,
+            answer: f.description,
+            pujaId: updatedPujas.id,
+          }))
+        );
+      }
+
+      // ✅ pujaBenefits  
+
+      if(body.pujaBenefits && Array.isArray(body.pujaBenefits)){
+       await pujaBenefits.destroy({ where: { pujaId: updatedPujas.id } });
+        await pujaBenefits.bulkCreate(
+          body.pujaBenefits.map((b) => ({
+            title: b.title,
+            description: b.description,
+            pujaId: updatedPujas.id,
+          }))
+        );
+      }
+     
+      // ✅ Fetch updated data with associations
+      const finalData = await pujas.findByPk(updatedPujas.id, {
+        include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory, pujaBenefits],
+      });
+
+      return NextResponse.json({
+        data: finalData,
+        status: 200,
+        message: "Puja updated successfully",
+      });
+    } catch (error) {
+      console.error("PUT Error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
-
-    // 🧩 4️⃣ Update Packages
-    if (body.packages) {
-      await pujaPackages.destroy({ where: { pujaId: updatedPujas.id } });
-      await pujaPackages.bulkCreate(
-        body.packages.map((pkg) => ({
-          packImg: pkg.packImg,
-          packageType: pkg.packageType,
-          packagePrice: parseFloat(pkg.packagePrice),
-          pujaId: updatedPujas.id,
-        }))
-      );
-    }
-
-
-    // ✅ Update offerings (offers + offerimg)
-    if (body.offerings && (body.offerings.offers || body.offerings.offerimg)) {
-      await pujaOfferings.destroy({ where: { pujaId: updatedPujas.id } });
-
-      // combine offers array with offerimg array
-      const offersArray = body.offerings.offers || [];
-
-      await pujaOfferings.bulkCreate(
-        offersArray.map((r) => ({
-          offerimg: body.offerings.offerimg || [], // array will be stored as JSON
-          title: r.title,
-          description: r.description,
-          pujaId: updatedPujas.id,
-        }))
-      );
-    }
-
-
-    // ✅ Update FAQs
-    if (body.faqs) {
-      await pujaFaqs.destroy({ where: { pujaId: updatedPujas.id } });
-      await pujaFaqs.bulkCreate(
-        body.faqs.map((f) => ({
-          icon: f.icon,
-          question: f.title,
-          answer: f.description,
-          pujaId: updatedPujas.id,
-        }))
-      );
-    }
-
-    // ✅ Fetch back with associations
-    const finalData = await pujas.findByPk(updatedPujas.id, {
-      include: [pujaPackages, pujaOfferings, pujaFaqs, pujaImages, templeHistory],
-    });
-
-    return NextResponse.json({
-      data: finalData,
-      status: 200,
-      message: "Puja updated successfully",
-    });
-  } catch (error) {
-    console.error("PUT Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
   }
-}
+
 
 
 

@@ -8,12 +8,12 @@ export default (sequelize, DataTypes) => {
     },
     icon: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "icon",
     },
     question: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "question",
     },
     answer: {
