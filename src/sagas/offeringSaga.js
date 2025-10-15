@@ -26,7 +26,7 @@ export function* fetchAllOfferingSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: OFFERINGS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -50,7 +50,7 @@ export function* addNewOfferingSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: ADD_NEW_OFFERINGS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -74,7 +74,7 @@ export function* OfferingDetialSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: OFFERINGS_DETAILS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -97,7 +97,7 @@ export function* updateOfferingSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: UPDATE_OFFERINGS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -120,6 +120,6 @@ export function* deleteOfferingSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: DELETE_OFFERINGS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }

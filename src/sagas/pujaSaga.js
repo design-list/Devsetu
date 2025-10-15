@@ -25,7 +25,7 @@ export function* fetchAllPujaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: PUJA_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -49,7 +49,7 @@ export function* fetchAllWebPujaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: PUJA_PAGE_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -72,7 +72,7 @@ export function* addNewPujaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: ADD_NEW_PUJA_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -96,7 +96,7 @@ export function* pujaDetialSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: PUJA_DETAILS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -119,7 +119,7 @@ export function* pujaDetialPageSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: PUJA_DETAILS_BY_SLUG_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -143,7 +143,7 @@ export function* updatePujaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: UPDATE_PUJA_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -166,6 +166,6 @@ export function* deletePujaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: DELETE_PUJA_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }

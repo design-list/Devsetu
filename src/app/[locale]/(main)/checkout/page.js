@@ -7,6 +7,8 @@ import { fetchWithWait } from "../../../../../helper/method";
 import { validateFields } from "../../../../../helper/validateFields";
 import { addNewCartAction } from "@/redux/actions/cartActions";
 import { paymentVerifyAction, requestPaymentOrderAction } from "@/redux/actions/paymentActions";
+import { useRouter } from "next/navigation";
+import { useWithLang } from "../../../../../helper/useWithLang";
 
 export default function CheckoutPage() {
   const [members, setMembers] = useState([""]);
@@ -27,7 +29,12 @@ export default function CheckoutPage() {
 
   const { allCarts } = useSelector((state) => state.cart);
 
-  console.log("NEXT_PUBLIC_RAZORPAY_KEY_ID ID:", process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID);
+  const router = useRouter();
+  const withLang = useWithLang();
+
+  // const handlaRedirect = (slug) => {
+  //   router.push(withLang(`/chadhava/${slug}`))
+  // }
 
 
 
@@ -166,120 +173,232 @@ export default function CheckoutPage() {
 //           setErrors({});
 
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
 
-  // 1️⃣ Validate form
-  const { isValid, errors: validationErrors } = validateFields([form], [
-    "whatsapp",
-    "name",
-    "address",
-    "postalCode",
-    "city",
-    "state",
-  ]);
+//   // 1️⃣ Validate form
+//   const { isValid, errors: validationErrors } = validateFields([form], [
+//     "whatsapp",
+//     "name",
+//     "address",
+//     "postalCode",
+//     "city",
+//     "state",
+//   ]);
 
-  const fieldErrorObj = validationErrors[0];
-  setErrors(fieldErrorObj);
+//   const fieldErrorObj = validationErrors[0];
+//   setErrors(fieldErrorObj);
 
-  if (!isValid) return;
+//   if (!isValid) return;
 
-  // 2️⃣ Prepare payload for saving cart/user details
-  const userDetails = { ...form, members };
-  const payload = {
-    ...allCarts,
-    store_id: storeId,
-    userDetails,
-  };
+//   // 2️⃣ Prepare payload for saving cart/user details
+//   const userDetails = { ...form, members };
+//   const payload = {
+//     ...allCarts,
+//     store_id: storeId,
+//     userDetails,
+//   };
 
-  try {
-    // 3️⃣ Save cart and get order amount
-    const cartRes = await fetchWithWait({ dispatch, action: addNewCartAction(payload) });
+//   try {
+//     // 3️⃣ Save cart and get order amount
+//     const cartRes = await fetchWithWait({ dispatch, action: addNewCartAction(payload) });
 
-    if (cartRes.status !== 200) {
-      alert(cartRes.message || "Error saving cart.");
-      return;
-    }
+//     if (cartRes.status !== 200) {
+//       alert(cartRes.message || "Error saving cart.");
+//       return;
+//     }
 
-    const orderPayload = {
-      amount: cartRes.data.grand_total,
-      currency: "INR",
-      receipt: `cart_${cartRes.data.cart_id}`,
-      cart_id: cartRes.data.cart_id,
-    };
+//     const orderPayload = {
+//       amount: cartRes.data.grand_total,
+//       currency: "INR",
+//       receipt: `cart_${cartRes.data.cart_id}`,
+//       cart_id: cartRes.data.cart_id,
+//     };
 
-    // 4️⃣ Request Razorpay order from backend
-    const orderRes = await fetchWithWait({ dispatch, action: requestPaymentOrderAction(orderPayload) });
+//     // 4️⃣ Request Razorpay order from backend
+//     const orderRes = await fetchWithWait({ dispatch, action: requestPaymentOrderAction(orderPayload) });
 
-    if (orderRes.status !== 200) {
-      alert(orderRes.message || "Error creating payment order.");
-      return;
-    }
+//     if (orderRes.status !== 200) {
+//       alert(orderRes.message || "Error creating payment order.");
+//       return;
+//     }
 
-    // 5️⃣ Load Razorpay SDK
-    const loadScript = (src) => new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => resolve(true);
-      script.onerror = () => resolve(false);
-      document.body.appendChild(script);
-    });
+//     // 5️⃣ Load Razorpay SDK
+//     const loadScript = (src) => new Promise((resolve) => {
+//       const script = document.createElement("script");
+//       script.src = src;
+//       script.onload = () => resolve(true);
+//       script.onerror = () => resolve(false);
+//       document.body.appendChild(script);
+//     });
 
-    const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
-    if (!res) {
-      alert("Razorpay SDK failed to load.");
-      return;
-    }
+//     const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+//     if (!res) {
+//       alert("Razorpay SDK failed to load.");
+//       return;
+//     }
 
-    // 6️⃣ Open Razorpay Checkout
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: orderRes.data.order.amount,
-      currency: "INR",
-      name: allCarts?.package?.packageType || "Checkout Payment",
-      description: "Payment for your cart",
-      order_id: orderRes.data.order.id,
-      handler: async (response) => {
-        try {
-          // Verify payment
-          const verifyPayload = {
-            ...response,
-            cart_id: cartRes.data.cart_id,
-          };
+//     // 6️⃣ Open Razorpay Checkout
+//     const options = {
+//       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+//       amount: orderRes.data.order.amount,
+//       currency: "INR",
+//       name: allCarts?.package?.packageType || "Checkout Payment",
+//       description: "Payment for your cart",
+//       order_id: orderRes.data.order.id,
+//       handler: async (response) => {
+//         try {
+//           // Verify payment
+//           const verifyPayload = {
+//             ...response,
+//             cart_id: cartRes.data.cart_id,
+//           };
 
-          const verifyRes = await fetchWithWait({
-            dispatch,
-            action: paymentVerifyAction(verifyPayload),
-          });
+//           const verifyRes = await fetchWithWait({
+//             dispatch,
+//             action: paymentVerifyAction(verifyPayload),
+//           });
 
-          if (verifyRes.status === 200) {
-            alert("✅ Payment Successful!");
-            // Optional: redirect to success page
-            // router.push(`/payment-success/${cartRes.data.cart_id}`);
-          } else {
-            alert(verifyRes.message || "Payment verification failed.");
+//           if (verifyRes.status === 200) {
+//             alert("✅ Payment Successful!");
+//             // Optional: redirect to success page
+//             // router.push(`/payment-success/${cartRes.data.cart_id}`);
+//           } else {
+//             alert(verifyRes.message || "Payment verification failed.");
+//           }
+//         } catch (err) {
+//           console.error("Verification error:", err);
+//           alert("Error verifying payment.");
+//         }
+//       },
+//       theme: { color: "#D32F2F" },
+//     };
+
+//     const rzp = new window.Razorpay(options);
+//     rzp.open();
+
+//     rzp.on("payment.failed", (response) => {
+//       console.error("Payment Failed:", response.error);
+//       alert("❌ Payment Failed. Please try again.");
+//     });
+
+//   } catch (error) {
+//     console.error("Error in payment flow:", error);
+//     alert("Something went wrong. Please try again.");
+//   }
+// };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { isValid, errors: validationErrors } = validateFields([form], [
+      "whatsapp",
+      "name",
+      "address",
+      "postalCode",
+      "city",
+      "state",
+    ]);
+
+    setErrors(validationErrors[0]);
+    if (!isValid) return;
+
+    const userDetails = { ...form, members };
+    const payload = { ...allCarts, store_id: storeId, userDetails };
+
+    try {
+      // Step 1: Save cart
+      const cartRes = await fetchWithWait({ dispatch, action: addNewCartAction(payload) });
+
+      if (cartRes.status !== 200) {
+        alert(cartRes.message || "Error saving cart.");
+        return;
+      }
+
+      // Step 2: Create Razorpay Order
+      const orderPayload = {
+        amount: cartRes.data.grand_total,
+        currency: "INR",
+        receipt: `cart_${cartRes.data.cart_id}`,
+        cart_id: cartRes.data.cart_id,
+      };
+
+      const orderRes = await fetchWithWait({
+        dispatch,
+        action: requestPaymentOrderAction(orderPayload),
+      });
+
+      if (orderRes.status !== 200) {
+        alert(orderRes.message || "Error creating payment order.");
+        return;
+      }
+
+      // Step 3: Ensure Razorpay SDK is loaded
+      const loadScript = (src) =>
+        new Promise((resolve) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.onload = () => resolve(true);
+          script.onerror = () => resolve(false);
+          document.body.appendChild(script);
+        });
+
+      const sdkLoaded = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      if (!sdkLoaded) {
+        alert("Razorpay SDK failed to load.");
+        return;
+      }
+
+      // Step 4: Open Razorpay Checkout
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: orderRes.order.amount,
+        currency: "INR",
+        name: allCarts?.package?.packageType || "Checkout Payment",
+        description: "Payment for your cart",
+        order_id: orderRes.order.id,
+        handler: async (response) => {
+          try {
+            const verifyPayload = { ...response, cart_id: cartRes.data.cart_id };
+            const verifyRes = await fetchWithWait({
+              dispatch,
+              action: paymentVerifyAction(verifyPayload),
+            });
+
+            if (verifyRes.success) {
+              alert("✅ Payment Successful!");
+              router.push(withLang(`/payment-success/${cartRes.data.cart_id}`)); // ✅ custom redirect
+            } else {
+              alert(verifyRes.message || "Payment verification failed.");
+              router.push(withLang(`/payment-failed`));
+            }
+
+            // if (verifyRes.success) {
+            //   alert("✅ Payment Successful!");
+            // } else {
+            //   alert(verifyRes.message || "Payment verification failed.");
+            // }
+          } catch (err) {
+            console.error("Verification error:", err);
+            alert("Error verifying payment.");
           }
-        } catch (err) {
-          console.error("Verification error:", err);
-          alert("Error verifying payment.");
-        }
-      },
-      theme: { color: "#D32F2F" },
-    };
+        },
+        theme: { color: "#D32F2F" },
+      };
 
-    const rzp = new window.Razorpay(options);
-    rzp.open();
+      const rzp = new window.Razorpay(options);
+      rzp.open();
 
-    rzp.on("payment.failed", (response) => {
-      console.error("Payment Failed:", response.error);
-      alert("❌ Payment Failed. Please try again.");
-    });
-
-  } catch (error) {
-    console.error("Error in payment flow:", error);
-    alert("Something went wrong. Please try again.");
-  }
-};
+      rzp.on("payment.failed", (response) => {
+        console.error("Payment Failed:", response.error);
+        alert("❌ Payment Failed. Please try again.");
+      });
+    } catch (error) {
+      console.error("Error in payment flow:", error);
+      alert("Something went wrong. Please try again.");
+    }
+  };
 
 
 

@@ -2,10 +2,16 @@
 
 // src/models/index.js
 
+import fs from 'fs';
+import path from 'path';
 import Sequelize from 'sequelize';
 import process from 'process';
 import mysql2 from "mysql2";
-import configFile from '../../config/config.json' assert { type: 'json' };
+// import configFile from '../../config/config.json' assert { type: 'json' };
+
+const configFile = JSON.parse(
+  fs.readFileSync(path.resolve('config/config.json'), 'utf-8')
+);
 
 
 import pujas from './PujaModels/pujas.js';
@@ -42,6 +48,7 @@ import cartPackage from './CartModels/cartPackage.js';
 import Faqs from './faqs.js';
 import offerings from './offerings.js';
 import UserDetails from './CartModels/UserDetails.js';
+// import UsersModel from './UsersModel.js';
 
 const env = process.env.NODE_ENV || 'development';
 const config = configFile[env];
@@ -96,6 +103,7 @@ db.Faqs = Faqs(sequelize, Sequelize.DataTypes);
 db.offerings = offerings(sequelize, Sequelize.DataTypes);
 db.commonPujaPackage = commonPujaPackage(sequelize, Sequelize.DataTypes);
 db.UserDetails = UserDetails(sequelize, Sequelize.DataTypes);
+// db.UsersModel = UsersModel(sequelize, Sequelize.DataTypes);
 
 // This part for setting up associations remains the same and will work correctly
 Object.keys(db).forEach((modelName) => {

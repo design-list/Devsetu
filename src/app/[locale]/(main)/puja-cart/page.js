@@ -38,7 +38,7 @@ const PujaCart = () => {
   };
 
   const handlaRedirect = () => {
-    router.push(withLang('/add-personal-details'))
+    router.push(withLang('/checkout'))
   }
 
   console.log("CART data", allCarts)

@@ -29,7 +29,7 @@ export function* fetchAllChadhavaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: CHADHAVA_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -52,7 +52,7 @@ export function* fetchAllWebChadhavaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: CHADHAVA_WEB_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -75,7 +75,7 @@ export function* addNewChadhavaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: ADD_NEW_CHADHAVA_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -99,7 +99,7 @@ export function* chadhavaWebDetialSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: CHADHAVA_WEB_DETAILS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -123,7 +123,7 @@ export function* chadhavaDetialSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: CHADHAVA_DETAILS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -147,7 +147,7 @@ export function* updateChadhavaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: UPDATE_CHADHAVA_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -170,6 +170,6 @@ export function* deleteChadhavaSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: DELETE_CHADHAVA_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }

@@ -25,7 +25,7 @@ export function* fetchAllFaqsSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: FAQS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -49,7 +49,7 @@ export function* addNewFaqsSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: ADD_NEW_FAQS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -73,7 +73,7 @@ export function* FaqsDetialSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: FAQS_DETAILS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -96,7 +96,7 @@ export function* updateFaqsSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: UPDATE_FAQS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -119,6 +119,6 @@ export function* deleteFaqsSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: DELETE_FAQS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }

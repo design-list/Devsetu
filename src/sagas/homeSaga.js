@@ -23,6 +23,6 @@ export function* fetchAllHomeSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: HOME_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }

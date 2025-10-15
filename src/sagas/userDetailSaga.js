@@ -24,7 +24,7 @@ export function* fetchAllUserDetailSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: USER_DETAILS_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -48,7 +48,7 @@ export function* addNewUserDetailSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: ADD_NEW_USER_DETAILS_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -72,7 +72,7 @@ export function* addNewUserDetailSaga({ payload, resolve }) {
 //         }
 //     } catch (e) {
 //         yield put({ type: UserDetail_DETAILS_DATA_FAILED, payload: e })
-
+    // yield put({ type: RESET_LOADER, isLoading: false })
 //     }
 // }
 
@@ -95,7 +95,7 @@ export function* addNewUserDetailSaga({ payload, resolve }) {
 //         }
 //     } catch (e) {
 //         yield put({ type: UPDATE_USER_DETAILS_FAILED, payload: e })
-
+    // yield put({ type: RESET_LOADER, isLoading: false })
 //     }
 // }
 
@@ -118,6 +118,6 @@ export function* addNewUserDetailSaga({ payload, resolve }) {
 //         }
 //     } catch (e) {
 //         yield put({ type: DELETE_USER_DETAILS_FAILED, payload: e })
-
+    // yield put({ type: RESET_LOADER, isLoading: false })
 //     }
 // }
