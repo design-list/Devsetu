@@ -2,21 +2,21 @@
 
 
 import { NextResponse } from "next/server";
-import { Cart, CartPackage, CartAddOn } from "@/models";
+import { cart, CartPackage, CartAddOn } from "@/models";
 
 export async function GET(request, { params }) {
   try {
     const { id } = params;
-    const cart = await Cart.findByPk(id, {
+    const carts = await cart.findByPk(id, {
       include: [
         { model: CartPackage, as: "package" },
         { model: CartAddOn, as: "add_ons" },
       ],
     });
-    if (!cart) {
+    if (!carts) {
       return NextResponse.json({ error: "Cart not found" }, { status: 404 });
     }
-    return NextResponse.json({ data: cart }, { status: 200 });
+    return NextResponse.json({ data: carts, status: 200 });
   } catch (error) {
     console.error("GET /api/cart/[id] error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -28,13 +28,13 @@ export async function PUT(request, { params }) {
     const { id } = params;
     const body = await request.json();
 
-    const cart = await Cart.findByPk(id);
-    if (!cart) {
+    const carts = await cart.findByPk(id);
+    if (!carts) {
       return NextResponse.json({ error: "Cart not found" }, { status: 404 });
     }
 
     // Update Cart fields
-    await cart.update({
+    await carts.update({
       storeId: body.store_id,
       tipAmount: body.tip_amount,
       otherCharges: body.other_charges,
@@ -105,7 +105,7 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     const { id } = params;
-    const deleted = await Cart.destroy({ where: { id } });
+    const deleted = await cart.destroy({ where: { id } });
     if (!deleted) {
       return NextResponse.json({ error: "Cart not found" }, { status: 404 });
     }
