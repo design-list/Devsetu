@@ -2,15 +2,17 @@
 
 
 import { NextResponse } from "next/server";
-import { cart, CartPackage, CartAddOn } from "@/models";
+import models from "@/models/index.js";
+
+const { cart, cartAddOn, cartPackage } = models;
 
 export async function GET(request, { params }) {
   try {
     const { id } = params;
     const carts = await cart.findByPk(id, {
       include: [
-        { model: CartPackage, as: "package" },
-        { model: CartAddOn, as: "add_ons" },
+        { model: cartPackage, as: "package" },
+        { model: cartAddOn, as: "add_ons" },
       ],
     });
     if (!carts) {
@@ -43,7 +45,7 @@ export async function PUT(request, { params }) {
 
     // Update or recreate CartPackage
     if (body.package) {
-      const existingPkg = await CartPackage.findOne({ where: { cartId: id } });
+      const existingPkg = await cartPackage.findOne({ where: { cartId: id } });
       if (existingPkg) {
         await existingPkg.update({
           packageId: body.package.id,
@@ -56,7 +58,7 @@ export async function PUT(request, { params }) {
           unitTaxRate: body.package.unit_tax_rate,
         });
       } else {
-        await CartPackage.create({
+        await cartPackage.create({
           cartId: id,
           packageId: body.package.id,
           name: body.package.name,
@@ -71,10 +73,10 @@ export async function PUT(request, { params }) {
     }
 
     // Update add-ons: simplest: delete existing and re-create
-    await CartAddOn.destroy({ where: { cartId: id } });
+    await cartAddOn.destroy({ where: { cartId: id } });
     if (Array.isArray(body.add_ons)) {
       for (const addon of body.add_ons) {
-        await CartAddOn.create({
+        await cartAddOn.create({
           cartId: id,
           addOnId: addon.id,
           name: addon.name,
@@ -90,12 +92,12 @@ export async function PUT(request, { params }) {
 
     const updatedCart = await Cart.findByPk(id, {
       include: [
-        { model: CartPackage, as: "package" },
-        { model: CartAddOn, as: "add_ons" },
+        { model: cartPackage, as: "package" },
+        { model: cartAddOn, as: "add_ons" },
       ],
     });
 
-    return NextResponse.json({ data: updatedCart }, { status: 200 });
+    return NextResponse.json({ data: updatedCart, status: 200 });
   } catch (error) {
     console.error("PUT /api/cart/[id] error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
