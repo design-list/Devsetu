@@ -258,6 +258,8 @@ const PujaForm = () => {
                     <Image
                       src={item.imgUrl}
                       alt={`banner imgUrl ${index}`}
+                      width={800}
+                      height={500}
                       className="w-32 h-32 object-cover rounded border cursor-pointer"
                     />
                     <button
@@ -404,6 +406,8 @@ const PujaForm = () => {
                 <Image
                   src={formData.temple.templeImg}
                   alt="temple image"
+                  width={200}
+                  height={200}
                   className="w-20 h-20 object-cover rounded border"
                 />
                 <button

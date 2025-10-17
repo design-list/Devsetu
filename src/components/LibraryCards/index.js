@@ -48,8 +48,10 @@ export default function LibraryCards() {
                                 <Image
                                     src={cat.img}
                                     alt={cat.title}
-                                    fill
+                                    // fill
                                     className="object-cover"
+                                    width={500}
+                                    height={500}
                                 />
                             </div>
 

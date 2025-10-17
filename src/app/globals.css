@@ -22,6 +22,7 @@
   --container-max-lg: 1024px;
   --container-max-xl: 1280px;
   --container-max-2xl: 1440px;
+  --font-primary: var(--font-philosopher), sans-serif;;
 }
 
 @media (prefers-color-scheme: dark) {
