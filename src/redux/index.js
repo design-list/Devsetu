@@ -1,80 +1,3 @@
-
-// src/redux/index.js
-
-"use client";
-
-import { createStore, applyMiddleware, compose } from "redux";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import createSagaMiddleware from "redux-saga";
-import reducers from "./reducers";
-import rootSaga from "../sagas";
-
-const sagaMiddleware = createSagaMiddleware();
-const middlewares = [sagaMiddleware];
-
-// Safe check for SSR
-const isServer = typeof window === "undefined";
-
-// Default store (non-persist for server)
-let store;
-let persistor;
-
-if (!isServer) {
-  // persist config (client only)
-  const persistConfig = {
-    key: "root",
-    storage,
-    whitelist: ["cart"],
-  };
-
-  const persistedReducer = persistReducer(persistConfig, reducers);
-
-  const composeEnhancers =
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-  store = createStore(
-    persistedReducer,
-    composeEnhancers(applyMiddleware(...middlewares))
-  );
-
-  persistor = persistStore(store);
-} else {
-  // Server build mode: no localStorage
-  store = createStore(reducers, applyMiddleware(...middlewares));
-}
-
-sagaMiddleware.run(rootSaga);
-store.asyncReducers = {};
-
-// Redux Provider (SSR Safe)
-export function ReduxProvider({ children }) {
-  return (
-    <Provider store={store}>
-      {persistor ? (
-        <PersistGate loading={null} persistor={persistor}>
-          {children}
-        </PersistGate>
-      ) : (
-        children
-      )}
-    </Provider>
-  );
-}
-
-export default ReduxProvider;
-
-
-
-
-
-
-
-// // src/redux/index.js
-
-
 // 'use client'
 
 // import { createStore, applyMiddleware, compose } from "redux";
@@ -133,3 +56,43 @@ export default ReduxProvider;
 // }
 
 // export default ReduxProvider;
+
+
+
+
+'use client'
+
+import { createStore, applyMiddleware, compose } from "redux";
+import reducers from "./reducers";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "../sagas";
+import { Provider } from "react-redux";
+
+const sagaMiddleware = createSagaMiddleware();
+
+const middlewares = [sagaMiddleware];
+
+const composeEnhancers =
+  typeof window !== "undefined" &&
+  process.env.NODE_ENV !== "production" &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : compose;
+
+// store create
+const store = createStore(
+  reducers,
+  composeEnhancers(applyMiddleware(...middlewares))
+);
+
+sagaMiddleware.run(rootSaga);
+
+store.asyncReducers = {};
+
+export function ReduxProvider({ children }) {
+  return <Provider store={store}>{children}</Provider>;
+}
+
+export default ReduxProvider;
+
+
