@@ -2,21 +2,23 @@
 
 
 import { NextResponse } from "next/server";
-import { Cart, CartPackage, CartAddOn } from "@/models";
+import models from "@/models/index.js";
+
+const { cart, cartAddOn, cartPackage } = models;
 
 export async function GET(request, { params }) {
   try {
     const { id } = params;
-    const cart = await Cart.findByPk(id, {
+    const carts = await cart.findByPk(id, {
       include: [
-        { model: CartPackage, as: "package" },
-        { model: CartAddOn, as: "add_ons" },
+        { model: cartPackage, as: "package" },
+        { model: cartAddOn, as: "add_ons" },
       ],
     });
-    if (!cart) {
+    if (!carts) {
       return NextResponse.json({ error: "Cart not found" }, { status: 404 });
     }
-    return NextResponse.json({ data: cart }, { status: 200 });
+    return NextResponse.json({ data: carts, status: 200 });
   } catch (error) {
     console.error("GET /api/cart/[id] error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -28,13 +30,13 @@ export async function PUT(request, { params }) {
     const { id } = params;
     const body = await request.json();
 
-    const cart = await Cart.findByPk(id);
-    if (!cart) {
+    const carts = await cart.findByPk(id);
+    if (!carts) {
       return NextResponse.json({ error: "Cart not found" }, { status: 404 });
     }
 
     // Update Cart fields
-    await cart.update({
+    await carts.update({
       storeId: body.store_id,
       tipAmount: body.tip_amount,
       otherCharges: body.other_charges,
@@ -43,7 +45,7 @@ export async function PUT(request, { params }) {
 
     // Update or recreate CartPackage
     if (body.package) {
-      const existingPkg = await CartPackage.findOne({ where: { cartId: id } });
+      const existingPkg = await cartPackage.findOne({ where: { cartId: id } });
       if (existingPkg) {
         await existingPkg.update({
           packageId: body.package.id,
@@ -56,7 +58,7 @@ export async function PUT(request, { params }) {
           unitTaxRate: body.package.unit_tax_rate,
         });
       } else {
-        await CartPackage.create({
+        await cartPackage.create({
           cartId: id,
           packageId: body.package.id,
           name: body.package.name,
@@ -71,10 +73,10 @@ export async function PUT(request, { params }) {
     }
 
     // Update add-ons: simplest: delete existing and re-create
-    await CartAddOn.destroy({ where: { cartId: id } });
+    await cartAddOn.destroy({ where: { cartId: id } });
     if (Array.isArray(body.add_ons)) {
       for (const addon of body.add_ons) {
-        await CartAddOn.create({
+        await cartAddOn.create({
           cartId: id,
           addOnId: addon.id,
           name: addon.name,
@@ -90,12 +92,12 @@ export async function PUT(request, { params }) {
 
     const updatedCart = await Cart.findByPk(id, {
       include: [
-        { model: CartPackage, as: "package" },
-        { model: CartAddOn, as: "add_ons" },
+        { model: cartPackage, as: "package" },
+        { model: cartAddOn, as: "add_ons" },
       ],
     });
 
-    return NextResponse.json({ data: updatedCart }, { status: 200 });
+    return NextResponse.json({ data: updatedCart, status: 200 });
   } catch (error) {
     console.error("PUT /api/cart/[id] error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -105,7 +107,7 @@ export async function PUT(request, { params }) {
 export async function DELETE(request, { params }) {
   try {
     const { id } = params;
-    const deleted = await Cart.destroy({ where: { id } });
+    const deleted = await cart.destroy({ where: { id } });
     if (!deleted) {
       return NextResponse.json({ error: "Cart not found" }, { status: 404 });
     }

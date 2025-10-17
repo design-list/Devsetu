@@ -23,7 +23,7 @@ export function* paymentOrderSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: PAYMENT_OREDR_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -47,6 +47,6 @@ export function* paymentOrderVerifySaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: PAYMENT_OREDR_VERIFY_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }

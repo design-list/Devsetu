@@ -15,10 +15,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "",
-    "database": "dev-setu-prod",
-    "host": "127.0.0.1",
+    "username": "dev_setu",
+    "password": "DevSetu@123_uat",
+    "database": "dev_setu_prod",
+    "host": "104.131.177.106",
     "dialect": "mysql"
   }
 }

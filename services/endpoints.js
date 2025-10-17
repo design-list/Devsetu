@@ -1,5 +1,4 @@
-//let url = "https://" + window.location.host + "/moslcms/cms/";
-// let url = process.env.CMS_BASE_URL;
+//services/endpoints.js
 
 let baseApiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 

@@ -25,7 +25,7 @@ export function* fetchAllPackageSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: PACKAGE_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -49,7 +49,7 @@ export function* addNewPackageSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: ADD_NEW_PACKAGE_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -73,7 +73,7 @@ export function* PackageDetialSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: PACKAGE_DETAILS_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -96,7 +96,7 @@ export function* updatePackageSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: UPDATE_PACKAGE_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }
 
@@ -119,6 +119,6 @@ export function* deletePackageSaga({ payload, resolve }) {
         }
     } catch (e) {
         yield put({ type: DELETE_PACKAGE_DATA_FAILED, payload: e })
-
+        yield put({ type: RESET_LOADER, isLoading: false })
     }
 }

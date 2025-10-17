@@ -27,6 +27,7 @@ export function* fetchAllCartSaga({ payload, resolve }) {
     yield put({ type: RESET_LOADER, isLoading: false });
   } catch (e) {
     yield put({ type: CART_DATA_FAILED, payload: e });
+    yield put({ type: RESET_LOADER, isLoading: false })
   }
 }
 
@@ -47,6 +48,7 @@ export function* fetchCartDetailSaga({ payload, resolve }) {
     yield put({ type: RESET_LOADER, isLoading: false });
   } catch (e) {
     yield put({ type: CART_DETAILS_FAILED, payload: e });
+    yield put({ type: RESET_LOADER, isLoading: false })
   }
 }
 
@@ -67,6 +69,7 @@ export function* addNewCartSaga({ payload, resolve }) {
     yield put({ type: RESET_LOADER, isLoading: false });
   } catch (e) {
     yield put({ type: ADD_NEW_CART_FAILED, payload: e });
+    yield put({ type: RESET_LOADER, isLoading: false })
   }
 }
 
@@ -87,5 +90,6 @@ export function* updateCartSaga({ payload, resolve }) {
     yield put({ type: RESET_LOADER, isLoading: false });
   } catch (e) {
     yield put({ type: UPDATE_CART_FAILED, payload: e });
+    yield put({ type: RESET_LOADER, isLoading: false })
   }
 }
