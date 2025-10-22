@@ -1,0 +1,30 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+export default function AuthGuard({ children, token }) {
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/admin/login");
+    } else {
+      setIsAuthenticated(true);
+    }
+    setLoading(false);
+  }, [router, token]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-xl">
+        Checking authentication...
+      </div>
+    );
+  }
+
+  return children;
+}

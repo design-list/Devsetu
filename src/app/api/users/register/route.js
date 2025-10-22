@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import db from "@/models"; // your sequelize index.js
+import models from "@/models/index.js";
 
-const Users = db.Users;
+const { Users } = models;
 
 export async function POST(req) {
   try {
@@ -23,7 +23,7 @@ export async function POST(req) {
       roles: roles || ["user"],
     });
 
-    return NextResponse.json({ message: "User registered successfully", user });
+    return NextResponse.json({status: 200, message: "User registered successfully", user });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Registration failed" }, { status: 500 });

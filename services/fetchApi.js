@@ -265,5 +265,14 @@ export default class fetchApi extends Api {
         return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
     }
     
+    CheckLogin(data) {
+        let url = this.buildUrl(endpoints.AdminLogin.adminLogin, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    Registration(data) {
+        let url = this.buildUrl(endpoints.AdminLogin.register, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
 
 }

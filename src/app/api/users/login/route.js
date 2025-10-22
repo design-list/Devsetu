@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import db from "@/models";
+import models from "@/models/index.js";
+
+const { Users } = models;
 
 export async function POST(req) {
   const { email, password } = await req.json();
 
-  const user = await db.Users.findOne({ where: { email } });
+  const user = await Users.findOne({ where: { email } });
   if (!user)
     return NextResponse.json({ message: "User not found" }, { status: 404 });
 
@@ -22,6 +24,7 @@ export async function POST(req) {
   );
 
   return NextResponse.json({
+    status: 200,
     message: "Login successful",
     token,
     user: { id: user.id, email: user.email, name: user.name },

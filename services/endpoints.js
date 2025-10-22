@@ -7,6 +7,15 @@ export const endpoints = {
 
     baseApiUrl,
 
+    AdminLogin: {
+        adminLogin:`${baseApiUrl}/users/login`,
+        register:`${baseApiUrl}/users/register`
+    },
+
+    UserLogin: {
+        userLogin:`${baseApiUrl}/user_details`
+    },
+
     Pujas: {
         puja:`${baseApiUrl}/pujas`
     },
