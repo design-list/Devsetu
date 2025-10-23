@@ -1,7 +1,10 @@
+//src/shares/AuthGuard/index.js
+
 "use client";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { loadState } from "../../../utils/localstorage";
 
 export default function AuthGuard({ children, token }) {
   const router = useRouter();
@@ -9,11 +12,12 @@ export default function AuthGuard({ children, token }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = loadState("token");
     if (!token) {
       router.push("/admin/login");
     } else {
       setIsAuthenticated(true);
+      router.push("/admin");
     }
     setLoading(false);
   }, [router, token]);

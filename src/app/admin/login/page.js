@@ -1,3 +1,5 @@
+//src/app/admin/login/page.js
+
 "use client";
 
 import { useState } from "react";
@@ -23,6 +25,7 @@ const LoginForm = () => {
     fetchWithWait({ dispatch, action: adminLoginAction(form) }).then((res) => {
 
       if (res.status === 200) {
+        window.location.reload();
         router.push('/admin')
       } else {
         alert(res.message)
