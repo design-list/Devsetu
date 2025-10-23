@@ -6,9 +6,11 @@ const LazyImage = ({ src, alt, width, height, fill, className, priority }) => {
       <Image
         src={src ? src : "/images/herobanner.webp"}
         alt={alt || ""}
-        fill
+        // fill
         priority={priority}
         className={className || "object-cover"}
+        width={500}
+        height={500}
       />
     );
   }
@@ -21,6 +23,7 @@ const LazyImage = ({ src, alt, width, height, fill, className, priority }) => {
       height={height || 300}
       className={className || "object-cover rounded-lg"}
       loading="lazy"
+
     />
   );
 };

@@ -69,7 +69,7 @@ const Header = () => {
               height={40}
               className="rounded-full"
             />
-            <span className="text-xl font-semibold text-brown-800">Dev Setu</span>
+            <span className="text-xl font-philosopher font-semibold text-brown-800">Dev Setu</span>
           </div>
         </Link>
 

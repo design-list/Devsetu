@@ -6,9 +6,17 @@
   --white: #ffffff;
   --black: #000000;
   --orange: #f99724;
+  /* Fonts */
+  --font-primary: var(--font-philosopher), sans-serif;
+  --font-proximanova-reg: var(--font-proximanova-regular), sans-serif;
+  --font-proximanova-bold: var(--font-proximanova-bold), sans-serif;
+
 }
 
 @theme {
+  --font-primary: var(--font-philosopher), sans-serif;
+  --font-proximanova-reg: var(--font-proximanova-regular), sans-serif;;
+  --font-proximanova_bold: var(--font-proximanova-bold), sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --roboto: var(--roboto), sans-serif;
@@ -34,7 +42,7 @@
 body {
   background: var(--background);
   color: var(--primary);
-  font-family: "Roboto", sans-serif;
+  font-family: var(--font-primary);
 }
 
 .container {

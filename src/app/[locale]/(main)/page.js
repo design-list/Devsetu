@@ -65,7 +65,7 @@ const Home = () => {
       <HeroBanner slides={heroBanner} />
       <ContinuousSlider />
       <Container>
-        <section className="py-8">
+        <section className="py-8 font">
           <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
             <h2 className=" capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
               Special pujas
