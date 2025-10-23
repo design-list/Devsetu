@@ -37,7 +37,7 @@ export default function Header({setOpen, open, user, token, handleLogout}) {
             {/* Username Button */}
             <button
               onClick={() => setOpen((prev) => !prev)}
-              className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition"
+              className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition cursor-pointer"
             >
               <span>{user?.name || "User"}</span>
               <svg
@@ -55,10 +55,10 @@ export default function Header({setOpen, open, user, token, handleLogout}) {
 
             {/* Dropdown Menu */}
             {open && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg">
+              <div className="absolute right-0 mt-1 w-25 bg-white-600 text-black border rounded-lg shadow-lg">
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+                  className="text-left px-4 py-2 text-black-600 cursor-pointer hover:bg-gray-300 rounded-lg w-full"
                 >
                   Logout
                 </button>

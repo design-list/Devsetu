@@ -30,8 +30,13 @@ const PujaForm = () => {
     faqs: [{ title: "", description: "" }],
     pujaBenefits: [{ title: "", description: "" }],
     temple: { templeImg: null, templeName: "", templeHistory: "" },
-    banners: [{imgUrl: null, type: "", position: 0}],
+    banners: [{imgUrl: null, type: "", position: ''}],
+
   });
+
+    // banners: [{ desktopImg: "", mobileImg: "", type: "", position: "" }],
+
+
 
   const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -64,6 +69,13 @@ const PujaForm = () => {
         setFormData((prev) => {
           const updated = [...prev.banners];
           updated[index].imgUrl = localPreview.toString();
+          return { ...prev, banners: updated };
+        });
+      } else if (name === "mobileImg") {
+        // Update images preview
+        setFormData((prev) => {
+          const updated = [...prev.banners];
+          updated[index].mobileImg = localPreview.toString();
           return { ...prev, banners: updated };
         });
       } else if (name === "icon") {
@@ -117,7 +129,14 @@ const PujaForm = () => {
               updated[index].imgUrl = (data.storedAs).toString(); // server path
               return { ...prev, banners: updated };
             });
-          } else if (name === "icon") {
+          } else if (name === "mobileImg") {
+            setFormData((prev) => {
+              const updated = [...prev.banners];
+              updated[index].mobileImg = (data.storedAs).toString(); // server path
+              return { ...prev, banners: updated };
+            });
+          } 
+          else if (name === "icon") {
             setFormData((prev) => {
               const updated = [...prev.faqs];
               updated[index].icon = (data.storedAs).toString(); // server path
@@ -233,6 +252,137 @@ const PujaForm = () => {
         </div>
 
          {/* Images (File Upload) */}
+
+         {/* <div>
+          <label className="block font-semibold mb-3">Banners</label>
+
+          {formData?.banners.map((item, index) => (
+            <div
+              key={index}
+              className="border p-4 rounded-lg mb-4 relative bg-gray-50 shadow-sm"
+            >
+              {formData?.banners.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const updated = formData?.banners.filter((_, i) => i !== index);
+                    setFormData({ ...formData, banners: updated });
+                  }}
+                  className="absolute top-2 right-2 text-red-600 hover:text-red-800"
+                >
+                  <Trash2 size={18} />
+                </button>
+              )}
+
+              <div className="mb-3">
+                <label className="block text-sm font-medium mb-1">Desktop Banner</label>
+                {item.desktopImg ? (
+                  <div className="relative w-32 h-20">
+                    <img
+                      src={item.desktopImg}
+                      alt={`desktop banner ${index}`}
+                      className="w-32 h-20 object-cover rounded border cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = [...formData?.banners];
+                        updated[index].desktopImg = null;
+                        setFormData({ ...formData, banners: updated });
+                      }}
+                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                ) : (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleChange(e, index, "desktopImg")}
+                    className="w-full border rounded p-2 text-sm cursor-pointer"
+                  />
+                )}
+              </div>
+
+              <div className="mb-3">
+                <label className="block text-sm font-medium mb-1">Mobile Banner</label>
+                {item.mobileImg ? (
+                  <div className="relative w-24 h-24">
+                    <img
+                      src={item.mobileImg}
+                      alt={`mobile banner ${index}`}
+                      className="w-24 h-24 object-cover rounded border cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = [...formData?.banners];
+                        updated[index].mobileImg = null;
+                        setFormData({ ...formData, banners: updated });
+                      }}
+                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                ) : (
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleChange(e, index, "mobileImg")}
+                    className="w-full border rounded p-2 text-sm cursor-pointer"
+                  />
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <select
+                  value={item.type}
+                  onChange={(e) => {
+                    const updated = [...formData?.banners];
+                    updated[index].type = e.target.value;
+                    setFormData({ ...formData, banners: updated });
+                  }}
+                  className="w-full border p-2 rounded text-sm"
+                >
+                  <option value="">Select Type</option>
+                  <option value="eng">English</option>
+                  <option value="hi">Hindi</option>
+                </select>
+
+                <input
+                  type="number"
+                  placeholder="Position"
+                  value={item.position}
+                  onChange={(e) => {
+                    const updated = [...formData?.banners];
+                    updated[index].position = e.target.value;
+                    setFormData({ ...formData, banners: updated });
+                  }}
+                  className="w-full border p-2 rounded text-sm"
+                />
+              </div>
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={() =>
+              setFormData({
+                ...formData,
+                banners: [
+                  ...formData?.banners,
+                  { desktopImg: "", mobileImg: "", type: "", position: "" },
+                ],
+              })
+            }
+            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
+          >
+            + Add Banner
+          </button>
+        </div> */}
+
 
         <div>
           <label className="block font-semibold mb-2">Banners</label>
