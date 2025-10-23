@@ -67,7 +67,7 @@ function AdminLayoutContent({ children }) {
       />
       <div className="flex">
         {token && <Sidebar />}
-        <main className="flex-1">{children}</main>
+        <>{children}</>
       </div>
     </AuthGuard>
   );

@@ -24,7 +24,7 @@ export default function AuthGuard({ children, token }) {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen text-xl">
+      <div className="">
         Checking authentication...
       </div>
     );
