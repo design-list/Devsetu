@@ -1,20 +1,37 @@
 @import "tailwindcss";
 
+/* ------------------------------
+   1. Base CSS Variables
+------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
   --white: #ffffff;
   --black: #000000;
   --orange: #f99724;
+
+  /* Font Variables */
+  --font-philosopher: "Philosopher";
+  --font-proximanova-regular: "Proxima Nova Regular";
+  --font-proximanova-bold: "Proxima Nova Bold";
 }
 
+/* ------------------------------
+   2. Tailwind @theme block
+------------------------------ */
 @theme {
+  /* 🎨 Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --roboto: var(--roboto), sans-serif;
-  --primary: var(--black);
-  --secondary: var(--orange);
-  --forcast: var(--white);
+  --color-primary: var(--black);
+  --color-secondary: var(--orange);
+  --color-white: var(--white);
+  --color-black: var(--black);
+
+  /* 🖋 Fonts */
+  --font-primary: var(--font-philosopher), sans-serif;
+  --font-proximanova: var(--font-proximanova-regular), sans-serif;
+  --font-proximanova-bold: var(--font-proximanova-bold), sans-serif;
+
+  /* 📦 Container sizes */
   --container-padding: 1rem;
   --container-margin: auto;
   --container-max-sm: 640px;
@@ -24,19 +41,26 @@
   --container-max-2xl: 1440px;
 }
 
+/* ------------------------------
+   3. Dark Mode
+------------------------------ */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
-    --foreground: #000000;
+    --background: #000000;
+    --foreground: #ffffff;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--primary);
-  font-family: "Roboto", sans-serif;
-}
+/* ------------------------------
+   4. Global Styles (with @apply)
+------------------------------ */
+/* body {
+  @apply bg-background text-foreground font-primary;
+} */
 
+/* ------------------------------
+   5. Container Utilities
+------------------------------ */
 .container {
   width: 100%;
   padding-left: var(--container-padding);
@@ -71,7 +95,9 @@ body {
   }
 }
 
-/* OverRide & Custom Styles  */
+/* ------------------------------
+   6. Custom Component Overrides
+------------------------------ */
 .swiper-button-prev,
 .swiper-button-next {
   color: var(--background);
@@ -80,6 +106,9 @@ body {
   background-color: var(--background);
 }
 
+/* ------------------------------
+   7. Animation Utilities
+------------------------------ */
 .fade-enter {
   opacity: 0;
 }
@@ -93,4 +122,9 @@ body {
 .fade-exit-active {
   opacity: 0;
   transition: opacity 0.5s;
+}
+main.HomePage .swiper{}
+.swiper-horizontal .swiper-button-next svg,
+.swiper-horizontal .swiper-button-prev svg {
+  color: var(--white);
 }

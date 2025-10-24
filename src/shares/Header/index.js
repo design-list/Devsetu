@@ -9,6 +9,8 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLang } from "@/app/langProviders";
 
+import Logo from '../../../public/icons/devsetu-horizontal.svg';
+import Container from "@/components/Container";
 
 const menu = [
   { id: 1, title: { en: "Home", hi: "होम" }, path: "/" },
@@ -57,23 +59,22 @@ const Header = () => {
 
   return (
     <header className="w-full shadow-sm sticky top-0 z-50 bg-white">
+    <Container>
       <div className="flex items-center justify-between py-4 px-6">
         
         {/* Logo */}
         <Link href={withLang("/")}>
           <div className="flex items-center gap-2">
             <Image
-              src="/icons/logo.jpg"
+              src={Logo}
               alt="Dev Setu"
-              width={40}
-              height={40}
-              className="rounded-full"
+              width={80}
+              height={80}
             />
-            <span className="text-xl font-semibold text-brown-800">Dev Setu</span>
           </div>
         </Link>
 
-        <nav className="hidden md:flex gap-6">
+        <nav className="hidden font-primary md:flex gap-6">
           {menu.map(({ id, title, path }) => {
             const link = withLang(path);
             const active = normalize(pathname) === path;
@@ -84,8 +85,8 @@ const Header = () => {
                 href={link}
                 className={`${
                   active
-                    ? "text-[var(--secondary)]"
-                    : "text-[var(--primary)] font-semibold"
+                    ? "text-black"
+                    : "text-black font-semibold"
                 } hover:text-[var(--secondary)] font-medium transition`}
               >
                 {title[lang]}
@@ -107,7 +108,7 @@ const Header = () => {
             </button>
 
             {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-md z-50">
+              <div className="absolute right-0 mt-2 w-32 bg-black border rounded-lg shadow-md z-50">
                 {language.map(({ code, label }) => (
                   <button
                     key={code}
@@ -126,6 +127,7 @@ const Header = () => {
           </button>
         </div>
       </div>
+      </Container>
     </header>
   );
 };

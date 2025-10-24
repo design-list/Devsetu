@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import { fetchWithWait } from "../../../../helper/method";
 import { addNewPujaDataAction, requestPujaDataAction } from "@/redux/actions/pujaActions";
+import Image from "next/image";
 
 const PujaForm = () => {
 
@@ -404,9 +405,11 @@ const PujaForm = () => {
                 <label className="block font-medium">Banner</label>
                 {item.imgUrl ? (
                   <div className="relative w-32 h-32">
-                    <img
+                    <Image
                       src={item.imgUrl}
                       alt={`banner imgUrl ${index}`}
+                      width={800}
+                      height={500}
                       className="w-32 h-32 object-cover rounded border cursor-pointer"
                     />
                     <button
@@ -550,9 +553,11 @@ const PujaForm = () => {
 
             {formData.temple.templeImg ? (
               <div className="relative w-20 h-20">
-                <img
+                <Image
                   src={formData.temple.templeImg}
                   alt="temple image"
+                  width={200}
+                  height={200}
                   className="w-20 h-20 object-cover rounded border"
                 />
                 <button
@@ -690,7 +695,7 @@ const PujaForm = () => {
                 <label className="block font-medium">Package Image</label>
                 {packaging.packImg ? (
                   <div className="relative w-32 h-32">
-                    <img
+                    <Image
                       src={packaging.packImg}
                       alt={`Packaging image ${index}`}
                       className="w-32 h-32 object-cover rounded border cursor-pointer"
@@ -793,7 +798,7 @@ const PujaForm = () => {
                 <label className="block font-medium">Offering Image</label>
                 {offering.offerimg ? (
                   <div className="relative w-32 h-32">
-                    <img
+                    <Image
                       src={offering.offerimg}
                       alt={`offering image ${index}`}
                       className="w-32 h-32 object-cover rounded border cursor-pointer"
