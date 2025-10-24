@@ -52,7 +52,7 @@ const PageHeroSlider = ({ heroSlides }) => {
 
         {/* Navigation Buttons */}
         <button className="swiper-button-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition">
-          <ChevronLeft className="w-5 h-5" />
+          <ChevronLeft className="w-5 h-5 bg-background" />
         </button>
         <button className="swiper-button-next absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition">
           <ChevronRight className="w-5 h-5" />
