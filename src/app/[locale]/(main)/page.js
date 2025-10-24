@@ -16,6 +16,8 @@ import { requestHomePageAction } from "@/redux/actions/homeAction";
 import ChadhavaCard from "@/components/Cards/chadhavaCard";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
 import SectionLoader from "@/components/Atom/loader/sectionLoader";
+import { useWithLang } from "../../../../helper/useWithLang";
+import { useRouter } from "next/navigation";
 
 
 
@@ -50,6 +52,11 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
+  
+  const withLang = useWithLang();
+  const router = useRouter();
+    
+
   useEffect(() => {
     dispatch(requestHomePageAction())
   },[])
@@ -58,6 +65,10 @@ const Home = () => {
 
   if(isLoading){
     return <PageLaoder />
+  }
+
+  const handlaRedirect = (base,slug) => {
+    router.push(withLang(`/${base}/${slug}`))
   }
 
   return (
@@ -72,7 +83,7 @@ const Home = () => {
             </h2>
             <p className="text-base">Connect with the divine from home. Get your puja performed in your name at India’s holy temples and invite peace, joy, and prosperity into your life.</p>
           </div>
-          {isLoading ? <SectionLoader /> : <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true}  />}
+          {isLoading ? <SectionLoader /> : <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true} handlaRedirect={handlaRedirect} withLang={withLang} />}
 
         </section>
 
@@ -83,7 +94,7 @@ const Home = () => {
             </h2>
             <p className="text-base">Offer your devotion through special chadhavas and seek divine blessings for yourself and your loved ones.</p>
           </div>
-          {isLoading ? <SectionLoader /> : <ChadhavaCard chadhava={chadhavaCard} viewmore={true} />}
+          {isLoading ? <SectionLoader /> : <ChadhavaCard chadhava={chadhavaCard} viewmore={true} handlaRedirect={handlaRedirect} withLang={withLang} />}
 
         </section>
 

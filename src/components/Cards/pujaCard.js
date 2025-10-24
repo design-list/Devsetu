@@ -3,18 +3,10 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from "../Atom/LazyImage";
-import { useWithLang } from "../../../helper/useWithLang";
-import { useRouter } from "next/navigation";
 
-export default function PujaCard({ pujas, viewmore, PujaName }) {
+const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
 
-  const withLang = useWithLang();
 
-  const router = useRouter();
-
-  const handlaRedirect = (slug) => {
-    router.push(withLang(`/puja/${slug}`))
-  }
 
   return (
     <>
@@ -28,7 +20,7 @@ export default function PujaCard({ pujas, viewmore, PujaName }) {
             <>
               {
                 pujaBanners?.map((item) => {
-                  return <div key={item.id}  onClick={() => handlaRedirect(puja.slug)} className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center cursor-pointer">
+                  return <div key={item.id}  onClick={() => handlaRedirect('puja', puja.slug)} className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center cursor-pointer">
                     <LazyImage
                       src={item.image_url || "/images/herobanner.webp"}
                       alt={puja.title}
@@ -67,11 +59,20 @@ export default function PujaCard({ pujas, viewmore, PujaName }) {
         })}
       </div>
 
-      {viewmore && <div className="text-center mt-6">
-        <Link href={withLang("/puja")} className="flex justify-center text-[var(--secondary)] capitalize font-medium text-xl hover:underline">
-          View All {PujaName} <ArrowUpRight className="w-6 h-6" />
-        </Link>
-      </div>}
+      {/* {
+      
+      viewmore && (
+        <div className="text-center mt-6">
+          <Link href={withLang(`/puja`)}
+            className="flex justify-center text-[var(--secondary)] capitalize font-medium text-xl hover:underline"
+          >
+            View All {PujaName} <ArrowUpRight className="w-6 h-6" />
+          </Link>
+        </div>
+      )
+      } */}
     </>
   );
 }
+
+export default PujaCard;
