@@ -62,7 +62,7 @@ export default function LibraryCards() {
                                 <p className="text-[var(--color-dark)] text-sm flex-grow">{cat.desc}</p>
                                 <Link
                                     href={cat.link}
-                                    className="flex items-center mt-4 text-orange-500 font-semibold hover:underline"
+                                    className="flex items-center mt-4 text-[var(--color-primary-light)] font-semibold hover:underline"
                                 >
                                     Read All <ArrowUpRight />
                                 </Link>

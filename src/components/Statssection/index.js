@@ -26,7 +26,7 @@ export default function StatsSection() {
         ))}
       </div>
       {/* Highlighted card */}
-        <div className="md:w-1/3 my-4 bg-[var(--color-primary)] text-[var(--forcast)] rounded-xl flex flex-col justify-center p-8">
+        <div className="md:w-1/3 my-4 bg-[var(--color-primary-light)] text-[var(--forcast)] rounded-xl flex flex-col justify-center p-8">
         <ShieldCheck size={92} strokeWidth={0.5} />
           <span className="uppercase text-xl font-bold mb-2">Dev Setu</span>
           <h3 className="font-secondary text-4xl font-bold mb-2">Trusted by Over 30 Million Devotees</h3>
