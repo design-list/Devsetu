@@ -1,4 +1,5 @@
 // src/app/api/pujas/[id]/toggle/route.js
+export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 
