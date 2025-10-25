@@ -3,6 +3,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from "../Atom/LazyImage";
+import { formatDate } from "../../../utils/localstorage";
 
 const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
 
@@ -43,7 +44,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                   {puja.location || "No description available."}
                 </p>
                 <p className="text-base text-[var(--primary)] mt-4 font-normal">
-                  {puja.date}
+                  {formatDate(puja.date, "full")}
                 </p>
               </div>
             </>
