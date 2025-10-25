@@ -9,70 +9,28 @@ import Container from "@/components/Container";
 import PageHeroSlider from "@/components/HeroBanner/PageHeroSlider";
 import { requestPujaWebPageAction } from "@/redux/actions/pujaActions";
 import SectionLoader from "@/components/Atom/loader/sectionLoader";
+import { useWithLang } from "../../../../../helper/useWithLang";
+import { useRouter } from "next/navigation";
 
-const heroSlides = [
-  {
-    title: "Wednesday Special",
-    description: "At Ujjain's oldest Ganesh temple \nVighnaharta Puja and Havan",
-    buttonText: "Book Puja",
-    bgColor: "bg-green-100",
-    textColor: "text-green-800",
-    image: "/images/krishana.webp",
-  },
-  {
-    title: "Friday Puja",
-    description: "Shri Dirgh Vishnu Mandir \nSatyanarayan Katha & Havan",
-    buttonText: "Participate",
-    bgColor: "bg-yellow-100",
-    textColor: "text-yellow-800",
-    image: "/images/siva.webp",
-  },
-  {
-    title: "Special Occasion",
-    description: "Join Online Puja \nDirect from Temple",
-    buttonText: "Join Now",
-    bgColor: "bg-pink-100",
-    textColor: "text-pink-800",
-    image: "/images/krishana.webp",
-  },
-];
-
-const pujas = [
-  {
-    title: "51,000 Pitru Gayatri Mantra Jaap and Til Tarpanam",
-    desc: "For Peace of Ancestor’s souls and Resolving Family Disputes",
-    img: "/images/herobanner.webp",
-    place: "Dharmaranyam Vedi, Gaya, Bihar",
-    date: "17 September, Wednesday, Krishna Ekadashi",
-  },
-  {
-    title: "Kashi-Rameshwaram Ghat-Gokarna Pitru Shanti Puja",
-    desc: "To Seek Relief from Ancestral Curses and Bring Peace to Departed Souls",
-    img: "/images/herobanner.webp",
-    place: "Pishach Mochan Kund, Gokarna Kshetra",
-    date: "17 September, Wednesday, Krishna Ekadashi",
-  },
-  {
-    title: "Panch Tirth Pitru Dosha Nivaran Puja",
-    desc: "For Peace of Ancestor’s souls and Resolving Family Disputes",
-    img: "/images/herobanner.webp",
-    place: "Kashi, Rameshwaram, Gaya, Gokarna, Hardwar",
-    date: "21 September, Sunday, Amavasya",
-  },
-];
 
 const PujaPage = () => {
 
   const dispatch = useDispatch();
 
-  const { pujaCard } = useSelector((state) => state.pujas)
+  const { pujaCard, heroBanner } = useSelector((state) => state.pujas)
   const { isLoading } = useSelector((state) => state.loader)
+
+  const withLang = useWithLang();
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(requestPujaWebPageAction())
   }, [dispatch])
 
 
+  const handlaRedirect = (base,slug) => {
+    router.push(withLang(`/${base}/${slug}`))
+  }
 
   return (
     <div className="text-[var(--color-dark)]">
@@ -83,14 +41,14 @@ const PujaPage = () => {
         <h1 className="font-secondary text-2xl md:text-4xl font-bold text-[var(--color-dark)] mb-4">
           Perform Puja as per Vedic rituals at Famous Hindu Temples in India
         </h1>
-        {isLoading ? <SectionLoader /> : <PageHeroSlider heroSlides={heroSlides} />}
+        <PageHeroSlider heroBanner={heroBanner} handlaRedirect={handlaRedirect} />
       </section>
 
       {/* Featured Puja */}
       <Container>
         <section className="pb-8 px-6">
           <h2 className="font-secondary text-center text-4xl uppercase font-bold text-[var(--primary)] mt-5">Featured Pujas</h2>
-          <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore={false} />
+          <PujaCard pujas={pujaCard} PujaName={'pujas'} handlaRedirect={handlaRedirect} viewmore={false} withLang={withLang} />
         </section>
 
         {/* Testimonials */}

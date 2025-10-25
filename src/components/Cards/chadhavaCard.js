@@ -4,17 +4,9 @@ import React from 'react'
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from '../Atom/LazyImage';
-import { useWithLang } from '../../../helper/useWithLang';
-import { useRouter } from 'next/navigation';
-
-function ChadhavaCard({ chadhava, viewmore }) {
 
 
-  const router = useRouter();
-  const withLang = useWithLang();
-  const handlaRedirect = (slug) => {
-    router.push(withLang(`/chadhava/${slug}`))
-  }
+function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
 
   return (
     <>
@@ -22,7 +14,7 @@ function ChadhavaCard({ chadhava, viewmore }) {
         {chadhava?.map((card) => (
           <div
             key={card.id}
-            onClick={() => handlaRedirect(card.slug)}
+            onClick={() => handlaRedirect('chadhava', card.slug)}
             className="bg-white rounded-lg shadow hover:shadow-lg transition p-4 flex flex-col cursor-pointer"
           >
             {card?.['chadhavaBanners']?.map((item) => (
@@ -50,7 +42,7 @@ function ChadhavaCard({ chadhava, viewmore }) {
         <Link href={withLang("/chadhava")} className="font-medium flex justify-center text-[var(--secondary)] text-xl hover:underline capitalize">
           View All Chadhava <ArrowUpRight className="w-6 h-6" />
         </Link>
-      </div>}
+      </div>} 
     </>
   )
 }

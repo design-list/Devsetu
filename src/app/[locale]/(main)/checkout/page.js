@@ -21,7 +21,7 @@ export default function CheckoutPage() {
     state: "",
   });
 
-  const [errors, setErrors] = useState({}); // field errors
+  const [errors, setErrors] = useState({}); 
 
   const [storeId, setStoreId] = useState("");
 

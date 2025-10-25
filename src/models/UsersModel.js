@@ -30,7 +30,7 @@ export default (sequelize, DataTypes) => {
       roles: {
         type: DataTypes.JSON,
         allowNull: false,
-        defaultValue: ["user"],
+        defaultValue: ["admin"],
         comment: "Array of roles like ['admin','user']",
       },
       isActive: {
@@ -49,5 +49,5 @@ export default (sequelize, DataTypes) => {
     { tableName: "users" }
   );
 
-  return UserModel;
+  return Users;
 };

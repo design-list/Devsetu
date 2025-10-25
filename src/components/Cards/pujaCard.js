@@ -3,18 +3,11 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from "../Atom/LazyImage";
-import { useWithLang } from "../../../helper/useWithLang";
-import { useRouter } from "next/navigation";
+import { formatDate } from "../../../utils/localstorage";
 
-export default function PujaCard({ pujas, viewmore, PujaName }) {
+const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
 
-  const withLang = useWithLang();
 
-  const router = useRouter();
-
-  const handlaRedirect = (slug) => {
-    router.push(withLang(`/puja/${slug}`))
-  }
 
   return (
     <>
@@ -28,7 +21,7 @@ export default function PujaCard({ pujas, viewmore, PujaName }) {
             <>
               {
                 pujaBanners?.map((item) => {
-                  return <div key={item.id}  onClick={() => handlaRedirect(puja.slug)} className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center cursor-pointer">
+                  return <div key={item.id}  onClick={() => handlaRedirect('puja', puja.slug)} className="m-2.5 overflow-hidden rounded-md h-80 flex justify-center items-center cursor-pointer">
                     <LazyImage
                       src={item.image_url || "/images/herobanner.webp"}
                       alt={puja.title}
@@ -51,7 +44,7 @@ export default function PujaCard({ pujas, viewmore, PujaName }) {
                   {puja.location || "No description available."}
                 </p>
                 <p className="text-base text-[var(--primary)] mt-4 font-normal">
-                  {puja.date}
+                  {formatDate(puja.date, "full")}
                 </p>
               </div>
             </>
@@ -75,3 +68,5 @@ export default function PujaCard({ pujas, viewmore, PujaName }) {
     </>
   );
 }
+
+export default PujaCard;

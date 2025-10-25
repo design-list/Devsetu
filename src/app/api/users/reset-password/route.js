@@ -2,9 +2,10 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import db from "@/models";
+import models from "@/models/index.js";
 
-const Users = db.Users;
+const { Users } = models;
+
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 export async function POST(req) {

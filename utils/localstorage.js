@@ -1,3 +1,4 @@
+import moment from "moment";
 
 export const loadState = (key) => {
   try {
@@ -21,24 +22,14 @@ export const saveState = (key, value) => {
   }
 };
 
-// export const loadCookies = (key) => {
-//   try {
-//     const serializedState = Cookies.get(key);
-//     if(serializedState === null) {
-//         return undefined;
-//     }
-//     return JSON.parse(serializedState);
-//   }
-//   catch (err) {
-//     return undefined;
-//   }
-// };
+export const formatDate = (date, formatType = "full") => {
+  if (!date) return "";
 
-// export const saveCookies = (key, value) => {
-//   try {
-//     Cookies.set(key, JSON.stringify(value));
-//   }
-//   catch (err) {
+  const formats = {
+    full: "DD MMMM, dddd,",
+    short: "DD MMM, YY",
+    time: "DD MMM, h:mm A",
+  };
 
-//   }
-// };
+  return moment.utc(date).local().format(formats[formatType] || formats.full);
+};

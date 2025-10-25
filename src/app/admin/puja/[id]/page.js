@@ -650,7 +650,7 @@ const EditPujaForm = () => {
                 </div>
 
                 <div>
-                    <label className="block font-semibold">Sub Title</label>
+                    <label className="block font-semibold">Benefits Title</label>
                     <input
                         type="text"
                         name="subTitle"
@@ -710,7 +710,7 @@ const EditPujaForm = () => {
 
                     {/* Location */}
                     <div>
-                        <label className="block font-semibold">Location</label>
+                        <label className="block font-semibold">Puja Location</label>
                         <input
                             type="text"
                             name="location"
