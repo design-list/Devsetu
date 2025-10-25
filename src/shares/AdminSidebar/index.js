@@ -75,7 +75,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                href="/admin/articles/list"
+                href="/admin/aartis/list"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <List size={18} />

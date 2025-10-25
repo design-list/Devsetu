@@ -285,4 +285,24 @@ export default class fetchApi extends Api {
         return this.fetch(url, "GET", null, data).then(response => response)
     }
 
+    GetAartisById(id) {
+        console.log("Fetching Aarti by ID:", id);
+        let url = this.buildUrl(endpoints.Aartis.aartis, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+    UpdeteAartis(data) {
+        let url = this.buildUrl(endpoints.Aartis.aartis, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
+
+    DeleteAartis(id) {
+        let url = this.buildUrl(endpoints.Aartis.aartis, "full")
+        if (id) {
+            return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
+        }
+    }
+
 }

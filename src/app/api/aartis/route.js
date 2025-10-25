@@ -22,7 +22,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { icon, title, slug, aboutArticle, Aartis: aartiText } = body;
+    const { icon, title, slug, aboutArticle, aartis: aartiText } = body;
 
     const newAarti = await Aartis.create({
       icon,
