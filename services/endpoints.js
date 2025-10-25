@@ -60,7 +60,11 @@ export const endpoints = {
         Order: `${baseApiUrl}/payment/order`,
         Verify: `${baseApiUrl}/payment/verify`,
     },
-    
+
+    Aartis: {
+        aartis: `${baseApiUrl}/aartis`,
+    },
+
     Web: {
         puja:`${baseApiUrl}/web/pujas`,
         chadhava:`${baseApiUrl}/web/chadhavas`

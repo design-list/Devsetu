@@ -41,8 +41,8 @@ const HeroBanner = ({ slides }) => {
 
           const {title, id, slug, type, banners} = slide
 
-          return <SwiperSlide key={index}>
-            <div className="h-[600px] cursor-pointer" onClick={() => handleExplore(type, slug)}>
+          return <SwiperSlide key={id}>
+            <div className="h-[500px] cursor-pointer" onClick={() => handleExplore(type, slug)}>
               {
                 banners?.map((item) => {
                   return <LazyImage

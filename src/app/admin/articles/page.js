@@ -115,7 +115,7 @@ const ArticalsForm = () => {
         <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
             <form
                 onSubmit={handleSubmit}
-                className="mx-auto shadow-md rounded-lg p-6 space-y-6 max-h-screen scrollbar-hide"
+                className="mx-auto shadow-md rounded-lg p-6 space-y-6 scrollbar-hide"
             >
                 <div>
                     <div className="gap-4">
