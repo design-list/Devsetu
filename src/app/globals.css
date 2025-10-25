@@ -4,14 +4,24 @@
    1. Base CSS Variables
 ------------------------------ */
 :root {
+  /* 🎨 Core Palette */
   --white: #ffffff;
   --black: #000000;
-  --orange: #f99724;
 
-  /* Font Variables */
+  --orange: #f15822;
+  --orange-light: #f57e20;
+  --yellow: #fec76f;
+  --blue: #37768d;
+  --brown: #351714;
+
+  /* 🖋 Fonts */
   --font-philosopher: "Philosopher";
   --font-proximanova-regular: "Proxima Nova Regular";
   --font-proximanova-bold: "Proxima Nova Bold";
+
+  /* 🌗 Default Theme Colors */
+  --background: var(--white);
+  --foreground: var(--black);
 }
 
 /* ------------------------------
@@ -21,15 +31,20 @@
   /* 🎨 Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-primary: var(--black);
-  --color-secondary: var(--orange);
+
+  --color-primary: var(--orange);
+  --color-primary-light: var(--orange-light);
+  --color-accent: var(--yellow);
+  --color-info: var(--blue);
+  --color-dark: var(--brown);
+
   --color-white: var(--white);
   --color-black: var(--black);
 
   /* 🖋 Fonts */
-  --font-primary: var(--font-philosopher), sans-serif;
-  --font-proximanova: var(--font-proximanova-regular), sans-serif;
-  --font-proximanova-bold: var(--font-proximanova-bold), sans-serif;
+  --font-primary: var(--font-proximanova-regular), sans-serif;
+  --font-secondary: var(--font-philosopher), sans-serif;
+  --font-proxi-bold: var(--font-proximanova-bold), sans-serif;
 
   /* 📦 Container sizes */
   --container-padding: 1rem;
@@ -44,87 +59,58 @@
 /* ------------------------------
    3. Dark Mode
 ------------------------------ */
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #000000;
     --foreground: #ffffff;
   }
-}
+} */
 
 /* ------------------------------
    4. Global Styles (with @apply)
 ------------------------------ */
-/* body {
-  @apply bg-background text-foreground font-primary;
-} */
+body {
+  @apply text-foreground font-primary;
+}
 
 /* ------------------------------
    5. Container Utilities
 ------------------------------ */
 .container {
   width: 100%;
-  padding-left: var(--container-padding);
-  padding-right: var(--container-padding);
-  margin-left: var(--container-margin);
-  margin-right: var(--container-margin);
+  padding-inline: var(--container-padding);
+  margin-inline: var(--container-margin);
 }
 
-@media (min-width: 640px) {
-  .container {
-    max-width: var(--container-max-sm);
-  }
-}
-@media (min-width: 768px) {
-  .container {
-    max-width: var(--container-max-md);
-  }
-}
-@media (min-width: 1024px) {
-  .container {
-    max-width: var(--container-max-lg);
-  }
-}
-@media (min-width: 1280px) {
-  .container {
-    max-width: var(--container-max-xl);
-  }
-}
-@media (min-width: 1536px) {
-  .container {
-    max-width: var(--container-max-2xl);
-  }
-}
+@media (min-width: 640px) { .container { max-width: var(--container-max-sm); } }
+@media (min-width: 768px) { .container { max-width: var(--container-max-md); } }
+@media (min-width: 1024px) { .container { max-width: var(--container-max-lg); } }
+@media (min-width: 1280px) { .container { max-width: var(--container-max-xl); } }
+@media (min-width: 1536px) { .container { max-width: var(--container-max-2xl); } }
 
 /* ------------------------------
    6. Custom Component Overrides
 ------------------------------ */
 .swiper-button-prev,
 .swiper-button-next {
-  color: var(--background);
+  color: var(--color-primary);
 }
+
 .swiper-pagination-bullet-active {
-  background-color: var(--background);
+  background-color: var(--color-primary);
+}
+
+.swiper-horizontal .swiper-button-next svg,
+.swiper-horizontal .swiper-button-prev svg {
+  color: var(--white);
 }
 
 /* ------------------------------
    7. Animation Utilities
 ------------------------------ */
-.fade-enter {
-  opacity: 0;
-}
-.fade-enter-active {
-  opacity: 1;
-  transition: opacity 0.5s;
-}
-.fade-exit {
-  opacity: 1;
-}
-.fade-exit-active {
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-main.HomePage .swiper{}
-.swiper-horizontal .swiper-button-next svg,
-.swiper-horizontal .swiper-button-prev svg {
-  color: var(--white);
-}
+.fade-enter { opacity: 0; }
+.fade-enter-active { opacity: 1; transition: opacity 0.5s; }
+.fade-exit { opacity: 1; }
+.fade-exit-active { opacity: 0; transition: opacity 0.5s; }
+
+main.HomePage .swiper {}

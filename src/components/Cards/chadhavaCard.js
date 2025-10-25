@@ -32,22 +32,22 @@ function ChadhavaCard({ chadhava, viewmore }) {
                 alt={card.title}
                 width={400}
                 height={320}
-                className="w-full h-full object-cover"
+                className="w-full h-64 object-fill"
               />
             ))
             }
-            <h2 className="text-xl font-semibold mt-3 text-gray-800">
+            <h2 className="font-secondary text-2xl font-semibold mt-3 text-[var(--color-dark)]">
               {card.title}
             </h2>
-            <p className="text-gray-600 text-sm mt-2 flex-grow">{card.chadhava_details.substring(0,400)+ "..."}</p>
-            <Link href={withLang(`/chadhava/${card.slug}`)} className="mt-4 text-center bg-green-600 hover:bg-green-700 text-white py-2 rounded-md">
+            <p className="text-[var(--color-dark)] text-base mt-2 flex-grow">{card.chadhava_details.substring(0,400)+ "..."}</p>
+            <Link href={withLang(`/chadhava/${card.slug}`)} className="font-secondary text-lg mt-4 text-center bg-[var(--color-primary-light)] hover:[var(--color-primary)] text-white py-2 rounded-md">
               Book Your Chadhava
             </Link>
           </div>
         ))}
       </div>
-      {viewmore && <div className="text-center mt-6">
-        <Link href={withLang("/chadhava")} className="flex justify-center text-[var(--secondary)] capitalize font-medium text-xl hover:underline">
+      {viewmore && <div className="text-center mt-8">
+        <Link href={withLang("/chadhava")} className="font-medium flex justify-center text-[var(--secondary)] text-xl hover:underline capitalize">
           View All Chadhava <ArrowUpRight className="w-6 h-6" />
         </Link>
       </div>}
