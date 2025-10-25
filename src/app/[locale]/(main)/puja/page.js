@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Landmark, Users, Building, Sparkles } from "lucide-react";
+import { Landmark, Users, Building, Sparkles, ListChecks, User, Video, Gift } from "lucide-react";
 
 import PujaCard from "@/components/Cards/pujaCard";
 import Container from "@/components/Container";
@@ -159,26 +159,69 @@ const PujaPage = () => {
         </section>
 
         {/* How Puja Works */}
-        <section className="bg-gray-50 py-12 px-6">
-          <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-10 text-[var(--color-dark)] text-center">
-            Start your <span className="text-[var(--color-primary)]">How does</span> Sri Mandir Online <br />
-            <span className="text-[var(--color-info)]">Puja Works?</span>
-          </h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <div className="bg-white shadow rounded-lg p-6 text-center">
-              <h3 className="font-bold mb-2">Choose Your Puja</h3>
-              <p className="text-sm text-gray-600">Select your Puja from the list</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6 text-center">
-              <h3 className="font-bold mb-2">Your Information</h3>
-              <p className="text-sm text-gray-600">Fill in your Name and Gotra in the form</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6 text-center">
-              <h3 className="font-bold mb-2">Puja Video & Aashirwad</h3>
-              <p className="text-sm text-gray-600">Receive video on WhatsApp and Aashirwad box at home</p>
-            </div>
+        <section className="py-16 px-6 bg-[var(--color-background)] text-[var(--color-foreground)]">
+      <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-12 text-center text-[var(--color-dark)]">
+        Start your <span className="text-[var(--color-primary)]">Sacred Journey</span> with <br />
+        <span className="text-[var(--color-info)]">DevaSetu Online Puja</span>
+      </h2>
+
+      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* Step 1 */}
+        <div className="relative bg-[var(--color-primary-light)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
+          <div className="flex justify-center mb-4">
+            <ListChecks className="w-10 h-10 text-[var(--color-primary)] group-hover:scale-110 transition-transform duration-300" />
           </div>
-        </section>
+          <h3 className="font-proxi-bold text-xl text-[var(--color-dark)] mb-2">
+            Choose Your Puja
+          </h3>
+          <p className="text-sm font-primary text-gray-600">
+            Select your desired Puja from our wide list of sacred rituals.
+          </p>
+          <span className="absolute -top-4 left-6 bg-[var(--color-primary)] text-white px-3 py-1 rounded-full text-xs font-semibold">
+            Step 1
+          </span>
+        </div>
+
+        {/* Step 2 */}
+        <div className="relative bg-[var(--color-info)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
+          <div className="flex justify-center mb-4">
+            <User className="w-10 h-10 text-[var(--color-info)] group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <h3 className="font-proxi-bold text-xl text-[var(--color-dark)] mb-2">
+            Fill Your Information
+          </h3>
+          <p className="text-sm font-primary text-gray-600">
+            Enter your Name and Gotra — our priests will include them in the Puja Sankalp.
+          </p>
+          <span className="absolute -top-4 left-6 bg-[var(--color-info)] text-white px-3 py-1 rounded-full text-xs font-semibold">
+            Step 2
+          </span>
+        </div>
+
+        {/* Step 3 */}
+        <div className="relative bg-[var(--color-accent)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
+          <div className="flex justify-center mb-4">
+            <Video className="w-10 h-10 text-[var(--color-accent)] group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <h3 className="font-proxi-bold text-xl text-[var(--color-dark)] mb-2">
+            Watch & Receive Blessings
+          </h3>
+          <p className="text-sm font-primary text-gray-600">
+            Get Puja video on WhatsApp and receive your sacred Aashirwad box at home.
+          </p>
+          <span className="absolute -top-4 left-6 bg-[var(--color-accent)] text-white px-3 py-1 rounded-full text-xs font-semibold">
+            Step 3
+          </span>
+        </div>
+      </div>
+
+      {/* Optional Closing Line */}
+      <div className="text-center mt-12">
+        <p className="font-primary text-sm text-gray-600 max-w-xl mx-auto">
+          Every Puja is performed with devotion by experienced priests at holy temples — connecting you to divine energy from the comfort of your home.
+        </p>
+      </div>
+    </section>
 
         {/* Purohit Section */}
         <section className="py-12 px-6">
