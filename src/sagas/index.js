@@ -19,6 +19,8 @@ import { addNewUserDetailSaga, fetchAllUserDetailSaga } from './userDetailSaga';
 import { ADD_NEW_USER_DETAILS_REQUEST, USER_DETAILS_REQUEST } from '@/redux/types/userDetailsTypes';
 import { paymentOrderSaga, paymentOrderVerifySaga } from './paymentSaga';
 import { PAYMENT_OREDR_REQUEST, PAYMENT_OREDR_VERIFY_REQUEST } from '@/redux/types/paymentTypes';
+import { USER_LOGIN_REQUEST, USER_REGISTRATION_REQUEST } from '@/redux/types/usersLoginTypes';
+import { userLoginSaga, userRegistrationSaga } from './userLoginSaga';
 
 function* rootSaga() {
     yield all([
@@ -73,6 +75,10 @@ function* rootSaga() {
 
         takeLatest(PAYMENT_OREDR_REQUEST, paymentOrderSaga),
         takeLatest(PAYMENT_OREDR_VERIFY_REQUEST, paymentOrderVerifySaga),
+
+        takeLatest(USER_LOGIN_REQUEST, userLoginSaga),
+        takeLatest(USER_REGISTRATION_REQUEST, userRegistrationSaga),
+
     ]);
 }
 

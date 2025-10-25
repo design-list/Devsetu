@@ -8,7 +8,9 @@ const LazyImage = ({ src, alt, width, height, fill, className, priority }) => {
         alt={alt || ""}
         fill
         priority={priority}
-        className={className || "object-cover"}
+        className={className || "object-cover w-full h-full"}
+        // width={1000}
+        // height={800}
       />
     );
   }
@@ -21,6 +23,7 @@ const LazyImage = ({ src, alt, width, height, fill, className, priority }) => {
       height={height || 300}
       className={className || "object-cover rounded-lg"}
       loading="lazy"
+
     />
   );
 };

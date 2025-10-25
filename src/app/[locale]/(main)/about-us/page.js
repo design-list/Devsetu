@@ -116,12 +116,12 @@ const About = () => {
             vision of blending devotion with technology. If you would like to be
             a part of DevaSetu’s growing family, send your CV to:
           </p>
-          <a
+          <Link
             href="mailto:utkarsh.mansinghka@devasetu.com"
             className="inline-block px-5 py-3 bg-orange-500 text-white font-medium rounded-lg shadow hover:bg-orange-600 transition"
           >
             utkarsh.mansinghka@devasetu.com
-          </a>
+          </Link>
         </div>
       </section>
     </div>

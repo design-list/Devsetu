@@ -16,6 +16,7 @@ import PujaPackages from "@/components/PujaPackages/index.js";
 import { useWithLang } from "../../../../../../helper/useWithLang";
 import { useRouter } from "next/navigation";
 import { addNewCartAction, addPackageAction } from "@/redux/actions/cartActions";
+import { formatDate } from "../../../../../../utils/localstorage";
 
 
 const pujaData = {
@@ -132,7 +133,7 @@ export default function PujaDetailsPage() {
         setCartItem(pkg)
     };
 
-    const formattedDate = moment(pujaDetailPage?.['date']).format("D MMMM");
+    const formattedDate = formatDate(pujaDetailPage?.['date'], 'full');
 
 
     return (
@@ -154,7 +155,7 @@ export default function PujaDetailsPage() {
                             {pujaDetailPage?.['location']}
                         </p>
                         <p className="text-[18px] font-semibold text-orange-600">
-                            {`${formattedDate}, ${pujaDetailPage?.['specialDay']}`}
+                            {`${formattedDate} ${pujaDetailPage?.['specialDay']}`}
                         </p>
 
                         <CountdownTimer date={pujaDetailPage?.['date']} CountdownHeading={"Puja booking will close in:"} />

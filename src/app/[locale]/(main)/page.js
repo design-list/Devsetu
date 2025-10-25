@@ -16,6 +16,8 @@ import { requestHomePageAction } from "@/redux/actions/homeAction";
 import ChadhavaCard from "@/components/Cards/chadhavaCard";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
 import SectionLoader from "@/components/Atom/loader/sectionLoader";
+import { useWithLang } from "../../../../helper/useWithLang";
+import { useRouter } from "next/navigation";
 
 
 
@@ -50,6 +52,11 @@ const Home = () => {
 
   const dispatch = useDispatch();
 
+  
+  const withLang = useWithLang();
+  const router = useRouter();
+    
+
   useEffect(() => {
     dispatch(requestHomePageAction())
   },[])
@@ -60,38 +67,42 @@ const Home = () => {
     return <PageLaoder />
   }
 
+  const handlaRedirect = (base,slug) => {
+    router.push(withLang(`/${base}/${slug}`))
+  }
+
   return (
     <Main className="HomePage">
       <HeroBanner slides={heroBanner} />
       <ContinuousSlider />
       <Container>
-        <section className="py-8">
+        <section className="py-8 font">
           <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
-            <h2 className=" capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
+            <h2 className="font-secondary text-center text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5">
               Special pujas
             </h2>
-            <p className="text-base">Connect with the divine from home. Get your puja performed in your name at India’s holy temples and invite peace, joy, and prosperity into your life.</p>
+            <p className="text-base font-proximanova">Connect with the divine from home. Get your puja performed in your name at India’s holy temples and invite peace, joy, and prosperity into your life.</p>
           </div>
-          {isLoading ? <SectionLoader /> : <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true}  />}
+          {isLoading ? <SectionLoader /> : <PujaCard pujas={pujaCard} PujaName={'pujas'} viewmore = {true} handlaRedirect={handlaRedirect} withLang={withLang} />}
 
         </section>
 
-        <section className="py-8">
+        <section className="pb-16">
           <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
-            <h2 className=" capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
+            <h2 className="font-secondary text-center text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5">
            Special chadhavas
             </h2>
-            <p className="text-base">Offer your devotion through special chadhavas and seek divine blessings for yourself and your loved ones.</p>
+            <p className="text-base font-proximanova">Offer your devotion through special chadhavas and seek divine blessings for yourself and your loved ones.</p>
           </div>
-          {isLoading ? <SectionLoader /> : <ChadhavaCard chadhava={chadhavaCard} viewmore={true} />}
+          {isLoading ? <SectionLoader /> : <ChadhavaCard chadhava={chadhavaCard} viewmore={true} handlaRedirect={handlaRedirect} withLang={withLang} />}
 
         </section>
 
         <HowItWorks />
 
         <section className="py-8">
-          <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
-            <h2 className=" capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
+          <div className="mx-auto max-w-screen-md text-left md:text-center lg:mb-0">
+            <h2 className="font-secondary capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
              Explore Knowledge
             </h2>
             <p className="text-base">Explore the wisdom of Sanatan Dharma through our curated articles, videos, and guides.</p>
@@ -110,8 +121,8 @@ const Home = () => {
           <Effectiveness />
         </section> */}
 
-        <section className="py-16 bg-gray-50">
-          <h2 className="text-center text-3xl font-bold mb-10">Reviews & Ratings</h2>
+        <section className="py-16 bg-[var(--color-info)]">
+          <h2 className="font-secondary text-center text-3xl font-bold mb-10">Reviews & Ratings</h2>
           <Reviews reviews={reviews} />
         </section>
 

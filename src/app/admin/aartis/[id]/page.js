@@ -1,0 +1,251 @@
+"use client";
+import { useEffect, useState } from "react";
+import { Trash2 } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import Api from "../../../../../services/fetchApi";
+import Link from "next/link";
+const api = new Api();
+
+const UpdateAartis = () => {
+  const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const router = useRouter();
+  const { id } = useParams();
+
+  const [formData, setFormData] = useState({
+    icon: null,
+    title: "",
+    slug: "",
+    aboutArticle: "",
+    aartis: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  // ✅ Slug generate on title change
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      slug: slugify(prev.title),
+    }));
+  }, [formData?.title]);
+
+  const slugify = (text) => {
+    return text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-");
+  };
+
+  // ✅ Fetch existing Aarti data
+  useEffect(() => {
+    if (!id) return;
+    const fetchAarti = async () => {
+      try {
+        setLoading(true);
+        api.GetAartisById(id)
+        .then((res) => {
+          const data = res.data;
+        if (res.status === 200) {
+          setFormData({
+            icon: data.icon,
+            title: data.title,
+            slug: data.title ? slugify(data.title) : "",
+            aboutArticle: data.aboutArticle,
+            aartis: data.aartis,
+          });
+        } else {
+          alert("Failed to load Aarti details.");
+        }
+        })
+      } catch (err) {
+        console.error("Error fetching Aarti:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAarti();
+  }, [id]);
+
+  // ✅ Handle input & file change
+  const handleChange = async (e) => {
+    const { name, value, files } = e.target;
+
+    if (files && files[0]) {
+      const file = files[0];
+      const localPreview = URL.createObjectURL(file);
+
+      // show preview first
+      setFormData((prev) => ({ ...prev, icon: localPreview }));
+
+      // upload to backend
+      const uploadFormData = new FormData();
+      uploadFormData.append("file", file);
+
+      try {
+        const res = await fetch(`${baseAPIURL}/uploads`, {
+          method: "POST",
+          body: uploadFormData,
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          setFormData((prev) => ({
+            ...prev,
+            icon: data.storedAs.toString(), // file path from server
+          }));
+        } else {
+          alert("Upload failed: " + data.error);
+        }
+      } catch (err) {
+        console.error("Upload error:", err);
+        alert("Error while uploading image");
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setLoading(true);
+
+      const payloads = {
+        id,
+        ...formData,
+      };
+
+      api.UpdeteAartis(payloads)
+
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Aarti updated successfully!");
+          router.push("/admin/aartis/list");
+        } else {
+          alert(data.message || "Something went wrong!");
+        }
+      });
+    } catch (err) {
+      console.error("Submit error:", err);
+      alert("Error updating Aarti");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+  return (
+    <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
+      <form
+        onSubmit={handleSubmit}
+        className="mx-auto shadow-md rounded-lg p-6 space-y-6"
+      >
+        <h2 className="text-xl font-semibold mb-4">Update Aarti</h2>
+
+        {/* Image Upload */}
+        <div className="mb-3">
+          <label className="block font-medium mb-1">Aarti Image</label>
+          {formData.icon ? (
+            <div className="relative w-32 h-32">
+              <img
+                src={formData.icon}
+                alt="Aarti Icon"
+                className="w-32 h-32 object-cover rounded border cursor-pointer"
+              />
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, icon: null })}
+                className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
+              >
+                <Trash2 size={14} />
+              </button>
+            </div>
+          ) : (
+            <input
+              type="file"
+              name="icon"
+              accept="image/*"
+              onChange={handleChange}
+              className="w-32 h-32 border rounded flex items-center justify-center text-sm p-2 cursor-pointer"
+            />
+          )}
+        </div>
+
+        {/* Title */}
+        <div>
+          <label className="block font-medium mb-1">Title</label>
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter Aarti Title"
+            className="w-full border p-2 rounded"
+            required
+          />
+        </div>
+
+        {/* Slug */}
+        <div>
+          <label className="block font-medium mb-1">Slug</label>
+          <input
+            type="text"
+            name="slug"
+            value={formData.slug}
+            disabled
+            className="w-full border p-2 rounded bg-gray-100 cursor-not-allowed"
+          />
+        </div>
+
+        {/* About Article */}
+        <div>
+          <label className="block font-medium mb-1">About Aarti</label>
+          <textarea
+            name="aboutArticle"
+            value={formData.aboutArticle}
+            onChange={handleChange}
+            placeholder="Short description about the Aarti"
+            className="w-full border p-2 rounded"
+            rows={4}
+          />
+        </div>
+
+        {/* Aartis Text */}
+        <div>
+          <label className="block font-medium mb-1">Aarti Content</label>
+          <textarea
+            name="Aartis"
+            value={formData.aartis}
+            onChange={handleChange}
+            placeholder="Write full Aarti text here..."
+            className="w-full border p-2 rounded"
+            rows={8}
+          />
+        </div>
+
+        {/* Submit */}
+        <Link
+          type="button"
+          className={`bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition cursor-pointer`}
+          href={("/admin/aartis/list")}
+        >
+          Canlel
+        </Link>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className={`bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition cursor-pointer ${
+            loading ? "opacity-70" : ""
+          }`}
+        >
+          {loading ? "Updating..." : "Update Aarti"}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default UpdateAartis;

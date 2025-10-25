@@ -7,6 +7,15 @@ export const endpoints = {
 
     baseApiUrl,
 
+    AdminLogin: {
+        adminLogin:`${baseApiUrl}/users/login`,
+        register:`${baseApiUrl}/users/register`
+    },
+
+    UserLogin: {
+        userLogin:`${baseApiUrl}/user_details`
+    },
+
     Pujas: {
         puja:`${baseApiUrl}/pujas`
     },
@@ -51,7 +60,11 @@ export const endpoints = {
         Order: `${baseApiUrl}/payment/order`,
         Verify: `${baseApiUrl}/payment/verify`,
     },
-    
+
+    Aartis: {
+        aartis: `${baseApiUrl}/aartis`,
+    },
+
     Web: {
         puja:`${baseApiUrl}/web/pujas`,
         chadhava:`${baseApiUrl}/web/chadhavas`

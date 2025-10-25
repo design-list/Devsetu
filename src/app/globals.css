@@ -1,20 +1,52 @@
 @import "tailwindcss";
 
+/* ------------------------------
+   1. Base CSS Variables
+------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* 🎨 Core Palette */
   --white: #ffffff;
   --black: #000000;
-  --orange: #f99724;
+
+  --orange: #f15822;
+  --orange-light: #f57e20;
+  --yellow: #fec76f;
+  --blue: #37768d;
+  --brown: #351714;
+
+  /* 🖋 Fonts */
+  --font-philosopher: "Philosopher";
+  --font-proximanova-regular: "Proxima Nova Regular";
+  --font-proximanova-bold: "Proxima Nova Bold";
+
+  /* 🌗 Default Theme Colors */
+  --background: var(--white);
+  --foreground: var(--black);
 }
 
+/* ------------------------------
+   2. Tailwind @theme block
+------------------------------ */
 @theme {
+  /* 🎨 Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --roboto: var(--roboto), sans-serif;
-  --primary: var(--black);
-  --secondary: var(--orange);
-  --forcast: var(--white);
+
+  --color-primary: var(--orange);
+  --color-primary-light: var(--orange-light);
+  --color-accent: var(--yellow);
+  --color-info: var(--blue);
+  --color-dark: var(--brown);
+
+  --color-white: var(--white);
+  --color-black: var(--black);
+
+  /* 🖋 Fonts */
+  --font-primary: var(--font-proximanova-regular), sans-serif;
+  --font-secondary: var(--font-philosopher), sans-serif;
+  --font-proxi-bold: var(--font-proximanova-bold), sans-serif;
+
+  /* 📦 Container sizes */
   --container-padding: 1rem;
   --container-margin: auto;
   --container-max-sm: 640px;
@@ -24,73 +56,61 @@
   --container-max-2xl: 1440px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* ------------------------------
+   3. Dark Mode
+------------------------------ */
+/* @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
-    --foreground: #000000;
+    --background: #000000;
+    --foreground: #ffffff;
   }
-}
+} */
 
+/* ------------------------------
+   4. Global Styles (with @apply)
+------------------------------ */
 body {
-  background: var(--background);
-  color: var(--primary);
-  font-family: "Roboto", sans-serif;
+  @apply text-foreground font-primary;
 }
 
+/* ------------------------------
+   5. Container Utilities
+------------------------------ */
 .container {
   width: 100%;
-  padding-left: var(--container-padding);
-  padding-right: var(--container-padding);
-  margin-left: var(--container-margin);
-  margin-right: var(--container-margin);
+  padding-inline: var(--container-padding);
+  margin-inline: var(--container-margin);
 }
 
-@media (min-width: 640px) {
-  .container {
-    max-width: var(--container-max-sm);
-  }
-}
-@media (min-width: 768px) {
-  .container {
-    max-width: var(--container-max-md);
-  }
-}
-@media (min-width: 1024px) {
-  .container {
-    max-width: var(--container-max-lg);
-  }
-}
-@media (min-width: 1280px) {
-  .container {
-    max-width: var(--container-max-xl);
-  }
-}
-@media (min-width: 1536px) {
-  .container {
-    max-width: var(--container-max-2xl);
-  }
-}
+@media (min-width: 640px) { .container { max-width: var(--container-max-sm); } }
+@media (min-width: 768px) { .container { max-width: var(--container-max-md); } }
+@media (min-width: 1024px) { .container { max-width: var(--container-max-lg); } }
+@media (min-width: 1280px) { .container { max-width: var(--container-max-xl); } }
+@media (min-width: 1536px) { .container { max-width: var(--container-max-2xl); } }
 
-/* OverRide & Custom Styles  */
+/* ------------------------------
+   6. Custom Component Overrides
+------------------------------ */
 .swiper-button-prev,
 .swiper-button-next {
-  color: var(--background);
-}
-.swiper-pagination-bullet-active {
-  background-color: var(--background);
+  color: var(--color-primary);
 }
 
-.fade-enter {
-  opacity: 0;
+.swiper-pagination-bullet-active {
+  background-color: var(--color-primary);
 }
-.fade-enter-active {
-  opacity: 1;
-  transition: opacity 0.5s;
+
+.swiper-horizontal .swiper-button-next svg,
+.swiper-horizontal .swiper-button-prev svg {
+  color: var(--white);
 }
-.fade-exit {
-  opacity: 1;
-}
-.fade-exit-active {
-  opacity: 0;
-  transition: opacity 0.5s;
-}
+
+/* ------------------------------
+   7. Animation Utilities
+------------------------------ */
+.fade-enter { opacity: 0; }
+.fade-enter-active { opacity: 1; transition: opacity 0.5s; }
+.fade-exit { opacity: 1; }
+.fade-exit-active { opacity: 0; transition: opacity 0.5s; }
+
+main.HomePage .swiper {}

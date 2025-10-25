@@ -11,6 +11,7 @@ import packages from './packageReduces'
 import cart from './cartReducer'
 import userDetails from './userDetialsReduces'
 import payment from './paymentReduces'
+import loginUser from './userLoginReduces'
 
 export default combineReducers({
    count: counter,
@@ -24,5 +25,6 @@ export default combineReducers({
    packages,
    cart,
    userDetails,
-   payment
+   payment,
+   loginUser
 })

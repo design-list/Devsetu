@@ -9,6 +9,8 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLang } from "@/app/langProviders";
 
+import Logo from '../../../public/icons/devsetu-horizontal.svg';
+import Container from "@/components/Container";
 
 const menu = [
   { id: 1, title: { en: "Home", hi: "होम" }, path: "/" },
@@ -57,23 +59,22 @@ const Header = () => {
 
   return (
     <header className="w-full shadow-sm sticky top-0 z-50 bg-white">
-      <div className="flex items-center justify-between py-4 px-6">
+    <Container>
+      <div className="flex items-center justify-between py-4 fon">
         
         {/* Logo */}
         <Link href={withLang("/")}>
           <div className="flex items-center gap-2">
             <Image
-              src="/icons/logo.jpg"
+              src={Logo}
               alt="Dev Setu"
-              width={40}
-              height={40}
-              className="rounded-full"
+              width={80}
+              height={80}
             />
-            <span className="text-xl font-semibold text-brown-800">Dev Setu</span>
           </div>
         </Link>
 
-        <nav className="hidden md:flex gap-6">
+        <nav className="hidden font-primary md:flex gap-6 font-secondary">
           {menu.map(({ id, title, path }) => {
             const link = withLang(path);
             const active = normalize(pathname) === path;
@@ -83,10 +84,10 @@ const Header = () => {
                 key={id}
                 href={link}
                 className={`${
-                  active
-                    ? "text-[var(--secondary)]"
-                    : "text-[var(--primary)] font-semibold"
-                } hover:text-[var(--secondary)] font-medium transition`}
+                  active 
+                    ? "text-[var(--color-primary-light)]"
+                    : "text-black"
+                } font-bold hover:text-[var(--secondary)] transition`}
               >
                 {title[lang]}
               </Link>
@@ -100,7 +101,7 @@ const Header = () => {
           <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-1 border px-3 py-1 rounded-lg text-sm hover:bg-gray-100 transition"
+              className="flex items-center gap-1 border px-3 py-1 rounded-lg text-sm hover:bg-[var(--color-primary-light)] transition"
             >
               {lang === "en" ? "English" : "हिंदी"}
               <ChevronDown size={16} />
@@ -112,7 +113,7 @@ const Header = () => {
                   <button
                     key={code}
                     onClick={() => handleLanguageChange(code)}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100 transition"
+                    className="w-full text-left px-4 py-2 hover:bg-[var(--color-primary-light)] transition"
                   >
                     {label}
                   </button>
@@ -121,11 +122,12 @@ const Header = () => {
             )}
           </div>
 
-          <button className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-gray-100 transition">
+          <button className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition">
             <User size={20} />
           </button>
         </div>
       </div>
+      </Container>
     </header>
   );
 };

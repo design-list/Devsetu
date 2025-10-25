@@ -1,4 +1,5 @@
 // components/Categories.js
+import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -36,7 +37,7 @@ const categories = [
 export default function LibraryCards() {
     return (
         <section className="pt-8 pb-16 bg-[var(--forcast)]">
-            <div className="max-w-7xl mx-auto px-6">
+            <div className="max-w-7xl mx-auto md:px-6">
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                     {categories.map((cat) => (
                       
@@ -44,24 +45,26 @@ export default function LibraryCards() {
                             className="flex flex-col bg-[var(--forcast)] rounded-lg overflow-hidden shadow hover:shadow-lg transition"
                         >
                             {/* Image */}
-                            <div className="w-full h-40 relative">
+                            <div className="w-full h-full overflow-hidden max-h-52 rounded-xl">
                                 <Image
                                     src={cat.img}
                                     alt={cat.title}
-                                    fill
-                                    className="object-cover"
+                                    // fill
+                                    className="object-contain"
+                                    width={500}
+                                    height={500}
                                 />
                             </div>
 
                             {/* Content */}
                             <div className="p-4 flex flex-col flex-grow">
-                                <h3 className="text-lg font-bold mb-2">{cat.title}</h3>
-                                <p className="text-gray-600 text-sm flex-grow">{cat.desc}</p>
+                                <h3 className="font-secondary text-lg font-bold mb-2 text-[var(--color-dark)]">{cat.title}</h3>
+                                <p className="text-[var(--color-dark)] text-sm flex-grow">{cat.desc}</p>
                                 <Link
                                     href={cat.link}
-                                    className="mt-4 text-orange-500 font-semibold hover:underline"
+                                    className="flex items-center mt-4 text-[var(--color-primary-light)] font-semibold hover:underline"
                                 >
-                                    Read All
+                                    Read All <ArrowUpRight />
                                 </Link>
                             </div>
                         </div>
