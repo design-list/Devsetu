@@ -1,8 +1,11 @@
 // src/app/api/aartis/[id]/route.js
+
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import models from "@/models";
 
-const { Aartis, Chalisas, Festivals, Horoscopes, Wishes } = models;
+const { Aartis } = models;
 
 // ✅ Get Aarti by ID
 export async function GET(req, { params }) {

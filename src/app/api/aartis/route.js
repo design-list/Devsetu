@@ -3,7 +3,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models";
 
-const { Aartis, Chalisas, Festivals, Horoscopes, Wishes } = models;
+const { Aartis } = models;
 
 // ✅ Get all Aartis
 export async function GET() {
