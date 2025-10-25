@@ -1,5 +1,5 @@
 // src/app/api/chadhavas/[id]/toggle/route.js
-export const dynamic = "force-dynamic";
+
 
 import { NextResponse } from "next/server";
 

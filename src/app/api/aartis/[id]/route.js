@@ -1,6 +1,6 @@
 // src/app/api/aartis/[id]/route.js
 
-export const dynamic = "force-dynamic";
+
 
 import { NextResponse } from "next/server";
 import models from "@/models";

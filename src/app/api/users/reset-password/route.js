@@ -1,6 +1,6 @@
 // /api/users/reset-password
 
-export const dynamic = "force-dynamic";
+
 
 
 import { NextResponse } from "next/server";
