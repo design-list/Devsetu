@@ -32,7 +32,7 @@ const PageHeroSlider = ({ heroBanner, handlaRedirect }) => {
               return <SwiperSlide key={item.id}>
                   <div
                     className={`${slide.bgColor} rounded-lg p-6 h-64 flex flex-col justify-center cursor-pointer`}
-                     onClick={() => handlaRedirect(slide.slug)}
+                     onClick={() => handlaRedirect('puja',slide.slug)}
                   >
                     <LazyImage
                       src={item.image_url}
