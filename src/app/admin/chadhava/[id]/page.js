@@ -377,7 +377,7 @@ const EditChadhavaForm = () => {
           <label className="block font-semibold">Sub Title</label>
           <input
             type="text"
-            name="sutTitle"
+            name="subTitle"
             value={formData.subTitle}
             onChange={handleChange}
             className="w-full border p-2 rounded"

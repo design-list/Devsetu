@@ -7,6 +7,7 @@ import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { fetchWithWait } from "../../../../helper/method";
 import { addNewChadhavaAction, requestChadhavaAction } from "@/redux/actions/chadhavaAction";
+import { useRouter } from "next/navigation";
 
 const ChadhavaForm = () => {
 
@@ -41,6 +42,7 @@ const ChadhavaForm = () => {
 
   const dispatch = useDispatch();
   // const { pujaData } = useSelector((state) => state.puja);
+  const router = useRouter();
 
   useEffect(() => {
     setFormData((prev) => ({
@@ -220,7 +222,8 @@ const ChadhavaForm = () => {
     // console.log("Submitting form data===:", formData);
     fetchWithWait({ dispatch, action: addNewChadhavaAction(formData) }).then((res) => {
       if (res.status === 200) {
-        dispatch(requestChadhavaAction()); // Fetch updated puja data
+        dispatch(requestChadhavaAction()); 
+        router.push('/admin/chadhava/list')
       } else {
         console.log("Error:", res.error);
         alert(res.error)
@@ -368,7 +371,7 @@ const ChadhavaForm = () => {
           <label className="block font-semibold">Sub Title</label>
           <input
             type="text"
-            name="sutTitle"
+            name="subTitle"
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />

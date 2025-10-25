@@ -72,13 +72,13 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
-      field: "common_ecommended",
+      field: "common_recommended",
     },
     isActivePandit: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
-      field: "isActive_andit",
+      field: "isActive_pandit",
     },
     commonFaqs: {
       type: DataTypes.BOOLEAN,
