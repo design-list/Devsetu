@@ -35,12 +35,12 @@ const reviews = [
   {
     name: "Aparna Mal",
     city: "Pune",
-    text: "I did my first live darshan puja via Sri Mandir and it felt so divine. I was able to see all the rituals done live from the temple.",
+    text: "I did my first live darshan puja via DevaSetu and it felt so divine. I was able to see all the rituals done live from the temple.",
   },
   {
     name: "Shivraj Dobhi",
     city: "Agra",
-    text: "The best part is one can book puja services from anywhere. The app is so easy to use and very trustworthy. My family always uses Sri Mandir services.",
+    text: "The best part is one can book puja services from anywhere. The app is so easy to use and very trustworthy. My family always uses DevaSetu services.",
   },
 ];
 

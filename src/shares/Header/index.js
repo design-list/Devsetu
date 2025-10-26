@@ -16,7 +16,7 @@ const menu = [
   { id: 1, title: { en: "Home", hi: "होम" }, path: "/" },
   { id: 2, title: { en: "Puja", hi: "पूजा" }, path: "/puja" },
   { id: 3, title: { en: "Chadhava", hi: "चढ़ावा" }, path: "/chadhava" },
-  { id: 4, title: { en: "Library", hi: "पुस्तकालय" }, path: "/library" },
+  // { id: 4, title: { en: "Library", hi: "पुस्तकालय" }, path: "/library" },
   { id: 7, title: { en: "About Us", hi: "हमारे बारे में" }, path: "/about-us" },
 ];
 
