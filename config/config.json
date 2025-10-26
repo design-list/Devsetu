@@ -15,7 +15,7 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "dev_setu",
+    "username": "dev_setu_prod",
     "password": "DevSetu@123_uat",
     "database": "dev_setu_prod",
     "host": "104.131.177.106",
