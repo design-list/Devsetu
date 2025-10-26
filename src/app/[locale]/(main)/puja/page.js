@@ -2,7 +2,8 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Landmark, Users, Building, Sparkles, ListChecks, User, Video, Gift } from "lucide-react";
+import { Landmark, Users, Building, Sparkles, ListChecks, User, Video, Gift, MapPin, Clock } from "lucide-react";
+
 
 import PujaCard from "@/components/Cards/pujaCard";
 import Container from "@/components/Container";
@@ -11,6 +12,42 @@ import { requestPujaWebPageAction } from "@/redux/actions/pujaActions";
 import SectionLoader from "@/components/Atom/loader/sectionLoader";
 import { useWithLang } from "../../../../../helper/useWithLang";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import PanditJi from '../../../../../public/images/pandit-ji.png'
+
+const purohits = [
+  {
+    name: "Acharya Ramjas Dwivedi",
+    location: "Prayagraj",
+    experience: "15 years",
+    img: PanditJi,
+  },
+  {
+    name: "Pandit Ashish Bhatt",
+    location: "Haridwar",
+    experience: "5 years",
+    img: PanditJi,
+  },
+  {
+    name: "Pandit Hanshul Dutt",
+    location: "Haridwar",
+    experience: "5 years",
+    img: PanditJi,
+  },
+  {
+    name: "Pandit Ravi Dubey",
+    location: "Ujjain",
+    experience: "5 years",
+    img: PanditJi,
+  },
+  {
+    name: "Pandit Saurabh Gautam",
+    location: "Varanasi",
+    experience: "4 years",
+    img: PanditJi,
+  },
+];
+
 
 
 const PujaPage = () => {
@@ -28,7 +65,7 @@ const PujaPage = () => {
   }, [dispatch])
 
 
-  const handlaRedirect = (base,slug) => {
+  const handlaRedirect = (base, slug) => {
     router.push(withLang(`/${base}/${slug}`))
   }
 
@@ -53,14 +90,14 @@ const PujaPage = () => {
 
         {/* Testimonials */}
         <section className="bg-[var(--color-info)] py-12 px-6">
-          <h2 className="font-secondary text-center text-3xl font-bold mb-6">What devotees Say about Sri Mandir Puja?</h2>
+          <h2 className="font-secondary text-center text-3xl font-bold mb-6">What devotees Say about DevaSetu Puja?</h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             <div className="bg-white shadow rounded-lg p-4">
               <p className="italic text-gray-700 mb-2">“So many puja options for all the devotees. Great to get the grace of god from our homes. Most authentic and trustworthy puja service compared to others.”</p>
               <p className="font-secondary text-sm font-semibold">- Ramesh Chandra Bhatt, Nagpur</p>
             </div>
             <div className="bg-white shadow rounded-lg p-4">
-              <p className="italic text-gray-700 mb-2">“I really like the whole process of Puja at Sri Mandir. Proper guidance and constant support.”</p>
+              <p className="italic text-gray-700 mb-2">“I really like the whole process of Puja at DevaSetu. Proper guidance and constant support.”</p>
               <p className="font-secondary text-sm font-semibold">- Aparna Mal, Puri</p>
             </div>
             <div className="bg-white shadow rounded-lg p-4">
@@ -71,10 +108,10 @@ const PujaPage = () => {
         </section>
 
         {/* Stats */}
-        <section className="py-16 px-6 text-center bg-[var(--color-background)] text-[var(--color-foreground)]">
+        <section className="py-16 px-6 text-center bg-[var(--color-accent)]/10 text-[var(--color-foreground)]">
           <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-10 text-[var(--color-dark)]">
-            Start your <span className="text-[var(--color-primary)]">Sacred Journey</span> with <br />
-            <span className="text-[var(--color-info)]">DevaSetu Puja Service</span>
+            Start your <span className="text-[var(--color-primary)]">Sacred Journey</span> with 
+            <span className="text-[var(--color-info)]"> DevaSetu Puja Service</span>
           </h2>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
@@ -117,94 +154,115 @@ const PujaPage = () => {
         </section>
 
         {/* How Puja Works */}
-        <section className="py-16 px-6 bg-[var(--color-background)] text-[var(--color-foreground)]">
-      <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-12 text-center text-[var(--color-dark)]">
-        Start your <span className="text-[var(--color-primary)]">Sacred Journey</span> with <br />
-        <span className="text-[var(--color-info)]">DevaSetu Online Puja</span>
-      </h2>
+        <section className="bg-[var(--color-accent)]/10 py-16 px-6 text-[var(--color-foreground)]">
+          <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-12 text-center text-[var(--color-dark)]">
+            Start your <span className="text-[var(--color-primary)]">Sacred Journey</span> with
+            <span className="text-[var(--color-info)]"> DevaSetu Online Puja</span>
+          </h2>
 
-      <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {/* Step 1 */}
-        <div className="relative bg-[var(--color-primary-light)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
-          <div className="flex justify-center mb-4">
-            <ListChecks className="w-10 h-10 text-[var(--color-primary)] group-hover:scale-110 transition-transform duration-300" />
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Step 1 */}
+            <div className="relative bg-[var(--color-primary-light)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
+              <div className="flex justify-center mb-4">
+                <ListChecks className="w-10 h-10 text-[var(--color-primary)] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <h3 className="font-secondary font-bold text-xl text-[var(--color-dark)] mb-2">
+                Choose Your Puja
+              </h3>
+              <p className="text-sm font-primary text-[var(--color-dark)]">
+                Select your desired Puja from our wide list of sacred rituals.
+              </p>
+              <span className="absolute -top-4 left-6 bg-[var(--color-primary)] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                Step 1
+              </span>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative bg-[var(--color-info)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
+              <div className="flex justify-center mb-4">
+                <User className="w-10 h-10 text-[var(--color-info)] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <h3 className="font-secondary font-bold text-xl text-[var(--color-dark)] mb-2">
+                Fill Your Information
+              </h3>
+              <p className="text-sm font-primary text-[var(--color-dark)]">
+                Enter your Name and Gotra — our priests will include them in the Puja Sankalp.
+              </p>
+              <span className="absolute -top-4 left-6 bg-[var(--color-info)] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                Step 2
+              </span>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative bg-[var(--color-accent)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
+              <div className="flex justify-center mb-4">
+                <Video className="w-10 h-10 text-[var(--color-accent)] group-hover:scale-110 transition-transform duration-300" />
+              </div>
+              <h3 className="font-secondary font-bold text-xl text-[var(--color-dark)] mb-2">
+                Watch & Receive Blessings
+              </h3>
+              <p className="text-sm font-primary text-[var(--color-dark)]">
+                Get Puja video on WhatsApp and receive your sacred Aashirwad box at home.
+              </p>
+              <span className="absolute -top-4 left-6 bg-[var(--color-accent)] text-white px-3 py-1 rounded-full text-xs font-semibold">
+                Step 3
+              </span>
+            </div>
           </div>
-          <h3 className="font-proxi-bold text-xl text-[var(--color-dark)] mb-2">
-            Choose Your Puja
-          </h3>
-          <p className="text-sm font-primary text-gray-600">
-            Select your desired Puja from our wide list of sacred rituals.
-          </p>
-          <span className="absolute -top-4 left-6 bg-[var(--color-primary)] text-white px-3 py-1 rounded-full text-xs font-semibold">
-            Step 1
-          </span>
-        </div>
 
-        {/* Step 2 */}
-        <div className="relative bg-[var(--color-info)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
-          <div className="flex justify-center mb-4">
-            <User className="w-10 h-10 text-[var(--color-info)] group-hover:scale-110 transition-transform duration-300" />
+          {/* Optional Closing Line */}
+          <div className="text-center mt-12">
+            <p className="font-secondary text-3xl text-[var(--color-dark)] mx-auto">
+              Every Puja is performed with devotion by experienced priests at holy temples — connecting you to divine energy from the comfort of your home.
+            </p>
           </div>
-          <h3 className="font-proxi-bold text-xl text-[var(--color-dark)] mb-2">
-            Fill Your Information
-          </h3>
-          <p className="text-sm font-primary text-gray-600">
-            Enter your Name and Gotra — our priests will include them in the Puja Sankalp.
-          </p>
-          <span className="absolute -top-4 left-6 bg-[var(--color-info)] text-white px-3 py-1 rounded-full text-xs font-semibold">
-            Step 2
-          </span>
-        </div>
-
-        {/* Step 3 */}
-        <div className="relative bg-[var(--color-accent)]/10 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 group">
-          <div className="flex justify-center mb-4">
-            <Video className="w-10 h-10 text-[var(--color-accent)] group-hover:scale-110 transition-transform duration-300" />
-          </div>
-          <h3 className="font-proxi-bold text-xl text-[var(--color-dark)] mb-2">
-            Watch & Receive Blessings
-          </h3>
-          <p className="text-sm font-primary text-gray-600">
-            Get Puja video on WhatsApp and receive your sacred Aashirwad box at home.
-          </p>
-          <span className="absolute -top-4 left-6 bg-[var(--color-accent)] text-white px-3 py-1 rounded-full text-xs font-semibold">
-            Step 3
-          </span>
-        </div>
-      </div>
-
-      {/* Optional Closing Line */}
-      <div className="text-center mt-12">
-        <p className="font-primary text-sm text-gray-600 max-w-xl mx-auto">
-          Every Puja is performed with devotion by experienced priests at holy temples — connecting you to divine energy from the comfort of your home.
-        </p>
-      </div>
-    </section>
+        </section>
 
         {/* Purohit Section */}
-        <section className="py-12 px-6">
-          <h2 className="text-xl font-bold text-center mb-6">Meet the experienced community of Sri Mandir Purohits</h2>
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <div className="bg-white shadow rounded-lg p-6 text-center">
-              <h3 className="font-bold mb-2">Acharya Ramjas Dwivedi</h3>
-              <p className="text-sm text-gray-600">Prayagraj | 15 years</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6 text-center">
-              <h3 className="font-bold mb-2">Pandit Ashish Bhatt</h3>
-              <p className="text-sm text-gray-600">Haridwar | 5 years</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6 text-center">
-              <h3 className="font-bold mb-2">Pandit Hanshul Dutt</h3>
-              <p className="text-sm text-gray-600">Haridwar | 5 years</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6 text-center">
-              <h3 className="font-bold mb-2">Pandit Ravi Dubey</h3>
-              <p className="text-sm text-gray-600">Ujjain | 5 years</p>
-            </div>
-            <div className="bg-white shadow rounded-lg p-6 text-center">
-              <h3 className="font-bold mb-2">Pandit Saurabh Gautam</h3>
-              <p className="text-sm text-gray-600">Varanasi | 4 years</p>
-            </div>
+        <section className="py-16 px-6 bg-[var(--color-background)] text-[var(--color-foreground)]">
+          <h2 className="font-secondary text-3xl md:text-4xl font-bold text-center mb-2 text-[var(--color-dark)]">
+            Meet the Experienced <span className="text-[var(--color-primary)]">Community</span> of 
+            <span className="text-[var(--color-info)]"> DevaSetu Purohits</span>
+          </h2>
+          <div className="text-center mb-6">
+            <p className="text-base text-[var(--color-dark)] font-primary max-w-2xl mx-auto">
+              Our Purohits are certified Vedic scholars from renowned temples across India, performing each Puja with devotion, precision, and authenticity.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+            {purohits.map((purohit, index) => (
+              <div
+                key={index}
+                className="bg-[var(--white)] border border-[var(--color-primary-light)]/20 rounded-2xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+              >
+                {/* Image Placeholder or Actual Image */}
+                <div className="w-full h-48 bg-[var(--color-primary-light)]/10 flex items-center justify-center">
+                  <Image
+                    src={purohit.img}
+                    alt={purohit.name}
+                    width={300}
+                    height={300}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Info */}
+                <div className="p-6 text-center">
+                  <h3 className="font-proxi-bold text-lg text-[var(--color-dark)] mb-2">
+                    {purohit.name}
+                  </h3>
+                  <div className="flex justify-center items-center gap-2 text-sm text-[var(--color-dark)]">
+                    <MapPin className="w-4 h-4 text-[var(--color-primary)]" />
+                    <span>{purohit.location}</span>
+                  </div>
+                  <div className="flex justify-center items-center gap-2 text-sm mt-1 text-[var(--color-dark)]">
+                    <Clock className="w-4 h-4 text-[var(--color-info)]" />
+                    <span>{purohit.experience} experience</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       </Container>
