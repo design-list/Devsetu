@@ -32,8 +32,8 @@ const EditChadhavaForm = () => {
     isRecommended: false,
     commonFaqs: true,
     isActivePandit: false,
-    packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
-    recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
+    packages: [{ packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
+    recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: 0, currency: "INR" }],
     faqs: [{ icon: null, title: "", description: "" }],
     banners: [{imgUrl: null, type: "", position: 0}],
     pujaPerformedBy: { name: "", temple: "", pujaPerformerImg: "", bio: "" },
@@ -100,11 +100,11 @@ const EditChadhavaForm = () => {
             packImg: p.packImg || "",
             title: p.title || "",
             description: p.description || "",
-            price: p.price || "",
+            price: p.price || 0,
             currency: p.currency || "INR",
             tags: p.tags || "",
           }))
-          : [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
+          : [{ packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
 
         // Recommended Chadawas
         recommendedChadawa: chadhavaDetail.isRecommended && chadhavaDetail.recommendedChadawas
@@ -114,10 +114,10 @@ const EditChadhavaForm = () => {
             status: r.status || "",
             location: r.location || "",
             date: r.date ? new Date(r.date) : new Date(),
-            price: r.price || "",
+            price: r.price || 0,
             currency: r.currency || "INR",
           }))
-          : [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
+          : [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: 0, currency: "INR" }],
 
         // FAQs
         faqs: !chadhavaDetail.commonFaqs && chadhavaDetail.chadhavaFaqs
@@ -553,7 +553,7 @@ const EditChadhavaForm = () => {
         </div>
 
         {/* Temple History */}
-        <div>
+        {/* <div>
           <label className="block font-semibold">Temple History</label>
           <textarea
             name="templeHistory"
@@ -562,7 +562,7 @@ const EditChadhavaForm = () => {
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
-        </div>
+        </div> */}
 
         {/* Packages */}
         <div>
@@ -665,7 +665,7 @@ const EditChadhavaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                packages: [...formData?.packages, { packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
+                packages: [...formData?.packages, { packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded"
@@ -808,7 +808,7 @@ const EditChadhavaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                recommendedChadawa: [...formData?.recommendedChadawa, { recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
+                recommendedChadawa: [...formData?.recommendedChadawa, { recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: 0, currency: "INR" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded"

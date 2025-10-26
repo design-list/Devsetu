@@ -26,16 +26,16 @@ export default (sequelize, DataTypes) => {
       unique: true,
       field: "slug",
     },
-    ratingValue: {
-      type: DataTypes.FLOAT,
-      allowNull: true,
-      field: "rating_value",
-    },
-    ratingReviews: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: "rating_reviews",
-    },
+    // ratingValue: {
+    //   type: DataTypes.FLOAT,
+    //   allowNull: true,
+    //   field: "rating_value",
+    // },
+    // ratingReviews: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: true,
+    //   field: "rating_reviews",
+    // },
     specialDay: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -104,7 +104,7 @@ export default (sequelize, DataTypes) => {
     chadhava.hasMany(models.chadhavaFaqs, { foreignKey: "chadhavaId", onDelete: "CASCADE" });
     chadhava.hasMany(models.chadhavaBanner, { foreignKey: "chadhavaId", onDelete: "CASCADE" });
     chadhava.hasMany(models.pujaPerformed, { foreignKey: "chadhavaId", onDelete: "CASCADE" });
-    chadhava.hasMany(models.templeHistory, { foreignKey: "chadhavaId", onDelete: "CASCADE" });
+    // chadhava.hasMany(models.templeHistory, { foreignKey: "chadhavaId", onDelete: "CASCADE" });
     chadhava.hasMany(models.chadhavaOfferings, { foreignKey: "chadhavaId", onDelete: "CASCADE" });
   };
 

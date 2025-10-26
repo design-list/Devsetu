@@ -29,8 +29,8 @@ const ChadhavaForm = () => {
     commonFaqs: true,
     isActivePandit: false,
     temple: { templeImg: null, templeName: "", templeHistory: "" },
-    packages: [{ packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
-    recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
+    packages: [{ packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
+    recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: 0, currency: "INR" }],
     faqs: [{ icon: null, title: "", description: "" }],
     banners: [{imgUrl: null, type: "", position: 0}],
     pujaPerformedBy: { name: "", temple: "", pujaPerformerImg: "", bio: "" },
@@ -700,7 +700,7 @@ const ChadhavaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                packages: [...formData?.packages, { packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" }],
+                packages: [...formData?.packages, { packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded"
@@ -839,7 +839,7 @@ const ChadhavaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                recommendedChadawa: [...formData?.recommendedChadawa, { recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: "", currency: "INR" }],
+                recommendedChadawa: [...formData?.recommendedChadawa, { recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: 0, currency: "INR" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded"

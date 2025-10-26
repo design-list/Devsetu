@@ -13,8 +13,8 @@ const PujaPackages = () => {
 
 
     const [formData, setFormData] = useState({
-        packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-        offerings: [{ offerimg: null, title: "", description: "", price: "" }],
+        packages: [{ packImg: null, packageType: "", packageprice: 0 }],
+        offerings: [{ offerimg: null, title: "", description: "", price: 0 }],
     });
 
     const [editId, setEditId] = useState(null);
@@ -273,7 +273,7 @@ const PujaPackages = () => {
                             onClick={() =>
                                 setFormData({
                                     ...formData,
-                                    packages: [...formData?.packages, { packageType: "", packagePrice: "" }],
+                                    packages: [...formData?.packages, { packageType: "", packageprice: 0 }],
                                 })
                             }
                             className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
@@ -414,7 +414,7 @@ const PujaPackages = () => {
                         onClick={() =>
                             setFormData({
                                 ...formData,
-                                offerings: [...formData?.offerings, { title: "", description: "", price: "" }],
+                                offerings: [...formData?.offerings, { title: "", description: "", price: 0 }],
                             })
                         }
                         className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
