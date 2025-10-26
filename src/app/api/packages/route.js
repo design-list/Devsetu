@@ -25,6 +25,8 @@ export async function POST(req) {
         body.packages?.map(pkg => ({
             packImg: pkg.packImg,
             packageType: pkg.packageType,
+            packageDescription: pkg.packageDescription,
+            noOfPeople: parseFloat(pkg.noOfPeople),
             packagePrice: parseFloat(pkg.packagePrice),
         }))
     );

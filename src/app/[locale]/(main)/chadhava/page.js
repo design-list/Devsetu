@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useWithLang } from "../../../../../helper/useWithLang";
-import PageHeroSlider from "@/components/HeroBanner/PageHeroSlider";
 import Container from "@/components/Container";
+import ChadhavaHeroSlider from "@/components/HeroBanner/ChadhavaHeroSlider";
 
 const ChadhavaPage = () => {
   const dispatch = useDispatch();
@@ -81,7 +81,7 @@ const ChadhavaPage = () => {
             Offer <span className="text-[var(--color-primary)]">Chadhava</span> as per
             Vedic rituals at sacred temples across India
           </h1>
-          <PageHeroSlider heroBanner={heroBanner} handlaRedirect={handlaRedirect} />
+          <ChadhavaHeroSlider heroBanner={heroBanner} handlaRedirect={handlaRedirect} />
         </section>
 
         {/* 🕉️ Upcoming Chadhava Section */}
@@ -114,7 +114,7 @@ const ChadhavaPage = () => {
           </div>
 
           {/* 🌼 View More Button */}
-          {chadhavaCard?.length > 6 && (
+          {/* {chadhavaCard?.length > 6 && (
             <div className="text-center mt-10">
               <button
                 onClick={() => router.push(withLang("/chadhava/all"))}
@@ -123,7 +123,7 @@ const ChadhavaPage = () => {
                 View All Offerings →
               </button>
             </div>
-          )}
+          )} */}
         </section>
 
         {/* ✨ Decorative Bottom Divider */}

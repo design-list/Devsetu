@@ -10,7 +10,8 @@
     "build": "next build --no-lint",
     "start": "cross-env NODE_ENV=production next start",
     "lint": "eslint",
-    "db:sync": "node src/sync.js"
+    "db:sync": "node src/sync.js",
+    "prodDB:seed": "cross-env NODE_ENV=production node src/sync.js"
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.1.0",

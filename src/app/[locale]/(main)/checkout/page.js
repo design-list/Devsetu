@@ -32,18 +32,33 @@ export default function CheckoutPage() {
   const router = useRouter();
   const withLang = useWithLang();
 
-  // const handlaRedirect = (slug) => {
-  //   router.push(withLang(`/chadhava/${slug}`))
-  // }
-
-
-
   // generate once when component mounts
     useEffect(() => {
         setStoreId(uuidv4());
     }, []);
 
-  const handleAddMember = () => setMembers([...members, ""]);
+useEffect(() => {
+  if (allCarts?.package?.noOfPeople) {
+    const count = allCarts.package.noOfPeople - 1;
+    setMembers(Array(count).fill(""));
+  } else {
+    setMembers([""]);
+  }
+}, [allCarts?.package]);
+
+
+
+const handleAddMember = () => {
+  if (members.length < 10) {
+    setMembers([...members, ""]);
+  } else {
+    alert("You can add up to 10 members only.");
+  }
+};
+
+
+
+  // const handleAddMember = () => setMembers([...members, ""]);
 
   const handleRemoveMember = (index) =>
     setMembers(members.filter((_, i) => i !== index));
@@ -67,8 +82,23 @@ export default function CheckoutPage() {
       "state",
     ]);
 
-    setErrors(validationErrors[0]);
-    if (!isValid) return;
+    // setErrors(validationErrors[0]);
+    // if (!isValid) return;
+
+    if(allCarts?.package){
+      setErrors(validationErrors[0]);
+      if (!isValid) return;
+
+      const memberErrors = members.map((m) => !m.trim());
+      if (memberErrors.includes(true)) {
+        setErrors((prev) => ({
+          ...prev,
+          members: "Please fill all member names",
+        }));
+        return;
+      }
+    }
+
 
     const userDetails = { ...form, members };
     const payload = { ...allCarts, store_id: storeId, userDetails };
@@ -167,6 +197,7 @@ export default function CheckoutPage() {
   };
 
 
+  console.log("Rendered Checkout Page with storeId:", allCarts);
 
   return (
     <section className="min-h-screen bg-gray-50 py-10 px-4 md:px-10">
@@ -178,19 +209,23 @@ export default function CheckoutPage() {
           <h2 className="font-semibold text-lg mb-2 text-red-800">
             Your Cart Details
           </h2>
-          {allCarts?.["add_ons"].length > 0 && (
-            <div className="border-t pt-4 mt-4">
+
+          {allCarts?.["package"] && <div className="border-t pt-4 mt-4">
               <div className="flex justify-between text-gray-700">
                 <span>{allCarts?.["package"]?.packageType}</span>
                 <span>₹{allCarts?.["package"]?.packagePrice}</span>
               </div>
+          </div>}
+          {allCarts?.["add_ons"].length > 0 && (
+            <div className="border-t pt-4 mt-4">
+
               <div className="space-y-2 text-sm">
                 {allCarts?.["add_ons"].map((item) => (
                   <div
                     key={item.id}
                     className="flex justify-between text-gray-700"
                   >
-                    <span>{item.title.split(" ")[0]}</span>
+                    <span>{item.title.split(" ").slice(0, 2).join(" ")}</span>
                     <span>₹{`${item.price}* ${item.quantity}`}</span>
                   </div>
                 ))}
@@ -251,7 +286,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Family Members */}
-          <div>
+          {/* <div>
             <label className="block font-medium mb-1">
               Enter Family Member Names
             </label>
@@ -284,7 +319,53 @@ export default function CheckoutPage() {
             >
               + Add member
             </button>
+          </div> */}
+
+          <div>
+            <label className="block font-medium mb-1">
+              Enter Family Member Names
+            </label>
+            {members.map((member, i) => (
+              <div key={i} className="flex flex-col gap-1 mb-2">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Enter family member name"
+                    value={member}
+                    onChange={(e) => handleMemberChange(i, e.target.value)}
+                    className={`flex-1 border rounded-lg px-3 py-2 focus:ring-1 ${
+                      errors.members && !member.trim() ? "border-red-500" : "focus:ring-red-500"
+                    }`}
+                  />
+                  {(!allCarts?.package || members.length > allCarts.package?.noOfPeople) &&
+                    members.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveMember(i)}
+                        className="text-red-600 text-sm hover:underline"
+                      >
+                        ✕
+                      </button>
+                    )}
+                </div>
+                {errors.members && !member.trim() && (
+                  <p className="text-red-600 text-sm mt-1">{errors.members}</p>
+                )}
+              </div>
+            ))}
+
+            {!allCarts?.package && (
+              <button
+                type="button"
+                onClick={handleAddMember}
+                className="text-sm text-red-700 hover:underline font-medium"
+              >
+                + Add member
+              </button>
+            )}
           </div>
+
+
 
           {/* Address */}
           <div>
