@@ -105,7 +105,7 @@ export default function PujasPage() {
               {allChadhava?.map((chadhava) => (
                 <tr
                   key={chadhava.id}
-                  className="text-center border hover:bg-gray-50 hover:text-blue-600 transition"
+                  className="text-left border hover:bg-gray-50 hover:text-blue-600 transition"
                 >
                   <td className="p-2 border whitespace-nowrap">{chadhava.id}</td>
                   <td className="p-2 border whitespace-nowrap">{chadhava.title}</td>

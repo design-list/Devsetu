@@ -104,7 +104,7 @@ export default function PujasPage() {
               {Array.isArray(allPuja)&&allPuja?.map((puja) => (
                 <tr
                   key={puja.id}
-                  className="text-center border hover:bg-gray-50 hover:text-blue-600 transition"
+                  className="text-left border hover:bg-gray-50 hover:text-blue-600 transition"
                 >
                   <td className="p-2 border whitespace-nowrap">{puja.id}</td>
                   <td className="p-2 border whitespace-nowrap">{puja.title}</td>

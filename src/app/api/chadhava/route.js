@@ -3,7 +3,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models";
 
-const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa, templeHistory } = models;
+const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa } = models;
 
 //
 // GET: fetch all chadhavas with relations
@@ -17,7 +17,6 @@ export async function GET() {
         { model: chadhavaPackages },
         { model: pujaPerformed },
         { model: recommendedChadawa },
-        { model: templeHistory },
       ],
     });
 
@@ -70,11 +69,11 @@ export async function POST(req) {
           answer: f.description,
         })) || [],
 
-        templeHistories: body.temple ? [{
-          templeImg: body.temple.templeImg,
-          templeName: body.temple.templeName,
-          templeHistory: body.temple.templeHistory
-        }] : [],
+        // templeHistories: body.temple ? [{
+        //   templeImg: body.temple.templeImg,
+        //   templeName: body.temple.templeName,
+        //   templeHistory: body.temple.templeHistory
+        // }] : [],
 
         // ✅ Banners
         chadhavaBanners:
@@ -93,7 +92,6 @@ export async function POST(req) {
           { model: chadhavaFaqs },
           { model: chadhavaBanner },
           { model: pujaPerformed },
-          { model: templeHistory }
         ],
       }
     );
