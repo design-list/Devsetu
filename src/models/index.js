@@ -21,7 +21,7 @@ import pujaFaqs from './PujaModels/pujaFaqs.js';
 import pujaOfferings from './PujaModels/pujaOfferings.js'; 
 import pujaBenefits from './PujaModels/pujaBenefits.js'; 
 
-import templeHistory from './TempleModels/templeHistory.js'; 
+import templeHistory from './templeModels/templeHistory.js'; 
 
 import chadhava from './ChadhavaModels/chadhava.js';
 import chadhavaBanner from './ChadhavaModels/chadhavaBanner.js';
@@ -37,7 +37,7 @@ import Festivals from './ArticelsModels/Festivals.js';
 import Wishes from './ArticelsModels/Wishes.js';
 import Horoscopes from './ArticelsModels/Horoscopes.js';
 
-import testimonials from './TestimonialModels/testimonials.js';
+import testimonials from './testimonialModels/testimonials.js';
 
 import commonPujaPackage from './commonPujaPackage.js';
 
