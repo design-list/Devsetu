@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Edit2, Trash2, BookOpen, Search } from "lucide-react";
+import { Edit2, Trash2, BookOpen, Search, PlusCircle } from "lucide-react";
 import Api from "../../../../../services/fetchApi";
 import LazyImage from "@/components/Atom/LazyImage";
 
@@ -63,6 +63,11 @@ const ChalisaPage = () => {
 
   const handleLoadMore = () => setVisibleCount((prev) => prev + 9);
 
+  const handleAddNew = () => {
+    router.push("/admin/chalisa");
+  };
+  
+
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       {/* Header */}
@@ -81,6 +86,13 @@ const ChalisaPage = () => {
           />
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
         </div>
+        <button
+            onClick={handleAddNew}
+            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          >
+            <PlusCircle size={18} />
+            Add New
+          </button>
       </div>
 
       {/* Cards */}

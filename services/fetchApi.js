@@ -338,4 +338,34 @@ export default class fetchApi extends Api {
         }
     }
 
+
+    AddNewHoroscope(data) {
+        let url = this.buildUrl(endpoints.Horoscope.horoscope, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllHoroscope(data) {
+        let url = this.buildUrl(endpoints.Horoscope.horoscope, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetHoroscopeById(id) {
+        let url = this.buildUrl(endpoints.Horoscope.horoscope, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+    UpdeteHoroscope(data) {
+        let url = this.buildUrl(endpoints.Horoscope.horoscope, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
+
+    DeleteHoroscope(id) {
+        let url = this.buildUrl(endpoints.Horoscope.horoscope, "full")
+        if (id) {
+            return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
+        }
+    }
+
 }

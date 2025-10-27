@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { PlusCircle, Search } from "lucide-react";
 import Api from "../../../../../services/fetchApi";
 import LazyImage from "@/components/Atom/LazyImage";
 
@@ -51,6 +51,10 @@ export default function AartisPage() {
     }
   };
 
+    const handleAddNew = () => {
+    router.push("/admin/aartis");
+  };
+
   return (
     <div className="flex-1 overflow-y-auto max-h-screen scrollbar-hide p-6 bg-gray-50">
       <div className="max-w-7xl mx-auto">
@@ -71,6 +75,14 @@ export default function AartisPage() {
               className="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2 focus:ring-2 focus:ring-green-400 focus:outline-none shadow-sm"
             />
           </div>
+
+          <button
+            onClick={handleAddNew}
+            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          >
+            <PlusCircle size={18} />
+            Add New
+          </button>
         </div>
 
         {/* Card Grid */}
