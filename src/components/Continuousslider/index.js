@@ -17,7 +17,7 @@ export default function ContinuousSlider() {
         },
         {
             icon: <Globe className="w-8 h-8 text-[var(--color-white)]" />,
-            text: "Leading Platform for Hindu Devotees Globally",
+            text: "Leading Platform for Hindu Devotees",
         },
         {
             icon: <ShieldCheck className="w-8 h-8 text-[var(--color-white)]" />,
@@ -46,7 +46,7 @@ export default function ContinuousSlider() {
                         key={index}
                         className="flex items-center justify-center gap-3 text-[var(--color-white)] font-semibold text-xl whitespace-nowrap"
                     >
-                        <div className="flex items-center justify-center gap-3 px-4 py-2 bg-white/10 rounded-lg shadow-md hover:bg-white/20 transition-all duration-300">
+                        <div className="flex items-center justify-center gap-3 px-4 py-2 bg-white/10 rounded-lg shadow-md hover:bg-white/20 transition-all duration-300 list-disc">
                             {item.icon}
                             <span>{item.text}</span>
                         </div>

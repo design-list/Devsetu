@@ -49,7 +49,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
 
               {/* Details */}
               <div className="px-4 py-2 flex flex-col flex-1 bg-gradient-to-b from-white to-[var(--forcast)]">
-                <div className="text-[var(--color-dark)] font-secondary text-xl md:text-2xl font-bold tracking-wide mb-2">
+                <div className="text-[var(--color-dark)] font-primary text-xl md:text-2xl font-bold tracking-wide mt-2 mb-2">
                   {puja.title}
                 </div>
 
@@ -57,18 +57,18 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                   {puja.sub_title}
                 </p>
 
-                <div className="flex items-center gap-2 text-[var(--primary)] text-base font-medium mb-2">
+                <div className="flex items-center gap-2 text-[#393939] text-base font-medium mb-2">
                   <Image
                     src={TempleIcon}
                     alt="Temple Icon"
                     width={22}
                     height={22}
-                    className="mr-2"
+                    className="mr-2 relative -top-1.5 "
                   />
                   {puja.location || "Location unavailable"}
                 </div>
 
-                <div className="flex items-center gap-2 text-[var(--primary)] text-base font-medium">
+                <div className="flex items-center gap-2 text-[#393939] text-base font-medium">
                   <FontAwesomeIcon
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
@@ -82,7 +82,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                 <Link
                   href={withLang(`/puja/${puja.slug}`)}
                   className="w-full flex items-center justify-center gap-0 
-      bg-gradient-to-r from-[var(--color-accent)] via-[var(--color-primary-light)] to-[var(--color-primary)]
+      bg-gradient-to-t from-[var(--color-primary)] via-[var(--color-primary-light)] to-[var(--color-primary)]
       text-white font-semibold rounded-xl py-3 px-5
       shadow-[0_2px_6px_rgba(241,88,34,0.2)]
       hover:shadow-[0_4px_10px_rgba(241,88,34,0.3)]

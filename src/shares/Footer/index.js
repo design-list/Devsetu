@@ -42,7 +42,7 @@ export default function Footer() {
   );
 
   return (
-    <footer className="bg-[var(--color-accent)] text-[var(--color-dark)]">
+    <footer className="bg-[#255667] text-[var(--color-white)]">
       <Container>
         <div className="mx-auto md:px-6 py-4 md:py-10 grid grid-cols-1 md:grid-cols-5 gap-4">
           {/* Left - Logo & About */}
