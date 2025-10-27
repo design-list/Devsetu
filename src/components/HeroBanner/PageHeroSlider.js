@@ -38,7 +38,7 @@ const PageHeroSlider = ({ heroBanner, handlaRedirect }) => {
                       src={item.image_url}
                       alt={slide.title}
                       fill
-                      className="object-cover"
+                      className="object-contain"
                       priority
                     />
                     <h2 className={`text-lg md:text-xl font-bold mb-2 ${slide.textColor}`}>
