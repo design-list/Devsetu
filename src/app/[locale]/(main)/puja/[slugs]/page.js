@@ -169,7 +169,15 @@ export default function PujaDetailsPage() {
   };
 
   const handleAddPackages = (pkg) => {
-    dispatch(addPackageAction(pkg));
+    const packageData = {
+      productId : pujaDetailPage?.id,
+      productTitle : pujaDetailPage?.title,
+      productSlug : pujaDetailPage?.slug,
+      productImg : pujaDetailPage?.["pujaBanners"]?.[0]?.imageUrl || "",
+      ...pkg,
+    };
+      
+    dispatch(addPackageAction(packageData));
     setCartItem(pkg);
     setIsCartOpen(true); // open slide-in panel
   };

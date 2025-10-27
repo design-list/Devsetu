@@ -62,7 +62,7 @@ export async function POST(req) {
           location: item.location,
           currency: item.currency,
           date: item.date,
-          price: item.price
+          price: parseFloat(item.price)
         })) || [],
         chadhavaFaqs: !body.commonFaqs && body.faqs?.map(f => ({
           question: f.title,

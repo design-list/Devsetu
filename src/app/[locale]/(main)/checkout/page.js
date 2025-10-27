@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWithWait } from "../../../../../helper/method";
 import { validateFields } from "../../../../../helper/validateFields";
-import { addNewCartAction } from "@/redux/actions/cartActions";
+import { addNewCartAction, requestClearCartAction } from "@/redux/actions/cartActions";
 import { paymentVerifyAction, requestPaymentOrderAction } from "@/redux/actions/paymentActions";
 import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
+import SectionLoader from "@/components/Atom/loader/sectionLoader";
 
 export default function CheckoutPage() {
   const [members, setMembers] = useState([""]);
@@ -24,6 +25,7 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState({}); 
 
   const [storeId, setStoreId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -32,18 +34,33 @@ export default function CheckoutPage() {
   const router = useRouter();
   const withLang = useWithLang();
 
-  // const handlaRedirect = (slug) => {
-  //   router.push(withLang(`/chadhava/${slug}`))
-  // }
-
-
-
   // generate once when component mounts
     useEffect(() => {
         setStoreId(uuidv4());
     }, []);
 
-  const handleAddMember = () => setMembers([...members, ""]);
+useEffect(() => {
+  if (allCarts?.package?.noOfPeople) {
+    const count = allCarts.package.noOfPeople - 1;
+    setMembers(Array(count).fill(""));
+  } else {
+    setMembers([""]);
+  }
+}, [allCarts?.package]);
+
+
+
+const handleAddMember = () => {
+  if (members.length < 10) {
+    setMembers([...members, ""]);
+  } else {
+    alert("You can add up to 10 members only.");
+  }
+};
+
+
+
+  // const handleAddMember = () => setMembers([...members, ""]);
 
   const handleRemoveMember = (index) =>
     setMembers(members.filter((_, i) => i !== index));
@@ -57,6 +74,7 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const { isValid, errors: validationErrors } = validateFields([form], [
       "whatsapp",
@@ -67,8 +85,20 @@ export default function CheckoutPage() {
       "state",
     ]);
 
-    setErrors(validationErrors[0]);
-    if (!isValid) return;
+    if(allCarts?.package){
+      setErrors(validationErrors[0]);
+      if (!isValid) return;
+
+      const memberErrors = members.map((m) => !m.trim());
+      if (memberErrors.includes(true)) {
+        setErrors((prev) => ({
+          ...prev,
+          members: "Please fill all member names",
+        }));
+        return;
+      }
+    }
+
 
     const userDetails = { ...form, members };
     const payload = { ...allCarts, store_id: storeId, userDetails };
@@ -79,6 +109,7 @@ export default function CheckoutPage() {
 
       if (cartRes.status !== 200) {
         alert(cartRes.message || "Error saving cart.");
+        setIsLoading(false);
         return;
       }
 
@@ -97,6 +128,7 @@ export default function CheckoutPage() {
 
       if (orderRes.status !== 200) {
         alert(orderRes.message || "Error creating payment order.");
+        setIsLoading(false);
         return;
       }
 
@@ -113,6 +145,7 @@ export default function CheckoutPage() {
       const sdkLoaded = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
       if (!sdkLoaded) {
         alert("Razorpay SDK failed to load.");
+        setIsLoading(false);
         return;
       }
 
@@ -134,9 +167,23 @@ export default function CheckoutPage() {
 
             if (verifyRes.success) {
               alert("✅ Payment Successful!");
+              setForm({
+                whatsapp: "",
+                name: "",
+                address: "",
+                postalCode: "",
+                city: "",
+                state: "",
+              });
+              setMembers([]);
+              setErrors({});
+              setIsLoading(false);
               router.push(withLang(`/payment-success/${cartRes.data.cart_id}`)); // ✅ custom redirect
+              dispatch(requestClearCartAction());
+
             } else {
               alert(verifyRes.message || "Payment verification failed.");
+              setIsLoading(false);
               router.push(withLang(`/payment-failed`));
             }
 
@@ -159,14 +206,20 @@ export default function CheckoutPage() {
       rzp.on("payment.failed", (response) => {
         console.error("Payment Failed:", response.error);
         alert("❌ Payment Failed. Please try again.");
+        setIsLoading(false);
+        router.push(withLang(`/payment-failed`));
       });
     } catch (error) {
       console.error("Error in payment flow:", error);
+      setIsLoading(false);
       alert("Something went wrong. Please try again.");
     }
   };
 
 
+  // console.log("Rendered Checkout Page with storeId:", allCarts);
+
+  
 
   return (
     <section className="min-h-screen bg-gray-50 py-10 px-4 md:px-10">
@@ -178,19 +231,26 @@ export default function CheckoutPage() {
           <h2 className="font-semibold text-lg mb-2 text-red-800">
             Your Cart Details
           </h2>
-          {allCarts?.["add_ons"].length > 0 && (
-            <div className="border-t pt-4 mt-4">
+
+          {allCarts?.["package"] && <div className="border-t pt-4 mt-4">
+              <div className="font-medium mb-2">
+                <span>{allCarts?.["package"]?.productTitle}</span>
+              </div>
               <div className="flex justify-between text-gray-700">
                 <span>{allCarts?.["package"]?.packageType}</span>
                 <span>₹{allCarts?.["package"]?.packagePrice}</span>
               </div>
+          </div>}
+          {allCarts?.["add_ons"].length > 0 && (
+            <div className="border-t pt-4 mt-4">
+
               <div className="space-y-2 text-sm">
                 {allCarts?.["add_ons"].map((item) => (
                   <div
                     key={item.id}
                     className="flex justify-between text-gray-700"
                   >
-                    <span>{item.title.split(" ")[0]}</span>
+                    <span>{item.title.split(" ").slice(0, 2).join(" ")}</span>
                     <span>₹{`${item.price}* ${item.quantity}`}</span>
                   </div>
                 ))}
@@ -251,7 +311,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Family Members */}
-          <div>
+          {/* <div>
             <label className="block font-medium mb-1">
               Enter Family Member Names
             </label>
@@ -284,7 +344,53 @@ export default function CheckoutPage() {
             >
               + Add member
             </button>
+          </div> */}
+
+          <div>
+            <label className="block font-medium mb-1">
+              Enter Family Member Names
+            </label>
+            {members.map((member, i) => (
+              <div key={i} className="flex flex-col gap-1 mb-2">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Enter family member name"
+                    value={member}
+                    onChange={(e) => handleMemberChange(i, e.target.value)}
+                    className={`flex-1 border rounded-lg px-3 py-2 focus:ring-1 ${
+                      errors.members && !member.trim() ? "border-red-500" : "focus:ring-red-500"
+                    }`}
+                  />
+                  {(!allCarts?.package || members.length > allCarts.package?.noOfPeople) &&
+                    members.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveMember(i)}
+                        className="text-red-600 text-sm hover:underline"
+                      >
+                        ✕
+                      </button>
+                    )}
+                </div>
+                {errors.members && !member.trim() && (
+                  <p className="text-red-600 text-sm mt-1">{errors.members}</p>
+                )}
+              </div>
+            ))}
+
+            {!allCarts?.package && (
+              <button
+                type="button"
+                onClick={handleAddMember}
+                className="text-sm text-red-700 hover:underline font-medium"
+              >
+                + Add member
+              </button>
+            )}
           </div>
+
+
 
           {/* Address */}
           <div>
@@ -364,14 +470,18 @@ export default function CheckoutPage() {
             <p className="text-lg font-semibold">{`Total: ₹${allCarts?.["grand_total"]}/-`}</p>
             <button
               type="button"
-              className="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg font-medium"
+              className="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg font-medium cursor-pointer"
               onClick={(e) => handleSubmit(e)}
             >
               Pay Now
             </button>
           </div>
         </form>
+
+        <div className="mt-4 text-sm text-gray-500">{
+          isLoading && <SectionLoader /> }</div>
       </div>
+
     </section>
   );
 }

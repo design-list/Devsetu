@@ -208,6 +208,8 @@ export async function GET(req, { params }) {
           body.packages.map((pkg) => ({
             packImg: pkg.packImg,
             packageType: pkg.packageType,
+            packageDescription: pkg.packageDescription,
+            noOfPeople: parseFloat(pkg.noOfPeople),
             packagePrice: parseFloat(pkg.packagePrice),
             pujaId: updatedPujas.id,
           }))

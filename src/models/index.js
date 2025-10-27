@@ -21,7 +21,7 @@ import pujaFaqs from './PujaModels/pujaFaqs.js';
 import pujaOfferings from './PujaModels/pujaOfferings.js'; 
 import pujaBenefits from './PujaModels/pujaBenefits.js'; 
 
-import templeHistory from './TempleModels/templeHistory.js'; 
+import templeHistory from './templeModels/templeHistory.js'; 
 
 import chadhava from './ChadhavaModels/chadhava.js';
 import chadhavaBanner from './ChadhavaModels/chadhavaBanner.js';
@@ -37,13 +37,13 @@ import Festivals from './ArticelsModels/Festivals.js';
 import Wishes from './ArticelsModels/Wishes.js';
 import Horoscopes from './ArticelsModels/Horoscopes.js';
 
-import testimonials from './TestimonialModels/testimonials.js';
+import testimonials from './testimonialModels/testimonials.js';
 
 import commonPujaPackage from './commonPujaPackage.js';
 
 import cart from './CartModels/cart.js';
-import cartAddOn from './CartModels/cartAddOn.js';
-import cartPackage from './CartModels/cartPackage.js';
+import CartAddOn from './CartModels/cartAddOn.js';
+import CartPackage from './CartModels/cartPackage.js';
 
 import Faqs from './faqs.js';
 import offerings from './offerings.js';
@@ -96,8 +96,8 @@ db.Horoscopes = Horoscopes(sequelize, Sequelize.DataTypes);
 db.testimonials = testimonials(sequelize, Sequelize.DataTypes);
 
 db.cart = cart(sequelize, Sequelize.DataTypes);
-db.cartAddOn = cartAddOn(sequelize, Sequelize.DataTypes);
-db.cartPackage = cartPackage(sequelize, Sequelize.DataTypes);
+db.CartAddOn = CartAddOn(sequelize, Sequelize.DataTypes);
+db.CartPackage = CartPackage(sequelize, Sequelize.DataTypes);
 
 db.Faqs = Faqs(sequelize, Sequelize.DataTypes);
 db.offerings = offerings(sequelize, Sequelize.DataTypes);

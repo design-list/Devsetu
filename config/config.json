@@ -19,7 +19,8 @@
     "password": "DevSetu@123_uat",
     "database": "dev_setu_prod",
     "host": "104.131.177.106",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": 3306
   }
 }
 

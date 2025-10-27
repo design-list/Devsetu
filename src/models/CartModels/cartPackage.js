@@ -1,7 +1,7 @@
-// src/models/cartModels/cartPackage.js
+// src/models/cartModels/CartPackage.js
 
 export default (sequelize, DataTypes) => {
-  const CartPackage = sequelize.define("cartPackage", {
+  const CartPackage = sequelize.define("CartPackage", {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
@@ -20,6 +20,27 @@ export default (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: "name",
+    },
+    productId: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      field: "product_id",
+    },
+    productTitle: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "product_title",
+    },
+    productSlug: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "product_slug",
+    },
+    productImg: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "product_img",
     },
     hsnCode: {
       type: DataTypes.STRING,

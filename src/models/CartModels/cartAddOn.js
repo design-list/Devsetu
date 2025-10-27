@@ -1,7 +1,7 @@
-// src/models/cartModels/cartAddOn.js
+// src/models/cartModels/CartAddOn.js
 
 export default (sequelize, DataTypes) => {
-  const CartAddOn = sequelize.define("cartAddOn", {
+  const CartAddOn = sequelize.define("CartAddOn", {
     id: {
       type: DataTypes.BIGINT,
       autoIncrement: true,
@@ -20,6 +20,7 @@ export default (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: "name",
     },
     hsnCode: {
       type: DataTypes.STRING,
