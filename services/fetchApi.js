@@ -95,35 +95,35 @@ export default class fetchApi extends Api {
         }
     }
 
-    AddNewArticles(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
-    }
+    // AddNewArticles(data) {
+    //     let url = this.buildUrl(endpoints.Articles.articles, "full")
+    //     return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    // }
 
 
-    GetAllArticles(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        return this.fetch(url, "GET", null, data).then(response => response)
-    }
+    // GetAllArticles(data) {
+    //     let url = this.buildUrl(endpoints.Articles.articles, "full")
+    //     return this.fetch(url, "GET", null, data).then(response => response)
+    // }
 
-    GetArticlesDetails(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
-    }
+    // GetArticlesDetails(data) {
+    //     let url = this.buildUrl(endpoints.Articles.articles, "full")
+    //     return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
+    // }
 
-    UpdeteArticles(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        if (data.id) {
-            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
-        }
-    }
+    // UpdeteArticles(data) {
+    //     let url = this.buildUrl(endpoints.Articles.articles, "full")
+    //     if (data.id) {
+    //         return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
+    //     }
+    // }
 
-    DeleteArticles(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        if (data.id) {
-            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
-        }
-    }
+    // DeleteArticles(data) {
+    //     let url = this.buildUrl(endpoints.Articles.articles, "full")
+    //     if (data.id) {
+    //         return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
+    //     }
+    // }
     
     GetAllHome(data) {
         let url = this.buildUrl(endpoints.Home.home, "full")
@@ -276,30 +276,59 @@ export default class fetchApi extends Api {
     }
 
     AddNewAartis(data) {
-        let url = this.buildUrl(endpoints.Aartis.aartis, "full")
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
         return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
     }
 
     GetAllAartis(data) {
-        let url = this.buildUrl(endpoints.Aartis.aartis, "full")
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
         return this.fetch(url, "GET", null, data).then(response => response)
     }
 
     GetAartisById(id) {
         console.log("Fetching Aarti by ID:", id);
-        let url = this.buildUrl(endpoints.Aartis.aartis, "full")
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
         return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
     }
 
     UpdeteAartis(data) {
-        let url = this.buildUrl(endpoints.Aartis.aartis, "full")
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
         if (data.id) {
             return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
         }
     }
 
     DeleteAartis(id) {
-        let url = this.buildUrl(endpoints.Aartis.aartis, "full")
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
+        if (id) {
+            return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
+        }
+    }
+
+    AddNewChalisa(data) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllChalisa(data) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetChalisaById(id) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+    UpdeteChalisa(data) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
+
+    DeleteChalisa(id) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
         if (id) {
             return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
         }

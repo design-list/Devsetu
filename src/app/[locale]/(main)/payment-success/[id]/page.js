@@ -99,7 +99,7 @@ const PaymentSuccess = () => {
                 <div className="flex items-start space-x-2">
                   <span className="text-green-600 font-bold text-lg leading-5">✔</span>
                   <p className="text-gray-700">
-                    Your Puja is successfully conducted by Sri Mandir on 23rd August, Bhadrapada Krishna Amavasya
+                    Your Puja is successfully conducted by Dev Setu on 23rd August, Bhadrapada Krishna Amavasya
                   </p>
                 </div>
                 <div className="flex items-start space-x-2">

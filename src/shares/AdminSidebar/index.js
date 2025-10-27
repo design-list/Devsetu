@@ -84,20 +84,20 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                href="/admin/aartis/list"
+                href="/admin/chalisa"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <Gift size={18} />
-                {open && <span>Articles</span>}
+                {open && <span>Chalisa</span>}
               </Link>
             </li>
             <li>
               <Link
-                href="/admin/articles/list"
+                href="/admin/chalisa/list"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <List size={18} />
-                {open && <span>Articles List</span>}
+                {open && <span>Chalisa List</span>}
               </Link>
             </li>
             <li>
