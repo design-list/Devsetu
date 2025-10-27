@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import url('https://fonts.g  oogleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
 /* ------------------------------
    1. Base CSS Variables
 ------------------------------ */
@@ -16,7 +16,7 @@
   --brown: #351714;
 
   /* 🖋 Fonts */
-  --font-philosopher: "Philosopher";
+  --font-philosopher: "EB Garamond";
   --font-inter: "Inter";
 
   /* 🌗 Default Theme Colors */
@@ -43,7 +43,7 @@
 
   /* 🖋 Fonts */
   --font-primary: var(--font-inter), sans-serif;
-  --font-secondary: var(--font-philosopher), sans-serif;
+  --font-secondary: var(--font-philosopher), serif;
 
   /* 📦 Container sizes */
   --container-padding: 1rem;
