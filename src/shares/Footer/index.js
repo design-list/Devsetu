@@ -42,7 +42,7 @@ export default function Footer() {
   );
 
   return (
-    <footer className="bg-[var(--color-accent)] text-[var(--color-dark)] mt-12">
+    <footer className="bg-[var(--color-accent)] text-[var(--color-dark)]">
       <Container>
         <div className="mx-auto md:px-6 py-4 md:py-10 grid grid-cols-1 md:grid-cols-5 gap-4">
           {/* Left - Logo & About */}
@@ -53,7 +53,7 @@ export default function Footer() {
                 DevaSetu
               </span>
             </div>
-            <p className="text-base leading-relaxed pr-8">
+            <p className="text-base font-medium leading-relaxed pr-8">
               DevaSetu has brought religious services to the masses in India by
               connecting devotees, pandits and temples. Partnering with over 50
               renowned temples, we provide exclusive pujas and offerings
@@ -147,7 +147,7 @@ export default function Footer() {
                   Chadhava
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   href="/vip-puja"
                   className="text-sm md:text-base hover:underline"
@@ -162,7 +162,7 @@ export default function Footer() {
                 >
                   Seva
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
 

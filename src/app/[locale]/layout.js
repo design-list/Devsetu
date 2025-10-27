@@ -22,11 +22,11 @@ const philosopherFont = Philosopher({
 
 const proximanovaFont = localFont({
   src: [
-    {
-      path: "../../../public/fonts/proximanova_regular.woff2", 
-      weight: "400",
-      style: "normal",
-    },
+    // {
+    //   path: "../../../public/fonts/proximanova_regular.woff2", 
+    //   weight: "400",
+    //   style: "normal",
+    // },
     {
       path: "../../../public/fonts/proximanova_bold.woff2", 
       weight: "700",

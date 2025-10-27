@@ -9,7 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLang } from "@/app/langProviders";
 
-import Logo from '../../../public/icons/devsetu-horizontal.svg';
+import Logo from '../../../public/icons/devasetu-logo_vertical.svg';
 import Container from "@/components/Container";
 
 const menu = [
@@ -68,13 +68,14 @@ const Header = () => {
             <Image
               src={Logo}
               alt="Dev Setu"
-              width={80}
-              height={80}
+              width={100}
+              height={100}
+              className=" w-[200px]"
             />
           </div>
         </Link>
 
-        <nav className="hidden font-primary md:flex gap-6 font-secondary">
+        <nav className="hidden md:flex gap-8">
           {menu.map(({ id, title, path }) => {
             const link = withLang(path);
             const active = normalize(pathname) === path;
@@ -83,10 +84,10 @@ const Header = () => {
               <Link
                 key={id}
                 href={link}
-                className={`${
+                className={`font-secondary text-xl ${
                   active 
                     ? "text-[var(--color-primary-light)]"
-                    : "text-black"
+                    : "text-[var(--color-dark)]"
                 } font-bold hover:text-[var(--secondary)] transition`}
               >
                 {title[lang]}
@@ -98,14 +99,14 @@ const Header = () => {
 
         {/* Language & User */}
         <div className="flex items-center gap-4 relative">
-          {/* <div className="relative">
-            <button
+          <div className="relative">
+            {/* <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="flex items-center gap-1 border px-3 py-1 rounded-lg text-sm hover:bg-[var(--color-primary-light)] transition"
             >
               {lang === "en" ? "English" : "हिंदी"}
               <ChevronDown size={16} />
-            </button>
+            </button> */}
 
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-md z-50">
@@ -120,7 +121,7 @@ const Header = () => {
                 ))}
               </div>
             )}
-          </div> */}
+          </div> 
 
           <button className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition">
             <User size={20} />

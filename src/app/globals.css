@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.g  oogleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 /* ------------------------------
    1. Base CSS Variables
@@ -16,8 +17,7 @@
 
   /* 🖋 Fonts */
   --font-philosopher: "Philosopher";
-  --font-proximanova-regular: "Proxima Nova Regular";
-  --font-proximanova-bold: "Proxima Nova Bold";
+  --font-inter: "Inter";
 
   /* 🌗 Default Theme Colors */
   --background: var(--white);
@@ -42,9 +42,8 @@
   --color-black: var(--black);
 
   /* 🖋 Fonts */
-  --font-primary: var(--font-proximanova-regular), sans-serif;
+  --font-primary: var(--font-inter), sans-serif;
   --font-secondary: var(--font-philosopher), sans-serif;
-  --font-proxi-bold: var(--font-proximanova-bold), sans-serif;
 
   /* 📦 Container sizes */
   --container-padding: 1rem;
@@ -113,4 +112,27 @@ body {
 .fade-exit { opacity: 1; }
 .fade-exit-active { opacity: 0; transition: opacity 0.5s; }
 
-main.HomePage .swiper {}
+
+.puja-tag {
+  display: block;
+  padding: 6px 10px;
+  position: absolute;
+  left: -14px;
+  top: 20px;
+  color: var(--white);
+  border-top-right-radius: 7px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  z-index: 9;
+}
+
+.puja-tag::after {
+  display: block;
+  content: "";
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  background-color: var(--color-primary-light);
+  left: 0;
+  bottom: -14px;
+  border-bottom-left-radius: 14px;
+}
