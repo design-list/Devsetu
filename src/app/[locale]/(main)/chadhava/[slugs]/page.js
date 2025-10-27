@@ -15,6 +15,7 @@ import {
   updateOfferingCountAction,
 } from "@/redux/actions/cartActions";
 import { useWithLang } from "../../../../../../helper/useWithLang";
+import OfferingModal from "@/components/OfferingModal";
 
 const ChadhavaDetailsPage = () => {
   const params = useParams();
@@ -25,6 +26,8 @@ const ChadhavaDetailsPage = () => {
   const withLang = useWithLang();
 
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedOffering, setSelectedOffering] = useState(false);
 
   const { chadhavaWebDetail } = useSelector((state) => state.chadhavas);
   const { allCarts } = useSelector((state) => state.cart);
@@ -52,6 +55,11 @@ const ChadhavaDetailsPage = () => {
   const handlaRedirect = () => {
     router.push(withLang(`/puja-cart`));
   };
+
+  const handleShowModal = (item) => {
+    setShowModal(true);
+    setSelectedOffering(item);
+  }
 
   console.log("allCarts", allCarts);
 
@@ -128,7 +136,7 @@ const ChadhavaDetailsPage = () => {
                   }`}
                 >
                   {/* Left Content */}
-                  <div className="pr-4">
+                  <div className="pr-4" onClick={() => handleShowModal(item)}>
                     {item.tags && (
                       <h2
                         className={`text-base font-medium ${
@@ -152,20 +160,20 @@ const ChadhavaDetailsPage = () => {
 
                   {/* Right Image + Button */}
                   <div className="flex flex-col items-center h-full">
-                    <LazyImage
-                      src={item.packImg}
-                      alt={item.title}
-                      width={80}
-                      height={80}
-                      className="rounded-md object-cover"
-                    />
+                    <div className="w-24 h-24 relative cursor-pointer" onClick={() => handleShowModal(item)}>
+                      <LazyImage
+                        src={item.packImg}
+                        alt={item.title}
+                        width={80}
+                        height={80}
+                        className="rounded-md object-cover cursor-pointer"
+                      />
+                    </div>
                     {(() => {
-                      // current item का add_on entry खोजो
+                      
                       const matchedAddOn = allCarts?.add_ons?.find(
                         (add) => add.id === item.id
                       );
-
-                      // अगर मिला तो quantity वाला UI दिखाओ
                       if (matchedAddOn) {
                         return (
                           <div className="flex items-center border rounded-lg px-2 py-1 mt-4">
@@ -193,8 +201,6 @@ const ChadhavaDetailsPage = () => {
                           </div>
                         );
                       }
-
-                      // अगर नहीं मिला तो +Add button दिखाओ
                       return (
                         <button
                           onClick={() => hanldeAddChadhava(item)}
@@ -254,6 +260,16 @@ const ChadhavaDetailsPage = () => {
             </div>
           )}
         </div>
+
+        <OfferingModal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          selectedOffering={selectedOffering}
+          allCarts={allCarts}
+          handleQuantityChange={handleQuantityChange}
+          onAdd={hanldeAddChadhava}
+        />
+
       </Container>
     </div>
   );
