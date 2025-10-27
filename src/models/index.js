@@ -42,8 +42,8 @@ import testimonials from './testimonialModels/testimonials.js';
 import commonPujaPackage from './commonPujaPackage.js';
 
 import cart from './CartModels/cart.js';
-import cartAddOn from './CartModels/cartAddOn.js';
-import cartPackage from './CartModels/cartPackage.js';
+import CartAddOn from './CartModels/cartAddOn.js';
+import CartPackage from './CartModels/cartPackage.js';
 
 import Faqs from './faqs.js';
 import offerings from './offerings.js';
@@ -96,8 +96,8 @@ db.Horoscopes = Horoscopes(sequelize, Sequelize.DataTypes);
 db.testimonials = testimonials(sequelize, Sequelize.DataTypes);
 
 db.cart = cart(sequelize, Sequelize.DataTypes);
-db.cartAddOn = cartAddOn(sequelize, Sequelize.DataTypes);
-db.cartPackage = cartPackage(sequelize, Sequelize.DataTypes);
+db.CartAddOn = CartAddOn(sequelize, Sequelize.DataTypes);
+db.CartPackage = CartPackage(sequelize, Sequelize.DataTypes);
 
 db.Faqs = Faqs(sequelize, Sequelize.DataTypes);
 db.offerings = offerings(sequelize, Sequelize.DataTypes);

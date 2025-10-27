@@ -73,12 +73,12 @@ export default (sequelize, DataTypes) => {
   );
 
   cart.associate = (models) => {
-    cart.hasOne(models.cartPackage, {
+    cart.hasOne(models.CartPackage, {
       foreignKey: "cartId",
       as: "package",
       onDelete: "CASCADE",
     });
-    cart.hasMany(models.cartAddOn, {
+    cart.hasMany(models.CartAddOn, {
       foreignKey: "cartId",
       as: "add_ons",
       onDelete: "CASCADE",

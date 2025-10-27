@@ -305,4 +305,9 @@ export default class fetchApi extends Api {
         }
     }
 
+    GetCartById(id) {
+        let url = this.buildUrl(endpoints.Web.cart, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
 }

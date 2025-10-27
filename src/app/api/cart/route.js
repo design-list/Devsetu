@@ -4,7 +4,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js";
 
-const { cart, cartAddOn, cartPackage, UserDetails } = models;
+const { cart, CartAddOn, CartPackage, UserDetails } = models;
 
 // =========================
 // GET ALL CARTS
@@ -13,8 +13,8 @@ export async function GET() {
   try {
     const carts = await cart.findAll({
       include: [
-        { model: cartPackage, as: "package" },
-        { model: cartAddOn, as: "add_ons" },
+        { model: CartPackage, as: "package" },
+        { model: CartAddOn, as: "add_ons" },
         { model: UserDetails, as: "user_details" },
       ],
       order: [["createdAt", "DESC"]],
@@ -44,20 +44,24 @@ export async function POST(request) {
 
     // 2️⃣ Insert package
     if (body.package) {
-      await cartPackage.create({
+      await CartPackage.create({
         cartId: newCart.id,
         packageId: body.package.id,
         name: body.package.packageType,
         basePrice: body.package.packagePrice,
         price: body.package.packagePrice,
         quantity: body.package.quantity,
+        productId: body.package.productId,
+        productTitle: body.package.productTitle,
+        productSlug: body.package.productSlug,
+        productImg: body.package.productImg,
       });
     }
 
     // 3️⃣ Insert add-ons
     if (Array.isArray(body.add_ons)) {
       for (const addon of body.add_ons) {
-        await cartAddOn.create({
+        await CartAddOn.create({
           cartId: newCart.id,
           addOnId: addon.id,
           name: addon.title,

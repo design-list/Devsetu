@@ -67,6 +67,7 @@ export const endpoints = {
 
     Web: {
         puja:`${baseApiUrl}/web/pujas`,
-        chadhava:`${baseApiUrl}/web/chadhavas`
+        chadhava:`${baseApiUrl}/web/chadhavas`,
+        cart:`${baseApiUrl}/web/cart`
     },
 }

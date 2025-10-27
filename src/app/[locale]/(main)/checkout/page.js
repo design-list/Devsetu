@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWithWait } from "../../../../../helper/method";
 import { validateFields } from "../../../../../helper/validateFields";
-import { addNewCartAction } from "@/redux/actions/cartActions";
+import { addNewCartAction, requestClearCartAction } from "@/redux/actions/cartActions";
 import { paymentVerifyAction, requestPaymentOrderAction } from "@/redux/actions/paymentActions";
 import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
+import SectionLoader from "@/components/Atom/loader/sectionLoader";
 
 export default function CheckoutPage() {
   const [members, setMembers] = useState([""]);
@@ -24,6 +25,7 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState({}); 
 
   const [storeId, setStoreId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -72,6 +74,7 @@ const handleAddMember = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const { isValid, errors: validationErrors } = validateFields([form], [
       "whatsapp",
@@ -81,9 +84,6 @@ const handleAddMember = () => {
       "city",
       "state",
     ]);
-
-    // setErrors(validationErrors[0]);
-    // if (!isValid) return;
 
     if(allCarts?.package){
       setErrors(validationErrors[0]);
@@ -109,6 +109,7 @@ const handleAddMember = () => {
 
       if (cartRes.status !== 200) {
         alert(cartRes.message || "Error saving cart.");
+        setIsLoading(false);
         return;
       }
 
@@ -127,6 +128,7 @@ const handleAddMember = () => {
 
       if (orderRes.status !== 200) {
         alert(orderRes.message || "Error creating payment order.");
+        setIsLoading(false);
         return;
       }
 
@@ -143,6 +145,7 @@ const handleAddMember = () => {
       const sdkLoaded = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
       if (!sdkLoaded) {
         alert("Razorpay SDK failed to load.");
+        setIsLoading(false);
         return;
       }
 
@@ -164,9 +167,23 @@ const handleAddMember = () => {
 
             if (verifyRes.success) {
               alert("✅ Payment Successful!");
+              setForm({
+                whatsapp: "",
+                name: "",
+                address: "",
+                postalCode: "",
+                city: "",
+                state: "",
+              });
+              setMembers([]);
+              setErrors({});
+              setIsLoading(false);
               router.push(withLang(`/payment-success/${cartRes.data.cart_id}`)); // ✅ custom redirect
+              dispatch(requestClearCartAction());
+
             } else {
               alert(verifyRes.message || "Payment verification failed.");
+              setIsLoading(false);
               router.push(withLang(`/payment-failed`));
             }
 
@@ -189,15 +206,20 @@ const handleAddMember = () => {
       rzp.on("payment.failed", (response) => {
         console.error("Payment Failed:", response.error);
         alert("❌ Payment Failed. Please try again.");
+        setIsLoading(false);
+        router.push(withLang(`/payment-failed`));
       });
     } catch (error) {
       console.error("Error in payment flow:", error);
+      setIsLoading(false);
       alert("Something went wrong. Please try again.");
     }
   };
 
 
-  console.log("Rendered Checkout Page with storeId:", allCarts);
+  // console.log("Rendered Checkout Page with storeId:", allCarts);
+
+  
 
   return (
     <section className="min-h-screen bg-gray-50 py-10 px-4 md:px-10">
@@ -211,6 +233,9 @@ const handleAddMember = () => {
           </h2>
 
           {allCarts?.["package"] && <div className="border-t pt-4 mt-4">
+              <div className="font-medium mb-2">
+                <span>{allCarts?.["package"]?.productTitle}</span>
+              </div>
               <div className="flex justify-between text-gray-700">
                 <span>{allCarts?.["package"]?.packageType}</span>
                 <span>₹{allCarts?.["package"]?.packagePrice}</span>
@@ -445,14 +470,18 @@ const handleAddMember = () => {
             <p className="text-lg font-semibold">{`Total: ₹${allCarts?.["grand_total"]}/-`}</p>
             <button
               type="button"
-              className="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg font-medium"
+              className="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg font-medium cursor-pointer"
               onClick={(e) => handleSubmit(e)}
             >
               Pay Now
             </button>
           </div>
         </form>
+
+        <div className="mt-4 text-sm text-gray-500">{
+          isLoading && <SectionLoader /> }</div>
       </div>
+
     </section>
   );
 }

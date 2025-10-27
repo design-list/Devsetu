@@ -41,7 +41,7 @@ const PujaCart = () => {
     router.push(withLang('/checkout'))
   }
 
-  // console.log("CART data", allCarts)
+  console.log("CART data", allCarts)
 
 
   return (
@@ -55,12 +55,20 @@ const PujaCart = () => {
           {allCarts?.['package'] !== null && <div
             className="border border-[var(--color-dark)]/10 rounded-lg p-4 shadow-sm bg-white"
           >
-            <div className="flex justify-between items-center">
-              <h3 className="text-lg font-medium">{allCarts?.['package']?.packageType}</h3>
-              <button onClick={handleRemovePackages} className="bg-red-600 p-1 rounded text-white hover:bg-red-700 cursor-pointer">
-                <Trash2 />
-              </button>
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col items-start space-y-1">
+              <p className="text-lg font-medium">{allCarts?.['package']?.productTitle}</p>
+              <h3 className="text-lg font-small">{allCarts?.['package']?.packageType}</h3>
             </div>
+            
+            <button
+              onClick={handleRemovePackages}
+              className="bg-red-600 p-1 rounded text-white hover:bg-red-700 cursor-pointer"
+            >
+              <Trash2 />
+            </button>
+          </div>
+
             <div className="flex justify-between items-center mt-2">
               <span className="font-secondary font-bold text-[var(--color-dark)] text-xl">₹{allCarts?.['package']?.packagePrice}</span>
             </div>
@@ -124,9 +132,10 @@ const PujaCart = () => {
           </div>}
 
           {/* Continue Button */}
-          <button onClick={handlaRedirect} className="font-secondary w-full bg-[var(--color-primary-light)] hover:[var(--color-primary)] text-white font-bold py-3 rounded-lg mt-4 flex justify-between px-4 items-center">
+          <button onClick={handlaRedirect} className="font-secondary w-full bg-[var(--color-primary-light)] hover:[var(--color-primary)]
+             text-white font-bold py-3 rounded-lg mt-4 flex justify-between px-4 items-center cursor-pointer">
             ₹{allCarts?.['grand_total']}
-            <span className="text-lg font-medium cursor-pointer">
+            <span className="text-lg font-medium">
               Cart Review →
             </span>
           </button>
