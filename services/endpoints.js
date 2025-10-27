@@ -60,6 +60,7 @@ export const endpoints = {
     Articels: {
         aartis: `${baseApiUrl}/aartis`,
         chalisa: `${baseApiUrl}/articles/chalisas`,
+        mantras: `${baseApiUrl}/articles/mantras`,
     },
 
     Web: {

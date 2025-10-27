@@ -102,6 +102,24 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
+                href="/admin/mantras"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"  
+              >
+                <Gift size={18} />
+                {open && <span>Mantra</span>}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin/mantras/list"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
+              >
+                <List size={18} />
+                {open && <span>Mantras List</span>}
+              </Link>
+            </li>
+            {/* <li>
+              <Link
                 href="/admin/testimonials"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
@@ -117,7 +135,7 @@ const Sidebar = () => {
                 <List size={18} />
                 {open && <span>Testimonials List</span>}
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 href="/admin/faqs"

@@ -80,7 +80,6 @@ const slugify = (text) => {
     try {
       setLoading(true);
       const res = await api.AddNewChalisa(formData );
-      console.log("Submit response:", res);
 
       if (res.status === 200) {
         alert("Chalisa added successfully!");
@@ -97,7 +96,6 @@ const slugify = (text) => {
         alert(data.message || "Something went wrong!");
       }
     } catch (err) {
-      console.error("Submit error:", err);
       alert("Error submitting Chalisa");
     } finally {
       setLoading(false);

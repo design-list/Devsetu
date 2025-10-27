@@ -98,7 +98,7 @@ const Header = () => {
 
         {/* Language & User */}
         <div className="flex items-center gap-4 relative">
-          <div className="relative">
+          {/* <div className="relative">
             <button
               onClick={() => setDropdownOpen(!dropdownOpen)}
               className="flex items-center gap-1 border px-3 py-1 rounded-lg text-sm hover:bg-[var(--color-primary-light)] transition"
@@ -120,7 +120,7 @@ const Header = () => {
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
 
           <button className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition">
             <User size={20} />
