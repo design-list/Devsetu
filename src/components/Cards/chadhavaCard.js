@@ -4,6 +4,15 @@ import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from "../Atom/LazyImage";
+import Image from "next/image";
+import { formatDate } from "../../../utils/localstorage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import Goldenline from "../../../public/icons/goldline.svg";
+import DivineBlessings from "../../../public/icons/divine-blessings.png";
+import FamilyProsperity from "../../../public/icons/family-prosperity.png";
+import AncestralPeace from "../../../public/icons/ancestral-peace.png";
+
 
 function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
   return (
@@ -37,29 +46,85 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               </div>
 
               {/* Details */}
-              <div className="p-5 flex flex-col flex-1">
+              <div className="p-5 flex flex-col flex-1 justify-between">
+                <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
+                  {chadhava?.highlight || "NIVARAN MAHAPUJA SPECIAL"}
+                  <Image
+                    src={Goldenline}
+                    alt="Golden under"
+                    className="rotate-[0.5deg]"
+                  />
+                </div>
                 <h4 className="text-[var(--color-dark)] font-secondary text-xl md:text-2xl font-bold tracking-wide mb-2">
                   {card.title}
                 </h4>
-                <p className="text-[var(--color-dark)] text-base leading-relaxed mb-3">
+                {/* <div className="flex items-center gap-2 text-[#393939] text-base font-medium">
+                  <FontAwesomeIcon
+                    icon={faCalendarDays}
+                    className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
+                  />
+                  {formatDate(puja.date, "full")}
+                </div> */}
+                {/* <p className="text-[var(--color-dark)] text-base leading-relaxed mb-3">
                   {card.chadhava_details
                     ? card.chadhava_details.substring(0, 200) + "..."
                     : "No description available."}
-                </p>
+                </p> */}
+                <ul>
+                  <li className="flex items-center gap-2.5 text-base text-[#393939] pb-2">
+                    {" "}
+                    <Image
+                      src={DivineBlessings}
+                      alt="Icons"
+                      width={30}
+                      height={30}
+                    />{" "}
+                    <span>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.
+                    </span>{" "}
+                  </li>
+                  <li className="flex items-center gap-2.5 text-base text-[#393939] pb-2">
+                    {" "}
+                    <Image
+                      src={FamilyProsperity}
+                      alt="Icons"
+                      width={30}
+                      height={30}
+                    />{" "}
+                    <span>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.
+                    </span>{" "}
+                  </li>
+                  <li className="flex items-center gap-2.5 text-base text-[#393939] pb-2">
+                    {" "}
+                    <Image
+                      src={AncestralPeace}
+                      alt="Icons"
+                      width={30}
+                      height={30}
+                    />{" "}
+                    <span>
+                      Lorem Ipsum is simply dummy text of the printing and
+                      typesetting industry.
+                    </span>{" "}
+                  </li>
+                </ul>
               </div>
 
               {/* Button */}
               <div className="p-5 pt-0">
                 <Link
                   href={withLang(`/chadhava/${card.slug}`)}
-                  className="w-full flex items-center justify-center gap-2 
-      bg-gradient-to-r from-[var(--color-accent)] via-[var(--color-primary-light)] to-[var(--color-primary)]
-      text-white font-semibold rounded-xl py-3 px-5
+                  className="w-full flex items-center justify-center gap-0 
+      bg-gradient-to-t from-[var(--color-primary)] via-[var(--color-primary-light)] to-[var(--color-primary)]
+      text-white font-semibold rounded-lg py-3 px-5
       shadow-[0_2px_6px_rgba(241,88,34,0.2)]
       hover:shadow-[0_4px_10px_rgba(241,88,34,0.3)]
       transition-all duration-300 hover:scale-[1.04]
       active:translate-y-[1px]
-      relative overflow-hidden"
+      relative overflow-hidden mt-4 uppercase"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Soft Gradient Glow Overlay */}
@@ -70,7 +135,6 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   </span>
                 </Link>
               </div>
-
             </div>
           );
         })}
