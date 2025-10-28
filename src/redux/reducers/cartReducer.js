@@ -109,7 +109,7 @@ export default function reducer(state = initialState, action) {
 
 // Helper: calculate grand total
 const calculateGrandTotal = (cart) => {
-  const packageTotal = cart.package
+  const packageTotal = cart.package && cart.package.type === "puja"  
     ? cart.package.packagePrice * (cart.package.quantity || 1)
     : 0;
 

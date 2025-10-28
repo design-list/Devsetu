@@ -26,6 +26,8 @@ export default function CheckoutPage() {
 
   const [storeId, setStoreId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [priceOfMember, setPriceOfMember] = useState(0);
+  const [finalTotal, setFinalTotal] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -40,7 +42,7 @@ export default function CheckoutPage() {
     }, []);
 
 useEffect(() => {
-  if (allCarts?.package?.noOfPeople) {
+  if ( !allCarts?.package?.type && allCarts?.package?.noOfPeople) {
     const count = allCarts.package.noOfPeople - 1;
     setMembers(Array(count).fill(""));
   } else {
@@ -48,6 +50,44 @@ useEffect(() => {
   }
 }, [allCarts?.package]);
 
+// // Calculate ₹50 per member (only if package.type exists)
+//   useEffect(() => {
+//     if (allCarts?.package?.type) {
+//       setPriceOfMember(members.length * 50);
+//     } else {
+//       setPriceOfMember(0);
+//     }
+//   }, [members, allCarts?.package?.type]);
+
+//   // 🔥 Update final total dynamically
+//   useEffect(() => {
+//     const baseTotal = allCarts?.grand_total || 0;
+//     setFinalTotal(baseTotal + priceOfMember);
+//   }, [allCarts?.grand_total, priceOfMember]);
+
+// Calculate ₹50 per member (only if package.type exists)
+
+useEffect(() => {
+  if (allCarts?.package?.type === "chadhava") {
+    // check if members array is completely empty (no names)
+    const isMembersEmpty =
+      members.length === 0 || members.every((m) => !m.trim());
+
+    if (isMembersEmpty) {
+      setPriceOfMember(0);
+    } else {
+      setPriceOfMember(members.length * 50);
+    }
+  } else {
+    setPriceOfMember(0);
+  }
+}, [members, allCarts?.package?.type === "chadhava"]);
+
+// 🔥 Update final total dynamically
+useEffect(() => {
+  const baseTotal = allCarts?.grand_total || 0;
+  setFinalTotal(baseTotal + priceOfMember);
+}, [allCarts?.grand_total, priceOfMember]);
 
 
 const handleAddMember = () => {
@@ -59,8 +99,6 @@ const handleAddMember = () => {
 };
 
 
-
-  // const handleAddMember = () => setMembers([...members, ""]);
 
   const handleRemoveMember = (index) =>
     setMembers(members.filter((_, i) => i !== index));
@@ -89,19 +127,22 @@ const handleAddMember = () => {
       setErrors(validationErrors[0]);
       if (!isValid) return;
 
-      const memberErrors = members.map((m) => !m.trim());
-      if (memberErrors.includes(true)) {
-        setErrors((prev) => ({
-          ...prev,
-          members: "Please fill all member names",
-        }));
-        return;
-      }
+      // const memberErrors = members.map((m) => !m.trim());
+
+      // if (memberErrors.includes(true)) {
+      //   setErrors((prev) => ({
+      //     ...prev,
+      //     members: "Please fill all member names",
+      //   }));
+      //   return;
+      // }
     }
 
 
     const userDetails = { ...form, members };
-    const payload = { ...allCarts, store_id: storeId, userDetails };
+    // const payload = { ...allCarts, store_id: storeId, userDetails };
+
+    const payload = { ...allCarts, store_id: storeId, userDetails, grand_total: finalTotal };
 
     try {
       // Step 1: Save cart
@@ -166,7 +207,7 @@ const handleAddMember = () => {
             });
 
             if (verifyRes.success) {
-              alert("✅ Payment Successful!");
+              // alert("✅ Payment Successful!");
               setForm({
                 whatsapp: "",
                 name: "",
@@ -236,10 +277,10 @@ const handleAddMember = () => {
               <div className="font-medium mb-2">
                 <span>{allCarts?.["package"]?.productTitle}</span>
               </div>
-              <div className="flex justify-between text-gray-700">
+              {allCarts?.["package"]?.packagePrice && <div className="flex justify-between text-gray-700">
                 <span>{allCarts?.["package"]?.packageType}</span>
                 <span>₹{allCarts?.["package"]?.packagePrice}</span>
-              </div>
+              </div>}
           </div>}
           {allCarts?.["add_ons"].length > 0 && (
             <div className="border-t pt-4 mt-4">
@@ -310,45 +351,9 @@ const handleAddMember = () => {
             )}
           </div>
 
-          {/* Family Members */}
-          {/* <div>
-            <label className="block font-medium mb-1">
-              Enter Family Member Names
-            </label>
-            {members.map((member, i) => (
-              <div key={i} className="flex flex-col gap-1 mb-2">
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    placeholder="Enter family member name"
-                    value={member}
-                    onChange={(e) => handleMemberChange(i, e.target.value)}
-                    className={`flex-1 border rounded-lg px-3 py-2 focus:ring-1 `}
-                  />
-                  {members.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveMember(i)}
-                      className="text-red-600 text-sm hover:underline"
-                    >
-                      ✕
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={handleAddMember}
-              className="text-sm text-red-700 hover:underline font-medium"
-            >
-              + Add member
-            </button>
-          </div> */}
-
           <div>
             <label className="block font-medium mb-1">
-              Enter Family Member Names
+              Enter Family Member Names {allCarts?.package?.type === "chadhava" && "/ Rs 50"  }
             </label>
             {members.map((member, i) => (
               <div key={i} className="flex flex-col gap-1 mb-2">
@@ -362,7 +367,11 @@ const handleAddMember = () => {
                       errors.members && !member.trim() ? "border-red-500" : "focus:ring-red-500"
                     }`}
                   />
-                  {(!allCarts?.package || members.length > allCarts.package?.noOfPeople) &&
+
+                    {/* {(!allCarts?.package.type || members.length > allCarts.package?.noOfPeople) &&
+                    members.length > 1 && ( */}
+
+                  {(allCarts?.package?.type === "chadhava") &&
                     members.length > 1 && (
                       <button
                         type="button"
@@ -379,7 +388,7 @@ const handleAddMember = () => {
               </div>
             ))}
 
-            {!allCarts?.package && (
+            {allCarts?.package?.type === "chadhava" && (
               <button
                 type="button"
                 onClick={handleAddMember}
@@ -467,7 +476,7 @@ const handleAddMember = () => {
 
           {/* Total and Pay Button */}
           <div className="flex justify-between items-center pt-4 border-t">
-            <p className="text-lg font-semibold">{`Total: ₹${allCarts?.["grand_total"]}/-`}</p>
+            <p className="text-lg font-semibold">{`Total: ₹${finalTotal}/-`}</p>
             <button
               type="button"
               className="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg font-medium cursor-pointer"

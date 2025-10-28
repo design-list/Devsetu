@@ -41,7 +41,7 @@ const PujaCart = () => {
     router.push(withLang('/checkout'))
   }
 
-  console.log("CART data", allCarts)
+  // console.log("CART data", allCarts)
 
 
   return (
@@ -61,17 +61,17 @@ const PujaCart = () => {
               <h3 className="text-lg font-small">{allCarts?.['package']?.packageType}</h3>
             </div>
             
-            <button
+           {allCarts?.['package'].type ==='puja' && <button
               onClick={handleRemovePackages}
               className="bg-red-600 p-1 rounded text-white hover:bg-red-700 cursor-pointer"
             >
               <Trash2 />
-            </button>
+            </button>}
           </div>
 
-            <div className="flex justify-between items-center mt-2">
+            {allCarts?.['package']?.packagePrice && <div className="flex justify-between items-center mt-2">
               <span className="font-secondary font-bold text-[var(--color-dark)] text-xl">₹{allCarts?.['package']?.packagePrice}</span>
-            </div>
+            </div>}
           </div>}
 
           {

@@ -37,6 +37,7 @@ export async function POST(request) {
     const newCart = await cart.create({
       storeId: body.store_id,
       tipAmount: body.tip_amount || 0,
+      grandTotal: body.grand_total || 0,
       otherCharges: body.other_charges || {},
       couponCode: body.coupon_code || null,
       paymentStatus: "PENDING",
@@ -51,6 +52,7 @@ export async function POST(request) {
         basePrice: body.package.packagePrice,
         price: body.package.packagePrice,
         quantity: body.package.quantity,
+        type: body.package.type,
         productId: body.package.productId,
         productTitle: body.package.productTitle,
         productSlug: body.package.productSlug,

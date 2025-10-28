@@ -14,32 +14,37 @@ export default (sequelize, DataTypes) => {
     },
     packageId: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       field: "package_id",
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "name",
     },
     productId: {
       type: DataTypes.BIGINT,
-      allowNull: false,
+      allowNull: true,
       field: "product_id",
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "product_type",
     },
     productTitle: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "product_title",
     },
     productSlug: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "product_slug",
     },
     productImg: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "product_img",
     },
     hsnCode: {
@@ -54,12 +59,13 @@ export default (sequelize, DataTypes) => {
     },
     basePrice: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
       field: "base_price",
     },
     price: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
+      field: "package_price",
     },
     quantity: {
       type: DataTypes.INTEGER,

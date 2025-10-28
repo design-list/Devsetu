@@ -19,6 +19,11 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
         field: "tip_amount",
       },
+      grandTotal: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        field: "grand_total",
+      },
       otherCharges: {
         type: DataTypes.JSON,
         allowNull: true,

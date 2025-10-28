@@ -12,6 +12,7 @@ import ChadhavaDetailHeroSlider from "@/components/HeroBanner/ChadhavaDetailHero
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
 import {
   addOfferingAction,
+  addPackageAction,
   updateOfferingCountAction,
 } from "@/redux/actions/cartActions";
 import { useWithLang } from "../../../../../../helper/useWithLang";
@@ -52,7 +53,18 @@ const ChadhavaDetailsPage = () => {
     dispatch(updateOfferingCountAction(id, changeType));
   };
 
+
   const handlaRedirect = () => {
+    const packageData = {
+      type: "chadhava",
+      productId : chadhavaWebDetail?.id,
+      productTitle : chadhavaWebDetail?.title,
+      productSlug : chadhavaWebDetail?.slug,
+      productImg : chadhavaWebDetail?.["chadhavaBanners"]?.[0]?.image_url || "",
+    };
+
+    dispatch(addPackageAction(packageData));
+
     router.push(withLang(`/puja-cart`));
   };
 
@@ -61,7 +73,7 @@ const ChadhavaDetailsPage = () => {
     setSelectedOffering(item);
   }
 
-  console.log("allCarts", allCarts);
+  // console.log("chadhavaWebDetail", chadhavaWebDetail);
 
   if (isLoading) {
     return <PageLaoder />;
@@ -94,17 +106,6 @@ const ChadhavaDetailsPage = () => {
               {chadhavaWebDetail?.["pujaDetails"]}
               {/* <a href="#" className="text-blue-600 underline ml-1">Read more</a> */}
             </p>
-
-            {/* People Avatars + Count */}
-            {/* <div className="flex items-center mb-2">
-                            <div className="flex -space-x-3">
-                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={35} className="rounded-full border-2 border-white w-[40px] h-[40px] obj" />
-                                <LazyImage src="/images/couple.webp" alt="devotee" width={35} height={35} className="rounded-full border-2 border-white w-[40px] h-[40px]" />
-                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={35} className="rounded-full border-2 border-white w-[40px] h-[40px]" />
-                                <LazyImage src="/images/couple.webp" alt="devotee" width={35} height={35} className="rounded-full border-2 border-white w-[40px] h-[40px]" />
-                                <LazyImage src="/images/individual.webp" alt="devotee" width={35} height={35} className="rounded-full border-2 border-white w-[40px] h-[40px]" />
-                            </div>
-                        </div> */}
 
             <p className="text-[var(--color-dark)] text-xl">
               Till now{" "}

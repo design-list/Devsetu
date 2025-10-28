@@ -6,6 +6,7 @@ import { Phone, Mail, MessageCircle, ChevronDown, CheckCircle } from "lucide-rea
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { fetchCartDetailAction } from "@/redux/actions/cartActions";
+import PageLaoder from "@/components/Atom/loader/pageLaoder";
 
 const PaymentSuccess = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
@@ -14,12 +15,13 @@ const PaymentSuccess = () => {
   const dispatch = useDispatch();
 
   const { cartDetails } = useSelector((state) => state.cart);
+  const { isLoading } = useSelector((state) => state.loader);
 
   useEffect(() => {
     dispatch((fetchCartDetailAction(params.id)));
   }, [params]);
 
-  console.log("cartDetails", cartDetails);
+  // console.log("cartDetails", cartDetails);
 
   const toggleFAQ = (index) => {
     setOpenFAQ(openFAQ === index ? null : index);
@@ -44,11 +46,21 @@ const PaymentSuccess = () => {
     },
   ];
 
+
+  if(isLoading){
+    return <PageLaoder />
+  }
+
+  // console.log("cartDetails", cartDetails)
+
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md p-6">
         {/* Booking ID */}
-        {cartDetails?.['id'] && <p className="text-sm text-gray-500 mb-4 font-medium">Booking ID #{cartDetails?.['id']}</p>}
+       <div className="flex justify-between">
+         {cartDetails?.['id'] && <p className="text-sm text-gray-500 mb-4 font-medium">Booking ID #{cartDetails?.['id']}</p>}
+          {cartDetails?.['paymentStatus'] && <spen className="text-sm text-gray-500 mb-4 font-medium">Payment status: {cartDetails?.['paymentStatus']}</spen>}
+       </div>
 
         {/* Main Layout */}
         <div className="grid md:grid-cols-[1.7fr_1fr] gap-8">
@@ -74,21 +86,38 @@ const PaymentSuccess = () => {
               <h3 className="text-lg font-semibold mb-3">
                 Puja and Participant's Details
               </h3>
-              <div className="border rounded-md divide-y">
-                {cartDetails?.['package'] && <div className="p-3">
-                  <p className="font-medium">{cartDetails?.['package'].productTitle}</p>
-                  <p className="text-gray-500 text-sm">{cartDetails?.['package'].name}</p>
-                </div>}
-                <div className="p-3">
-                  <p className="font-medium">{cartDetails?.['user_details'].name}</p>
-                  <p className="text-gray-500 text-sm">{`${cartDetails?.['user_details'].whatsapp} • ${cartDetails?.['user_details'].name}`}</p>
-                  {
-                    cartDetails?.['user_details']?.members?.map((member, index) => (
-                      <p key={index} className="text-gray-500 text-sm">{member}</p>
-                    ))
-                  }
-                  
+                 <div className="border rounded-md divide-y">
+                  <div className="p-3">
+                    <p className="font-medium">{cartDetails?.['user_details'].name}</p>
+                    <p className="text-gray-500 text-sm">{`${cartDetails?.['user_details'].whatsapp} • ${cartDetails?.['user_details'].name}`}</p>
+                    {
+                      cartDetails?.['user_details']?.members?.map((member, index) => (
+                        <p key={index} className="text-gray-500 text-sm">{member}</p>
+                      ))
+                    }
+                  </div>
+
+                  {cartDetails?.['package'] && <div className="p-3">
+                    <p className="font-medium">{cartDetails?.['package'].productTitle}</p>
+                    <p className="text-gray-500 text-sm">{cartDetails?.['package'].name}</p>
+                  </div>}
+
+                <div className="space-y-2 text-sm">
+                  {cartDetails?.["add_ons"].map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex justify-between text-gray-700"
+                    >
+                      <span>{item?.name}</span>
+                      <span>₹{`${item?.price}* ${item?.quantity}`}</span>
+                    </div>
+                  ))}
+                  {cartDetails?.["grandTotal"] && <div className="flex justify-between font-semibold border-t pt-2">
+                    <span>Total Amount</span>
+                    <span>₹{cartDetails?.["grandTotal"]}</span>
+                  </div>}
                 </div>
+                
               </div>
             </div>}
 
@@ -215,7 +244,7 @@ const PaymentSuccess = () => {
                 <div className="flex items-start space-x-3">
                   <Phone className="text-green-700 w-5 h-5 mt-0.5" />
                   <p className="text-gray-800 leading-tight">
-                    080-711-74417 <br />
+                    080-851-88888 <br />
                     <span className="text-gray-500 text-sm">
                       You can call us from 10:30 AM - 7:30 PM
                     </span>

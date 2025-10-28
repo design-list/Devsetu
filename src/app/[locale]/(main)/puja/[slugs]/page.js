@@ -170,6 +170,7 @@ export default function PujaDetailsPage() {
 
   const handleAddPackages = (pkg) => {
     const packageData = {
+      type: 'puja',
       productId : pujaDetailPage?.id,
       productTitle : pujaDetailPage?.title,
       productSlug : pujaDetailPage?.slug,
