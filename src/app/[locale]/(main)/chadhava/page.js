@@ -9,6 +9,62 @@ import { useDispatch, useSelector } from "react-redux";
 import { useWithLang } from "../../../../../helper/useWithLang";
 import Container from "@/components/Container";
 import ChadhavaHeroSlider from "@/components/HeroBanner/ChadhavaHeroSlider";
+import { Landmark, Users, Building, Sparkles } from "lucide-react";
+import Reviews from "@/components/Review";
+import HowPujaWorks from "@/components/OnlineSteps";
+
+const reviews = [
+  {
+    name: "Ritika Sharma",
+    city: "Delhi",
+    text: "Booked Baglamukhi puja on Dhanteras. Honestly didn’t expect it to feel so real. Video came next day — felt like I was sitting there in temple.",
+  },
+  {
+    name: "Rajesh Mehta",
+    city: "Pune",
+    text: "Did Mangalnath Chadhava for my son’s mangal dosh. Panditji said his name in the puja, got full faith now. Mahadev ki kripa.",
+  },
+  {
+    name: "Manisha Tiwari",
+    city: "Indore",
+    text: "My diya floated on Kshipra so beautifully. I actually got goosebumps watching the video. Jai Maa Kshipra.",
+  },
+  {
+    name: "Anil Deshmukh",
+    city: "Dubai",
+    text: "I stay in Dubai, can’t visit temples easily. Through DevaSetu, I did my first puja online. Simple, clean, no confusion.",
+  },
+  {
+    name: "Sneha Patel",
+    city: "Ahmedabad",
+    text: "Did Lalita Tripura Sundari chadhava for Navratri. The team kept updating me. Puja looked pure, not commercial type.",
+  },
+  {
+    name: "Ramesh Iyer",
+    city: "Bengaluru",
+    text: "Very nice experience. Got the video link on time, and I could see my name in sankalp. Whole family watched together.",
+  },
+  {
+    name: "Aditi Gupta",
+    city: "Jaipur",
+    text: "Booked puja for my parents from my phone. They saw video on TV and got so emotional. Thank you DevaSetu.",
+  },
+  {
+    name: "Vikas Sharma",
+    city: "Ujjain",
+    text: "Easy process, everything step by step. Not like other apps. Proper mandir, proper pandit. Felt real.",
+  },
+  {
+    name: "Neha Joshi",
+    city: "Mumbai",
+    text: "I joined the free Deep Daan. Watching hundreds of diyas floating was magical. Felt very peaceful inside.",
+  },
+  {
+    name: "Sanjay Agarwal",
+    city: "Kolkata",
+    text: "Offered for my late father. Didn’t think online puja can touch heart like this. Truly divine feeling.",
+  },
+];
 
 const ChadhavaPage = () => {
   const dispatch = useDispatch();
@@ -78,17 +134,25 @@ const ChadhavaPage = () => {
           </div>
         </div> */}
           <h1 className="font-secondary text-2xl md:text-4xl text-center font-bold text-[var(--color-dark)] leading-snug mb-6">
-            Offer <span className="text-[var(--color-primary)]">Chadhava</span> as per
-            Vedic rituals at sacred temples across India
+            Offer <span className="text-[var(--color-primary)]">Chadhava</span>{" "}
+            as per Vedic rituals at sacred temples across India
           </h1>
-          <ChadhavaHeroSlider heroBanner={heroBanner} handlaRedirect={handlaRedirect} />
+          <ChadhavaHeroSlider
+            heroBanner={heroBanner}
+            handlaRedirect={handlaRedirect}
+          />
         </section>
+      </Container>
+
 
         {/* 🕉️ Upcoming Chadhava Section */}
         <section className="max-w-7xl mx-auto px-6 py-8">
           <div className="text-center mb-12">
             <h2 className="font-secondary text-3xl md:text-4xl font-extrabold text-[var(--color-dark)] mb-4">
-              Upcoming <span className="text-[var(--color-primary)]">Chadhava Offerings</span>
+              Upcoming{" "}
+              <span className="text-[var(--color-primary)]">
+                Chadhava Offerings
+              </span>
             </h2>
             <p className=" text-lg text-[var(--color-dark)] max-w-2xl mx-auto">
               Participate in auspicious Chadhava ceremonies organized at holy
@@ -126,9 +190,97 @@ const ChadhavaPage = () => {
           )} */}
         </section>
 
-        {/* ✨ Decorative Bottom Divider */}
-        <div className="h-1 bg-gradient-to-r from-orange-400 via-yellow-400 to-green-500"></div>
-      </Container>
+        {/* Review */}
+        <section className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
+          <Container>
+            <h2 className="font-secondary text-center text-3xl font-bold mb-10">
+              What devotees Say about DevaSetu Puja?
+            </h2>
+            <Reviews reviews={reviews} />
+          </Container>
+        </section>
+
+        {/* How Puja Works */}
+        <section className="relative py-20 px-6 overflow-hidden">
+          {/* Heading */}
+          <h2 className="text-center font-secondary text-3xl font-bold mb-10 text-[var(--color-dark)]">
+            How does <span className="text-[var(--color-info)]">DevaSetu</span>{" "}
+            Online Puja Work?
+          </h2>
+
+          <HowPujaWorks />
+        </section>
+
+        {/* Stats */}
+        <section className="bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] py-16 px-6 text-center text-[var(--color-foreground)]">
+          <Container>
+            <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-10 text-[var(--color-dark)]">
+              Start your{" "}
+              <span className="text-[var(--color-primary)]">
+                Sacred Journey
+              </span>{" "}
+              with
+              <span className="text-[var(--color-info)]">
+                {" "}
+                DevaSetu Puja Service
+              </span>
+            </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+              {/* Pujas Done */}
+              <div className="bg-[var(--color-primary-light)]/10 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="flex justify-center mb-3">
+                  <Landmark className="w-8 h-8 text-[var(--color-primary)]" />
+                </div>
+                <p className="text-3xl font-secondary font-bold text-[var(--color-primary)] mb-1">
+                  10,00,000+
+                </p>
+                <p className="text-xl font-secondary font-medium text-[var(--color-dark)]">
+                  Pujas Done
+                </p>
+              </div>
+
+              {/* Happy Devotees */}
+              <div className="bg-[var(--color-info)]/10 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="flex justify-center mb-3">
+                  <Users className="w-8 h-8 text-[var(--color-info)]" />
+                </div>
+                <p className="text-3xl font-secondary font-bold text-[var(--color-info)] mb-1">
+                  300,000+
+                </p>
+                <p className="text-xl font-secondary font-medium text-[var(--color-dark)]">
+                  Happy Devotees
+                </p>
+              </div>
+
+              {/* Famous Temples */}
+              <div className="bg-[var(--color-accent)]/10 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="flex justify-center mb-3">
+                  <Building className="w-8 h-8 text-[var(--color-accent)]" />
+                </div>
+                <p className="text-3xl font-secondary font-bold text-[var(--color-accent)] mb-1">
+                  100+
+                </p>
+                <p className="text-xl font-secondary font-medium text-[var(--color-dark)]">
+                  Famous Temples
+                </p>
+              </div>
+
+              {/* Spreading Dharma */}
+              <div className="bg-[var(--color-dark)]/5 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="flex justify-center mb-3">
+                  <Sparkles className="w-8 h-8 text-[var(--color-dark)]" />
+                </div>
+                <p className="text-3xl font-secondary font-bold text-[var(--color-dark)] mb-1">
+                  1 Sankalp
+                </p>
+                <p className="text-xl font-secondary font-medium text-[var(--color-dark)]">
+                  Spreading Sanatan Dharma
+                </p>
+              </div>
+            </div>
+          </Container>
+        </section>
     </main>
   );
 };

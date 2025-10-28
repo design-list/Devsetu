@@ -15,7 +15,7 @@ export default function StatsSection() {
   ];
 
   return (
-    <section className="bg-white relative py-24 px-6 overflow-hidden">
+    <section className="bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] relative py-24 px-6 overflow-hidden">
       <Container>
         {/* Decorative gradient glow */}
         {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(241,88,34,0.08)_0%,transparent_70%)] pointer-events-none"></div> */}

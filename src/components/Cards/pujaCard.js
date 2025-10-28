@@ -23,7 +23,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
           return (
             <div
               key={puja.id}
-              className="group flex flex-col bg-white overflow-visible shadow-sm hover:shadow-[0_10px_25px_rgba(0,0,0,0.15)] hover:-translate-y-1 transition-all duration-300 border border-gray-100 relative"
+              className="group flex flex-col bg-white overflow-visible shadow-sm hover:shadow-[0_10px_25px_rgba(0,0,0,0.15)] hover:-translate-y-1 transition-all duration-300 border border-gray-100 relative rounded-xl"
             >
               {/* Custom Tag — visible even with overflow-hidden */}
               <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-xs font-bold text-white uppercase">
@@ -32,14 +32,14 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
               {/* Image Section */}
               <div
                 onClick={() => handlaRedirect("puja", puja.slug)}
-                className="relative h-64 cursor-pointer overflow-hidden"
+                className="relative h-52 p-4 cursor-pointer overflow-hidden"
               >
                 <LazyImage
                   src={bannerImage}
                   alt={puja.title}
                   width={400}
                   height={320}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover rounded-xl "
                 />
 
                 {/* Label Tag */}
@@ -59,7 +59,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                     "NIVARAN MAHAPUJA SPECIAL"}
                   <Image src={Goldenline} alt="Golden under" className="rotate-[0.5deg]"/>
                 </div>
-                <div className="text-[var(--color-dark)] font-primary text-xl md:text-2xl font-bold tracking-wide mt-2 mb-2">
+                <div className="text-[var(--color-dark)] font-primary text-xl 2xl:text-2xl 3xl:text-3xl font-bold tracking-wide mt-2 mb-2">
                   {puja.title}
                 </div>
 

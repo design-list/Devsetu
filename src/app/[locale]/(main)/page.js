@@ -177,7 +177,7 @@ const Home = () => {
           <Effectiveness />
         </section> */}
 
-      <section className="py-14 bg-white">
+      <section className="py-14 bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-primary)] to-[var(--color-accent)]">
         <Container>
           <h2 className="font-secondary text-center text-3xl font-bold mb-10">
             Reviews
@@ -188,7 +188,7 @@ const Home = () => {
 
       <StatsSection />
 
-      <section className="relative bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] py-20 overflow-hidden text-center">
+      <section className="relative bg-white py-20 overflow-hidden text-center">
         {/* Top Ornament */}
         {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 opacity-80">
           <Image

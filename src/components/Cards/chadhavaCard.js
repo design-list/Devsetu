@@ -26,7 +26,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
             <div
               key={card.id}
               onClick={() => handlaRedirect("chadhava", card.slug)}
-              className="group flex flex-col bg-white overflow-visible shadow-md border border-gray-100 hover:shadow-[0_10px_25px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 cursor-pointer relative"
+              className="group flex flex-col bg-white overflow-visible shadow-md border border-gray-100 hover:shadow-[0_10px_25px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 cursor-pointer relative rounded-xl"
             >
               {/* Custom Tag — visible even with overflow-hidden */}
               <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-sm font-bold text-white uppercase">
@@ -34,13 +34,13 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               </span>
 
               {/* Image Section */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative h-52 p-4 overflow-hidden">
                 <LazyImage
                   src={bannerImage}
                   alt={card.title}
                   width={400}
                   height={320}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover rounded-xl"
                 />
                 {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80 group-hover:opacity-100 transition-all duration-300"></div> */}
               </div>

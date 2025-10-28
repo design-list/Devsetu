@@ -75,8 +75,8 @@ export default function HowItWorks() {
   return (
     <>
       <section className="relative bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-primary)] to-[var(--color-accent)] text-white py-18 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/patterns/mandala-bg.svg')] bg-center bg-cover opacity-10"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0%,transparent_70%)]"></div>
+      {/* <div className="absolute inset-0 bg-[url('/patterns/mandala-bg.svg')] bg-center bg-cover opacity-10"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_0%,transparent_70%)]"></div> */}
 
       <div className="relative z-10 max-w-6xl mx-auto text-center">
         <motion.h2
@@ -94,7 +94,7 @@ export default function HowItWorks() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="text-lg md:text-xl text-white/90 mb-20 max-w-2xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto leading-relaxed"
         >
           Experience devotion beyond distance through our transparent and heartfelt process.
         </motion.p>
@@ -112,20 +112,20 @@ export default function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.2 }}
                 viewport={{ once: true }}
-                className="relative z-10 flex flex-col items-center text-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 shadow-lg hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:-translate-y-2 transition-all duration-300"
+                className="relative z-10 flex flex-col items-center text-center bg-white backdrop-blur-md border border-white rounded-2xl p-8 shadow-lg hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:-translate-y-2 transition-all duration-300"
               >
                 <div className="relative mb-6">
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400 to-orange-600 flex items-center justify-center shadow-[0_0_25px_rgba(255,200,100,0.5)]">
                     <Icon className="w-10 h-10 text-white" strokeWidth={1.4} />
                   </div>
-                  <span className="absolute -top-2 -right-2 bg-white text-[var(--color-primary)] font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm shadow-md">
+                  <span className="absolute border -top-2 -right-2 bg-white text-[var(--color-primary)] font-bold rounded-full w-8 h-8 flex items-center justify-center text-sm shadow-md">
                     {index + 1}
                   </span>
                 </div>
-                <h3 className="font-secondary text-xl font-semibold mb-2 uppercase tracking-wide">
+                <h3 className="text-[var(--color-dark)] font-secondary text-xl font-semibold mb-2 uppercase tracking-wide">
                   {step.title}
                 </h3>
-                <p className="text-white/90 text-base leading-relaxed">{step.desc}</p>
+                <p className="text-[var(--color-dark)] text-base leading-relaxed">{step.desc}</p>
               </motion.div>
             );
           })}
