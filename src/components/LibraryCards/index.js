@@ -40,8 +40,8 @@ export default function LibraryCards() {
     <section className="relative py-14 bg-gradient-to-b from-[var(--forcast)] via-white to-[var(--forcast)]">
       <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
         {/* Heading */}
-        <h2 className="font-secondary text-4xl md:text-5xl font-extrabold mb-4 text-[var(--color-primary)]">
-          <span className="text-[var(--color-info)]">Explore Our</span> Divine Library
+        <h2 className="font-secondary text-4xl md:text-5xl font-extrabold mb-4 text-[var(--color-dark)]">
+          Explore Our<span className="text-[var(--color-info)]"> Divine Library</span>
         </h2>
         <p className="text-[var(--color-dark)] text-lg md:text-xl mb-12 max-w-3xl mx-auto">
          Explore the wisdom of Sanatan Dharma through our curated articles, videos, and guides.

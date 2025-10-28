@@ -41,6 +41,7 @@ import {
 } from "@/redux/actions/cartActions";
 import { formatDate } from "../../../../../../utils/localstorage";
 import Link from "next/link";
+import Reviews from "@/components/Review";
 
 const pujaData = {
   benefits: [
@@ -67,28 +68,54 @@ const pujaData = {
 
 const reviews = [
   {
-    name: "Anjali Sharma",
-    date: "Oct 20, 2025",
-    rating: 5,
-    comment:
-      "It was an amazing experience. The Puja was beautifully organized and gave me peace of mind. Jai Maa Lakshmi!",
-    avatar: "/images/individual.webp",
+    name: "Ritika Sharma",
+    city: "Delhi",
+    text: "Booked Baglamukhi puja on Dhanteras. Honestly didn’t expect it to feel so real. Video came next day — felt like I was sitting there in temple.",
   },
   {
-    name: "Rohit Verma",
-    date: "Oct 22, 2025",
-    rating: 4,
-    comment:
-      "Well managed and authentic service. Got the Puja video on time and received Prasad the next day.",
-    avatar: "/images/couple.webp",
+    name: "Rajesh Mehta",
+    city: "Pune",
+    text: "Did Mangalnath Chadhava for my son’s mangal dosh. Panditji said his name in the puja, got full faith now. Mahadev ki kripa.",
   },
   {
-    name: "Priya Nair",
-    date: "Oct 24, 2025",
-    rating: 5,
-    comment:
-      "It felt divine! I could see the whole Puja clearly through the live stream. Thank you for this beautiful initiative.",
-    avatar: "/images/individual.webp",
+    name: "Manisha Tiwari",
+    city: "Indore",
+    text: "My diya floated on Kshipra so beautifully. I actually got goosebumps watching the video. Jai Maa Kshipra.",
+  },
+  {
+    name: "Anil Deshmukh",
+    city: "Dubai",
+    text: "I stay in Dubai, can’t visit temples easily. Through DevaSetu, I did my first puja online. Simple, clean, no confusion.",
+  },
+  {
+    name: "Sneha Patel",
+    city: "Ahmedabad",
+    text: "Did Lalita Tripura Sundari chadhava for Navratri. The team kept updating me. Puja looked pure, not commercial type.",
+  },
+  {
+    name: "Ramesh Iyer",
+    city: "Bengaluru",
+    text: "Very nice experience. Got the video link on time, and I could see my name in sankalp. Whole family watched together.",
+  },
+  {
+    name: "Aditi Gupta",
+    city: "Jaipur",
+    text: "Booked puja for my parents from my phone. They saw video on TV and got so emotional. Thank you DevaSetu.",
+  },
+  {
+    name: "Vikas Sharma",
+    city: "Ujjain",
+    text: "Easy process, everything step by step. Not like other apps. Proper mandir, proper pandit. Felt real.",
+  },
+  {
+    name: "Neha Joshi",
+    city: "Mumbai",
+    text: "I joined the free Deep Daan. Watching hundreds of diyas floating was magical. Felt very peaceful inside.",
+  },
+  {
+    name: "Sanjay Agarwal",
+    city: "Kolkata",
+    text: "Offered for my late father. Didn’t think online puja can touch heart like this. Truly divine feeling.",
   },
 ];
 
@@ -177,7 +204,7 @@ export default function PujaDetailsPage() {
       productImg : pujaDetailPage?.["pujaBanners"]?.[0]?.imageUrl || "",
       ...pkg,
     };
-      
+
     dispatch(addPackageAction(packageData));
     setCartItem(pkg);
     setIsCartOpen(true); // open slide-in panel
@@ -359,7 +386,7 @@ export default function PujaDetailsPage() {
                         <div className="flex justify-center sm:justify-start mt-1">
                           {renderStars(5)}
                         </div>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-sm text-[var(--color-dark)] mt-1">
                           Based on 1,200+ reviews
                         </p>
                       </div>
@@ -377,27 +404,27 @@ export default function PujaDetailsPage() {
                         >
                           <Quote className="absolute top-3 right-3 w-5 h-5 text-[var(--color-accent)] opacity-30" />
                           <div className="flex items-center mb-3">
-                            <Image
+                            {/* <Image
                               src={review.avatar}
                               alt={review.name}
                               width={100}
                               height={100}
                               className="w-12 h-12 rounded-full mr-4 object-cover"
-                            />
+                            /> */}
                             <div>
-                              <h4 className="font-proxi-bold text-lg text-[var(--color-dark)]">
+                              <h4 className="text-lg text-[var(--color-dark)]">
                                 {review.name}
                               </h4>
-                              <p className="text-sm text-gray-500">
+                              {/* <p className="text-sm text-gray-500">
                                 {review.date}
-                              </p>
+                              </p> */}
                             </div>
                           </div>
-                          <div className="flex items-center mb-2">
+                          {/* <div className="flex items-center mb-2">
                             {renderStars(review.rating)}
-                          </div>
-                          <p className="text-gray-700 leading-relaxed text-sm">
-                            {review.comment}
+                          </div> */}
+                          <p className="text-[var(--color-dark)] text-left leading-relaxed text-base">
+                            {review.text}
                           </p>
                         </div>
                       ))}
@@ -435,13 +462,16 @@ export default function PujaDetailsPage() {
               <h2 className="font-secondary text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
                 <Info className="w-6 h-6" /> The Power of Devotion
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-[var(--color-dark)] leading-relaxed">
                 {pujaDetailPage?.["pujaDetails"]}
               </p>
             </section>
 
             {/* 🎁 Puja Benefits */}
-            <section ref={benefitsRef} className="bg-white rounded-2xl p-6">
+            <section
+              ref={benefitsRef}
+              className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] rounded-2xl p-6"
+            >
               <h2 className="font-secondary text-3xl font-bold text-[var(--color-primary)] mb-6">
                 Puja Benefits
               </h2>
@@ -458,12 +488,12 @@ export default function PujaDetailsPage() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">
+                    <h3 className="text-lg font-bold text-[var(--color-dark)]  mb-2">
                       {b.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-sm leading-relaxed">
+                    <p className="text-[var(--color-dark)]  text-sm leading-relaxed">
                       {b.description?.slice(0, 100)}...
                       <span className="text-[var(--color-primary)] font-semibold cursor-pointer hover:underline">
                         Read more
@@ -475,7 +505,10 @@ export default function PujaDetailsPage() {
             </section>
 
             {/* 📜 Puja Process */}
-            <section ref={processRef} className="bg-white rounded-2xl p-6">
+            <section
+              ref={processRef}
+              className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] rounded-2xl p-6"
+            >
               <h2 className="font-secondary text-3xl font-bold text-[var(--color-primary)] mb-6">
                 Puja Process
               </h2>
@@ -492,12 +525,12 @@ export default function PujaDetailsPage() {
                     </span>
 
                     {/* Step Title */}
-                    <h4 className="text-lg font-semibold text-gray-900 mb-1">
+                    <h4 className="text-lg font-semibold text-[var(--color-dark)]  mb-1">
                       {step.split(":")[0]}
                     </h4>
 
                     {/* Step Description */}
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-[var(--color-dark)]  text-sm">
                       {step.split(":")[1] || ""}
                     </p>
                   </div>
@@ -525,7 +558,7 @@ export default function PujaDetailsPage() {
 
                 {/* Description */}
                 <div className="w-full md:w-1/2">
-                  <p className="text-gray-700 text-justify leading-relaxed">
+                  <p className="text-[var(--color-dark)]  text-justify leading-relaxed">
                     {pujaDetailPage?.["templeHistories"][0]?.["templeHistory"]}
                   </p>
                 </div>
@@ -536,7 +569,7 @@ export default function PujaDetailsPage() {
             <section
               id="pujapakage"
               ref={packagesRef}
-              className="bg-white rounded-2xl p-6"
+              className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] rounded-2xl p-6"
             >
               <h2 className="font-secondary text-2xl font-bold text-[var(--color-primary)] mb-4">
                 Select Puja Package
@@ -548,7 +581,7 @@ export default function PujaDetailsPage() {
             </section>
 
             {/* ⭐ Reviews */}
-            <section ref={reviewsRef} className="bg-white rounded-2xl p-6">
+            {/* <section ref={reviewsRef} className="bg-white rounded-2xl p-6">
               <h2 className="font-secondary text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
                 <Star className="w-6 h-6" /> Reviews & Ratings
               </h2>
@@ -567,6 +600,20 @@ export default function PujaDetailsPage() {
                   </div>
                 ))}
               </div>
+            </section> */}
+
+            <section id="reviews"
+              ref={reviewsRef} 
+              className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
+              <Container>
+              <h2 className="font-secondary text-2xl font-bold text-[var(--color-primary)] mb-4">
+                 Reviews
+              </h2>
+                {/* <h2 className="font-secondary text-center text-3xl font-bold mb-10">
+                 Reviews
+                </h2> */}
+                <Reviews reviews={reviews} />
+              </Container>
             </section>
 
             {/* ❓ FAQ */}
