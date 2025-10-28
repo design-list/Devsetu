@@ -1,133 +1,151 @@
-// src/app/shares/Header/index.js
-
 "use client";
 
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronDown, User } from "lucide-react";
+import { ChevronDown, User, Mail, Phone, MessageCircle, Flame, BookOpen, Home, FileText } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLang } from "@/app/langProviders";
-
-import Logo from '../../../public/icons/devasetu-logo_vertical.svg';
+import Logo from "../../../public/icons/devasetu-logo_vertical.svg";
 import Container from "@/components/Container";
 
 const menu = [
   { id: 1, title: { en: "Home", hi: "होम" }, path: "/" },
   { id: 2, title: { en: "Puja", hi: "पूजा" }, path: "/puja" },
   { id: 3, title: { en: "Chadhava", hi: "चढ़ावा" }, path: "/chadhava" },
-  // { id: 4, title: { en: "Library", hi: "पुस्तकालय" }, path: "/library" },
   { id: 7, title: { en: "About Us", hi: "हमारे बारे में" }, path: "/about-us" },
-];
-
-
-
-const language = [
-  { code: "en", label: "English" },
-  { code: "hi", label: "हिंदी" },
 ];
 
 const Header = () => {
   const { lang, setLang } = useLang();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // prefix all menu paths with lang
   const withLang = (path) => `/${lang}${path}`;
+  const normalize = (path) =>
+    lang === "en" ? path.replace(/^\/en/, "") || "/" : path;
 
-  const normalize = (path) => {
-    if (lang === "en") {
-      // strip "/en" since Next.js hides it for default locale
-      return path.replace(/^\/en/, "") || "/";
-    }
-    return path;
-  };
-
-    // ✅ language change handler
-  const handleLanguageChange = (code) => {
+  const handleLangChange = (code) => {
     setLang(code);
-    setDropdownOpen(false);
-
-    // strip existing lang from current path
     let newPath = pathname.replace(/^\/(en|hi)/, "");
-
-    // always add lang prefix
     router.push(`/${code}${newPath || ""}`);
   };
 
-
   return (
     <header className="w-full shadow-sm sticky top-0 z-50 bg-white">
-    <Container>
-      <div className="flex items-center justify-between py-4 fon">
-        
-        {/* Logo */}
-        <Link href={withLang("/")}>
-          <div className="flex items-center gap-2">
-            <Image
-              src={Logo}
-              alt="Dev Setu"
-              width={100}
-              height={100}
-              className=" w-[200px]"
-            />
-          </div>
-        </Link>
+      <Container>
+        <div className="flex items-center justify-between py-4">
+          {/* Logo */}
+          <Link href={withLang("/")}>
+            <Image src={Logo} alt="Dev Setu" width={180} height={80} className="w-[180px]" />
+          </Link>
 
-        <nav className="hidden md:flex gap-8">
-          {menu.map(({ id, title, path }) => {
-            const link = withLang(path);
-            const active = normalize(pathname) === path;
+          {/* Nav Menu */}
+          <nav className="hidden md:flex gap-8">
+            {menu.map(({ id, title, path }) => {
+              const link = withLang(path);
+              const active = normalize(pathname) === path;
+              return (
+                <Link
+                  key={id}
+                  href={link}
+                  className={`font-secondary text-lg font-bold transition ${
+                    active
+                      ? "text-[var(--color-primary-light)]"
+                      : "text-[var(--color-dark)] hover:text-[var(--color-primary)]"
+                  }`}
+                >
+                  {title[lang]}
+                </Link>
+              );
+            })}
+          </nav>
 
-            return (
-              <Link
-                key={id}
-                href={link}
-                className={`font-secondary text-xl ${
-                  active 
-                    ? "text-[var(--color-primary-light)]"
-                    : "text-[var(--color-dark)]"
-                } font-bold hover:text-[var(--secondary)] transition`}
-              >
-                {title[lang]}
-              </Link>
-            );
-          })}
-        </nav>
-
-
-        {/* Language & User */}
-        <div className="flex items-center gap-4 relative">
-          <div className="relative">
-            {/* <button
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="flex items-center gap-1 border px-3 py-1 rounded-lg text-sm hover:bg-[var(--color-primary-light)] transition"
+          {/* Language & User */}
+          <div className="flex items-center gap-4 relative">
+            {/* Language Selector */}
+            {/* <select
+              value={lang}
+              onChange={(e) => handleLangChange(e.target.value)}
+              className="border rounded-lg px-3 py-1 text-sm bg-white hover:bg-[var(--color-primary-light)] transition"
             >
-              {lang === "en" ? "English" : "हिंदी"}
-              <ChevronDown size={16} />
-            </button> */}
+              <option value="en">English</option>
+              <option value="hi">हिंदी</option>
+            </select> */}
 
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-md z-50">
-                {language.map(({ code, label }) => (
-                  <button
-                    key={code}
-                    onClick={() => handleLanguageChange(code)}
-                    className="w-full text-left px-4 py-2 hover:bg-[var(--color-primary-light)] transition"
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Profile Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition"
+              >
+                <User size={20} />
+              </button>
+
+              {menuOpen && (
+                <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border overflow-hidden z-50">
+                  {/* Top CTA */}
+                  <div className="p-5 border-b">
+                    <p className="text-sm text-gray-600 mb-3 font-medium">
+                      To check all available pujas & offers:
+                    </p>
+                    <button className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2.5 rounded-lg hover:shadow-lg transition">
+                      Login / Create an account
+                    </button>
+                  </div>
+
+                  {/* Account Details */}
+                  <div className="p-4 border-b">
+                    <p className="text-sm text-gray-500 font-semibold mb-3">Account Details</p>
+                    <ul className="space-y-2">
+                      <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                        <span className="flex items-center gap-2 text-gray-700"><User size={16} /> My Profile</span>
+                      </li>
+                      <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                        <span className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Puja Bookings</span>
+                      </li>
+                      <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                        <span className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Chadhava Bookings</span>
+                      </li>
+                      <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                        <span className="flex items-center gap-2 text-gray-700"><Flame size={16} /> Book a Puja</span>
+                        <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</span>
+                      </li>
+                      <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                        <span className="flex items-center gap-2 text-gray-700"><BookOpen size={16} /> Book a Chadhava</span>
+                        <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</span>
+                      </li>
+                      {/* <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                        <span className="flex items-center gap-2 text-gray-700"><Home size={16} /> Astro Tools</span>
+                      </li> */}
+                    </ul>
+                  </div>
+
+                  {/* Support */}
+                  <div className="p-4">
+                    <p className="text-sm text-gray-500 font-semibold mb-3">Help & Support for Puja Booking</p>
+                    <div className="bg-gray-50 border rounded-lg p-3 mb-3 flex items-center gap-3">
+                      <Phone size={18} className="text-[var(--color-primary)]" />
+                      <div>
+                        <Link href={'tel:08000090999'} className="text-sm font-semibold text-gray-700">08000090999</Link>
+                        <p className="text-xs text-gray-500">10:30 AM - 7:30 PM</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="flex-1 flex items-center justify-center gap-2 border rounded-lg py-2 hover:bg-gray-50 transition">
+                        <Mail size={16} className="text-[var(--color-primary)]" /> Email Us
+                      </button>
+                      <button className="flex-1 flex items-center justify-center gap-2 border rounded-lg py-2 hover:bg-gray-50 transition">
+                        <MessageCircle size={16} className="text-green-600" /> WhatsApp
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-
-          <button className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition">
-            <User size={20} />
-          </button>
         </div>
-      </div>
       </Container>
     </header>
   );

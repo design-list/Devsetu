@@ -12,7 +12,7 @@
   --orange: #f15822;
   --orange-light: #f57e20;
   --yellow: #fec76f;
-  --blue: #37768d;
+  --blue: #255667;
   --brown: #351714;
 
   /* 🖋 Fonts */
@@ -96,7 +96,7 @@ body {
 }
 
 .swiper-pagination-bullet-active {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary) !important;
 }
 
 .swiper-horizontal .swiper-button-next svg,

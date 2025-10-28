@@ -24,26 +24,57 @@ import Link from "next/link";
 
 const reviews = [
   {
-    name: "Archana Nair",
-    city: "Bengaluru",
-    text: "So many pujas updates for all the devotees. Great to be part of this app. I’ve never been happier with online puja service compared to others.",
+    name: "Ritika Sharma",
+    city: "Delhi",
+    text: "Booked Baglamukhi puja on Dhanteras. Honestly didn’t expect it to feel so real. Video came next day — felt like I was sitting there in temple.",
   },
   {
-    name: "Ramesh Chandra Bhatt",
-    city: "Nagpur",
-    text: "I really like the entire aspect of puja arranged. Great customer support & easy process! I always get notified in time. Very authentic experience.",
-  },
-  {
-    name: "Aparna Mal",
+    name: "Rajesh Mehta",
     city: "Pune",
-    text: "I did my first live darshan puja via DevaSetu and it felt so divine. I was able to see all the rituals done live from the temple.",
+    text: "Did Mangalnath Chadhava for my son’s mangal dosh. Panditji said his name in the puja, got full faith now. Mahadev ki kripa.",
   },
   {
-    name: "Shivraj Dobhi",
-    city: "Agra",
-    text: "The best part is one can book puja services from anywhere. The app is so easy to use and very trustworthy. My family always uses DevaSetu services.",
+    name: "Manisha Tiwari",
+    city: "Indore",
+    text: "My diya floated on Kshipra so beautifully. I actually got goosebumps watching the video. Jai Maa Kshipra.",
+  },
+  {
+    name: "Anil Deshmukh",
+    city: "Dubai",
+    text: "I stay in Dubai, can’t visit temples easily. Through DevaSetu, I did my first puja online. Simple, clean, no confusion.",
+  },
+  {
+    name: "Sneha Patel",
+    city: "Ahmedabad",
+    text: "Did Lalita Tripura Sundari chadhava for Navratri. The team kept updating me. Puja looked pure, not commercial type.",
+  },
+  {
+    name: "Ramesh Iyer",
+    city: "Bengaluru",
+    text: "Very nice experience. Got the video link on time, and I could see my name in sankalp. Whole family watched together.",
+  },
+  {
+    name: "Aditi Gupta",
+    city: "Jaipur",
+    text: "Booked puja for my parents from my phone. They saw video on TV and got so emotional. Thank you DevaSetu.",
+  },
+  {
+    name: "Vikas Sharma",
+    city: "Ujjain",
+    text: "Easy process, everything step by step. Not like other apps. Proper mandir, proper pandit. Felt real.",
+  },
+  {
+    name: "Neha Joshi",
+    city: "Mumbai",
+    text: "I joined the free Deep Daan. Watching hundreds of diyas floating was magical. Felt very peaceful inside.",
+  },
+  {
+    name: "Sanjay Agarwal",
+    city: "Kolkata",
+    text: "Offered for my late father. Didn’t think online puja can touch heart like this. Truly divine feeling.",
   },
 ];
+
 
 const Home = () => {
   const { heroBanner, pujaCard, chadhavaCard } = useSelector(
@@ -101,9 +132,9 @@ const Home = () => {
 
         <section className="pb-16">
           <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
-            <h2 className="font-secondary text-center text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5 drop-shadow-lg">
-              <span className="text-[var(--color-info)]">Special</span>{" "}
-              chadhavas
+            <h2 className="font-secondary text-center text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5 drop-shadow-lg">Special
+              <span className="text-[var(--color-info)]"> chadhavas</span>{" "}
+              
             </h2>
             <p className="text-xl text-[var(--color-dark)]">
               Offer your devotion through special chadhavas and seek divine
@@ -146,10 +177,10 @@ const Home = () => {
           <Effectiveness />
         </section> */}
 
-      <section className="py-16 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
+      <section className="py-14 bg-white">
         <Container>
           <h2 className="font-secondary text-center text-3xl font-bold mb-10">
-            Reviews & Ratings
+            Reviews
           </h2>
           <Reviews reviews={reviews} />
         </Container>
@@ -169,7 +200,7 @@ const Home = () => {
         </div> */}
 
         {/* Content */}
-        <div className="relative z-10 max-w-3xl mx-auto px-6">
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
           <h2 className="font-secondary text-4xl md:text-5xl font-bold text-[var(--color-primary)] mb-6">
             Start Your Spiritual Journey Today
           </h2>
@@ -183,7 +214,7 @@ const Home = () => {
           </p>
 
           <div className="text-center">
-            <Link href={'#'} className="w-[160px] m-auto cursor-pointer bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] hover:scale-105 hover:shadow-lg transition-all duration-300 text-white px-4 py-2 rounded-xl font-semibold text-lg shadow-xl flex items-center">
+            <Link href={'#'} className="w-[160px] m-auto cursor-pointer bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] hover:scale-105 hover:shadow-lg transition-all duration-300 text-white px-4 py-2 rounded-lg font-semibold text-lg shadow-xl flex items-center">
             Begin Now <Image src={Namaste} alt="Namaste Icon" width={30} height={30}  />
           </Link>
           </div>

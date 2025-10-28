@@ -151,7 +151,7 @@ export default function HowItWorks() {
             alt="ornament"
             className="w-20 opacity-70 mb-4"
           /> */}
-          <h2 className="font-secondary text-4xl md:text-5xl font-extrabold text-[var(--color-primary)] tracking-wide">
+          <h2 className="font-secondary text-4xl md:text-5xl font-extrabold text-[var(--color-dark)] tracking-wide">
             Our <span className="text-[var(--color-info)]">Promise</span>
           </h2>
           <p className="text-gray-700 text-lg md:text-xl mt-4 max-w-2xl mx-auto">
