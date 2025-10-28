@@ -260,7 +260,7 @@ const UpdateChalisa = () => {
         <Link
           type="button"
           className={`bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition cursor-pointer`}
-          href={("/admin/Chalisas/list")}
+          href={("/admin/chalisa/list")}
         >
           Canlel
         </Link>

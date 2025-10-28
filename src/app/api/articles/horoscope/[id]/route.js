@@ -1,31 +1,32 @@
-import db from "@/models";
 import { NextResponse } from "next/server";
 
-const Horoscope = db.Horoscope;
+import models from "@/models";
 
-// ✅ Get Single Horoscope
+const { Horoscopes } = models;
+
+// ✅ Get Single Horoscopes
 export async function GET(req, { params }) {
   try {
     const { id } = params;
-    const data = await Horoscope.findByPk(id);
+    const data = await Horoscopes.findByPk(id);
 
     if (!data)
       return NextResponse.json({ status: 404, message: "Not found" });
 
     return NextResponse.json({ status: 200, data });
   } catch (error) {
-    console.error("Error fetching horoscope:", error);
+    console.error("Error fetching Horoscopes:", error);
     return NextResponse.json({ status: 500, error: "Internal Server Error" });
   }
 }
 
-// ✅ Update Horoscope
+// ✅ Update Horoscopes
 export async function PUT(req, { params }) {
   try {
     const { id } = params;
     const body = await req.json();
 
-    const item = await Horoscope.findByPk(id);
+    const item = await Horoscopes.findByPk(id);
     if (!item)
       return NextResponse.json({ status: 404, message: "Not found" });
 
@@ -33,21 +34,21 @@ export async function PUT(req, { params }) {
 
     return NextResponse.json({
       status: 200,
-      message: "Horoscope updated successfully",
+      message: "Horoscopes updated successfully",
       data: item,
     });
   } catch (error) {
-    console.error("Error updating horoscope:", error);
+    console.error("Error updating Horoscopes:", error);
     return NextResponse.json({ status: 500, error: "Update failed" });
   }
 }
 
-// ✅ Delete Horoscope
+// ✅ Delete Horoscopes
 export async function DELETE(req, { params }) {
   try {
     const { id } = params;
 
-    const item = await Horoscope.findByPk(id);
+    const item = await Horoscopes.findByPk(id);
     if (!item)
       return NextResponse.json({ status: 404, message: "Not found" });
 
@@ -55,10 +56,10 @@ export async function DELETE(req, { params }) {
 
     return NextResponse.json({
       status: 200,
-      message: "Horoscope deleted successfully",
+      message: "Horoscopes deleted successfully",
     });
   } catch (error) {
-    console.error("Error deleting horoscope:", error);
+    console.error("Error deleting Horoscopes:", error);
     return NextResponse.json({ status: 500, error: "Delete failed" });
   }
 }

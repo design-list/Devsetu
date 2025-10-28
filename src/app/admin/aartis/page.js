@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 
 import Api from "../../../../services/fetchApi";
+import Link from "next/link";
 const api = new Api();
 
 const AartisForm = () => {
@@ -104,6 +105,14 @@ const slugify = (text) => {
 
   return (
     <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
+      <div className="mb-4">
+        <Link
+          href="/admin/aartis/list"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium px-4 py-2 rounded-xl shadow hover:shadow-md hover:from-purple-600 hover:to-pink-600 transition-all duration-200"
+        >
+          ← Back
+        </Link>
+      </div>
       <form
         onSubmit={handleSubmit}
         className="mx-auto shadow-md rounded-lg p-6 space-y-6"

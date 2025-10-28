@@ -61,7 +61,7 @@ export const endpoints = {
         aartis: `${baseApiUrl}/aartis`,
         chalisa: `${baseApiUrl}/articles/chalisas`,
         mantras: `${baseApiUrl}/articles/mantras`,
-        Horoscope: `${baseApiUrl}/articles/horoscope`,
+        horoscope: `${baseApiUrl}/articles/horoscope`,
     },
 
     Web: {

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Api from "../../../../services/fetchApi";
+import Link from "next/link";
 const api = new Api();
 
 const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -127,6 +128,14 @@ export default function AddMantraForm() {
       onSubmit={handleSubmit}
       className="space-y-5 bg-white shadow-md rounded-xl p-6 w-6xl mx-auto"
     >
+      <div className="mb-4">
+        <Link
+          href="/admin/mantras/list"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium px-4 py-2 rounded-xl shadow hover:shadow-md hover:from-purple-600 hover:to-pink-600 transition-all duration-200"
+        >
+          ← Back
+        </Link>
+      </div>
       <h2 className="text-2xl font-bold mb-4">Add New Mantra</h2>
 
       {/* Image Upload */}

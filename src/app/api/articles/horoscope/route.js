@@ -1,26 +1,28 @@
-import db from "@/models";
 import { NextResponse } from "next/server";
+import models from "@/models";
 
-const Horoscope = db.Horoscope;
+const { Horoscopes } = models;
 
 // ✅ Get All Horoscopes
 export async function GET() {
   try {
-    const data = await Horoscope.findAll();
+    const data = await Horoscopes.findAll();
     return NextResponse.json({ status: 200, data });
   } catch (error) {
-    console.error("Error fetching horoscopes:", error);
+    console.error("Error fetching Horoscopes:", error);
     return NextResponse.json({ status: 500, error: "Internal Server Error" });
   }
 }
 
-// ✅ Create New Horoscope
+// ✅ Create New Horoscopes
 export async function POST(req) {
   try {
     const body = await req.json();
 
-    const newEntry = await Horoscope.create({
+    const newEntry = await Horoscopes.create({
       zodiac_sign: body.zodiac_sign,
+      slug: body.slug,
+      zodiac_about: body.zodiac_about,
       date_range: body.date_range,
       element: body.element,
       ruling_planet: body.ruling_planet,
@@ -38,11 +40,11 @@ export async function POST(req) {
 
     return NextResponse.json({
       status: 200,
-      message: "Horoscope created successfully",
+      message: "Horoscopes created successfully",
       data: newEntry,
     });
   } catch (error) {
-    console.error("Error creating horoscope:", error);
+    console.error("Error creating Horoscopes:", error);
     return NextResponse.json({ status: 500, error: "Failed to create" });
   }
 }

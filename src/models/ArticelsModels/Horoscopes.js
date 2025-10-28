@@ -10,10 +10,20 @@ export default (sequelize, DataTypes) => {
         primaryKey: true,
         field: "id",
       },
+      zodiac_about: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: "zodiac_about",
+      },
       zodiac_sign: {
         type: DataTypes.STRING,
         allowNull: false,
         field: "zodiac_sign",
+      },
+      slug: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: "slug",
       },
       date_range: {
         type: DataTypes.STRING,
@@ -82,10 +92,12 @@ export default (sequelize, DataTypes) => {
       },
       createdAt: {
         type: DataTypes.DATE,
+        allowNull: true,
         field: "created_at",
       },
       updatedAt: {
         type: DataTypes.DATE,
+        allowNull: true,
         field: "updated_at",
       },
     },

@@ -100,22 +100,22 @@ const Sidebar = () => {
                 {open && <span>Chalisa List</span>}
               </Link>
             </li>
-            {/* <li>
+            <li>
               <Link
-                href="/admin/mantras"
+                href="/admin/horoscope"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"  
               >
                 <Gift size={18} />
-                {open && <span>Mantra</span>}
+                {open && <span>Horoscope</span>}
               </Link>
-            </li> */}
+            </li>
             <li>
               <Link
-                href="/admin/mantras/list"
+                href="/admin/horoscope/list"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <List size={18} />
-                {open && <span>Mantras List</span>}
+                {open && <span>Horoscope List</span>}
               </Link>
             </li>
             <li>
