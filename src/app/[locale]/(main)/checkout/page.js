@@ -54,38 +54,22 @@ useEffect(() => {
   }
 }, [allCarts?.package]);
 
-// // Calculate ₹50 per member (only if package.type exists)
-//   useEffect(() => {
-//     if (allCarts?.package?.type) {
-//       setPriceOfMember(members.length * 50);
-//     } else {
-//       setPriceOfMember(0);
-//     }
-//   }, [members, allCarts?.package?.type]);
-
-//   // 🔥 Update final total dynamically
-//   useEffect(() => {
-//     const baseTotal = allCarts?.grand_total || 0;
-//     setFinalTotal(baseTotal + priceOfMember);
-//   }, [allCarts?.grand_total, priceOfMember]);
-
-// Calculate ₹50 per member (only if package.type exists)
 
 useEffect(() => {
   if (allCarts?.package?.type === "chadhava") {
-    // check if members array is completely empty (no names)
-    const isMembersEmpty =
-      members.length === 0 || members.every((m) => !m.trim());
+    // केवल non-empty members गिनो
+    const filledMembers = members.filter((m) => m.trim() !== "");
 
-    if (isMembersEmpty) {
+    if (filledMembers.length === 0) {
       setPriceOfMember(0);
     } else {
-      setPriceOfMember(members.length * 50);
+      setPriceOfMember(filledMembers.length * 50);
     }
   } else {
     setPriceOfMember(0);
   }
-}, [members, allCarts?.package?.type === "chadhava"]);
+}, [members, allCarts?.package?.type]);
+
 
 // 🔥 Update final total dynamically
 useEffect(() => {
@@ -147,7 +131,6 @@ const handleAddMember = () => {
       // }
     }
 
-
     
     if (!gotra.trim() && !dontKnow) {
       alert("Please enter your gotra or check the box if you don't know it.");
@@ -199,6 +182,7 @@ const handleAddMember = () => {
           script.onload = () => resolve(true);
           script.onerror = () => resolve(false);
           document.body.appendChild(script);
+          setIsLoading(false);
         });
 
       const sdkLoaded = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
