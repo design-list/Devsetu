@@ -1,3 +1,5 @@
+
+
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
@@ -29,7 +31,7 @@ export async function GET() {
           attributes: ["id", "image_url", "position", "type"],
         },
       ],
-        limit: 3,
+        // limit: 3,
         order: [["date", "DESC"]],
     });
 

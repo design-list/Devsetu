@@ -1,3 +1,5 @@
+
+
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
@@ -15,97 +17,6 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
-
-
-// export async function POST(req) {
-//   try {
-//     const body = await req.json();
-
-//     const newPuja = await pujas.create(
-//       {
-//         title: body.title,
-//         subTitle: body.subTitle,
-//         slug: body.slug,
-//         ratingValue: parseFloat(body.ratingValue),
-//         ratingReviews: parseInt(body.ratingReviews),
-//         specialDay: body.specialDay,
-//         location: body.location,
-//         date: new Date(body.date),
-//         pujaDetails: body.pujaDetails,
-//         isActive: body.isActive,
-//         isActiveOnHome: body.isActiveOnHome,
-        
-//         commonOffer: body.commonOffer,
-//         commonPack: body.commonPack,
-//         commonFaqs: body.commonFaqs,
-
-//         pujaPackages: body.packages.map(pkg => ({
-//           packImg: pkg.packImg,
-//           packageType: pkg.packageType,
-//           packagePrice: parseFloat(pkg.packagePrice),
-//         })),
-
-//         pujaOfferings: body.offerings.map(o => ({
-//           title: o.title,
-//           description: o.description,
-//           offerimg: o.offerimg,
-//           price: o.price,
-//         })),
-
-//         templeHistories: body.temple ? [{
-//           templeImg: body.temple.templeImg,
-//           templeName: body.temple.templeName,
-//           templeHistory: body.temple.templeHistory
-//         }] : [],
-
-//         pujaFaqs: body.faqs.map(f => ({
-//           question: f.title,
-//           answer: f.description,
-//         })),
-
-//         pujaBanners: body.banners?.map(banner => ({
-//           imageUrl: banner.imgUrl,
-//           type: banner.type,
-//           position: banner.position ? parseInt(banner.position) : null,
-//         })) || [],
-//       },
-//       {
-//         include: [
-//           { model: pujaPackages },
-//           { model: pujaOfferings },
-//           { model: pujaFaqs },
-//           { model: pujaBanners },
-//           { model: templeHistory }
-//         ],
-//       }
-//     );
-
-//     return NextResponse.json({ status: 200, data: newPuja });
-//   } catch (error) {
-//     console.error("Error creating Puja:", error);
-
-//     // ✅ Sequelize validation error
-//     if (error.name === "SequelizeUniqueConstraintError") {
-//       return NextResponse.json(
-//         { status: "error", message: `Duplicate value: ${error.errors[0].message}` },
-//         { status: 400 }
-//       );
-//     }
-
-//     if (error.name === "SequelizeValidationError") {
-//       return NextResponse.json(
-//         { status: "error", message: error.errors.map(e => e.message).join(", ") },
-//         { status: 400 }
-//       );
-//     }
-
-//     // fallback
-//     return NextResponse.json(
-//       { status: "error", message: "Internal server error" },
-//       { status: 500 }
-//     );
-//   }
-// }
 
 
 export async function POST(req) {
@@ -136,6 +47,8 @@ export async function POST(req) {
           ? body.packages?.map(pkg => ({
               packImg: pkg.packImg,
               packageType: pkg.packageType,
+              packageDescription: pkg.packageDescription,
+              noOfPeople: parseFloat(pkg.noOfPeople),
               packagePrice: parseFloat(pkg.packagePrice),
             }))
           : [],

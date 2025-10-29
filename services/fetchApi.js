@@ -95,42 +95,11 @@ export default class fetchApi extends Api {
         }
     }
 
-    AddNewArticles(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
-    }
-
-
-    GetAllArticles(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        return this.fetch(url, "GET", null, data).then(response => response)
-    }
-
-    GetArticlesDetails(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        return this.fetchParams(url, "GET", null, `/${data}`).then(response => response)
-    }
-
-    UpdeteArticles(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        if (data.id) {
-            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
-        }
-    }
-
-    DeleteArticles(data) {
-        let url = this.buildUrl(endpoints.Articles.articles, "full")
-        if (data.id) {
-            return this.fetchParams(url, "DELETE", null, `/${data.id}`).then(response => response)
-        }
-    }
-    
     GetAllHome(data) {
         let url = this.buildUrl(endpoints.Home.home, "full")
         return this.fetch(url, "GET", null, data).then(response => response)
     }
 
-    // ============================ CART ============================
     
     AddNewCart(data) {
         let url = this.buildUrl(endpoints.Cart.cart, "full");
@@ -273,6 +242,130 @@ export default class fetchApi extends Api {
     Registration(data) {
         let url = this.buildUrl(endpoints.AdminLogin.register, "full")
         return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetCartById(id) {
+        let url = this.buildUrl(endpoints.Web.cart, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+
+    AddNewAartis(data) {
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllAartis(data) {
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetAartisById(id) {
+        console.log("Fetching Aarti by ID:", id);
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+    UpdeteAartis(data) {
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
+
+    DeleteAartis(id) {
+        let url = this.buildUrl(endpoints.Articels.aartis, "full")
+        if (id) {
+            return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
+        }
+    }
+
+    AddNewChalisa(data) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllChalisa(data) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetChalisaById(id) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+    UpdeteChalisa(data) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
+
+    DeleteChalisa(id) {
+        let url = this.buildUrl(endpoints.Articels.chalisa, "full")
+        if (id) {
+            return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
+        }
+    }
+
+    AddNewMantras(data) {
+        let url = this.buildUrl(endpoints.Articels.mantras, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllMantras(data) {
+        let url = this.buildUrl(endpoints.Articels.mantras, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetMantrasById(id) {
+        let url = this.buildUrl(endpoints.Articels.mantras, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+    UpdeteMantras(data) {
+        let url = this.buildUrl(endpoints.Articels.mantras, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
+
+    DeleteMantras(id) {
+        let url = this.buildUrl(endpoints.Articels.mantras, "full")
+        if (id) {
+            return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
+        }
+    }
+
+
+    AddNewHoroscope(data) {
+        let url = this.buildUrl(endpoints.Articels.horoscope, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllHoroscope(data) {
+        let url = this.buildUrl(endpoints.Articels.horoscope, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetHoroscopeById(id) {
+        let url = this.buildUrl(endpoints.Articels.horoscope, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+    UpdeteHoroscope(data) {
+        let url = this.buildUrl(endpoints.Articels.horoscope, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
+
+    DeleteHoroscope(id) {
+        let url = this.buildUrl(endpoints.Articels.horoscope, "full")
+        if (id) {
+            return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
+        }
     }
 
 }

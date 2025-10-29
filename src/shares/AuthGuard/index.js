@@ -15,9 +15,6 @@ export default function AuthGuard({ children, token }) {
     const token = loadState("token");
     if (!token) {
       router.push("/admin/login");
-    } else {
-      setIsAuthenticated(true);
-      router.push("/admin");
     }
     setLoading(false);
   }, [router, token]);

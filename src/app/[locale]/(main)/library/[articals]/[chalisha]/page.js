@@ -89,7 +89,7 @@ const ArticleDetails = () => {
 
       {/* Published info */}
       <div className="mt-10 text-sm text-gray-500">
-        Published by <span className="font-semibold text-gray-700">Sri Mandir</span> · May 19, 2025
+        Published by <span className="font-semibold text-gray-700">DevaSetu</span> · May 19, 2025
       </div>
 
       {/* Share Buttons */}

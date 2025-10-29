@@ -1,3 +1,5 @@
+
+
 import { NextResponse } from "next/server";
 import models from "@/models/index.js";
 
@@ -59,7 +61,7 @@ export async function GET(req, { params }) {
     if (puja.commonPack === true) {
       const pujaPackages = await commonPujaPackage.findAll({
         // where: { type: "puja" },
-        attributes: ["id", "packImg", "packagePrice", "packageType"],
+        attributes: ["id", "packImg", "packagePrice", "packageType", "packageDescription", "noOfPeople"],
         order: [["id", "ASC"]],
       });
 

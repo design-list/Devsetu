@@ -18,6 +18,11 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
       field: "title",
     },
+    slug: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "slug",
+    },
     aboutArticle: {
       type: DataTypes.STRING,
       allowNull: true,

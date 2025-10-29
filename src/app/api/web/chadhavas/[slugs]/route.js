@@ -1,7 +1,9 @@
+
+
 import { NextResponse } from "next/server";
 import models from "@/models";
 
-const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa,templeHistory, Faqs, offerings } = models;
+const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa, Faqs, offerings } = models;
 
 
 export async function GET(req, { params }) {
@@ -10,7 +12,7 @@ export async function GET(req, { params }) {
 
     const chadhavas = await chadhava.findOne({
         where: { slug: slugs }, 
-        include: [chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa, templeHistory ], order: [["id", "DESC"]],
+        include: [chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa ], order: [["id", "DESC"]],
     });
     if (!chadhavas) {
       return NextResponse.json({ error: "chadhavas not found" }, { status: 404 });

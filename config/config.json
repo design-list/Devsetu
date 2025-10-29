@@ -4,7 +4,8 @@
     "password": "",
     "database": "dev-setu-db",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": 3306
   },
   "test": {
     "username": "root",
@@ -18,7 +19,8 @@
     "password": "DevSetu@123_uat",
     "database": "dev_setu_prod",
     "host": "104.131.177.106",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": 3306
   }
 }
 

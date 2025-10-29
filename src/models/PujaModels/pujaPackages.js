@@ -17,10 +17,20 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       field: "package_type",
     },
+     packageDescription: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "package_description",
+    },
     packagePrice: {
       type: DataTypes.FLOAT,
       allowNull: false,
       field: "package_price",
+    },
+    noOfPeople: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      field: "no_of_people",
     },
     createdAt: {
       type: DataTypes.DATE,

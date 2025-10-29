@@ -5,6 +5,8 @@ import {
   CLEAR_CART,
   REMOVE_FROM_CART_REQUEST,
   REMOVE_PACKAGE_REQUEST,
+  CART_DETAILS_RESPONSE,
+  CART_DETAILS_FAILED,
 } from "../types/cartTypes";
 
 const initialState = {
@@ -21,6 +23,7 @@ const initialState = {
     coupon_code: null,
     grand_total: 0,
   },
+  cartDetails: null,
 };
 
 
@@ -78,6 +81,17 @@ export default function reducer(state = initialState, action) {
       return updateCart(state, { ...state.allCarts, add_ons: updatedAddOns });
     }
 
+    case CART_DETAILS_RESPONSE:
+      return {
+        ...state,
+        cartDetails: { ...action.payload },
+      };
+    case CART_DETAILS_FAILED:
+      return {
+        ...state,
+        cartDetails: { ...action.payload },
+      };
+
     case REMOVE_FROM_CART_REQUEST:
       return { ...state };
 
@@ -95,7 +109,7 @@ export default function reducer(state = initialState, action) {
 
 // Helper: calculate grand total
 const calculateGrandTotal = (cart) => {
-  const packageTotal = cart.package
+  const packageTotal = cart.package && cart.package.type === "puja"  
     ? cart.package.packagePrice * (cart.package.quantity || 1)
     : 0;
 

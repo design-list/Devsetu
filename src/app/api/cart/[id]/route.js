@@ -4,15 +4,15 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js";
 
-const { cart, cartAddOn, cartPackage } = models;
+const { cart, CartAddOn, CartPackage } = models;
 
 export async function GET(request, { params }) {
   try {
     const { id } = params;
     const carts = await cart.findByPk(id, {
       include: [
-        { model: cartPackage, as: "package" },
-        { model: cartAddOn, as: "add_ons" },
+        { model: CartPackage, as: "package" },
+        { model: CartAddOn, as: "add_ons" },
       ],
     });
     if (!carts) {
@@ -45,7 +45,7 @@ export async function PUT(request, { params }) {
 
     // Update or recreate CartPackage
     if (body.package) {
-      const existingPkg = await cartPackage.findOne({ where: { cartId: id } });
+      const existingPkg = await CartPackage.findOne({ where: { cartId: id } });
       if (existingPkg) {
         await existingPkg.update({
           packageId: body.package.id,
@@ -58,7 +58,7 @@ export async function PUT(request, { params }) {
           unitTaxRate: body.package.unit_tax_rate,
         });
       } else {
-        await cartPackage.create({
+        await CartPackage.create({
           cartId: id,
           packageId: body.package.id,
           name: body.package.name,
@@ -73,10 +73,10 @@ export async function PUT(request, { params }) {
     }
 
     // Update add-ons: simplest: delete existing and re-create
-    await cartAddOn.destroy({ where: { cartId: id } });
+    await CartAddOn.destroy({ where: { cartId: id } });
     if (Array.isArray(body.add_ons)) {
       for (const addon of body.add_ons) {
-        await cartAddOn.create({
+        await CartAddOn.create({
           cartId: id,
           addOnId: addon.id,
           name: addon.name,
@@ -92,8 +92,8 @@ export async function PUT(request, { params }) {
 
     const updatedCart = await Cart.findByPk(id, {
       include: [
-        { model: cartPackage, as: "package" },
-        { model: cartAddOn, as: "add_ons" },
+        { model: CartPackage, as: "package" },
+        { model: CartAddOn, as: "add_ons" },
       ],
     });
 

@@ -31,7 +31,7 @@ const PujaForm = () => {
     faqs: [{ title: "", description: "" }],
     pujaBenefits: [{ title: "", description: "" }],
     temple: { templeImg: null, templeName: "", templeHistory: "" },
-    banners: [{imgUrl: null, type: "", position: ''}],
+    banners: [{imgUrl: null, type: "", position: 1}],
 
   });
 
@@ -197,19 +197,66 @@ const PujaForm = () => {
       .replace(/\s+/g, '-');
   }
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   fetchWithWait({ dispatch, action: addNewPujaDataAction(formData) }).then((res) => {
+  //     if (res.status === 200) {
+  //       alert("Puja added successfully!");
+
+  //       dispatch(requestPujaDataAction());
+  //     } else {
+  //       console.log("Error:", res.error);
+  //       alert(res.message)
+  //     }
+  //   }).catch((e) => {
+  //     console.log(`error`, e)
+  //   })
+  // };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetchWithWait({ dispatch, action: addNewPujaDataAction(formData) }).then((res) => {
-      if (res.status === 200) {
-        dispatch(requestPujaDataAction());
-      } else {
-        console.log("Error:", res.error);
-        alert(res.message)
-      }
-    }).catch((e) => {
-      console.log(`error`, e)
-    })
+
+    fetchWithWait({ dispatch, action: addNewPujaDataAction(formData) })
+      .then((res) => {
+        if (res.status === 200) {
+          alert("Puja added successfully!");
+
+          dispatch(requestPujaDataAction());
+
+          // ✅ Reset form after success
+          setFormData({
+            title: "",
+            subTitle: "",
+            slug: "",
+            ratingValue: "",
+            ratingReviews: "",
+            specialDay: "",
+            location: "",
+            date: new Date(),
+            pujaDetails: "",
+            isActive: true,
+            commonOffer: true,
+            commonPack: true,
+            commonFaqs: true,
+            isActiveOnHome: false,
+            packages: [{ packImg: null, packageType: "", packagePrice: "" }],
+            offerings: [{ offerimg: null, title: "", description: "", price: "" }],
+            faqs: [{ title: "", description: "" }],
+            pujaBenefits: [{ title: "", description: "" }],
+            temple: { templeImg: null, templeName: "", templeHistory: "" },
+            banners: [{ imgUrl: null, type: "", position: 1 }],
+          });
+        } else {
+          console.log("Error:", res.error);
+          alert(res.message);
+        }
+      })
+      .catch((e) => {
+        console.log(`error`, e);
+      });
   };
+
 
 
   return (
@@ -226,6 +273,7 @@ const PujaForm = () => {
           <input
             type="text"
             name="title"
+            value={formData?.title}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
@@ -243,10 +291,11 @@ const PujaForm = () => {
         </div>
 
         <div>
-          <label className="block font-semibold">Sub Title</label>
+          <label className="block font-semibold">Benefits Title</label>
           <input
             type="text"
             name="subTitle"
+            value={formData?.subTitle}
             onChange={handleChange}
             className="w-full border p-2 rounded"
           />
@@ -485,6 +534,7 @@ const PujaForm = () => {
               type="number"
               step="0.1"
               name="ratingValue"
+              value={formData?.ratingValue}
               onChange={handleChange}
               className="w-full border p-2 rounded"
             />
@@ -494,6 +544,7 @@ const PujaForm = () => {
             <input
               type="number"
               name="ratingReviews"
+              value={formData?.ratingReviews}
               onChange={handleChange}
               className="w-full border p-2 rounded"
             />
@@ -517,6 +568,7 @@ const PujaForm = () => {
             <input
               type="text"
               name="specialDay"
+              value={formData?.specialDay}
               onChange={handleChange}
               className="w-full border p-2 rounded"
             />
@@ -524,10 +576,11 @@ const PujaForm = () => {
 
           {/* Location */}
           <div>
-            <label className="block font-semibold">Location</label>
+            <label className="block font-semibold">Puja Location</label>
             <input
               type="text"
               name="location"
+              value={formData?.location}
               onChange={handleChange}
               className="w-full border p-2 rounded"
             />
@@ -539,6 +592,7 @@ const PujaForm = () => {
           <label className="block font-semibold">Puja Details</label>
           <textarea
             name="pujaDetails"
+            value={formData?.pujaDetails}
             rows="4"
             onChange={handleChange}
             className="w-full border p-2 rounded"

@@ -25,7 +25,7 @@ const LoginForm = () => {
     fetchWithWait({ dispatch, action: adminLoginAction(form) }).then((res) => {
 
       if (res.status === 200) {
-        window.location.reload();
+        // window.location.reload();
         router.push('/admin')
       } else {
         alert(res.message)
@@ -47,7 +47,7 @@ const LoginForm = () => {
             <p className="text-red-600 text-sm mt-1">{reserr}</p>
           )}
         <button type="button" onClick={(e) => handleSubmit(e)} className="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Login</button>
-        <span>Have not an account? <Link href={'/admin/registration'} >Registration</Link></span>
+        {/* <span>Have not an account? <Link href={'/admin/registration'} >Registration</Link></span> */}
       </form>
     </div>
   );

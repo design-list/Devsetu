@@ -35,20 +35,21 @@ export function* fetchAllCartSaga({ payload, resolve }) {
 export function* fetchCartDetailSaga({ payload, resolve }) {
   try {
     yield put({ type: START_LOADING, isLoading: true });
-    let response = yield api.GetCartDetail(payload);
+    let response = yield api.GetCartById(payload);
     const { data, status } = response;
 
     if (status === 200) {
       yield put({ type: CART_DETAILS_RESPONSE, payload: data });
+      resolve && resolve(response)
     } else {
       yield put({ type: CART_DETAILS_FAILED, payload: data });
+      resolve && resolve(response)
     }
-
-    resolve && resolve(response);
     yield put({ type: RESET_LOADER, isLoading: false });
   } catch (e) {
     yield put({ type: CART_DETAILS_FAILED, payload: e });
     yield put({ type: RESET_LOADER, isLoading: false })
+    resolve && resolve(response);
   }
 }
 

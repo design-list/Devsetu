@@ -64,40 +64,58 @@ const Sidebar = () => {
                 {open && <span>Chadhava List</span>}
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
-                href="/admin/articles"
+                href="/admin/aartis"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <Gift size={18} />
-                {open && <span>Articles</span>}
+                {open && <span>Aartis</span>}
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
-                href="/admin/articles/list"
+                href="/admin/aartis/list"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <List size={18} />
-                {open && <span>Articles List</span>}
+                {open && <span>Aartis List</span>}
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
-                href="/admin/testimonials"
+                href="/admin/chalisa"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <Gift size={18} />
-                {open && <span>Testimonials</span>}
+                {open && <span>Chalisa</span>}
+              </Link>
+            </li> */}
+            <li>
+              <Link
+                href="/admin/chalisa/list"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
+              >
+                <List size={18} />
+                {open && <span>Chalisa List</span>}
               </Link>
             </li>
             <li>
               <Link
-                href="/admin/testimonials/list"
+                href="/admin/horoscope"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"  
+              >
+                <Gift size={18} />
+                {open && <span>Horoscope</span>}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin/horoscope/list"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >
                 <List size={18} />
-                {open && <span>Testimonials List</span>}
+                {open && <span>Horoscope List</span>}
               </Link>
             </li>
             <li>

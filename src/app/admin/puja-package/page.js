@@ -8,13 +8,14 @@ import PackagesComponent from "@/components/PujaPackages/AdminPackage";
 import { addNewPackageDataAction, deletePackageAction, requestPackageDataAction } from "@/redux/actions/packageActions";
 import { addNewOfferingDataAction, deleteOfferingAction, requestOfferingDataAction } from "@/redux/actions/offeringActions";
 import AdminOfferingCard from "@/components/OfferingCard/adminCard";
+import SectionLoader from "@/components/Atom/loader/sectionLoader";
 
 const PujaPackages = () => {
 
 
     const [formData, setFormData] = useState({
-        packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-        offerings: [{ offerimg: null, title: "", description: "", price: "" }],
+        packages: [{ packImg: null, packageType: "", packagePrice: "", packageDescription: "", noOfPeople: "" }],
+        offerings: [{ offerimg: null, title: "", description: "", price: 0 }],
     });
 
     const [editId, setEditId] = useState(null);
@@ -28,6 +29,7 @@ const PujaPackages = () => {
     const dispatch = useDispatch();
     const { allPackage } = useSelector((state) => state.packages);
     const { allOffering } = useSelector((state) => state.offering);
+    const { isLoading } = useSelector((state) => state.loader);
 
 
     useEffect(() => {
@@ -113,6 +115,9 @@ const PujaPackages = () => {
             if (res.status === 200) {
                 setAddNewPackage(false)
                 dispatch(requestPackageDataAction());
+                setFormData({
+                    packages: [{ packImg: null, packageType: "", packagePrice: "", packageDescription: "", noOfPeople: "" }]
+                })
             } else {
                 console.log("Error:", res.error);
                 alert(res.message)
@@ -187,8 +192,8 @@ const PujaPackages = () => {
             </div>
            { Array.isArray(allPackage) && allPackage.length > 0 && !addNewPackage ?
                 <>
-                    <h2 className="text-xl font-bold mb-4">Available Common Packages</h2>
-                    <PackagesComponent pujaPackages={allPackage} handleDelete={handleDelete}  />
+                    { isLoading ? <SectionLoader /> : <><h2 className="text-xl font-bold mb-4">Available Common Packages</h2>
+                    <PackagesComponent pujaPackages={allPackage} handleDelete={handleDelete}  /> </>}
                 </>
 
                 : 
@@ -247,7 +252,7 @@ const PujaPackages = () => {
 
                                 <input
                                     type="text"
-                                    placeholder="Package Type"
+                                    placeholder="Package Title"
                                     value={packaging.packageType}
                                     onChange={(e) => {
                                         const updated = [...formData?.packages];
@@ -256,12 +261,34 @@ const PujaPackages = () => {
                                     }}
                                     className="w-full border p-2 rounded mb-2"
                                 />
-                                <textarea
+                                <input
+                                    type="text"
                                     placeholder="Package Price"
                                     value={packaging.packagePrice}
                                     onChange={(e) => {
                                         const updated = [...formData?.packages];
                                         updated[index].packagePrice = e.target.value;
+                                        setFormData({ ...formData, packages: updated });
+                                    }}
+                                    className="w-full border p-2 rounded mb-2"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Number of People"
+                                    value={packaging.noOfPeople}
+                                    onChange={(e) => {
+                                        const updated = [...formData?.packages];
+                                        updated[index].noOfPeople = e.target.value;
+                                        setFormData({ ...formData, packages: updated });
+                                    }}
+                                    className="w-full border p-2 rounded mb-2"
+                                />
+                                <textarea
+                                    placeholder="Description"
+                                    value={packaging.packageDescription}
+                                    onChange={(e) => {
+                                        const updated = [...formData?.packages];
+                                        updated[index].packageDescription = e.target.value;
                                         setFormData({ ...formData, packages: updated });
                                     }}
                                     className="w-full border p-2 rounded"
@@ -273,7 +300,7 @@ const PujaPackages = () => {
                             onClick={() =>
                                 setFormData({
                                     ...formData,
-                                    packages: [...formData?.packages, { packageType: "", packagePrice: "" }],
+                                    packages: [...formData?.packages, { packageType: "", packagePrice: "", packageDescription: "", noOfPeople: "" }],
                                 })
                             }
                             className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
@@ -414,7 +441,7 @@ const PujaPackages = () => {
                         onClick={() =>
                             setFormData({
                                 ...formData,
-                                offerings: [...formData?.offerings, { title: "", description: "", price: "" }],
+                                offerings: [...formData?.offerings, { title: "", description: "", price: 0 }],
                             })
                         }
                         className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"

@@ -5,10 +5,12 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchWithWait } from "../../../../../helper/method";
 import { validateFields } from "../../../../../helper/validateFields";
-import { addNewCartAction } from "@/redux/actions/cartActions";
+import { addNewCartAction, requestClearCartAction } from "@/redux/actions/cartActions";
 import { paymentVerifyAction, requestPaymentOrderAction } from "@/redux/actions/paymentActions";
 import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
+import SectionLoader from "@/components/Atom/loader/sectionLoader";
+import { Info } from "lucide-react";
 
 export default function CheckoutPage() {
   const [members, setMembers] = useState([""]);
@@ -24,6 +26,12 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState({}); 
 
   const [storeId, setStoreId] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [priceOfMember, setPriceOfMember] = useState(0);
+  const [finalTotal, setFinalTotal] = useState(0);
+  const [gotra, setGotra] = useState("");
+  const [dontKnow, setDontKnow] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -32,18 +40,67 @@ export default function CheckoutPage() {
   const router = useRouter();
   const withLang = useWithLang();
 
-  // const handlaRedirect = (slug) => {
-  //   router.push(withLang(`/chadhava/${slug}`))
-  // }
-
-
-
   // generate once when component mounts
     useEffect(() => {
         setStoreId(uuidv4());
     }, []);
 
-  const handleAddMember = () => setMembers([...members, ""]);
+useEffect(() => {
+  if ( !allCarts?.package?.type && allCarts?.package?.noOfPeople) {
+    const count = allCarts.package.noOfPeople - 1;
+    setMembers(Array(count).fill(""));
+  } else {
+    setMembers([""]);
+  }
+}, [allCarts?.package]);
+
+// // Calculate ₹50 per member (only if package.type exists)
+//   useEffect(() => {
+//     if (allCarts?.package?.type) {
+//       setPriceOfMember(members.length * 50);
+//     } else {
+//       setPriceOfMember(0);
+//     }
+//   }, [members, allCarts?.package?.type]);
+
+//   // 🔥 Update final total dynamically
+//   useEffect(() => {
+//     const baseTotal = allCarts?.grand_total || 0;
+//     setFinalTotal(baseTotal + priceOfMember);
+//   }, [allCarts?.grand_total, priceOfMember]);
+
+// Calculate ₹50 per member (only if package.type exists)
+
+useEffect(() => {
+  if (allCarts?.package?.type === "chadhava") {
+    // check if members array is completely empty (no names)
+    const isMembersEmpty =
+      members.length === 0 || members.every((m) => !m.trim());
+
+    if (isMembersEmpty) {
+      setPriceOfMember(0);
+    } else {
+      setPriceOfMember(members.length * 50);
+    }
+  } else {
+    setPriceOfMember(0);
+  }
+}, [members, allCarts?.package?.type === "chadhava"]);
+
+// 🔥 Update final total dynamically
+useEffect(() => {
+  const baseTotal = allCarts?.grand_total || 0;
+  setFinalTotal(baseTotal + priceOfMember);
+}, [allCarts?.grand_total, priceOfMember]);
+
+
+const handleAddMember = () => {
+  if (members.length < 10) {
+    setMembers([...members, ""]);
+  } else {
+    alert("You can add up to 10 members only.");
+  }
+};
 
   const handleRemoveMember = (index) =>
     setMembers(members.filter((_, i) => i !== index));
@@ -55,8 +112,23 @@ export default function CheckoutPage() {
   };
 
 
+  const handleCheckboxChange = (e) => {
+    const checked = e.target.checked;
+    setDontKnow(checked);
+    if (checked) setGotra("Kshyapa");
+      else setGotra("");
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+     if (!gotra.trim() && !dontKnow) {
+      alert("Please enter your gotra or check the box if you don't know it.");
+      return;
+    }
+
+    setIsLoading(true);
 
     const { isValid, errors: validationErrors } = validateFields([form], [
       "whatsapp",
@@ -67,11 +139,26 @@ export default function CheckoutPage() {
       "state",
     ]);
 
-    setErrors(validationErrors[0]);
-    if (!isValid) return;
+    if(allCarts?.package){
+      setErrors(validationErrors[0]);
+      if (!isValid) return;
+
+      // const memberErrors = members.map((m) => !m.trim());
+
+      // if (memberErrors.includes(true)) {
+      //   setErrors((prev) => ({
+      //     ...prev,
+      //     members: "Please fill all member names",
+      //   }));
+      //   return;
+      // }
+    }
+
 
     const userDetails = { ...form, members };
-    const payload = { ...allCarts, store_id: storeId, userDetails };
+    // const payload = { ...allCarts, store_id: storeId, userDetails };
+
+    const payload = { ...allCarts, store_id: storeId, userDetails, grand_total: finalTotal };
 
     try {
       // Step 1: Save cart
@@ -79,6 +166,7 @@ export default function CheckoutPage() {
 
       if (cartRes.status !== 200) {
         alert(cartRes.message || "Error saving cart.");
+        setIsLoading(false);
         return;
       }
 
@@ -97,6 +185,7 @@ export default function CheckoutPage() {
 
       if (orderRes.status !== 200) {
         alert(orderRes.message || "Error creating payment order.");
+        setIsLoading(false);
         return;
       }
 
@@ -113,6 +202,7 @@ export default function CheckoutPage() {
       const sdkLoaded = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
       if (!sdkLoaded) {
         alert("Razorpay SDK failed to load.");
+        setIsLoading(false);
         return;
       }
 
@@ -133,10 +223,24 @@ export default function CheckoutPage() {
             });
 
             if (verifyRes.success) {
-              alert("✅ Payment Successful!");
+              // alert("✅ Payment Successful!");
+              setForm({
+                whatsapp: "",
+                name: "",
+                address: "",
+                postalCode: "",
+                city: "",
+                state: "",
+              });
+              setMembers([]);
+              setErrors({});
+              setIsLoading(false);
               router.push(withLang(`/payment-success/${cartRes.data.cart_id}`)); // ✅ custom redirect
+              dispatch(requestClearCartAction());
+
             } else {
               alert(verifyRes.message || "Payment verification failed.");
+              setIsLoading(false);
               router.push(withLang(`/payment-failed`));
             }
 
@@ -159,14 +263,20 @@ export default function CheckoutPage() {
       rzp.on("payment.failed", (response) => {
         console.error("Payment Failed:", response.error);
         alert("❌ Payment Failed. Please try again.");
+        setIsLoading(false);
+        router.push(withLang(`/payment-failed`));
       });
     } catch (error) {
       console.error("Error in payment flow:", error);
+      setIsLoading(false);
       alert("Something went wrong. Please try again.");
     }
   };
 
 
+  // console.log("Rendered Checkout Page with storeId:", allCarts);
+
+  
 
   return (
     <section className="min-h-screen bg-gray-50 py-10 px-4 md:px-10">
@@ -178,19 +288,26 @@ export default function CheckoutPage() {
           <h2 className="font-semibold text-lg mb-2 text-red-800">
             Your Cart Details
           </h2>
-          {allCarts?.["add_ons"].length > 0 && (
-            <div className="border-t pt-4 mt-4">
-              <div className="flex justify-between text-gray-700">
+
+          {allCarts?.["package"] && <div className="border-t pt-4 mt-4">
+              <div className="font-medium mb-2">
+                <span>{allCarts?.["package"]?.productTitle}</span>
+              </div>
+              {allCarts?.["package"]?.packagePrice && <div className="flex justify-between text-gray-700">
                 <span>{allCarts?.["package"]?.packageType}</span>
                 <span>₹{allCarts?.["package"]?.packagePrice}</span>
-              </div>
+              </div>}
+          </div>}
+          {allCarts?.["add_ons"].length > 0 && (
+            <div className="border-t pt-4 mt-4">
+
               <div className="space-y-2 text-sm">
                 {allCarts?.["add_ons"].map((item) => (
                   <div
                     key={item.id}
                     className="flex justify-between text-gray-700"
                   >
-                    <span>{item.title.split(" ")[0]}</span>
+                    <span>{item.title.split(" ").slice(0, 2).join(" ")}</span>
                     <span>₹{`${item.price}* ${item.quantity}`}</span>
                   </div>
                 ))}
@@ -250,10 +367,39 @@ export default function CheckoutPage() {
             )}
           </div>
 
-          {/* Family Members */}
+          {/* Gotra Input */}
+          <div className="relative mb-4">
+            <input
+              type="text"
+              placeholder="Enter your Gotra"
+              value={gotra}
+              onChange={(e) => setGotra(e.target.value)}
+              disabled={dontKnow}
+              className={`w-full border rounded-lg p-3 pr-10 outline-none transition ${
+                dontKnow ? "bg-gray-100 cursor-not-allowed" : "focus:ring-2 focus:ring-blue-400"
+              }`}
+            />
+            <Info
+              className="absolute right-3 top-3.5 text-blue-600 cursor-pointer hover:text-blue-800"
+              size={18}
+              onClick={() => setShowPopup(true)}
+            />
+          </div>
+
+          {/* Checkbox */}
+          <label className="flex items-center gap-2 text-sm text-gray-700">
+            <input
+              type="checkbox"
+              checked={dontKnow}
+              onChange={handleCheckboxChange}
+              className="w-4 h-4 accent-blue-600"
+            />
+            I do not know my gotra
+          </label>
+
           <div>
             <label className="block font-medium mb-1">
-              Enter Family Member Names
+              Enter Family Member Names {allCarts?.package?.type === "chadhava" && "/ Rs 50"  }
             </label>
             {members.map((member, i) => (
               <div key={i} className="flex flex-col gap-1 mb-2">
@@ -263,27 +409,40 @@ export default function CheckoutPage() {
                     placeholder="Enter family member name"
                     value={member}
                     onChange={(e) => handleMemberChange(i, e.target.value)}
-                    className={`flex-1 border rounded-lg px-3 py-2 focus:ring-1 `}
+                    className={`flex-1 border rounded-lg px-3 py-2 focus:ring-1 ${
+                      errors.members && !member.trim() ? "border-red-500" : "focus:ring-red-500"
+                    }`}
                   />
-                  {members.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveMember(i)}
-                      className="text-red-600 text-sm hover:underline"
-                    >
-                      ✕
-                    </button>
-                  )}
+
+                    {/* {(!allCarts?.package.type || members.length > allCarts.package?.noOfPeople) &&
+                    members.length > 1 && ( */}
+
+                  {(allCarts?.package?.type === "chadhava") &&
+                    members.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveMember(i)}
+                        className="text-red-600 text-sm hover:underline"
+                      >
+                        ✕
+                      </button>
+                    )}
                 </div>
+                {errors.members && !member.trim() && (
+                  <p className="text-red-600 text-sm mt-1">{errors.members}</p>
+                )}
               </div>
             ))}
-            <button
-              type="button"
-              onClick={handleAddMember}
-              className="text-sm text-red-700 hover:underline font-medium"
-            >
-              + Add member
-            </button>
+
+            {allCarts?.package?.type === "chadhava" && (
+              <button
+                type="button"
+                onClick={handleAddMember}
+                className="text-sm text-red-700 hover:underline font-medium"
+              >
+                + Add member
+              </button>
+            )}
           </div>
 
           {/* Address */}
@@ -361,17 +520,46 @@ export default function CheckoutPage() {
 
           {/* Total and Pay Button */}
           <div className="flex justify-between items-center pt-4 border-t">
-            <p className="text-lg font-semibold">{`Total: ₹${allCarts?.["grand_total"]}/-`}</p>
+            <p className="text-lg font-semibold">{`Total: ₹${finalTotal}/-`}</p>
             <button
               type="button"
-              className="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg font-medium"
+              className="bg-red-700 hover:bg-red-800 text-white px-6 py-2 rounded-lg font-medium cursor-pointer"
               onClick={(e) => handleSubmit(e)}
             >
               Pay Now
             </button>
           </div>
         </form>
+
+        {/* Popup (Modal) */}
+        {showPopup && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+            <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm w-full mx-4">
+              <h3 className="text-lg font-semibold mb-3">
+                I do not know my Lineage (Gotra), what should I do?
+              </h3>
+              <p className="text-sm text-gray-600 mb-5 leading-relaxed">
+                If you do not know your lineage (gotra), in this situation, you can consider your
+                lineage as <b>Kshyapa</b> because Rishi Kshyapa is a sage whose descendants can be
+                found in every caste. Therefore, he is considered a revered sage. The priest will
+                chant these details during the worship.
+              </p>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
+                >
+                  Okay
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="mt-4 text-sm text-gray-500">{
+          isLoading && <SectionLoader /> }</div>
       </div>
+
     </section>
   );
 }

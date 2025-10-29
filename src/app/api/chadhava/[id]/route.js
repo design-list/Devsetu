@@ -1,13 +1,15 @@
+
+
 import { NextResponse } from "next/server";
 import models from "@/models";
 
-const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa,templeHistory } = models;
+const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa } = models;
 
 
 export async function GET(req, { params }) {
   try {
     const chadhavas = await chadhava.findByPk(params.id, {
-      include: [chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa, templeHistory ], order: [["id", "DESC"]],
+      include: [chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa ], order: [["id", "DESC"]],
     });
     if (!chadhavas) {
       return NextResponse.json({ error: "chadhavas not found" }, { status: 404 });
@@ -59,7 +61,7 @@ export async function PUT(req, { params }) {
       location: body.location,
       date: body.date,
       pujaDetails: body.pujaDetails,
-      templeHistory: body.templeHistory,
+      // templeHistory: body.templeHistory,
       isActive: body.isActive,
       isActiveOnHome: body.isActiveOnHome,
 
@@ -107,13 +109,13 @@ export async function PUT(req, { params }) {
     }
 
     // // ✅ Update templeHistory
-    if (body.temple) {
-      await templeHistory.destroy({ where: { chadhavaId: updatedChadhava.id } });
-      await templeHistory.create({
-        ...body.temple,
-        chadhavaId: updatedChadhava.id,
-      });
-    }
+    // if (body.temple) {
+    //   await templeHistory.destroy({ where: { chadhavaId: updatedChadhava.id } });
+    //   await templeHistory.create({
+    //     ...body.temple,
+    //     chadhavaId: updatedChadhava.id,
+    //   });
+    // }
 
     // ✅ Update FAQs
     if (!body.commonFaqs && body.faqs) {
@@ -139,7 +141,7 @@ export async function PUT(req, { params }) {
 
     // ✅ Fetch back with associations
     const finalData = await chadhava.findByPk(updatedChadhava.id, {
-      include: [chadhavaBanner, chadhavaPackages, recommendedChadawa, chadhavaFaqs, pujaPerformed, templeHistory ],
+      include: [chadhavaBanner, chadhavaPackages, recommendedChadawa, chadhavaFaqs, pujaPerformed ],
     });
 
     return NextResponse.json({
