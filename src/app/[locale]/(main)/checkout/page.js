@@ -46,7 +46,7 @@ export default function CheckoutPage() {
     }, []);
 
 useEffect(() => {
-  if ( !allCarts?.package?.type && allCarts?.package?.noOfPeople) {
+  if ( allCarts?.package?.type === 'puja' && allCarts?.package?.noOfPeople) {
     const count = allCarts.package.noOfPeople - 1;
     setMembers(Array(count).fill(""));
   } else {

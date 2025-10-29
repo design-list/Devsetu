@@ -102,7 +102,7 @@ const PaymentSuccess = () => {
             </motion.div>
 
             {/* Puja & Participant's Details */}
-             {cartDetails?.['user_details'] && <div>
+             {/* {cartDetails?.['user_details'] && <div>
               <h3 className="text-lg font-semibold mb-3">
                 Puja and Participant's Details
               </h3>
@@ -139,7 +139,7 @@ const PaymentSuccess = () => {
                 </div>
               </div>
             </div>
-            }
+            } */}
 
              {cartDetails?.user_details && (
               <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
