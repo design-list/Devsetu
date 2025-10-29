@@ -8,6 +8,7 @@ import LazyImage from "@/components/Atom/LazyImage";
 import {
   addOfferingAction,
   removePackageAction,
+  requestClearCartAction,
   updateOfferingCountAction,
 } from "@/redux/actions/cartActions";
 import { useRouter } from "next/navigation";
@@ -35,6 +36,7 @@ const PujaCart = () => {
 
   const handleRemovePackages = () => {
     dispatch(removePackageAction());
+    dispatch(requestClearCartAction());
   };
 
   const handlaRedirect = () => {
