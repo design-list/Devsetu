@@ -65,7 +65,7 @@ const ChadhavaDetailsPage = () => {
 
     dispatch(addPackageAction(packageData));
 
-    router.push(withLang(`/puja-cart`));
+    router.push(withLang(`/cart-review`));
   };
 
   const handleShowModal = (item) => {

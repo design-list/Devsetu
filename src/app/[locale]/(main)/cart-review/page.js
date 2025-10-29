@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { Plus, Minus, Trash2 } from "lucide-react";
+import { Plus, Minus, Trash2, ArrowLeft } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestOfferingDataAction } from "@/redux/actions/offeringActions";
 import LazyImage from "@/components/Atom/LazyImage";
@@ -43,7 +43,31 @@ const PujaCart = () => {
     router.push(withLang('/checkout'))
   }
 
+  const handlaBackToHome = () => {
+    router.push(withLang('/'))
+  }
+
   // console.log("CART data", allCarts)
+
+  if (!allCarts.grand_total) {
+    return <div className="min-h-screen bg-gradient-to-b from-[#fffaf4] via-[#fffefd] to-[#fff] py-10 px-4">
+      <div className="flex justify-center item-center max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)] rounded-2xl p-6 border border-orange-100 relative overflow-hidden">
+          <div className="h-2 bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] rounded-t-2xl"></div>
+            <h2 className="font-secondary text-2xl font-bold text-[var(--color-primary)] mb-6">
+              cart is empty 🪔
+            </h2>
+
+            <button 
+            onClick={handlaBackToHome}
+            className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-3 rounded-xl mt-6 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300 flex justify-between items-center px-5 cursor-pointer">
+              <ArrowLeft className="w-4 h-4" />
+              <span className="text-lg font-medium"> Book your Pujas Or Chavdhavas</span>
+            </button>
+        </div>
+      </div>
+    </div>
+  }
 
 
   return (
@@ -66,7 +90,7 @@ const PujaCart = () => {
               <h3 className="text-lg font-small">{allCarts?.['package']?.packageType}</h3>
             </div>
             
-           {allCarts?.['package'].type ==='puja' && <button
+           {allCarts?.['package'] && <button
               onClick={handleRemovePackages}
               className="bg-red-600 p-1 rounded text-white hover:bg-red-700 cursor-pointer"
             >
@@ -162,43 +186,6 @@ const PujaCart = () => {
               </span>
               <span className="text-lg font-medium">Proceed to Checkout →</span>
             </button>
-          </div>
-        </div>
-
-        {/* RIGHT SECTION - OFFERINGS (Optional Display) */}
-        <div className="hidden lg:block bg-gradient-to-b from-orange-50 to-white border border-orange-100 rounded-2xl shadow-sm p-6">
-          <h3 className="font-secondary text-xl font-semibold text-[var(--color-primary)] mb-4">
-            Other Offerings You May Like 🌸
-          </h3>
-          <div className="space-y-3">
-            {allOffering?.slice(0, 4).map((off) => (
-              <div
-                key={off.id}
-                className="flex items-center gap-3 p-3 rounded-lg bg-white shadow-sm border border-gray-100 hover:shadow-md transition-all"
-              >
-                <div className="w-16 h-16 rounded-md overflow-hidden">
-                  <LazyImage
-                    src={off.offerimg}
-                    alt={off.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex-1">
-                  <p className="text-gray-700 font-medium text-sm leading-tight">
-                    {off.title}
-                  </p>
-                  <p className="text-gray-500 text-xs mt-1 line-clamp-2">
-                    {off.description}
-                  </p>
-                </div>
-                <button
-                  onClick={() => handleAddOtherOffers(off)}
-                  className="text-sm text-[var(--color-primary)] border border-[var(--color-primary-light)] px-2.5 py-1 rounded-md hover:bg-orange-50"
-                >
-                  + Add
-                </button>
-              </div>
-            ))}
           </div>
         </div>
       </div>
