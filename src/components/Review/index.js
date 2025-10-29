@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 
 const Reviews = ({ reviews }) => {
   return (
-    <div className="px-8">
+    <div>
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         navigation={{

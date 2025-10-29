@@ -220,7 +220,7 @@ const PujaPage = () => {
         </section> */}
       </Container>
 
-{/* Review */}
+      {/* Review */}
       <section className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
         <Container>
           <h2 className="font-secondary text-center text-3xl font-bold mb-10">

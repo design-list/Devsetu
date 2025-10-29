@@ -60,13 +60,6 @@ const PujaCart = () => {
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-[var(--color-primary)] to-yellow-400 transition-all duration-300 rounded-2xl"></div>
 
                 <div className="flex gap-4 items-start">
-                  <div className="w-20 h-20 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
-                    <LazyImage
-                      src={off.offerimg}
-                      alt={off.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
                   <div className="flex-1">
                     <h4 className="font-semibold text-[var(--color-dark)] text-xl leading-tight">
                       {off.title}
@@ -75,21 +68,28 @@ const PujaCart = () => {
                       {off.description}
                     </p>
                   </div>
+                   <div className="w-28 h-28 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
+                    <LazyImage
+                      src={off.offerimg}
+                      alt={off.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
 
-                <div className="flex justify-between items-center mt-5">
+                <div className="flex justify-between items-center">
                   <span className="font-secondary text-lg text-[var(--color-primary)] font-bold">
                     ₹{off.price}
                   </span>
 
                   {isAdded ? (
-                    <button className="border border-green-400 text-green-600 text-sm px-3 py-1.5 rounded-md flex items-center gap-1 bg-green-50 font-medium cursor-default">
+                    <button className="-mt-[10px] mr-[17px] border border-green-400 text-green-600 text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default">
                       <CheckCircle size={14} /> Added
                     </button>
                   ) : (
                     <button
                       onClick={() => handleAddOtherOffers(off)}
-                      className="cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-sm px-3 py-1.5 rounded-md flex items-center gap-1 font-medium hover:bg-orange-50 transition-all z-10"
+                      className="-mt-[10px] mr-[17px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-sm px-3 py-1.5 rounded-md flex items-center gap-1 font-medium hover:bg-orange-50 transition-all z-10"
                     >
                       <Plus size={14} /> Add
                     </button>

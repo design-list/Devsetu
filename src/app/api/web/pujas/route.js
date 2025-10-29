@@ -26,7 +26,7 @@ export async function GET() {
       include: [
         {
           model: pujaBanners,
-          where: { position: 1 },
+          where: { position: 2 },
           attributes: ["id", "image_url", "position", "type"],
         },
       ],

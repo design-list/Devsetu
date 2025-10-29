@@ -37,7 +37,7 @@ const categories = [
 
 export default function LibraryCards() {
   return (
-    <section className="relative py-14 bg-gradient-to-b from-[var(--forcast)] via-white to-[var(--forcast)]">
+    <section className="relative bg-gradient-to-b from-[var(--forcast)] via-white to-[var(--forcast)]">
       <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
         {/* Heading */}
         <h2 className="font-secondary text-4xl md:text-5xl font-extrabold mb-4 text-[var(--color-dark)]">
