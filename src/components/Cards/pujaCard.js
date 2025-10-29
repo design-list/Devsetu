@@ -7,10 +7,9 @@ import { formatDate } from "../../../utils/localstorage";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
-import Goldenline from '../../../public/icons/goldline.svg';
+import Goldenline from "../../../public/icons/goldline.svg";
 import TempleIcon from "../../../public/icons/hindu-temple.svg";
 import TemplateNew from "../../../public/icons/temple.png";
-
 
 const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
   return (
@@ -52,15 +51,35 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
 
               {/* Details */}
               <div className="px-4 py-2 flex flex-col flex-1 bg-gradient-to-b from-white to-[var(--forcast)]">
-                <div
-                  className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1"
-                >
-                  {puja?.highlight ||
-                    "NIVARAN MAHAPUJA SPECIAL"}
-                  <Image src={Goldenline} alt="Golden under" className="rotate-[0.5deg]"/>
+                <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
+                  {puja?.highlight || "NIVARAN MAHAPUJA SPECIAL"}
+                  <Image
+                    src={Goldenline}
+                    alt="Golden under"
+                    className="rotate-[0.5deg]"
+                  />
                 </div>
-                <div className="text-[var(--color-dark)] font-primary text-xl 2xl:text-2xl 3xl:text-3xl font-bold tracking-wide mt-2 mb-2">
-                  {puja.title}
+
+                <div className="relative group max-w-full">
+                  {/* Title */}
+                  <div
+                    className="text-[var(--color-dark)] font-primary text-xl 2xl:text-2xl 3xl:text-3xl font-bold tracking-wide mt-2 mb-2
+               line-clamp-2 overflow-hidden text-ellipsis cursor-default"
+                  >
+                    {puja.title}
+                  </div>
+
+                  {/* Tooltip */}
+                  <div
+                    className="absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 ease-out
+               left-1/2 -translate-x-1/2 top-14 mt-3 z-20 bg-gray-900 text-white text-sm font-normal px-3 py-1.5 rounded-lg
+               shadow-xl w-max max-w-[320px] text-center"
+                  >
+                    {puja.title}
+
+                    {/* Tooltip Arrow */}
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
+                  </div>
                 </div>
 
                 <p className="text-[var(--color-info)] text-sm font-bold mb-3 uppercase">

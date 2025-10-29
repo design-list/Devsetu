@@ -13,7 +13,6 @@ import DivineBlessings from "../../../public/icons/divine-blessings.png";
 import FamilyProsperity from "../../../public/icons/family-prosperity.png";
 import AncestralPeace from "../../../public/icons/ancestral-peace.png";
 
-
 function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
   return (
     <>
@@ -55,9 +54,28 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                     className="rotate-[0.5deg]"
                   />
                 </div>
-                <h4 className="text-[var(--color-dark)] font-secondary text-xl md:text-2xl font-bold tracking-wide mb-2">
-                  {card.title}
-                </h4>
+                <div className="relative group max-w-full">
+                  {/* Title */}
+                  <h4
+                    className="text-[var(--color-dark)] font-secondary text-xl md:text-2xl font-bold tracking-wide mb-2
+               line-clamp-2 overflow-hidden text-ellipsis cursor-default"
+                  >
+                    {card.title}
+                  </h4>
+
+                  {/* Tooltip */}
+                  <div
+                    className="absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 ease-out
+               left-1/2 -translate-x-1/2 top-14 mt-3 z-20 bg-gray-900 text-white text-sm font-normal px-3 py-1.5 rounded-lg
+               shadow-xl w-max max-w-[320px] text-center"
+                  >
+                    {card.title}
+
+                    {/* Tooltip Arrow */}
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
+                  </div>
+                </div>
+
                 {/* <div className="flex items-center gap-2 text-[#393939] text-base font-medium">
                   <FontAwesomeIcon
                     icon={faCalendarDays}
@@ -70,8 +88,8 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                     ? card.chadhava_details.substring(0, 200) + "..."
                     : "No description available."}
                 </p> */}
-                <ul>
-                  <li className="flex items-center gap-2.5 text-base text-[#393939] pb-2">
+                <ul className="flex flex-row justify-between">
+                  <li className="flex flex-col items-center gap-2.5 text-base text-[#393939] pb-2">
                     {" "}
                     <Image
                       src={DivineBlessings}
@@ -80,11 +98,10 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                       height={30}
                     />{" "}
                     <span>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
+                      Lorem Ipsum 
                     </span>{" "}
                   </li>
-                  <li className="flex items-center gap-2.5 text-base text-[#393939] pb-2">
+                  <li className="flex flex-col items-center gap-2.5 text-base text-[#393939] pb-2">
                     {" "}
                     <Image
                       src={FamilyProsperity}
@@ -93,11 +110,10 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                       height={30}
                     />{" "}
                     <span>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
+                      Lorem Ipsum 
                     </span>{" "}
                   </li>
-                  <li className="flex items-center gap-2.5 text-base text-[#393939] pb-2">
+                  <li className="flex flex-col items-center gap-2.5 text-base text-[#393939] pb-2">
                     {" "}
                     <Image
                       src={AncestralPeace}
@@ -106,8 +122,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                       height={30}
                     />{" "}
                     <span>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry.
+                      Lorem 
                     </span>{" "}
                   </li>
                 </ul>
