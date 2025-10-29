@@ -33,7 +33,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               </span>
 
               {/* Image Section */}
-              <div className="relative h-52 p-4 overflow-hidden">
+              <div className="relative h-52 px-4 pt-4 pb-0 overflow-hidden">
                 <LazyImage
                   src={bannerImage}
                   alt={card.title}
@@ -45,7 +45,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               </div>
 
               {/* Details */}
-              <div className="p-5 flex flex-col flex-1 justify-between">
+              <div className="px-4 pt-2 pb-4 flex flex-col flex-1 justify-between">
                 <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
                   {chadhava?.highlight || "NIVARAN MAHAPUJA SPECIAL"}
                   <Image

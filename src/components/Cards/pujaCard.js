@@ -31,7 +31,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
               {/* Image Section */}
               <div
                 onClick={() => handlaRedirect("puja", puja.slug)}
-                className="relative h-52 p-4 cursor-pointer overflow-hidden"
+                className="relative h-52 px-4 pt-4 pb-0 cursor-pointer overflow-hidden"
               >
                 <LazyImage
                   src={bannerImage}

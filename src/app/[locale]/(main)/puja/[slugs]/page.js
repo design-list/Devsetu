@@ -42,6 +42,7 @@ import {
 import { formatDate } from "../../../../../../utils/localstorage";
 import Link from "next/link";
 import Reviews from "@/components/Review";
+import PujaExperience from "@/components/PujaExperience";
 
 const pujaData = {
   benefits: [
@@ -141,6 +142,7 @@ export default function PujaDetailsPage() {
   const processRef = useRef(null);
   const templeRef = useRef(null);
   const packagesRef = useRef(null);
+  const videosRef = useRef(null);
   const reviewsRef = useRef(null);
   const faqRef = useRef(null);
 
@@ -156,6 +158,7 @@ export default function PujaDetailsPage() {
     { id: "process", label: "Process", ref: processRef },
     { id: "temple", label: "About Temple", ref: templeRef },
     { id: "packages", label: "Packages", ref: packagesRef },
+    { id: "youtubevideos", label: "Completed Puja", ref: videosRef },
     { id: "reviews", label: "Reviews", ref: reviewsRef },
     { id: "faq", label: "FAQ", ref: faqRef },
   ];
@@ -197,11 +200,11 @@ export default function PujaDetailsPage() {
 
   const handleAddPackages = (pkg) => {
     const packageData = {
-      type: 'puja',
-      productId : pujaDetailPage?.id,
-      productTitle : pujaDetailPage?.title,
-      productSlug : pujaDetailPage?.slug,
-      productImg : pujaDetailPage?.["pujaBanners"]?.[0]?.imageUrl || "",
+      type: "puja",
+      productId: pujaDetailPage?.id,
+      productTitle: pujaDetailPage?.title,
+      productSlug: pujaDetailPage?.slug,
+      productImg: pujaDetailPage?.["pujaBanners"]?.[0]?.imageUrl || "",
       ...pkg,
     };
 
@@ -233,9 +236,10 @@ export default function PujaDetailsPage() {
 
   return (
     <div className="w-full font-sans scroll-smooth">
+      {/* Banner */}
       <Container>
         <Breadcrumbs pathname={pathname} />
-        {/* Banner */}
+
         <div className="flex flex-col lg:flex-row gap-6">
           {isLoading ? (
             <PageLaoder />
@@ -435,44 +439,48 @@ export default function PujaDetailsPage() {
             </div>
           </div>
         </div>
+      </Container>
 
-        {/* Tabs */}
-        <div className=" bg-white text-[var(--color-dark)]">
-          {/* Sticky Tab Navigation */}
-          <div className="bg-white sticky top-20 z-20 flex justify-center gap-12 px-4 overflow-x-auto">
-            {tabs.map((t) => (
-              <button
-                key={t.id}
-                onClick={() => handleScroll(t.ref, t.id)}
-                className={`relative py-3 text-xl font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
-                  activeTab === t.id
-                    ? "text-[var(--color-primary)] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-[var(--color-primary)]"
-                    : "text[var(--color-dark)] hover:text-[var(--color-primary)]"
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
+      {/* Tabs */}
+      <div className=" bg-white text-[var(--color-dark)]">
+        {/* Sticky Tab Navigation */}
+        <div className="bg-white sticky top-20 z-20 flex justify-center gap-12 px-4 overflow-x-auto">
+          {tabs.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => handleScroll(t.ref, t.id)}
+              className={`relative py-3 text-xl font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                activeTab === t.id
+                  ? "text-[var(--color-primary)] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-[var(--color-primary)]"
+                  : "text[var(--color-dark)] hover:text-[var(--color-primary)]"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Content */}
-          <div className="p-6 max-w-6xl mx-auto space-y-16">
-            {/* 🕉️ About */}
-            <section ref={aboutRef} className="bg-white rounded-2xl p-6">
-              <h2 className="font-secondary text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
+        {/* Content */}
+        <div>
+          {/* 🕉️ About */}
+          <section ref={aboutRef} className="bg-white py-8 px-4">
+            <Container>
+              <h2 className="font-secondary uppercase text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
                 <Info className="w-6 h-6" /> The Power of Devotion
               </h2>
               <p className="text-[var(--color-dark)] leading-relaxed">
                 {pujaDetailPage?.["pujaDetails"]}
               </p>
-            </section>
+            </Container>
+          </section>
 
-            {/* 🎁 Puja Benefits */}
-            <section
-              ref={benefitsRef}
-              className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] rounded-2xl p-6"
-            >
-              <h2 className="font-secondary text-3xl font-bold text-[var(--color-primary)] mb-6">
+          {/* 🎁 Puja Benefits */}
+          <section
+            ref={benefitsRef}
+            className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] py-8 px-4"
+          >
+            <Container>
+              <h2 className="font-secondary uppercase text-3xl font-bold text-[var(--color-primary)] mb-6">
                 Puja Benefits
               </h2>
 
@@ -502,14 +510,16 @@ export default function PujaDetailsPage() {
                   </div>
                 ))}
               </div>
-            </section>
+            </Container>
+          </section>
 
-            {/* 📜 Puja Process */}
-            <section
-              ref={processRef}
-              className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] rounded-2xl p-6"
-            >
-              <h2 className="font-secondary text-3xl font-bold text-[var(--color-primary)] mb-6">
+          {/* 📜 Puja Process */}
+          <section
+            ref={processRef}
+            className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] py-8 px-4"
+          >
+            <Container>
+              <h2 className="font-secondary uppercase text-3xl font-bold text-[var(--color-primary)] mb-6">
                 Puja Process
               </h2>
 
@@ -536,11 +546,13 @@ export default function PujaDetailsPage() {
                   </div>
                 ))}
               </div>
-            </section>
+            </Container>
+          </section>
 
-            {/* 🛕 Temple */}
-            <section ref={templeRef} className="bg-white rounded-2xl p-6">
-              <h2 className="font-secondary text-2xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
+          {/* 🛕 Temple */}
+          <section ref={templeRef} className="bg-white py-8 px-4">
+            <Container>
+              <h2 className="font-secondary uppercase text-2xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
                 <Landmark className="w-6 h-6" />{" "}
                 {pujaDetailPage?.["templeHistories"][0]?.["templeName"]}
               </h2>
@@ -563,25 +575,28 @@ export default function PujaDetailsPage() {
                   </p>
                 </div>
               </div>
-            </section>
+            </Container>
+          </section>
 
-            {/* 💰 Packages */}
-            <section
-              id="pujapakage"
-              ref={packagesRef}
-              className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] rounded-2xl p-6"
-            >
-              <h2 className="font-secondary text-2xl font-bold text-[var(--color-primary)] mb-4">
+          {/* 💰 Packages */}
+          <section
+            id="pujapakage"
+            ref={packagesRef}
+            className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] py-8 px-4"
+          >
+            <Container>
+              <h2 className="font-secondary uppercase text-2xl font-bold text-[var(--color-primary)] mb-4">
                 Select Puja Package
               </h2>
               <PujaPackages
                 pujaPackages={pujaDetailPage?.["pujaPackages"]}
                 onAddToCart={handleAddPackages}
               />
-            </section>
+            </Container>
+          </section>
 
-            {/* ⭐ Reviews */}
-            {/* <section ref={reviewsRef} className="bg-white rounded-2xl p-6">
+          {/* ⭐ Reviews */}
+          {/* <section ref={reviewsRef} className="bg-white py-8 px-4">
               <h2 className="font-secondary text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
                 <Star className="w-6 h-6" /> Reviews & Ratings
               </h2>
@@ -602,23 +617,37 @@ export default function PujaDetailsPage() {
               </div>
             </section> */}
 
-            <section id="reviews"
-              ref={reviewsRef} 
-              className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
-              <Container>
-              <h2 className="font-secondary text-2xl font-bold text-[var(--color-primary)] mb-4">
-                 Reviews
+          <section ref={videosRef} className="relative py-8 px-4">
+            <Container>
+              {/* Heading */}
+              <h2 className="font-secondary uppercase text-2xl font-bold text-[var(--color-primary)] mb-4">
+                Glimpses of our past puja experience
               </h2>
-                {/* <h2 className="font-secondary text-center text-3xl font-bold mb-10">
+
+              <PujaExperience />
+            </Container>
+          </section>
+
+          <section
+            id="reviews"
+            ref={reviewsRef}
+            className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]"
+          >
+            <Container>
+              <h2 className="font-secondary uppercase text-2xl font-bold text-[var(--color-primary)] mb-4">
+                Reviews
+              </h2>
+              {/* <h2 className="font-secondary text-center text-3xl font-bold mb-10">
                  Reviews
                 </h2> */}
-                <Reviews reviews={reviews} />
-              </Container>
-            </section>
+              <Reviews reviews={reviews} />
+            </Container>
+          </section>
 
-            {/* ❓ FAQ */}
-            <section ref={faqRef} className="bg-white rounded-2xl p-6">
-              <h2 className="font-secondary text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
+          {/* ❓ FAQ */}
+          <section ref={faqRef} className="bg-white py-8 px-4">
+            <Container>
+              <h2 className="font-secondary uppercase text-2xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
                 <HelpCircle className="w-6 h-6" /> Frequently Asked Questions
               </h2>
               <div className="space-y-3">
@@ -644,11 +673,10 @@ export default function PujaDetailsPage() {
                   </div>
                 ))}
               </div>
-            </section>
-          </div>
+            </Container>
+          </section>
         </div>
-      </Container>
-
+      </div>
       {/* Slide-in Cart Panel */}
       <div
         className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform transition-transform duration-300 ${
