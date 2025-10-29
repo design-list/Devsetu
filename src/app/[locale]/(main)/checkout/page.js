@@ -10,6 +10,7 @@ import { paymentVerifyAction, requestPaymentOrderAction } from "@/redux/actions/
 import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
 import SectionLoader from "@/components/Atom/loader/sectionLoader";
+import { Info } from "lucide-react";
 
 export default function CheckoutPage() {
   const [members, setMembers] = useState([""]);
@@ -28,6 +29,9 @@ export default function CheckoutPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [priceOfMember, setPriceOfMember] = useState(0);
   const [finalTotal, setFinalTotal] = useState(0);
+  const [gotra, setGotra] = useState("");
+  const [dontKnow, setDontKnow] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -98,8 +102,6 @@ const handleAddMember = () => {
   }
 };
 
-
-
   const handleRemoveMember = (index) =>
     setMembers(members.filter((_, i) => i !== index));
 
@@ -110,8 +112,22 @@ const handleAddMember = () => {
   };
 
 
+  const handleCheckboxChange = (e) => {
+    const checked = e.target.checked;
+    setDontKnow(checked);
+    if (checked) setGotra("Kshyapa");
+      else setGotra("");
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+     if (!gotra.trim() && !dontKnow) {
+      alert("Please enter your gotra or check the box if you don't know it.");
+      return;
+    }
+
     setIsLoading(true);
 
     const { isValid, errors: validationErrors } = validateFields([form], [
@@ -351,6 +367,36 @@ const handleAddMember = () => {
             )}
           </div>
 
+          {/* Gotra Input */}
+          <div className="relative mb-4">
+            <input
+              type="text"
+              placeholder="Enter your Gotra"
+              value={gotra}
+              onChange={(e) => setGotra(e.target.value)}
+              disabled={dontKnow}
+              className={`w-full border rounded-lg p-3 pr-10 outline-none transition ${
+                dontKnow ? "bg-gray-100 cursor-not-allowed" : "focus:ring-2 focus:ring-blue-400"
+              }`}
+            />
+            <Info
+              className="absolute right-3 top-3.5 text-blue-600 cursor-pointer hover:text-blue-800"
+              size={18}
+              onClick={() => setShowPopup(true)}
+            />
+          </div>
+
+          {/* Checkbox */}
+          <label className="flex items-center gap-2 text-sm text-gray-700">
+            <input
+              type="checkbox"
+              checked={dontKnow}
+              onChange={handleCheckboxChange}
+              className="w-4 h-4 accent-blue-600"
+            />
+            I do not know my gotra
+          </label>
+
           <div>
             <label className="block font-medium mb-1">
               Enter Family Member Names {allCarts?.package?.type === "chadhava" && "/ Rs 50"  }
@@ -398,8 +444,6 @@ const handleAddMember = () => {
               </button>
             )}
           </div>
-
-
 
           {/* Address */}
           <div>
@@ -486,6 +530,31 @@ const handleAddMember = () => {
             </button>
           </div>
         </form>
+
+        {/* Popup (Modal) */}
+        {showPopup && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+            <div className="bg-white rounded-xl shadow-lg p-6 max-w-sm w-full mx-4">
+              <h3 className="text-lg font-semibold mb-3">
+                I do not know my Lineage (Gotra), what should I do?
+              </h3>
+              <p className="text-sm text-gray-600 mb-5 leading-relaxed">
+                If you do not know your lineage (gotra), in this situation, you can consider your
+                lineage as <b>Kshyapa</b> because Rishi Kshyapa is a sage whose descendants can be
+                found in every caste. Therefore, he is considered a revered sage. The priest will
+                chant these details during the worship.
+              </p>
+              <div className="flex justify-center">
+                <button
+                  onClick={() => setShowPopup(false)}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg"
+                >
+                  Okay
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="mt-4 text-sm text-gray-500">{
           isLoading && <SectionLoader /> }</div>
