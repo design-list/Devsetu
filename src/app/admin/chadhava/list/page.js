@@ -12,13 +12,13 @@ import Api from "../../../../../services/fetchApi";
 import {
   Trash,
   SquarePen,
-  Flame,
   Filter,
   PlusCircle,
   Package,
   Gift,
   HelpCircle,
   Image as ImageIcon,
+  Leaf,
 } from "lucide-react";
 import { formatDate } from "../../../../../utils/localstorage";
 
@@ -74,7 +74,7 @@ export default function ChadhavaPage() {
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-orange-600 flex items-center gap-2">
-          <Flame className="text-yellow-500" />
+          <Leaf className="text-yellow-500" />
           All Chadhava
         </h2>
 
