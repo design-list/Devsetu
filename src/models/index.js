@@ -27,9 +27,10 @@ import chadhava from './ChadhavaModels/chadhava.js';
 import chadhavaBanner from './ChadhavaModels/chadhavaBanner.js';
 import chadhavaFaqs from './ChadhavaModels/chadhavaFaqs.js';
 import chadhavaPackages from './ChadhavaModels/chadhavaPackages.js';
-import recommendedChadawa from './ChadhavaModels/recommendedChadawa.js';
-import pujaPerformed from './ChadhavaModels/pujaPerformed.js';
-import chadhavaOfferings from './ChadhavaModels/chadhavaOfferings.js';
+// import recommendedChadawa from './ChadhavaModels/recommendedChadawa.js';
+// import pujaPerformed from './ChadhavaModels/pujaPerformed.js';
+// import chadhavaOfferings from './ChadhavaModels/chadhavaOfferings.js';
+import chadhavaFocus from './ChadhavaModels/chadhavaFocus.js';
 
 import Aartis from './ArticelsModels/Aartis.js';
 import Chalisas from './ArticelsModels/Chalisas.js';
@@ -84,9 +85,7 @@ db.chadhava = chadhava(sequelize, Sequelize.DataTypes);
 db.chadhavaBanner = chadhavaBanner(sequelize, Sequelize.DataTypes);
 db.chadhavaFaqs = chadhavaFaqs(sequelize, Sequelize.DataTypes);
 db.chadhavaPackages = chadhavaPackages(sequelize, Sequelize.DataTypes);
-db.recommendedChadawa = recommendedChadawa(sequelize, Sequelize.DataTypes);
-db.pujaPerformed = pujaPerformed(sequelize, Sequelize.DataTypes);
-db.chadhavaOfferings = chadhavaOfferings(sequelize, Sequelize.DataTypes);
+db.chadhavaFocus = chadhavaFocus(sequelize, Sequelize.DataTypes);
 
 db.Aartis = Aartis(sequelize, Sequelize.DataTypes);
 db.Chalisas = Chalisas(sequelize, Sequelize.DataTypes);

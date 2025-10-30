@@ -49,7 +49,8 @@ const PujaPackages = ({ pujaPackages = [], handleDelete }) => {
               <h3 className="font-semibold text-lg truncate">
                 {pkg.packageType || pkg.name}
               </h3>
-              <p className="font-bold text-xl mt-1">₹{pkg.packagePrice}</p>
+              <p className="font-bold text-xl mt-1">₹{pkg.packagePrice}</p> 
+              <span className="font-normal text-small">{pkg.packageDescription}</span> 
             </div>
           </div>
         ))}

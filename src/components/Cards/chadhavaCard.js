@@ -9,9 +9,7 @@ import { formatDate } from "../../../utils/localstorage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import Goldenline from "../../../public/icons/goldline.svg";
-import DivineBlessings from "../../../public/icons/divine-blessings.png";
-import FamilyProsperity from "../../../public/icons/family-prosperity.png";
-import AncestralPeace from "../../../public/icons/ancestral-peace.png";
+import TempleIcon from "../../../public/icons/hindu-temple.svg";
 
 function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
   return (
@@ -76,56 +74,44 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   </div>
                 </div>
 
-                {/* <div className="flex items-center gap-2 text-[#393939] text-base font-medium">
+                <div className="flex items-center gap-2 text-[#393939] text-base font-medium mb-2">
+                  <Image
+                    src={TempleIcon}
+                    alt="Temple Icon"
+                    width={22}
+                    height={22}
+                    className="mr-2 relative -top-1.5 "
+                  />
+                  {card.location || "Location unavailable"}
+                </div>
+
+                <div className="flex items-center gap-2 text-[#393939] text-base font-medium">
                   <FontAwesomeIcon
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
                   />
-                  {formatDate(puja.date, "full")}
-                </div> */}
-                {/* <p className="text-[var(--color-dark)] text-base leading-relaxed mb-3">
-                  {card.chadhava_details
-                    ? card.chadhava_details.substring(0, 200) + "..."
-                    : "No description available."}
-                </p> */}
-                <ul className="flex flex-row justify-between">
-                  <li className="flex flex-col items-center gap-2.5 text-base text-[#393939] pb-2">
-                    {" "}
-                    <Image
-                      src={DivineBlessings}
-                      alt="Icons"
-                      width={30}
-                      height={30}
-                    />{" "}
-                    <span>
-                      Lorem Ipsum 
-                    </span>{" "}
-                  </li>
-                  <li className="flex flex-col items-center gap-2.5 text-base text-[#393939] pb-2">
-                    {" "}
-                    <Image
-                      src={FamilyProsperity}
-                      alt="Icons"
-                      width={30}
-                      height={30}
-                    />{" "}
-                    <span>
-                      Lorem Ipsum 
-                    </span>{" "}
-                  </li>
-                  <li className="flex flex-col items-center gap-2.5 text-base text-[#393939] pb-2">
-                    {" "}
-                    <Image
-                      src={AncestralPeace}
-                      alt="Icons"
-                      width={30}
-                      height={30}
-                    />{" "}
-                    <span>
-                      Lorem 
-                    </span>{" "}
-                  </li>
-                </ul>
+                  {formatDate(card.date, "full")}
+                </div>
+                <div className="mt-3">
+                  <ul className="flex flex-row justify-between">
+                    {
+                      card?.chadhavaFocus?.map((item) => {
+                        return <li key={item.id} className="flex flex-col justify-center text-center items-center gap-2.5 text-base text-[#393939] pb-2">
+                          {" "}
+                          <Image
+                            src={item.focusIcon}
+                            alt="Icons"
+                            width={30}
+                            height={30}
+                          />{" "}
+                          <span>
+                            {item.foucs}
+                          </span>{" "}
+                        </li>
+                      })
+                    }
+                  </ul>
+                </div>
               </div>
 
               {/* Button */}

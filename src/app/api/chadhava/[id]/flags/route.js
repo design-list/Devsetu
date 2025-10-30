@@ -22,7 +22,6 @@ export async function PUT(req, { params }) {
       "isActive",
       "isActiveOnHome",
       "isRecommended",
-      "isActivePandit",
       "commonFaqs",
     ];
 

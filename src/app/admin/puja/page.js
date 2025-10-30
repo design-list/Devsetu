@@ -225,28 +225,28 @@ const PujaForm = () => {
           dispatch(requestPujaDataAction());
 
           // ✅ Reset form after success
-          setFormData({
-            title: "",
-            subTitle: "",
-            slug: "",
-            ratingValue: "",
-            ratingReviews: "",
-            specialDay: "",
-            location: "",
-            date: new Date(),
-            pujaDetails: "",
-            isActive: true,
-            commonOffer: true,
-            commonPack: true,
-            commonFaqs: true,
-            isActiveOnHome: false,
-            packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-            offerings: [{ offerimg: null, title: "", description: "", price: "" }],
-            faqs: [{ title: "", description: "" }],
-            pujaBenefits: [{ title: "", description: "" }],
-            temple: { templeImg: null, templeName: "", templeHistory: "" },
-            banners: [{ imgUrl: null, type: "", position: 1 }],
-          });
+          // setFormData({
+          //   title: "",
+          //   subTitle: "",
+          //   slug: "",
+          //   ratingValue: "",
+          //   ratingReviews: "",
+          //   specialDay: "",
+          //   location: "",
+          //   date: new Date(),
+          //   pujaDetails: "",
+          //   isActive: true,
+          //   commonOffer: true,
+          //   commonPack: true,
+          //   commonFaqs: true,
+          //   isActiveOnHome: false,
+          //   packages: [{ packImg: null, packageType: "", packagePrice: "" }],
+          //   offerings: [{ offerimg: null, title: "", description: "", price: "" }],
+          //   faqs: [{ title: "", description: "" }],
+          //   pujaBenefits: [{ title: "", description: "" }],
+          //   temple: { templeImg: null, templeName: "", templeHistory: "" },
+          //   banners: [{ imgUrl: null, type: "", position: 1 }],
+          // });
         } else {
           console.log("Error:", res.error);
           alert(res.message);

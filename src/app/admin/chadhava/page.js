@@ -1,10 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
-import ExcelJS from 'exceljs';
-import { saveAs } from 'file-saver';
 import { fetchWithWait } from "../../../../helper/method";
 import { addNewChadhavaAction, requestChadhavaAction } from "@/redux/actions/chadhavaAction";
 import { useRouter } from "next/navigation";
@@ -19,7 +17,6 @@ const ChadhavaForm = () => {
     slug: "",
     tithi: "",
     tags: "",
-    focus: "",
     location: "",
     date: new Date(),
     pujaDetails: "",
@@ -27,13 +24,11 @@ const ChadhavaForm = () => {
     isActiveOnHome: false,
     isRecommended: false,
     commonFaqs: true,
-    // isActivePandit: false,
-    // temple: { templeImg: null, templeName: "", templeHistory: "" },
+    chadhavaFocus: [{ focusIcon: null, foucs: "" }],
     packages: [{ packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
-    recommendedChadawa: [{ recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: 0, currency: "INR" }],
-    faqs: [{ icon: null, title: "", description: "" }],
+    faqs: [{ title: "", description: "" }],
     banners: [{ imgUrl: null, type: "", position: 0 }],
-    // pujaPerformedBy: { name: "", temple: "", pujaPerformerImg: "", bio: "" },
+
   });
 
   const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -55,58 +50,30 @@ const ChadhavaForm = () => {
   const handleChange = async (e, index) => {
     const { name, value, files } = e.target;
 
-
     if (files && files[0]) {
       const file = files[0];
 
-      // Local preview
       const localPreview = URL.createObjectURL(file);
 
 
       if (name === "imgUrl") {
-        // Update images preview
         setFormData((prev) => {
           const updated = [...prev.banners];
           updated[index].imgUrl = localPreview.toString();
           return { ...prev, banners: updated };
         });
-      } else if (name === "recommendedImg") {
-        // Update FAQ icon preview
+      } else if (name === "focusIcon") {
         setFormData((prev) => {
-          const updated = [...prev.recommendedChadawa];
-          updated[index].recommendedImg = localPreview.toString();
-          return { ...prev, recommendedChadawa: updated };
-        });
-      } else if (name === "icon") {
-        // Update FAQ icon preview
-        setFormData((prev) => {
-          const updated = [...prev.faqs];
-          updated[index].icon = localPreview.toString();
-          return { ...prev, faqs: updated };
+          const updated = [...prev.chadhavaFocus];
+          updated[index].focusIcon = localPreview.toString();
+          return { ...prev, chadhavaFocus: updated };
         });
       } else if (name === "packImg") {
-        // Update Package Image preview
         setFormData((prev) => {
           const updated = [...prev.packages];
           updated[index].packImg = localPreview.toString();
           return { ...prev, packages: updated };
         });
-      } else if (name === "pujaPerformerImg") {
-        setFormData((prev) => ({
-          ...prev,
-          pujaPerformedBy: {
-            ...prev.pujaPerformedBy,
-            pujaPerformerImg: localPreview,
-          },
-        }));
-      } else if (name === "templeImg") {
-        setFormData((prev) => ({
-          ...prev,
-          temple: {
-            ...prev.temple,
-            templeImg: localPreview,
-          },
-        }));
       } else {
         alert("Upload failed: ");
       }
@@ -127,43 +94,26 @@ const ChadhavaForm = () => {
           if (name === "imgUrl") {
             setFormData((prev) => {
               const updated = [...prev.banners];
-              updated[index].imgUrl = (data.storedAs).toString(); // server path
+              updated[index].imgUrl = (data.storedAs).toString();
               return { ...prev, banners: updated };
             });
-          } else if (name === "recommendedImg") {
+          }
+          else if (name === "focusIcon") {
+            console.log("data.storedAs", data.storedAs)
+
             setFormData((prev) => {
-              const updated = [...prev.recommendedChadawa];
-              updated[index].recommendedImg = (data.storedAs).toString(); // server path
-              return { ...prev, recommendedChadawa: updated };
+              
+              const updated = [...prev.chadhavaFocus];
+              updated[index].focusIcon = (data.storedAs).toString();
+              return { ...prev, chadhavaFocus: updated };
             });
-          } else if (name === "icon") {
-            setFormData((prev) => {
-              const updated = [...prev.faqs];
-              updated[index].icon = (data.storedAs).toString(); // server path
-              return { ...prev, faqs: updated };
-            });
-          } else if (name === "packImg") {
+          }
+          else if (name === "packImg") {
             setFormData((prev) => {
               const updated = [...prev.packages];
-              updated[index].packImg = (data.storedAs).toString(); // server path
+              updated[index].packImg = (data.storedAs).toString();
               return { ...prev, packages: updated };
             });
-          } else if (name === "pujaPerformerImg") {
-            setFormData((prev) => ({
-              ...prev,
-              pujaPerformedBy: {
-                ...prev.pujaPerformedBy,
-                pujaPerformerImg: data.storedAs.toString(),
-              },
-            }));
-          } else if (name === "templeImg") {
-            setFormData((prev) => ({
-              ...prev,
-              temple: {
-                ...prev.temple,
-                templeImg: data.storedAs.toString(),
-              },
-            }));
           }
         } else {
           alert("Upload failed: " + data.error);
@@ -173,31 +123,10 @@ const ChadhavaForm = () => {
         alert("Error while uploading file");
       }
     } else {
-      // Handle nested fields using destructuring and dynamic key access
-      if (name.startsWith("pujaPerformedBy.")) {
-        const field = name.split(".")[1]; // Gets 'name', 'temple', or 'bio'
-        setFormData((prev) => ({
-          ...prev,
-          pujaPerformedBy: {
-            ...prev.pujaPerformedBy,
-            [field]: value, // Dynamically set the correct nested field
-          },
-        }));
-      } else if (name.startsWith("temple.")) {
-        const field = name.split(".")[1];
-        setFormData((prev) => ({
-          ...prev,
-          temple: {
-            ...prev.temple,
-            [field]: value, // Dynamically set the correct nested field
-          },
-        }));
-      } else {
-        setFormData((prev) => ({
-          ...prev,
-          [name]: value,
-        }));
-      }
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
 
   };
@@ -227,110 +156,6 @@ const ChadhavaForm = () => {
     })
   };
 
-
-
-  // const exportStyledExcel = async (e) => {
-  //   e.preventDefault();
-  //   const workbook = new ExcelJS.Workbook();
-
-  //   // 🧾 Main Info Sheet
-  //   const mainSheet = workbook.addWorksheet('Main Info');
-  //   mainSheet.columns = [
-  //     { header: 'Title', key: 'title', width: 40 },
-  //     { header: 'Slug', key: 'slug', width: 40 },
-  //     { header: 'Rating', key: 'ratingValue', width: 10 },
-  //     { header: 'Reviews', key: 'ratingReviews', width: 10 },
-  //     { header: 'Special Day', key: 'specialDay', width: 20 },
-  //     { header: 'Location', key: 'location', width: 30 },
-  //     { header: 'Date', key: 'date', width: 25 },
-  //     { header: 'Puja Details', key: 'pujaDetails', width: 80 },
-  //     { header: 'Temple History', key: 'templeHistory', width: 80 },
-  //   ];
-  //   mainSheet.addRow({
-  //     title: formData?.title ?? '',
-  //     slug: formData?.slug ?? '',
-  //     ratingValue: formData?.ratingValue ?? '',
-  //     ratingReviews: formData?.ratingReviews ?? '',
-  //     specialDay: formData?.specialDay ?? '',
-  //     location: formData?.location ?? '',
-  //     date: formData?.date ? new Date(formData.date).toISOString() : '',
-  //     pujaDetails: formData?.pujaDetails ?? '',
-  //     templeHistory: formData?.templeHistory ?? '',
-  //   });
-  //   mainSheet.getRow(1).font = { bold: true };
-
-  //   // 🙏 Puja Performer Sheet
-  //   const performerSheet = workbook.addWorksheet('Puja Performer');
-  //   performerSheet.columns = [
-  //     { header: 'Name', key: 'name', width: 20 },
-  //     { header: 'Temple', key: 'temple', width: 30 },
-  //     { header: 'Image URL', key: 'pujaPerformerImg', width: 50 },
-  //     { header: 'Bio', key: 'bio', width: 80 },
-  //   ];
-  //   performerSheet.addRow(formData?.pujaPerformedBy ?? {});
-  //   performerSheet.getRow(1).font = { bold: true };
-
-  //   // 📦 Packages Sheet
-  //   const packagesSheet = workbook.addWorksheet('Packages');
-  //   packagesSheet.columns = [
-  //     { header: 'Image URL', key: 'packImg', width: 50 },
-  //     { header: 'Title', key: 'title', width: 30 },
-  //     { header: 'Description', key: 'description', width: 60 },
-  //     { header: 'Price', key: 'price', width: 10 },
-  //     { header: 'Currency', key: 'currency', width: 10 },
-  //     { header: 'Tags', key: 'tags', width: 20 },
-  //   ];
-  //   (formData?.packages ?? []).forEach(pkg => packagesSheet.addRow(pkg));
-  //   packagesSheet.getRow(1).font = { bold: true };
-
-  //   // 🪔 Recommended Chadawa Sheet
-  //   const chadawaSheet = workbook.addWorksheet('Recommended Chadawa');
-  //   chadawaSheet.columns = [
-  //     { header: 'Image URL', key: 'recommendedImg', width: 50 },
-  //     { header: 'Status', key: 'status', width: 15 },
-  //     { header: 'Title', key: 'title', width: 40 },
-  //     { header: 'Location', key: 'location', width: 30 },
-  //     { header: 'Date', key: 'date', width: 25 },
-  //     { header: 'Price', key: 'price', width: 10 },
-  //     { header: 'Currency', key: 'currency', width: 10 },
-  //   ];
-  //   (formData?.recommendedChadawa ?? []).forEach(item => {
-  //     chadawaSheet.addRow({
-  //       ...item,
-  //       date: item.date ? new Date(item.date).toISOString() : '',
-  //     });
-  //   });
-  //   chadawaSheet.getRow(1).font = { bold: true };
-
-  //   // ❓ FAQs Sheet
-  //   const faqsSheet = workbook.addWorksheet('FAQs');
-  //   faqsSheet.columns = [
-  //     { header: 'Icon', key: 'icon', width: 10 },
-  //     { header: 'Title', key: 'title', width: 40 },
-  //     { header: 'Description', key: 'description', width: 80 },
-  //   ];
-  //   (formData?.faqs ?? []).forEach(faq => faqsSheet.addRow(faq));
-  //   faqsSheet.getRow(1).font = { bold: true };
-
-  //   // 🖼️ Images Sheet
-  //   const imagesSheet = workbook.addWorksheet('Images');
-  //   imagesSheet.columns = [
-  //     { header: 'Image URL', key: 'url', width: 80 },
-  //   ];
-  //   (formData?.images ?? []).forEach(img => imagesSheet.addRow({ url: img }));
-  //   imagesSheet.getRow(1).font = { bold: true };
-
-  //   // 📥 Download Excel
-  //   const buffer = await workbook.xlsx.writeBuffer();
-  //   const blob = new Blob([buffer], {
-  //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  //   });
-  //   saveAs(blob, 'TempleChadhavaFullData.xlsx');
-  // };
-
-
-
-
   return (
     <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
       <form
@@ -343,75 +168,35 @@ const ChadhavaForm = () => {
           <h2 className="text-xl font-bold text-gray-700 border-b pb-2">Chadhava Information</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-          <label className="block font-semibold">Title</label>
-          <input
-            type="text"
-            name="title"
-            onChange={handleChange}
-            className="w-full border p-2 rounded"
-          />
-        </div>
-
-        <div>
-          <label className="block font-semibold">Slug</label>
-          <input
-            type="text"
-            name="slug"
-            value={formData?.slug}
-            onChange={handleChange}
-            className="w-full border p-2 rounded"
-          />
-        </div>
-
-        <div>
-          <label className="block font-semibold">Sub Title</label>
-          <input
-            type="text"
-            name="subTitle"
-            onChange={handleChange}
-            className="w-full border p-2 rounded"
-          />
-        </div>
-            <div>
-              <label className="font-semibold block mb-1">Date: </label>
-              <DatePicker
-                selected={formData.date}
-                onChange={(date) => setFormData({ ...formData, date })}
-                className="w-full border p-2 rounded-lg"
-              />
-            </div>
-            <div>
-              <label className="block font-semibold">Tithi</label>
+              <label className="block font-semibold">Title</label>
               <input
                 type="text"
-                value={formData.tithi}
-                name="tithi"
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
-              />
-            </div>
-            <div>
-              <label className="block font-semibold">Focus</label>
-              <input
-                type="text"
-                name="focus"
-                value={formData.focus}
-                onChange={handleChange}
-                className="w-full border p-2 rounded"
-              />
-            </div>
-            <div>
-              <label className="block font-semibold">Tags</label>
-              <input
-                type="text"
-                name="tags"
-                value={formData.tags}
+                name="title"
                 onChange={handleChange}
                 className="w-full border p-2 rounded"
               />
             </div>
 
-            {/* Location */}
+            <div>
+              <label className="block font-semibold">Slug</label>
+              <input
+                type="text"
+                name="slug"
+                value={formData?.slug}
+                onChange={handleChange}
+                className="w-full border p-2 rounded"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold">Sub Title</label>
+              <input
+                type="text"
+                name="subTitle"
+                onChange={handleChange}
+                className="w-full border p-2 rounded"
+              />
+            </div>
             <div>
               <label className="block font-semibold">Location</label>
               <input
@@ -419,6 +204,43 @@ const ChadhavaForm = () => {
                 name="location"
                 onChange={handleChange}
                 className="w-full border p-2 rounded"
+              />
+            </div>
+
+          </div>
+          <div className="flex flex-col md:flex-row gap-4">
+
+            {/* Date */}
+            <div className="flex-1">
+              <label className="font-semibold block mb-1">Date</label>
+              <DatePicker
+                selected={formData.date}
+                onChange={(date) => setFormData({ ...formData, date })}
+                className="w-full border p-2 rounded-lg"
+              />
+            </div>
+
+            {/* Tithi */}
+            <div className="flex-1">
+              <label className="block font-semibold mb-1">Tithi</label>
+              <input
+                type="text"
+                value={formData.tithi}
+                name="tithi"
+                onChange={handleChange}
+                className="w-full border p-2 rounded-lg"
+              />
+            </div>
+
+            {/* Tags */}
+            <div className="flex-1">
+              <label className="block font-semibold mb-1">Tags</label>
+              <input
+                type="text"
+                name="tags"
+                value={formData.tags}
+                onChange={handleChange}
+                className="w-full border p-2 rounded-lg"
               />
             </div>
           </div>
@@ -529,64 +351,95 @@ const ChadhavaForm = () => {
 
         </section>
 
-        {/* Temple History */}
-        {/* <section className="p-4 border rounded-xl space-y-4">
-          <div>
-            <label className="block font-semibold">Temple History</label>
-            <div className="mb-3">
-              <label className="block font-medium">Image</label>
+        <section className="p-4 border rounded-xl space-y-4">
+          <h2 className="text-xl font-bold text-gray-700 border-b pb-2">
+            Chadhava Focus
+          </h2>
 
-              {formData.temple.templeImg ? (
-                <div className="relative w-20 h-20">
-                  <img
-                    src={formData.temple.templeImg}
-                    alt="temple image"
-                    className="w-20 h-20 object-cover rounded border"
-                  />
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        temple: { ...prev.temple, templeImg: "" },
-                      }))
-                    }
-                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1"
-                  >
-                    <Trash2 size={14} />
-                  </button>
-                </div>
-              ) : (
-                <input
-                  type="file"
-                  name={`templeImg`}
-                  accept="image/*"
-                  onChange={handleChange}
-                  className="w-20 h-20 border rounded flex items-center justify-center text-sm p-2"
-                />
+          {formData.chadhavaFocus.map((item, index) => (
+            <div
+              key={index}
+              className="relative border p-4 rounded-lg bg-gray-50 mb-3"
+            >
+              {formData.chadhavaFocus.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const updated = formData.chadhavaFocus.filter((_, i) => i !== index);
+                    setFormData({ ...formData, chadhavaFocus: updated });
+                  }}
+                  className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                >
+                  <Trash2 size={18} />
+                </button>
               )}
+
+              <div className="flex items-center gap-4">
+                {item.focusIcon ? (
+                  <div className="relative">
+                    <img
+                      src={item.focusIcon}
+                      alt={`focus-${index}`}
+                      className="w-24 h-24 object-cover rounded-lg border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = [...formData.chadhavaFocus];
+                        updated[index].focusIcon = null;
+                        setFormData({ ...formData, chadhavaFocus: updated });
+                      }}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                    <span className="text-sm text-gray-500">Upload</span>
+                    <input
+                      type="file"
+                      name="focusIcon"
+                      className="hidden"
+                      accept="image/*"
+                      onChange={(e) => handleChange(e, index)}
+                    />
+                  </label>
+                )}
+
+                <div className="flex-1">
+                  <input
+                    type="text"
+                    placeholder="Enter focus text"
+                    value={item.foucs}
+                    onChange={(e) => {
+                      const updated = [...formData.chadhavaFocus];
+                      updated[index].foucs = e.target.value;
+                      setFormData({ ...formData, chadhavaFocus: updated });
+                    }}
+                    className="border p-2 rounded-lg w-full"
+                  />
+                </div>
+              </div>
             </div>
+          ))}
 
-            <input
-              type="text"
-              name={`temple.templeName`}
-              placeholder="name"
-              value={formData.temple.templeName}
-              onChange={handleChange}
-              className="w-full border p-2 rounded mb-2"
-            />
-
-            <textarea
-              type="text"
-              name={`temple.templeHistory`}
-              placeholder="About temple"
-              rows={4}
-              value={formData.temple.templeHistory}
-              onChange={handleChange}
-              className="w-full border p-2 rounded mb-2"
-            />
-          </div>
-        </section> */}
+          <button
+            type="button"
+            onClick={() =>
+              setFormData({
+                ...formData,
+                chadhavaFocus: [
+                  ...formData.chadhavaFocus,
+                  { focusIcon: null, foucs: "" },
+                ],
+              })
+            }
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+          >
+            + Add Focus
+          </button>
+        </section>
 
 
         {/* Packages */}
@@ -628,16 +481,16 @@ const ChadhavaForm = () => {
                       </button>
                     </div>
                   ) : (
-                  <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
-                    <span className="text-sm text-gray-500">Upload</span>
-                    <input
-                      type="file"
-                      name="packImg"
-                      accept="image/*"
-                      onChange={(e) => handleChange(e, index)} // ✅ index now works
-                      className="hidden"
-                    />
-                  </label>
+                    <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                      <span className="text-sm text-gray-500">Upload</span>
+                      <input
+                        type="file"
+                        name="packImg"
+                        accept="image/*"
+                        onChange={(e) => handleChange(e, index)} // ✅ index now works
+                        className="hidden"
+                      />
+                    </label>
                   )}
                 </div>
 
@@ -699,157 +552,9 @@ const ChadhavaForm = () => {
               }
               className="bg-green-500 text-white px-4 py-1 rounded"
             >
-              + Add Packages
+              + Add Offerings
             </button>
           </div>
-        </section>
-
-        
-
-        {/* Recommended Chadawa */}
-        <section className="p-4 border rounded-xl space-y-4">
-
-        <div className="flex items-center justify-between border p-3 rounded">
-          <label className="font-semibold">Common Recommended Chadhava</label>
-          <button
-            type="button"
-            onClick={() =>
-              setFormData((prev) => ({ ...prev, isRecommended: !prev.isRecommended }))
-            }
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${formData.isRecommended ? "bg-green-600" : "bg-gray-600"
-              }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.isRecommended ? "translate-x-6" : "translate-x-1"
-                }`}
-            />
-          </button>
-        </div>
-
-          {!formData.isRecommended && <div>
-            <label className="block font-semibold">Recommended Chadawa</label>
-            {formData?.recommendedChadawa.map((item, index) => (
-              <div key={index} className="border p-3 rounded mb-3 relative">
-                {formData?.recommendedChadawa.length > 1 && <button
-                  type="button"
-                  onClick={() => {
-                    const updated = formData?.recommendedChadawa.filter((_, i) => i !== index);
-                    setFormData({ ...formData, recommendedChadawa: updated });
-                  }}
-                  className="absolute top-2 right-2 text-red-600 hover:text-red-800"
-                >
-                  <Trash2 size={18} />
-                </button>}
-
-                <div className="mb-3">
-                  <label className="block font-medium">Image</label>
-                  {item.recommendedImg ? (
-                    <div className="relative w-15 h-15">
-                      <img
-                        src={item.recommendedImg}
-                        alt={`Package image ${index}`}
-                        className="w-15 h-15 object-cover rounded border"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const updated = [...formData?.recommendedChadawa];
-                          updated[index].recommendedImg = null;
-                          setFormData({ ...formData, recommendedChadawa: updated });
-                        }}
-                        className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  ) : (
-
-                    <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
-                    <span className="text-sm text-gray-500">Upload</span>
-                   <input
-                      type="file"
-                      name="recommendedImg"
-                      accept="image/*"
-                      onChange={(e) => handleChange(e, index)} // ✅ index now works
-                      className="hidden"
-                    />
-                  </label>
-                    
-                  )}
-                </div>
-
-                <input
-                  type="text"
-                  placeholder="Title"
-                  value={item.title}
-                  onChange={(e) => {
-                    const updated = [...formData?.recommendedChadawa];
-                    updated[index].title = e.target.value;
-                    setFormData({ ...formData, recommendedChadawa: updated });
-                  }}
-                  className="w-full border p-2 rounded mb-2"
-                />
-                <div className="grid grid-cols-4 gap-2">
-                  <input
-                    type="text"
-                    placeholder="status"
-                    value={item.status}
-                    onChange={(e) => {
-                      const updated = [...formData?.recommendedChadawa];
-                      updated[index].status = e.target.value;
-                      setFormData({ ...formData, recommendedChadawa: updated });
-                    }}
-                    className="w-full border p-2 rounded mb-2"
-                  />
-                  <input
-                    type="text"
-                    placeholder="location"
-                    value={item.location}
-                    onChange={(e) => {
-                      const updated = [...formData?.recommendedChadawa];
-                      updated[index].location = e.target.value;
-                      setFormData({ ...formData, recommendedChadawa: updated });
-                    }}
-                    className="w-full border p-2 rounded mb-2"
-                  />
-                  <DatePicker
-                    selected={item.date}
-                    onChange={(date) => {
-                      const updated = [...formData?.recommendedChadawa];
-                      updated[index].date = date;
-                      setFormData({ ...formData, recommendedChadawa: updated });
-                    }}
-                    className="w-full border p-2 rounded"
-                  />
-
-                  <input
-                    type="number"
-                    placeholder="price"
-                    value={item.price}
-                    onChange={(e) => {
-                      const updated = [...formData?.recommendedChadawa];
-                      updated[index].price = e.target.value;
-                      setFormData({ ...formData, recommendedChadawa: updated });
-                    }}
-                    className="w-full border p-2 rounded mb-2"
-                  />
-                </div>
-              </div>
-            ))}
-            <button
-              type="button"
-              onClick={() =>
-                setFormData({
-                  ...formData,
-                  recommendedChadawa: [...formData?.recommendedChadawa, { recommendedImg: "", status: "", title: "", location: "", date: new Date(), price: 0, currency: "INR" }],
-                })
-              }
-              className="bg-green-500 text-white px-4 py-1 rounded"
-            >
-              + Add Packages
-            </button>
-          </div>
-          }
         </section>
 
         {/* FAQs */}
@@ -871,7 +576,7 @@ const ChadhavaForm = () => {
               />
             </button>
           </div>
-       
+
           {!formData.commonFaqs && <div>
             <label className="block font-semibold">FAQs</label>
             {formData?.faqs.map((faq, index) => (
@@ -925,87 +630,6 @@ const ChadhavaForm = () => {
           </div>}
         </section>
 
-        {/* <div className="flex items-center justify-between border p-3 rounded">
-          <label className="font-semibold">Puja Performed by Pandit.</label>
-          <button
-            type="button"
-            onClick={() =>
-              setFormData((prev) => ({ ...prev, isActivePandit: !prev.isActivePandit }))
-            }
-            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${formData.isActivePandit ? "bg-green-600" : "bg-gray-600"
-              }`}
-          >
-            <span
-              className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${formData.isActivePandit ? "translate-x-6" : "translate-x-1"
-                }`}
-            />
-          </button>
-        </div> */}
-
-        {/* {formData.isActivePandit && <div>
-          <label className="block font-semibold">Puja Performed By</label>
-          <div className="mb-3">
-            <label className="block font-medium">Image</label>
-
-            {formData.pujaPerformedBy.pujaPerformerImg ? (
-              <div className="relative w-20 h-20">
-                <img
-                  src={formData.pujaPerformedBy.pujaPerformerImg}
-                  alt="Puja Performer"
-                  className="w-20 h-20 object-cover rounded border"
-                />
-                <button
-                  type="button"
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      pujaPerformedBy: { ...prev.pujaPerformedBy, pujaPerformerImg: "" },
-                    }))
-                  }
-                  className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1"
-                >
-                  <Trash2 size={14} />
-                </button>
-              </div>
-            ) : (
-              <input
-                type="file"
-                name={`pujaPerformerImg`}
-                accept="image/*"
-                onChange={handleChange}
-                className="w-20 h-20 border rounded flex items-center justify-center text-sm p-2"
-              />
-            )}
-          </div>
-
-          <input
-            type="text"
-            name={`pujaPerformedBy.name`}
-            placeholder="name"
-            value={formData.pujaPerformedBy.name}
-            onChange={handleChange}
-            className="w-full border p-2 rounded mb-2"
-          />
-          <input
-            type="text"
-            name={`pujaPerformedBy.temple`}
-            placeholder="temple"
-            value={formData.pujaPerformedBy.temple}
-            onChange={handleChange}
-            className="w-full border p-2 rounded mb-2"
-          />
-          <input
-            type="text"
-            name={`pujaPerformedBy.bio`}
-            placeholder="bio"
-            value={formData.pujaPerformedBy.bio}
-            onChange={handleChange}
-            className="w-full border p-2 rounded mb-2"
-          />
-        </div>} */}
-
-        {/* Toggle Switches */}
-
         <section className="p-4 border rounded-xl space-y-4">
           <div className="grid grid-cols-2 gap-6 mt-4">
 
@@ -1057,13 +681,6 @@ const ChadhavaForm = () => {
           Submit
         </button>
 
-        {/* <button
-          type="button"
-          onClick={(e) => exportStyledExcel(e)}
-          className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-        >
-          Excel
-        </button> */}
       </form>
     </div>
   );

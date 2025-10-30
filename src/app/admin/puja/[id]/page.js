@@ -58,59 +58,6 @@ const EditPujaForm = () => {
     }, [formData?.title]);
 
     
-
-    // useEffect(() => {
-    //     if (pujaDetail) {
-    //         setFormData({
-    //         title: pujaDetail.title || "",
-    //         subTitle: pujaDetail.subTitle || "",
-    //         description: pujaDetail.description || "",
-    //         price: pujaDetail.price || "",
-    //         offerPrice: pujaDetail.offerPrice || "",
-    //         discountPercent: pujaDetail.discountPercent || "",
-    //         samagriPrice: pujaDetail.samagriPrice || "",
-    //         onlinePrice: pujaDetail.onlinePrice || "",
-    //         isActive: pujaDetail.isActive || false,
-    //         image: pujaDetail.image || "",
-    //         otherImages: pujaDetail.otherImages || [],
-    //         location: pujaDetail.location || "",
-    //         metaTitle: pujaDetail.metaTitle || "",
-    //         metaDescription: pujaDetail.metaDescription || "",
-    //         metaKeyword: pujaDetail.metaKeyword || "",
-    //         commonPack: pujaDetail.commonPack || false,
-    //         commonOffer: pujaDetail.commonOffer || false,
-    //         commonFaqs: pujaDetail.commonFaqs || false,
-
-    //         // ✅ FIXED PART — अब पुराना data नहीं मिटेगा
-    //         packages:
-    //             pujaDetail.pujaPackages?.length
-    //             ? pujaDetail.pujaPackages.map((p) => ({
-    //                 name: p.name || "",
-    //                 price: p.price || "",
-    //                 description: p.description || "",
-    //                 }))
-    //             : formData.packages,
-
-    //         offerings:
-    //             pujaDetail.pujaOfferings?.length
-    //             ? pujaDetail.pujaOfferings.map((o) => ({
-    //                 name: o.name || "",
-    //                 description: o.description || "",
-    //                 }))
-    //             : formData.offerings,
-
-    //         faqs:
-    //             pujaDetail.pujaFaqs?.length
-    //             ? pujaDetail.pujaFaqs.map((f) => ({
-    //                 title: f.question || "",
-    //                 description: f.answer || "",
-    //                 }))
-    //             : formData.faqs,
-    //         });
-    //     }
-    // }, [pujaDetail]);
-
-
     useEffect(() => {
         if (pujaDetail) {
             setFormData({
@@ -557,17 +504,18 @@ const EditPujaForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetchWithWait({ dispatch, action: updatePujaAction(formData) }).then((res) => {
-            if (res.status === 200) {
-                dispatch(requestPujaDataAction());
-                router.push("/admin/puja/list")
-            } else {
-                console.log("Error:", res.error);
-                alert(res.error)
-            }
-        }).catch((e) => {
-            console.log(`error`, e)
-        })
+        console.log("handlels Update data ", formData)
+        // fetchWithWait({ dispatch, action: updatePujaAction(formData) }).then((res) => {
+        //     if (res.status === 200) {
+        //         dispatch(requestPujaDataAction());
+        //         router.push("/admin/puja/list")
+        //     } else {
+        //         console.log("Error:", res.error);
+        //         alert(res.error)
+        //     }
+        // }).catch((e) => {
+        //     console.log(`error`, e)
+        // })
     };
 
 
@@ -621,6 +569,8 @@ const EditPujaForm = () => {
     //         console.error("Toggle error:", e);
     //       });
     //   };
+
+    console.log("console formdata", formData)
 
     return (
         <div className="flex-1 p-6 pb-3 overflow-y-auto max-h-screen scrollbar-hide">

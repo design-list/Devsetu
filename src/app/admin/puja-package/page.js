@@ -355,7 +355,7 @@ const PujaPackages = () => {
                 >
                 <div>
                     <label className="block font-semibold">Offerings</label>
-                    {formData?.offerings.map((offering, index) => (
+                    {formData?.offerings?.map((offering, index) => (
                         <div key={index} className="border p-3 rounded mb-3 relative">
                             {formData?.offerings.length > 1 && <button
                                 type="button"

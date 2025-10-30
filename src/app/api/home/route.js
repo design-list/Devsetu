@@ -3,7 +3,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
-const { pujas, pujaBanners, chadhava, chadhavaBanner } = models;
+const { pujas, pujaBanners, chadhava, chadhavaBanner,chadhavaFocus } = models;
 
 export async function GET() {
   try {
@@ -49,12 +49,15 @@ export async function GET() {
 
     const chadhavaCard = await chadhava.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "chadhava_details", "date"],
+      attributes: ["id", "title", "slug", "location", "date"],
       include: [
         {
           model: chadhavaBanner,
           where: { position: 2 },
           attributes: ["id", "image_url", "position", "type"],
+        },
+        {
+          model: chadhavaFocus
         },
       ],
         limit: 3,

@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import Goldenline from "../../../public/icons/goldline.svg";
 import TempleIcon from "../../../public/icons/hindu-temple.svg";
-import TemplateNew from "../../../public/icons/temple.png";
 
 const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
   return (
