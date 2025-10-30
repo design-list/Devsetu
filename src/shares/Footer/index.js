@@ -10,6 +10,7 @@ import {
   FacebookIcon,
   MessageCircle,
   GitCommitHorizontal,
+  X,
 } from "lucide-react";
 import FooterLogo from "../../../public/icons/devsetu-logo-icon.svg";
 import DigitalIndia from "../../../public/icons/digital-india.svg";
@@ -26,12 +27,12 @@ export default function Footer() {
   // ✅ Reusable modal component
   const Modal = ({ title, children }) => (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-lg max-w-lg w-full p-6 relative">
+      <div className="bg-white rounded-2xl shadow-lg max-w-2xl w-full p-6 relative">
         <button
           onClick={() => setModal(null)}
-          className="absolute top-3 right-4 text-text-[var(--color-dark)] text-2xl cursor-pointer"
+          className="absolute top-3 right-4 text-[var(--color-dark)] text-2xl cursor-pointer"
         >
-          ×
+          <X />
         </button>
         <h2 className="text-3xl font-bold mb-4 font-secondary">{title}</h2>
         <div className="text-[var(--color-dark)] text-sm leading-relaxed">
