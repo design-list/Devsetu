@@ -16,7 +16,7 @@ import AncestralPeace from "../../../public/icons/ancestral-peace.png";
 function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 py-8 px-2 sm:px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 md:py-8 px-2 sm:px-4">
         {chadhava?.map((card) => {
           const bannerImage =
             card?.chadhavaBanners?.[0]?.image_url || "/images/herobanner.webp";
