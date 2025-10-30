@@ -551,9 +551,6 @@ export default function CheckoutPage() {
           </div>
         </form>
 
-       
-
-
         <div className="mt-4 text-sm text-gray-500">{
           isLoading && <SectionLoader />}</div>
       </div>
