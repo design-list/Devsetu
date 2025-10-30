@@ -9,7 +9,7 @@ const { offerings } = models;
 export async function GET() {
   try {
     const allOfferings = await offerings.findAll({
-      attributes: ["id", "offerimg", "title", "type", "description", "price"],
+      attributes: ["id", "offerimg", "title", "type", "description", "price", "tags"],
     });
 
     return NextResponse.json({data: allOfferings,  status: 200 });
@@ -29,6 +29,7 @@ export async function POST(req) {
           type: o.type,
           title: o.title,
           description: o.description,
+          tags: o.tags,
           offerimg: o.offerimg,
           price: o.price,
         }))

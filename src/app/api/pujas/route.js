@@ -58,6 +58,7 @@ export async function POST(req) {
           ? body.offerings?.map(o => ({
               title: o.title,
               description: o.description,
+              tags: o.tags,
               offerimg: o.offerimg,
               price: o.price,
             }))

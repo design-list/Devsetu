@@ -15,7 +15,7 @@ const PujaPackages = () => {
 
     const [formData, setFormData] = useState({
         packages: [{ packImg: null, packageType: "", packagePrice: "", packageDescription: "", noOfPeople: "" }],
-        offerings: [{ offerimg: null, title: "", description: "", price: 0 }],
+        offerings: [{ offerimg: null, title: "", description: "", price: 0, tags: "" }],
     });
 
     const [editId, setEditId] = useState(null);
@@ -137,8 +137,11 @@ const PujaPackages = () => {
         // console.log("handleOfferSubmit", payload)
         fetchWithWait({ dispatch, action: addNewOfferingDataAction(payload) }).then((res) => {
             if (res.status === 200) {
-                setAddNewPackage(false)
+                setAddNewOffering(false)
                 dispatch(requestOfferingDataAction());
+                setFormData({
+                    offerings: [{ offerimg: null, title: "", description: "", price: 0, tags: "" }],
+                })
             } else {
                 console.log("Error:", res.error);
                 alert(res.message)
@@ -354,7 +357,7 @@ const PujaPackages = () => {
                     className="mx-auto shadow-md rounded-lg p-6 space-y-6 scrollbar-hide"
                 >
                 <div>
-                    <label className="block font-semibold">Offerings</label>
+                    <label className="block font-semibold">Puja Common Offerings</label>
                     {formData?.offerings?.map((offering, index) => (
                         <div key={index} className="border p-3 rounded mb-3 relative">
                             {formData?.offerings.length > 1 && <button
@@ -402,7 +405,7 @@ const PujaPackages = () => {
 
                             <input
                                 type="text"
-                                placeholder="Offering Type"
+                                placeholder="Offering"
                                 value={offering.title}
                                 onChange={(e) => {
                                     const updated = [...formData?.offerings];
@@ -411,10 +414,21 @@ const PujaPackages = () => {
                                 }}
                                 className="w-full border p-2 rounded mb-2"
                             />
+                            <input
+                                type="text"
+                                placeholder="Tags"
+                                value={offering.tags}
+                                onChange={(e) => {
+                                    const updated = [...formData?.offerings];
+                                    updated[index].tags = e.target.value;
+                                    setFormData({ ...formData, offerings: updated });
+                                }}
+                                className="w-full border p-2 rounded mb-2"
+                            />
 
                             <input
                                 type="text"
-                                placeholder="Offering price"
+                                placeholder="Price"
                                 value={offering.price}
                                 onChange={(e) => {
                                     const updated = [...formData?.offerings];
@@ -425,7 +439,7 @@ const PujaPackages = () => {
                             />
 
                             <textarea
-                                placeholder="Offering description"
+                                placeholder="Significance"
                                 value={offering.description}
                                 onChange={(e) => {
                                     const updated = [...formData?.offerings];
@@ -441,7 +455,7 @@ const PujaPackages = () => {
                         onClick={() =>
                             setFormData({
                                 ...formData,
-                                offerings: [...formData?.offerings, { title: "", description: "", price: 0 }],
+                                offerings: [...formData?.offerings, { title: "", description: "", tags: "",  price: 0 }],
                             })
                         }
                         className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"

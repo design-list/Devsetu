@@ -223,6 +223,7 @@ export async function GET(req, { params }) {
           body.offerings.map((r) => ({
             offerimg: r.offerimg,
             title: r.title,
+            tags: r.tags,
             price: r.price,
             description: r.description,
             pujaId: updatedPujas.id,
