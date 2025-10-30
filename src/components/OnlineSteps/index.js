@@ -60,7 +60,7 @@ export default function HowPujaWorks() {
 
   return (
     <Container>
-      <div className="grid lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
         {/* Left - Steps List */}
         <div className="space-y-8">
           {steps.map((step, index) => (
@@ -82,7 +82,7 @@ export default function HowPujaWorks() {
               {/* Content */}
               <div>
                 <h3
-                  className={`font-secondary text-lg md:text-2xl font-bold transition-colors duration-300 ${
+                  className={`text-lg md:text-2xl font-bold transition-colors duration-300 ${
                     activeStep === index
                       ? "text-[var(--color-primary)]"
                       : "text-[var(--color-dark)]"

@@ -49,12 +49,12 @@ export default function Footer() {
           {/* Left - Logo & About */}
           <div className="col-span-2">
             <div className="flex justify-center md:justify-start items-center gap-2 mb-4">
-              <Image src={FooterLogo} alt="DevaSetu" width={100} height={100} />
+              <Image src={FooterLogo} alt="DevaSetu" width={100} height={100} className=" w-[80px] h-[80px] md:w-[100px] md:h-[100px]" />
               <span className="font-secondary text-2xl font-semibold">
                 DevaSetu
               </span>
             </div>
-            <p className="text-base font-medium leading-relaxed pr-8">
+            <p className="text-sm md:text-base font-medium leading-relaxed md:pr-8 text-center md:text-left">
               DevaSetu has brought religious services to the masses in India by
               connecting devotees, pandits and temples. Partnering with over 50
               renowned temples, we provide exclusive pujas and offerings
@@ -168,8 +168,8 @@ export default function Footer() {
           </div>
 
           {/* Address */}
-          <div>
-            <h3 className="font-secondary font-bold text-lg md:text-xl mb-3">
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="font-secondary font-bold text-lg md:text-xl mb-3 text-center md:text-left">
               Our Address
             </h3>
             <Link

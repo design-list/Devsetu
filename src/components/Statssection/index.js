@@ -15,32 +15,32 @@ export default function StatsSection() {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] relative py-24 px-6 overflow-hidden">
+    <section className="bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 overflow-hidden">
       <Container>
-        {/* Decorative gradient glow */}
+        {/* Decorative gradient glow (optional) */}
         {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(241,88,34,0.08)_0%,transparent_70%)] pointer-events-none"></div> */}
 
-        <div className="relative z-10 max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* LEFT SIDE — Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
+            className="text-center md:text-left"
           >
-            <h2 className="font-secondary text-4xl md:text-5xl font-extrabold text-[var(--color-primary)] mb-6">
+            <h2 className="font-secondary text-3xl sm:text-4xl md:text-5xl font-extrabold text-[var(--color-primary)] mb-4 sm:mb-6 leading-tight">
               Trusted by Hindus Globally
             </h2>
-            <p className="text-[var(--color-dark)] text-lg md:text-xl leading-relaxed max-w-lg">
+            <p className="text-[var(--color-dark)] text-base sm:text-lg md:text-xl leading-relaxed max-w-xl mx-auto md:mx-0">
               Committed to serving the devotional needs of millions, we make
               sacred rituals and blessings accessible wherever you are.
             </p>
 
             {/* Highlight Badge */}
-            <div className="mt-10 inline-flex items-center gap-3 bg-white border border-orange-100 shadow-md px-6 py-3 rounded-full">
-              {/* <Image src={Trusted} alt="Ornament" className="w-6 opacity-70" /> */}
-              <ShieldCheck size={28} className="text-green" />
-              <span className="text-[var(--color-primary)] font-semibold uppercase">
+            <div className="mt-8 sm:mt-10 inline-flex flex-wrap justify-center md:justify-start items-center gap-3 bg-white border border-orange-100 shadow-md px-5 sm:px-6 py-3 rounded-full">
+              <ShieldCheck size={26} className="text-green shrink-0" />
+              <span className="text-[var(--color-primary)] font-semibold uppercase text-sm sm:text-base text-center">
                 India’s Most Trusted Devotional Platform
               </span>
             </div>
@@ -52,22 +52,26 @@ export default function StatsSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="grid sm:grid-cols-2 grid-cols-2 gap-8"
+            className="grid grid-cols-2 sm:grid-cols-2 gap-6 sm:gap-8"
           >
             {stats.map((item, idx) => {
               const Icon = item.icon;
               return (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl shadow-[0_8px_20px_rgba(241,88,34,0.1)] border border-orange-100 text-center py-10 px-6 hover:shadow-[0_10px_25px_rgba(241,88,34,0.2)] hover:-translate-y-2 transition-all duration-300"
+                  className="bg-white rounded-2xl shadow-[0_8px_20px_rgba(241,88,34,0.1)] border border-orange-100 text-center py-8 sm:py-10 px-4 sm:px-6 hover:shadow-[0_10px_25px_rgba(241,88,34,0.2)] hover:-translate-y-2 transition-all duration-300"
                 >
                   <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[#f57e20] flex items-center justify-center text-white shadow-lg">
-                      <Icon size={32} />
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[#f57e20] flex items-center justify-center text-white shadow-lg">
+                      <Icon size={28} className="sm:size-32" />
                     </div>
                   </div>
-                  <h3 className="text-3xl font-bold text-[var(--color-primary)]">{item.value}</h3>
-                  <p className="text-gray-700 mt-1 text-lg">{item.label}</p>
+                  <h3 className="text-2xl sm:text-3xl font-bold text-[var(--color-primary)]">
+                    {item.value}
+                  </h3>
+                  <p className="text-gray-700 mt-1 text-base sm:text-lg">
+                    {item.label}
+                  </p>
                 </div>
               );
             })}

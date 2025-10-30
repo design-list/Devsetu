@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronDown, User, Mail, Phone, MessageCircle, Flame, BookOpen, Home, FileText } from "lucide-react";
+import { ChevronDown, User, Mail, Phone, MessageCircle, Flame, BookOpen, Home, FileText, X, Menu } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLang } from "@/app/langProviders";
@@ -21,6 +21,7 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileNav, setMobileNav] = useState(false);
 
   const withLang = (path) => `/${lang}${path}`;
   const normalize = (path) =>
@@ -35,13 +36,13 @@ const Header = () => {
   return (
     <header className="w-full shadow-sm sticky top-0 z-50 bg-white">
       <Container>
-        <div className="flex items-center justify-between py-4">
+        <div className="flex items-center justify-between py-2">
           {/* Logo */}
           <Link href={withLang("/")}>
-            <Image src={Logo} alt="Dev Setu" width={180} height={80} className="w-[180px]" />
+            <Image src={Logo} alt="Dev Setu" width={180} height={80} className="w-[150px] md:w-[180px]" />
           </Link>
 
-          {/* Nav Menu */}
+          {/* Desktop Menu */}
           <nav className="hidden md:flex gap-8">
             {menu.map(({ id, title, path }) => {
               const link = withLang(path);
@@ -62,20 +63,10 @@ const Header = () => {
             })}
           </nav>
 
-          {/* Language & User */}
-          <div className="flex items-center gap-4 relative">
-            {/* Language Selector */}
-            {/* <select
-              value={lang}
-              onChange={(e) => handleLangChange(e.target.value)}
-              className="border rounded-lg px-3 py-1 text-sm bg-white hover:bg-[var(--color-primary-light)] transition"
-            >
-              <option value="en">English</option>
-              <option value="hi">हिंदी</option>
-            </select> */}
-
+          {/* Right Side */}
+          <div className="flex items-center gap-3">
             {/* Profile Dropdown */}
-            <div className="relative">
+            <div className="relative hidden md:block">
               <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition"
@@ -116,9 +107,6 @@ const Header = () => {
                         <span className="flex items-center gap-2 text-gray-700"><BookOpen size={16} /> Book a Chadhava</span>
                         <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</span>
                       </li>
-                      {/* <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <span className="flex items-center gap-2 text-gray-700"><Home size={16} /> Astro Tools</span>
-                      </li> */}
                     </ul>
                   </div>
 
@@ -144,9 +132,46 @@ const Header = () => {
                 </div>
               )}
             </div>
+
+            {/* Mobile Hamburger */}
+            <button
+              className="md:hidden w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition"
+              onClick={() => setMobileNav(!mobileNav)}
+            >
+              {mobileNav ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </div>
         </div>
       </Container>
+
+      {/* Mobile Menu */}
+      {mobileNav && (
+        <div className="md:hidden bg-white border-t shadow-inner">
+          <nav className="flex flex-col gap-4 p-4">
+            {menu.map(({ id, title, path }) => {
+              const link = withLang(path);
+              const active = normalize(pathname) === path;
+              return (
+                <Link
+                  key={id}
+                  href={link}
+                  className={`text-base font-semibold transition ${
+                    active
+                      ? "text-[var(--color-primary-light)]"
+                      : "text-gray-800 hover:text-[var(--color-primary)]"
+                  }`}
+                  onClick={() => setMobileNav(false)}
+                >
+                  {title[lang]}
+                </Link>
+              );
+            })}
+            <button className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
+              Login / Create an account
+            </button>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
