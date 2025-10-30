@@ -21,7 +21,7 @@ const Breadcrumbs = ({ pathname }) => {
   });
 
   return (
-    <nav className="flex space-x-2 text-[var(--color-dark)] text-sm font-secondary py-4">
+    <nav className="flex items-center space-x-2 text-[var(--color-dark)] text-sm font-secondary py-4">
       <Link href={`/${lang}`} className="hover:underline">
         {lang === "en" ? "Home" : "होम"}
       </Link>
@@ -30,7 +30,7 @@ const Breadcrumbs = ({ pathname }) => {
         <span key={crumb.href} className="flex items-center space-x-2">
           <span>/</span>
           {i === crumbs.length - 1 ? (
-            <span className="font-semibold">{crumb.label}</span>
+            <span className="font-semibold line-clamp-1">{crumb.label}</span>
           ) : (
             <Link href={crumb.href} className="hover:underline">
               {crumb.label}

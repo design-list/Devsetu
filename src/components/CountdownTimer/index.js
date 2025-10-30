@@ -31,7 +31,7 @@ const CountdownTimer = ({date, CountdownHeading}) => {
   }, [date]);
 
   return (
-    <div className="flex gap-4 items-center rounded-lg max-w-md">
+    <div className="flex gap-4 items-center rounded-lg max-w-md m-auto">
       <h2 className="text-xl font-bold text-[var(--color-dark)] uppercase">
         {CountdownHeading}
       </h2>

@@ -160,3 +160,8 @@ body {
 .glow-text {
   animation: glow 3s ease-in-out infinite;
 }
+
+@media (min-width: 640px) {
+  .puja-page .swiper .swiper-button-prev,
+  .puja-page .swiper .swiper-button-next{top: 60% !important; width: 30px !important; height: 30px !important;}
+}

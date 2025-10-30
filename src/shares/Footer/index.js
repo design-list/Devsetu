@@ -10,6 +10,7 @@ import {
   FacebookIcon,
   MessageCircle,
   GitCommitHorizontal,
+  X,
 } from "lucide-react";
 import FooterLogo from "../../../public/icons/devsetu-logo-icon.svg";
 import DigitalIndia from "../../../public/icons/digital-india.svg";
@@ -26,12 +27,12 @@ export default function Footer() {
   // ✅ Reusable modal component
   const Modal = ({ title, children }) => (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-lg max-w-lg w-full p-6 relative">
+      <div className="bg-white rounded-2xl shadow-lg max-w-2xl w-full p-6 relative">
         <button
           onClick={() => setModal(null)}
-          className="absolute top-3 right-4 text-text-[var(--color-dark)] text-2xl cursor-pointer"
+          className="absolute top-3 right-4 text-[var(--color-dark)] text-2xl cursor-pointer"
         >
-          ×
+          <X />
         </button>
         <h2 className="text-3xl font-bold mb-4 font-secondary">{title}</h2>
         <div className="text-[var(--color-dark)] text-sm leading-relaxed">
@@ -48,12 +49,12 @@ export default function Footer() {
           {/* Left - Logo & About */}
           <div className="col-span-2">
             <div className="flex justify-center md:justify-start items-center gap-2 mb-4">
-              <Image src={FooterLogo} alt="DevaSetu" width={100} height={100} />
+              <Image src={FooterLogo} alt="DevaSetu" width={100} height={100} className=" w-[80px] h-[80px] md:w-[100px] md:h-[100px]" />
               <span className="font-secondary text-2xl font-semibold">
                 DevaSetu
               </span>
             </div>
-            <p className="text-base font-medium leading-relaxed pr-8">
+            <p className="text-sm md:text-base font-medium leading-relaxed md:pr-8 text-center md:text-left">
               DevaSetu has brought religious services to the masses in India by
               connecting devotees, pandits and temples. Partnering with over 50
               renowned temples, we provide exclusive pujas and offerings
@@ -167,8 +168,8 @@ export default function Footer() {
           </div>
 
           {/* Address */}
-          <div>
-            <h3 className="font-secondary font-bold text-lg md:text-xl mb-3">
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="font-secondary font-bold text-lg md:text-xl mb-3 text-center md:text-left">
               Our Address
             </h3>
             <Link

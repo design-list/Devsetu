@@ -258,11 +258,7 @@ const handleAddMember = () => {
       alert("Something went wrong. Please try again.");
     }
   };
-
-
   // console.log("Rendered Checkout Page with storeId:", allCarts);
-
-  
 
   return (
 

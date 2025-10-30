@@ -14,7 +14,7 @@ import TempleIcon from "../../../public/icons/hindu-temple.svg";
 function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
   return (
     <>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 py-8 px-2 sm:px-4">
         {chadhava?.map((card) => {
           
           const bannerImage =
@@ -32,7 +32,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               </span>}
 
               {/* Image Section */}
-              <div className="relative h-52 px-4 pt-4 pb-0 overflow-hidden">
+              <div className="relative h-44 sm:h-52 md:h-56 px-4 pt-4 pb-0 overflow-hidden">
                 <LazyImage
                   src={bannerImage}
                   alt={card.title}
@@ -40,7 +40,6 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   height={320}
                   className="w-full h-full object-cover rounded-xl"
                 />
-                {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80 group-hover:opacity-100 transition-all duration-300"></div> */}
               </div>
 
               {/* Details */}
@@ -49,28 +48,24 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   {card?.tags}
                   <Image
                     src={Goldenline}
-                    alt="Golden under"
-                    className="rotate-[0.5deg]"
+                    alt="Golden underline"
+                    className="mx-auto rotate-[0.5deg] w-16 sm:w-20"
                   />
                 </div>
-                <div className="relative group max-w-full">
-                  {/* Title */}
-                  <h4
-                    className="text-[var(--color-dark)] font-secondary text-xl md:text-2xl font-bold tracking-wide mb-2
-               line-clamp-2 overflow-hidden text-ellipsis cursor-default"
-                  >
+
+                {/* Title + Tooltip */}
+                <div className="relative group max-w-full text-left">
+                  <h4 className="text-[var(--color-dark)] font-secondary text-lg sm:text-xl md:text-2xl font-bold tracking-wide mb-2 line-clamp-3 overflow-hidden text-ellipsis cursor-default">
                     {card.title}
                   </h4>
 
                   {/* Tooltip */}
                   <div
                     className="absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-300 ease-out
-               left-1/2 -translate-x-1/2 top-14 mt-3 z-20 bg-gray-900 text-white text-sm font-normal px-3 py-1.5 rounded-lg
-               shadow-xl w-max max-w-[320px] text-center"
+               left-1/2 -translate-x-1/2 top-full mt-2 z-20 bg-gray-900 text-white text-sm font-normal px-3 py-1.5 rounded-lg
+               shadow-xl w-max max-w-[280px] sm:max-w-[320px] text-left"
                   >
                     {card.title}
-
-                    {/* Tooltip Arrow */}
                     <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
                   </div>
                 </div>
@@ -116,22 +111,20 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               </div>
 
               {/* Button */}
-              <div className="p-5 pt-0">
+              <div className="px-5 pb-5 pt-0">
                 <Link
                   href={withLang(`/chadhava/${card.slug}`)}
-                  className="w-full flex items-center justify-center gap-0 
-      bg-gradient-to-t from-[var(--color-primary)] via-[var(--color-primary-light)] to-[var(--color-primary)]
-      text-white font-semibold rounded-lg py-3 px-5
-      shadow-[0_2px_6px_rgba(241,88,34,0.2)]
-      hover:shadow-[0_4px_10px_rgba(241,88,34,0.3)]
-      transition-all duration-300 hover:scale-[1.04]
-      active:translate-y-[1px]
-      relative overflow-hidden mt-4 uppercase"
                   onClick={(e) => e.stopPropagation()}
+                  className="w-full flex items-center justify-center gap-2 
+              bg-gradient-to-t from-[var(--color-primary)] via-[var(--color-primary-light)] to-[var(--color-primary)]
+              text-white font-semibold rounded-lg py-3 px-4
+              shadow-[0_2px_6px_rgba(241,88,34,0.2)]
+              hover:shadow-[0_4px_10px_rgba(241,88,34,0.3)]
+              transition-all duration-300 hover:scale-[1.03]
+              active:translate-y-[1px]
+              relative overflow-hidden uppercase text-sm sm:text-base"
                 >
-                  {/* Soft Gradient Glow Overlay */}
                   <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-30 blur-sm pointer-events-none"></span>
-
                   <span className="relative z-10 flex items-center gap-2">
                     Book Your Chadhava <ArrowUpRight className="w-4 h-4" />
                   </span>
@@ -142,11 +135,12 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
         })}
       </div>
 
+      {/* View More Button */}
       {viewmore && (
-        <div className="text-center">
+        <div className="text-center md:mt-4">
           <Link
             href={withLang("/chadhava")}
-            className="inline-flex items-center gap-0 text-[var(--secondary)] text-lg font-semibold hover:underline transition-all duration-200 mt-4"
+            className="inline-flex items-center gap-1 text-[var(--secondary)] text-base sm:text-lg font-semibold hover:underline transition-all duration-200"
           >
             View All Chadhava <ArrowUpRight className="w-5 h-5" />
           </Link>

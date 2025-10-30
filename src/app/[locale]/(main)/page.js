@@ -106,12 +106,12 @@ const Home = () => {
       <HeroBanner slides={heroBanner} />
       <ContinuousSlider />
       <Container>
-        <section className="py-8 font">
+        <section className="py-3 md:py-8">
           <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
-            <h2 className="font-secondary text-center text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5 drop-shadow-lg">
+            <h2 className="font-secondary text-center text-3xl md:text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5 drop-shadow-lg">
               Special <span className="text-[var(--color-info)]">puja</span>
             </h2>
-            <p className="text-xl text-[var(--color-dark)]">
+            <p className="text-base md:text-xl text-[var(--color-dark)] text-center md:text-left">
               Connect with the divine from home. Get your puja performed in your
               name at India’s holy temples and invite peace, joy, and prosperity
               into your life.
@@ -132,11 +132,11 @@ const Home = () => {
 
         <section className="pb-16">
           <div className="mx-auto max-w-screen-md text-left md:text-center  lg:mb-0">
-            <h2 className="font-secondary text-center text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5 drop-shadow-lg">Special
+            <h2 className="font-secondary text-center text-3xl md:text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5 drop-shadow-lg">Special
               <span className="text-[var(--color-info)]"> chadhavas</span>{" "}
               
             </h2>
-            <p className="text-xl text-[var(--color-dark)]">
+            <p className="text-sm md:text-xl text-[var(--color-dark)]">
               Offer your devotion through special chadhavas and seek divine
               blessings for yourself and your loved ones.
             </p>

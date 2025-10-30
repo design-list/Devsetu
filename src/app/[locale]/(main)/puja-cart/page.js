@@ -32,7 +32,7 @@ const PujaCart = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] px-6 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] md:px-6 py-12">
       <Container>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
           <h3 className="font-secondary text-3xl font-bold text-[var(--color-primary)] tracking-tight mb-4 sm:mb-0">
