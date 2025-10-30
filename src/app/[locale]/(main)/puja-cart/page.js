@@ -32,15 +32,15 @@ const PujaCart = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] md:px-6 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] md:px-6 py-6 md:py-12">
       <Container>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
-          <h3 className="font-secondary text-3xl font-bold text-[var(--color-primary)] tracking-tight mb-4 sm:mb-0">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-8 text-center md:text-left">
+          <h3 className="font-secondary text-2xl md:text-3xl font-bold text-[var(--color-primary)] tracking-tight md:mb-4 sm:mb-0">
             Add More Offering Items 🪔
           </h3>
           <button
             onClick={handleRedirect}
-            className="font-secondary bg-[var(--color-primary-light)] hover:bg-[var(--color-primary)] text-white font-semibold py-3 px-8 rounded-lg text-lg shadow-md transition-all duration-300"
+            className="font-secondary hidden md:block bg-[var(--color-primary-light)] hover:bg-[var(--color-primary)] text-white font-semibold py-3 px-8 rounded-lg text-lg shadow-md transition-all duration-300"
           >
             Next →
           </button>
@@ -99,6 +99,13 @@ const PujaCart = () => {
             );
           })}
         </div>
+
+         <button
+            onClick={handleRedirect}
+            className="font-secondary block md:hidden bg-[var(--color-primary-light)] hover:bg-[var(--color-primary)] text-white font-semibold py-3 px-8 rounded-lg text-lg shadow-md transition-all duration-300 mt-5 m-auto"
+          >
+            Next →
+          </button>
       </Container>
     </div>
   );
