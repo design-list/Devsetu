@@ -64,7 +64,7 @@ const PaymentSuccess = () => {
 
         {/* Booking Header */}
         {cartDetails?.id && (
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-sm text-gray-600 mb-6"
@@ -74,7 +74,7 @@ const PaymentSuccess = () => {
               {cartDetails?.['paymentStatus'] && <spen className="font-semibold text-orange-700">Payment status: {cartDetails?.['paymentStatus']}</spen>}
             </div>
 
-          </motion.p>
+          </motion.div>
         )}
 
         {/* Main Layout */}

@@ -24,9 +24,9 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
               className="group flex flex-col bg-white overflow-visible shadow-sm hover:shadow-[0_10px_25px_rgba(0,0,0,0.15)] hover:-translate-y-1 transition-all duration-300 border border-gray-100 relative rounded-xl"
             >
               {/* Custom Tag — visible even with overflow-hidden */}
-              <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-xs font-bold text-white uppercase">
+              {puja.tags && <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-xs font-bold text-white uppercase">
                 Label Tag
-              </span>
+              </span> }
               {/* Image Section */}
               <div
                 onClick={() => handlaRedirect("puja", puja.slug)}
@@ -51,7 +51,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
               {/* Details */}
               <div className="px-4 py-2 flex flex-col flex-1 bg-gradient-to-b from-white to-[var(--forcast)]">
                 <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
-                  {puja?.highlight || "NIVARAN MAHAPUJA SPECIAL"}
+                  {puja?.tags}
                   <Image
                     src={Goldenline}
                     alt="Golden under"

@@ -20,6 +20,7 @@ import {
   HelpCircle,
   Image as ImageIcon,
 } from "lucide-react";
+import { formatDate } from "../../../../../utils/localstorage";
 
 const api = new Api();
 
@@ -110,7 +111,7 @@ export default function ChadhavaPage() {
                 <p className="text-sm text-gray-500 mb-2">{chadhava.slug}</p>
 
                 <p className="text-gray-600 text-sm mb-3">
-                  <span className="font-semibold">Date:</span> {chadhava.date}
+                  <span className="font-semibold">Date:</span> {formatDate(chadhava.date, "full")}
                 </p>
 
                 <p className="text-gray-700 text-sm mb-3">

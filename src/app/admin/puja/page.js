@@ -17,6 +17,7 @@ const PujaForm = () => {
     slug: "",
     ratingValue: "",
     ratingReviews: "",
+    tags: "",
     specialDay: "",
     location: "",
     date: new Date(),
@@ -27,7 +28,7 @@ const PujaForm = () => {
     commonFaqs: true,
     isActiveOnHome: false,
     packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-    offerings: [{ offerimg: null, title: "", description: "", price: "" }],
+    offerings: [{ offerimg: null, title: "", description: "",tags: "", price: "" }],
     faqs: [{ title: "", description: "" }],
     pujaBenefits: [{ title: "", description: "" }],
     temple: { templeImg: null, templeName: "", templeHistory: "" },
@@ -225,28 +226,28 @@ const PujaForm = () => {
           dispatch(requestPujaDataAction());
 
           // ✅ Reset form after success
-          // setFormData({
-          //   title: "",
-          //   subTitle: "",
-          //   slug: "",
-          //   ratingValue: "",
-          //   ratingReviews: "",
-          //   specialDay: "",
-          //   location: "",
-          //   date: new Date(),
-          //   pujaDetails: "",
-          //   isActive: true,
-          //   commonOffer: true,
-          //   commonPack: true,
-          //   commonFaqs: true,
-          //   isActiveOnHome: false,
-          //   packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-          //   offerings: [{ offerimg: null, title: "", description: "", price: "" }],
-          //   faqs: [{ title: "", description: "" }],
-          //   pujaBenefits: [{ title: "", description: "" }],
-          //   temple: { templeImg: null, templeName: "", templeHistory: "" },
-          //   banners: [{ imgUrl: null, type: "", position: 1 }],
-          // });
+          setFormData({
+            title: "",
+            subTitle: "",
+            slug: "",
+            ratingValue: "",
+            ratingReviews: "",
+            specialDay: "",
+            location: "",
+            date: new Date(),
+            pujaDetails: "",
+            isActive: true,
+            commonOffer: true,
+            commonPack: true,
+            commonFaqs: true,
+            isActiveOnHome: false,
+            packages: [{ packImg: null, packageType: "", packagePrice: "" }],
+            offerings: [{ offerimg: null, title: "", description: "", price: "" }],
+            faqs: [{ title: "", description: "" }],
+            pujaBenefits: [{ title: "", description: "" }],
+            temple: { templeImg: null, templeName: "", templeHistory: "" },
+            banners: [{ imgUrl: null, type: "", position: 1 }],
+          });
         } else {
           console.log("Error:", res.error);
           alert(res.message);
@@ -301,138 +302,16 @@ const PujaForm = () => {
           />
         </div>
 
-         {/* Images (File Upload) */}
-
-         {/* <div>
-          <label className="block font-semibold mb-3">Banners</label>
-
-          {formData?.banners.map((item, index) => (
-            <div
-              key={index}
-              className="border p-4 rounded-lg mb-4 relative bg-gray-50 shadow-sm"
-            >
-              {formData?.banners.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    const updated = formData?.banners.filter((_, i) => i !== index);
-                    setFormData({ ...formData, banners: updated });
-                  }}
-                  className="absolute top-2 right-2 text-red-600 hover:text-red-800"
-                >
-                  <Trash2 size={18} />
-                </button>
-              )}
-
-              <div className="mb-3">
-                <label className="block text-sm font-medium mb-1">Desktop Banner</label>
-                {item.desktopImg ? (
-                  <div className="relative w-32 h-20">
-                    <img
-                      src={item.desktopImg}
-                      alt={`desktop banner ${index}`}
-                      className="w-32 h-20 object-cover rounded border cursor-pointer"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const updated = [...formData?.banners];
-                        updated[index].desktopImg = null;
-                        setFormData({ ...formData, banners: updated });
-                      }}
-                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
-                    >
-                      <Trash2 size={12} />
-                    </button>
-                  </div>
-                ) : (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleChange(e, index, "desktopImg")}
-                    className="w-full border rounded p-2 text-sm cursor-pointer"
-                  />
-                )}
-              </div>
-
-              <div className="mb-3">
-                <label className="block text-sm font-medium mb-1">Mobile Banner</label>
-                {item.mobileImg ? (
-                  <div className="relative w-24 h-24">
-                    <img
-                      src={item.mobileImg}
-                      alt={`mobile banner ${index}`}
-                      className="w-24 h-24 object-cover rounded border cursor-pointer"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const updated = [...formData?.banners];
-                        updated[index].mobileImg = null;
-                        setFormData({ ...formData, banners: updated });
-                      }}
-                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 cursor-pointer"
-                    >
-                      <Trash2 size={12} />
-                    </button>
-                  </div>
-                ) : (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleChange(e, index, "mobileImg")}
-                    className="w-full border rounded p-2 text-sm cursor-pointer"
-                  />
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <select
-                  value={item.type}
-                  onChange={(e) => {
-                    const updated = [...formData?.banners];
-                    updated[index].type = e.target.value;
-                    setFormData({ ...formData, banners: updated });
-                  }}
-                  className="w-full border p-2 rounded text-sm"
-                >
-                  <option value="">Select Type</option>
-                  <option value="eng">English</option>
-                  <option value="hi">Hindi</option>
-                </select>
-
-                <input
-                  type="number"
-                  placeholder="Position"
-                  value={item.position}
-                  onChange={(e) => {
-                    const updated = [...formData?.banners];
-                    updated[index].position = e.target.value;
-                    setFormData({ ...formData, banners: updated });
-                  }}
-                  className="w-full border p-2 rounded text-sm"
-                />
-              </div>
-            </div>
-          ))}
-
-          <button
-            type="button"
-            onClick={() =>
-              setFormData({
-                ...formData,
-                banners: [
-                  ...formData?.banners,
-                  { desktopImg: "", mobileImg: "", type: "", position: "" },
-                ],
-              })
-            }
-            className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
-          >
-            + Add Banner
-          </button>
-        </div> */}
-
+        <div>
+          <label className="block font-semibold">Special Tags</label>
+          <input
+            type="text"
+            name="tags"
+            value={formData?.tags}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+          />
+        </div>
 
         <div>
           <label className="block font-semibold mb-2">Banners</label>
@@ -788,7 +667,7 @@ const PujaForm = () => {
                 }}
                 className="w-full border p-2 rounded mb-2"
               />
-              <textarea
+              <input
                 placeholder="Package Price"
                 value={packaging.packagePrice}
                 onChange={(e) => {
@@ -798,6 +677,26 @@ const PujaForm = () => {
                 }}
                 className="w-full border p-2 rounded"
               />
+              <input
+                placeholder="No. of People"
+                value={packaging.noOfPeople}
+                onChange={(e) => {
+                    const updated = [...formData?.packages];
+                    updated[index].noOfPeople = e.target.value;
+                    setFormData({ ...formData, packages: updated });
+                }}
+                className="w-full border p-2 rounded"
+            />
+            <textarea
+                placeholder="Package Description"
+                value={packaging.packageDescription}
+                onChange={(e) => {
+                    const updated = [...formData?.packages];
+                    updated[index].packageDescription = e.target.value;
+                    setFormData({ ...formData, packages: updated });
+                }}
+                className="w-full border p-2 rounded"
+            />
             </div>
           ))}
           <button
@@ -805,7 +704,7 @@ const PujaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                packages: [...formData?.packages, { packageType: "", packagePrice: "" }],
+                packages: [...formData?.packages, { packImg: null, packageType: "", packagePrice: "", packageDescription: "", noOfPeople: "" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
@@ -894,6 +793,18 @@ const PujaForm = () => {
 
               <input
                 type="text"
+                placeholder="Tags"
+                value={offering.tags}
+                onChange={(e) => {
+                  const updated = [...formData?.offerings];
+                  updated[index].tags = e.target.value;
+                  setFormData({ ...formData, offerings: updated });
+                }}
+                className="w-full border p-2 rounded mb-2"
+              />
+
+              <input
+                type="text"
                 placeholder="Offering price"
                 value={offering.price}
                 onChange={(e) => {
@@ -921,7 +832,7 @@ const PujaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                offerings: [...formData?.offerings, { packageType: "", packagePrice: "" }],
+                offerings: [...formData?.offerings, { offerimg: null, title: "", description: "", tags: "", price: "" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"

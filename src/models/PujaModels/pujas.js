@@ -25,6 +25,11 @@ export default (sequelize, DataTypes) => {
       unique: true,
       field: "slug",
     },
+    tags: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "tags",
+    },
     ratingValue: {
       type: DataTypes.FLOAT,
       allowNull: true,

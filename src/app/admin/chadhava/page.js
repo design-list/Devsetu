@@ -234,7 +234,7 @@ const ChadhavaForm = () => {
 
             {/* Tags */}
             <div className="flex-1">
-              <label className="block font-semibold mb-1">Tags</label>
+              <label className="block font-semibold mb-1">Special Tags</label>
               <input
                 type="text"
                 name="tags"

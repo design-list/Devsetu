@@ -11,7 +11,7 @@ export async function GET() {
     // Chadhavas fetch
     const chadhavaData = await chadhava.findAll({
       where: { isActive: true, isActiveOnHome: true },
-      attributes: ["id", "title", "slug"],
+      attributes: ["id", "title", "slug", "tags"],
       include: [
         {
           model: chadhavaBanner,
@@ -23,7 +23,7 @@ export async function GET() {
 
     const chadhavaCard = await chadhava.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "location", "date"],
+      attributes: ["id", "title", "slug", "sub_title", "location", "date", "tags"],
       include: [
         {
           model: chadhavaBanner,
@@ -42,6 +42,7 @@ export async function GET() {
       id: c.id,
       title: c.title,
       slug: c.slug,
+      tags: c.tags,
       banners: c.chadhavaBanners || [],
       type: "chadhava"
     }));

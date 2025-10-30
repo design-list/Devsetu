@@ -10,7 +10,7 @@ export async function GET() {
     // Pujas fetch
     const pujaData = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: true },
-      attributes: ["id", "title", "slug"],
+      attributes: ["id", "title", "slug", "tags" ],
       include: [
         {
           model: pujaBanners,
@@ -22,7 +22,7 @@ export async function GET() {
 
     const pujaCard = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "location", "date"],
+      attributes: ["id", "title", "slug", "sub_title", "location","tags", "date"],
       include: [
         {
           model: pujaBanners,
@@ -37,7 +37,7 @@ export async function GET() {
     // Chadhavas fetch
     const chadhavaData = await chadhava.findAll({
       where: { isActive: true, isActiveOnHome: true },
-      attributes: ["id", "title", "slug"],
+      attributes: ["id", "title", "slug", "tags"],
       include: [
         {
           model: chadhavaBanner,
@@ -49,7 +49,7 @@ export async function GET() {
 
     const chadhavaCard = await chadhava.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "location", "date"],
+      attributes: ["id", "title", "slug", "location", "date", "tags"],
       include: [
         {
           model: chadhavaBanner,

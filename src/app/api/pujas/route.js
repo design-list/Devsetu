@@ -31,6 +31,7 @@ export async function POST(req) {
         ratingValue: parseFloat(body.ratingValue),
         ratingReviews: parseInt(body.ratingReviews),
         specialDay: body.specialDay,
+        tags: body.tags,
         location: body.location,
         date: new Date(body.date),
         pujaDetails: body.pujaDetails,

@@ -16,6 +16,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
     <>
       <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 py-6">
         {chadhava?.map((card) => {
+          
           const bannerImage =
             card?.chadhavaBanners?.[0]?.image_url || "/images/herobanner.webp";
 
@@ -26,9 +27,9 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               className="group flex flex-col bg-white overflow-visible shadow-md border border-gray-100 hover:shadow-[0_10px_25px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 cursor-pointer relative rounded-xl"
             >
               {/* Custom Tag — visible even with overflow-hidden */}
-              <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-sm font-bold text-white uppercase">
+              {card.tags && <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-sm font-bold text-white uppercase">
                 Label Tag
-              </span>
+              </span>}
 
               {/* Image Section */}
               <div className="relative h-52 px-4 pt-4 pb-0 overflow-hidden">
@@ -45,7 +46,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               {/* Details */}
               <div className="px-4 pt-2 pb-4 flex flex-col flex-1 justify-between">
                 <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
-                  {chadhava?.highlight || "NIVARAN MAHAPUJA SPECIAL"}
+                  {card?.tags}
                   <Image
                     src={Goldenline}
                     alt="Golden under"

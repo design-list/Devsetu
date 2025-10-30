@@ -36,6 +36,7 @@ const PujaPackages = ({ pujaPackages = [], onAddToCart }) => {
                 {pkg.packageType || pkg.name}
               </h3>
               <p className="font-bold text-xl mt-1">₹{pkg.packagePrice}</p>
+              <span>{pkg.packageDescription}</span>
             </div>
           </div>
         ))}

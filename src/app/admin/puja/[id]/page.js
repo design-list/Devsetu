@@ -8,6 +8,7 @@ import { addNewPujaDataAction, fetchPujaDetailAction, requestPujaDataAction, upd
 import { useParams, useRouter } from "next/navigation";
 
 import Api from "../../../../../services/fetchApi";
+import { title } from "process";
 
 const api = new Api()
 
@@ -19,6 +20,7 @@ const EditPujaForm = () => {
         slug: "",
         ratingValue: "",
         ratingReviews: "",
+        tags: "",
         specialDay: "",
         location: "",
         date: new Date(),
@@ -29,8 +31,9 @@ const EditPujaForm = () => {
         commonPack: true,
         commonFaqs: true,
         temple: { templeImg: null, templeName: "", templeHistory: "" },
-        packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-        offerings: [{ offerimg: null, title: "", description: "", price: "" }],
+        packages: [{ packImg: null, packageType: "", packagePrice: "", packageDescription: "", noOfPeople: "" }],
+        offerings: [{ offerimg: null, title: "", description: "", tags: "", price: "" }],
+        pujaBenefits: [{ title: "", description: "" }],
         faqs: [{ title: "", description: "" }],
         banners: [{imgUrl: null, type: "", position: 0}],
     });
@@ -68,6 +71,7 @@ const EditPujaForm = () => {
                 ratingValue: pujaDetail.ratingValue || "",
                 ratingReviews: pujaDetail.ratingReviews || "",
                 specialDay: pujaDetail.specialDay || "",
+                tags: pujaDetail.tags || "",
                 location: pujaDetail.location || "",
                 date: pujaDetail.date ? new Date(pujaDetail.date) : new Date(),
                 pujaDetails: pujaDetail.pujaDetails || "",
@@ -88,19 +92,32 @@ const EditPujaForm = () => {
                 packages:
                     pujaDetail.pujaPackages?.length
                     ? pujaDetail.pujaPackages.map((p) => ({
-                        name: p.name || "",
-                        price: p.price || "",
-                        description: p.description || "",
+                        packImg: p.packImg || "",
+                        packageType: p.packageType || "",
+                        packagePrice: p.packagePrice || "",
+                        packageDescription: p.packageDescription || "",
+                        noOfPeople: p.noOfPeople || "",
                         }))
                     : formData.packages,
 
                 offerings:
                     pujaDetail.pujaOfferings?.length
                     ? pujaDetail.pujaOfferings.map((o) => ({
-                        name: o.name || "",
+                        offerimg: o.offerimg || "",
+                        title: o.title || "",
                         description: o.description || "",
+                        tags: o.tags || "",
+                        price: o.price || "",
                         }))
                     : formData.offerings,
+
+                pujaBenefits:
+                    pujaDetail.pujaBenefits?.length
+                    ? pujaDetail.pujaBenefits.map((f) => ({
+                        title: f.title || "",
+                        description: f.description || "",
+                        }))
+                    : formData.faqs,
 
                 faqs:
                     pujaDetail.pujaFaqs?.length
@@ -134,252 +151,7 @@ const EditPujaForm = () => {
             .replace(/\s+/g, '-');
     }
 
-    // const handleChange = async (e, index) => {
-    // e.preventDefault();
 
-    // const { name, value, files } = e.target;
-
-    // if (files && files[0]) {
-    //   const file = files[0];
-
-    //   // Local preview
-    //   const localPreview = URL.createObjectURL(file);
-
-    //         if (name === "imgUrl") {
-    //             // Update images preview
-    //             setFormData((prev) => {
-    //             const updated = [...prev.banners];
-    //             updated[index].imgUrl = localPreview.toString();
-    //             return { ...prev, banners: updated };
-    //         });
-    //         } else if (name === "packImg") {
-    //             // Update Package Image preview
-    //             setFormData((prev) => {
-    //                 const updated = [...prev.packages];
-    //                 updated[index].packImg = localPreview.toString();
-    //                 return { ...prev, packages: updated };
-    //             });
-    //         } else if (name === "offerimg") {
-    //             setFormData((prev) => {
-    //                 const updatedImgs = [...prev.offerings.offerimg];
-    //                 updatedImgs[index] = localPreview;
-    //                 return {
-    //                     ...prev,
-    //                     offerings: { ...prev.offerings, offerimg: updatedImgs },
-    //                 };
-    //             });
-    //         } else if (name === "templeImg") {
-    //             setFormData((prev) => ({
-    //                 ...prev,
-    //                 temple: {
-    //                     ...prev.temple,
-    //                     templeImg: localPreview,
-    //                 },
-    //             }));
-    //         } else {
-    //             alert("Upload failed: ");
-    //         }
-
-    //         // Upload to server
-    //         const uploadFormData = new FormData();
-    //         uploadFormData.append("file", file);
-
-    //         try {
-    //             const res = await fetch(`${baseAPIURL}/uploads`, {
-    //                 method: "POST",
-    //                 body: uploadFormData,
-    //             });
-
-    //             const data = await res.json();
-    //             // console.log("datadatadata", data)
-
-    //             if (res.ok) {
-    //                 if (name === "imgUrl") {
-    //                         setFormData((prev) => {
-    //                         const updated = [...prev.banners];
-    //                         updated[index].imgUrl = (data.storedAs).toString(); // server path
-    //                         return { ...prev, banners: updated };
-    //                     });
-    //                 } else if (name === "icon") {
-    //                     setFormData((prev) => {
-    //                         const updated = [...prev.faqs];
-    //                         updated[index].icon = (data.storedAs).toString(); // server path
-    //                         return { ...prev, faqs: updated };
-    //                     });
-    //                 } else if (name === "packImg") {
-    //                     setFormData((prev) => {
-    //                         const updated = [...prev.packages];
-    //                         updated[index].packImg = (data.storedAs).toString(); // server path
-    //                         return { ...prev, packages: updated };
-    //                     });
-    //                 } else if (name === "offerimg") {
-    //                     setFormData((prev) => {
-    //                         const updatedImgs = [...prev.offerings.offerimg];
-    //                         updatedImgs[index] = (data.storedAs).toString(); // replace null with uploaded path
-    //                         return {
-    //                             ...prev,
-    //                             offerings: { ...prev.offerings, offerimg: updatedImgs },
-    //                         };
-    //                     });
-    //                 }
-    //             } else if (name === "templeImg") {
-    //                 setFormData((prev) => ({
-    //                     ...prev,
-    //                     temple: {
-    //                         ...prev.temple,
-    //                         templeImg: data.storedAs.toString(),
-    //                     },
-    //                 }));
-    //             } else {
-    //                 alert("Upload failed: " + data.error);
-    //             }
-    //         } catch (err) {
-    //             console.error("Upload error:", err);
-    //             alert("Error while uploading file");
-    //         }
-    //     } else if (name.startsWith("temple.")) {
-    //         const field = name.split(".")[1];
-    //         setFormData((prev) => ({
-    //             ...prev,
-    //             temple: {
-    //                 ...prev.temple,
-    //                 [field]: value, // Dynamically set the correct nested field
-    //             },
-    //         }));
-    //     } else {
-    //         setFormData((prev) => ({
-    //             ...prev,
-    //             [name]: value,
-    //         }));
-    //     }
-    // };
-
-    // const handleChange = async (e, index) => {
-    // e.preventDefault();
-
-    // const { name, value, files } = e.target;
-
-    // if (files && files[0]) {
-    //   const file = files[0];
-
-    //   // Local preview
-    //   const localPreview = URL.createObjectURL(file);
-
-    //   if (name === "imgUrl") {
-    //     // Update images preview
-    //     setFormData((prev) => {
-    //       const updated = [...prev.banners];
-    //       updated[index].imgUrl = localPreview.toString();
-    //       return { ...prev, banners: updated };
-    //     });
-    //   } else if (name === "icon") {
-    //     // Update FAQ icon preview
-    //     setFormData((prev) => {
-    //       const updated = [...prev.faqs];
-    //       updated[index].icon = localPreview.toString();
-    //       return { ...prev, faqs: updated };
-    //     });
-    //   } else if (name === "packImg") {
-    //     // Update Package Image preview
-    //     setFormData((prev) => {
-    //       const updated = [...prev.packages];
-    //       updated[index].packImg = localPreview.toString();
-    //       return { ...prev, packages: updated };
-    //     });
-    //   } else if (name === "offerimg") {
-    //     setFormData((prev) => {
-    //       const updatedImgs = [...prev.offerings.offerimg];
-    //       updatedImgs[index] = localPreview;
-    //       return {
-    //         ...prev,
-    //         offerings: { ...prev.offerings, offerimg: updatedImgs },
-    //       };
-    //     });
-    //   } else if (name === "templeImg") {
-    //     setFormData((prev) => ({
-    //       ...prev,
-    //       temple: {
-    //         ...prev.temple,
-    //         templeImg: localPreview,
-    //       },
-    //     }));
-    //   } else {
-    //     alert("Upload failed: ");
-    //   }
-
-    //   // Upload to server
-    //   const uploadFormData = new FormData();
-    //   uploadFormData.append("file", file);
-
-    //   try {
-    //     const res = await fetch(`${baseAPIURL}/uploads`, {
-    //       method: "POST",
-    //       body: uploadFormData,
-    //     });
-
-    //     const data = await res.json();
-    //     console.log("datadatadata", data)
-
-    //     if (res.ok) {
-    //       if (name === "imgUrl") {
-    //         setFormData((prev) => {
-    //           const updated = [...prev.banners];
-    //           updated[index].imgUrl = (data.storedAs).toString(); // server path
-    //           return { ...prev, banners: updated };
-    //         });
-    //       } else if (name === "icon") {
-    //         setFormData((prev) => {
-    //           const updated = [...prev.faqs];
-    //           updated[index].icon = (data.storedAs).toString(); // server path
-    //           return { ...prev, faqs: updated };
-    //         });
-    //       } else if (name === "packImg") {
-    //         setFormData((prev) => {
-    //           const updated = [...prev.packages];
-    //           updated[index].packImg = (data.storedAs).toString(); // server path
-    //           return { ...prev, packages: updated };
-    //         });
-    //       } else if (name === "offerimg") {
-    //         setFormData((prev) => {
-    //           const updatedImgs = [...prev.offerings.offerimg];
-    //           updatedImgs[index] = (data.storedAs).toString(); // replace null with uploaded path
-    //           return {
-    //             ...prev,
-    //             offerings: { ...prev.offerings, offerimg: updatedImgs },
-    //           };
-    //         });
-    //       } else if (name === "templeImg") {
-    //         setFormData((prev) => ({
-    //           ...prev,
-    //           temple: {
-    //             ...prev.temple,
-    //             templeImg: data.storedAs.toString(),
-    //           },
-    //         }));
-    //       }
-    //     } else {
-    //       alert("Upload failed: " + data.error);
-    //     }
-    //   } catch (err) {
-    //     console.error("Upload error:", err);
-    //     alert("Error while uploading file");
-    //   }
-    // } else if (name.startsWith("temple.")) {
-    //     const field = name.split(".")[1];
-    //     setFormData((prev) => ({
-    //       ...prev,
-    //       temple: {
-    //         ...prev.temple,
-    //         [field]: value, // Dynamically set the correct nested field
-    //       },
-    //     })); 
-    //   } else {
-    //   setFormData((prev) => ({
-    //     ...prev,
-    //     [name]: value,
-    //   }));
-    // }
-    // };
 
     const handleChange = async (e, index) => {
         e.preventDefault();
@@ -505,17 +277,17 @@ const EditPujaForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("handlels Update data ", formData)
-        // fetchWithWait({ dispatch, action: updatePujaAction(formData) }).then((res) => {
-        //     if (res.status === 200) {
-        //         dispatch(requestPujaDataAction());
-        //         router.push("/admin/puja/list")
-        //     } else {
-        //         console.log("Error:", res.error);
-        //         alert(res.error)
-        //     }
-        // }).catch((e) => {
-        //     console.log(`error`, e)
-        // })
+        fetchWithWait({ dispatch, action: updatePujaAction(formData) }).then((res) => {
+            if (res.status === 200) {
+                dispatch(requestPujaDataAction());
+                router.push("/admin/puja/list")
+            } else {
+                console.log("Error:", res.error);
+                alert(res.error)
+            }
+        }).catch((e) => {
+            console.log(`error`, e)
+        })
     };
 
 
@@ -653,6 +425,17 @@ const EditPujaForm = () => {
                             type="text"
                             name="specialDay"
                             value={formData.specialDay}
+                            onChange={handleChange}
+                            className="w-full border p-2 rounded"
+                        />
+                    </div>
+                    {/* Special tags */}
+                    <div>
+                        <label className="block font-semibold">Special Tags</label>
+                        <input
+                            type="text"
+                            name="tags"
+                            value={formData?.tags}
                             onChange={handleChange}
                             className="w-full border p-2 rounded"
                         />
@@ -853,6 +636,58 @@ const EditPujaForm = () => {
                     </button>
                 </div>
 
+                <div>
+                    <label className="block font-semibold">Puja Benefits</label>
+                    {formData?.pujaBenefits.map((faq, index) => (
+                    <div key={index} className="border p-3 rounded mb-3 relative">
+                        {formData?.pujaBenefits.length > 1 && <button
+                        type="button"
+                        onClick={() => {
+                            const updated = formData?.pujaBenefits.filter((_, i) => i !== index);
+                            setFormData({ ...formData, pujaBenefits: updated });
+                        }}
+                        className="absolute top-2 right-2 text-red-600 hover:text-red-800 cursor-pointer"
+                        >
+                        <Trash2 size={18} />
+                        </button>}
+
+                        <input
+                        type="text"
+                        placeholder="Title"
+                        value={faq.title}
+                        onChange={(e) => {
+                            const updated = [...formData?.pujaBenefits];
+                            updated[index].title = e.target.value;
+                            setFormData({ ...formData, pujaBenefits: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                        />
+                        <textarea
+                            placeholder="Description"
+                            value={faq.description}
+                            onChange={(e) => {
+                                const updated = [...formData?.pujaBenefits];
+                                updated[index].description = e.target.value;
+                                setFormData({ ...formData, pujaBenefits: updated });
+                            }}
+                            className="w-full border p-2 rounded"
+                        />
+                    </div>
+                    ))}
+                    <button
+                    type="button"
+                    onClick={() =>
+                        setFormData({
+                        ...formData,
+                        pujaBenefits: [...formData?.pujaBenefits, { title: "", discription: "" }],
+                        })
+                    }
+                    className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
+                    >
+                    + Add Benefits
+                    </button>
+                </div>
+
                 {/* Packages */}
                { !formData.commonPack && <div>
                     <label className="block font-semibold">Packages</label>
@@ -903,7 +738,7 @@ const EditPujaForm = () => {
 
                             <input
                                 type="text"
-                                placeholder="Package Type"
+                                placeholder="Package Titel"
                                 value={packaging.packageType}
                                 onChange={(e) => {
                                     const updated = [...formData?.packages];
@@ -912,7 +747,7 @@ const EditPujaForm = () => {
                                 }}
                                 className="w-full border p-2 rounded mb-2"
                             />
-                            <textarea
+                            <input
                                 placeholder="Package Price"
                                 value={packaging.packagePrice}
                                 onChange={(e) => {
@@ -920,7 +755,27 @@ const EditPujaForm = () => {
                                     updated[index].packagePrice = e.target.value;
                                     setFormData({ ...formData, packages: updated });
                                 }}
-                                className="w-full border p-2 rounded"
+                                className="w-full border p-2 rounded mb-2"
+                            />
+                            <input
+                                placeholder="No. of People"
+                                value={packaging.noOfPeople}
+                                onChange={(e) => {
+                                    const updated = [...formData?.packages];
+                                    updated[index].noOfPeople = e.target.value;
+                                    setFormData({ ...formData, packages: updated });
+                                }}
+                                className="w-full border p-2 rounded mb-2"
+                            />
+                            <textarea
+                                placeholder="Package Description"
+                                value={packaging.packageDescription}
+                                onChange={(e) => {
+                                    const updated = [...formData?.packages];
+                                    updated[index].packageDescription = e.target.value;
+                                    setFormData({ ...formData, packages: updated });
+                                }}
+                                className="w-full border p-2 rounded mb-2"
                             />
                         </div>
                     ))}
@@ -929,7 +784,7 @@ const EditPujaForm = () => {
                         onClick={() =>
                             setFormData({
                                 ...formData,
-                                packages: [...formData?.packages, { packageType: "", packagePrice: "" }],
+                                packages: [...formData?.packages, { packImg: null, packageType: "", packagePrice: "", packageDescription: "", noOfPeople: "" }],
                             })
                         }
                         className="bg-green-500 text-white px-4 py-1 rounded"
@@ -1023,6 +878,18 @@ const EditPujaForm = () => {
 
                     <input
                         type="text"
+                        placeholder="Tags"
+                        value={offering.tags}
+                        onChange={(e) => {
+                        const updated = [...formData?.offerings];
+                        updated[index].tags = e.target.value;
+                        setFormData({ ...formData, offerings: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                    />
+
+                    <input
+                        type="text"
                         placeholder="Offering price"
                         name="price"
                         value={offering.price}
@@ -1051,7 +918,7 @@ const EditPujaForm = () => {
                     onClick={() =>
                     setFormData({
                         ...formData,
-                        offerings: [...formData?.offerings, { title: "", description: "", price: "" }],
+                         offerings: [...formData?.offerings, { offerimg: null, title: "", description: "", tags: "", price: "" }],
                     })
                     }
                     className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
