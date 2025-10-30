@@ -27,7 +27,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               className="group flex flex-col bg-white overflow-visible shadow-md border border-gray-100 hover:shadow-[0_10px_25px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 cursor-pointer relative rounded-xl"
             >
               {/* Custom Tag — visible even with overflow-hidden */}
-              {card.tags && <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-sm font-bold text-white uppercase">
+              {card.tags && <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-xs font-bold text-white uppercase">
                 Label Tag
               </span>}
 
