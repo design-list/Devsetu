@@ -22,7 +22,7 @@ export async function GET() {
 
     const pujaCard = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "location","tags", "date"],
+      attributes: ["id", "title", "slug", "sub_title", "location","tags", "date", "specialDay"],
       include: [
         {
           model: pujaBanners,
@@ -49,7 +49,7 @@ export async function GET() {
 
     const chadhavaCard = await chadhava.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "location", "date", "tags"],
+      attributes: ["id", "title", "slug", "location", "date", "tags", "tithi"],
       include: [
         {
           model: chadhavaBanner,

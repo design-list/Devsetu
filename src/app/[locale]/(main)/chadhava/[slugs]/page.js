@@ -110,9 +110,9 @@ const ChadhavaDetailsPage = () => {
             <p className="text-[var(--color-dark)] text-xl">
               Till now{" "}
               <span className="font-secondary font-bold text-2xl text-[var(--color-primary)]">
-                1,50,000+ Devotees
+                20,000+ Devotees
               </span>{" "}
-              have participated in Chadava conducted by DevaSetu Chadava Seva.
+              have participated in Chadhava conducted by DevaSetu Chadhava Seva.
             </p>
           </div>
         </div>
@@ -220,7 +220,7 @@ const ChadhavaDetailsPage = () => {
           {/* FAQ */}
           <section className="bg-white rounded-2xl p-6">
             <h2 className="font-secondary text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
-              <HelpCircle className="w-6 h-6" /> Frequently Asked Questions
+              Frequently Asked Questions
             </h2>
             <div className="space-y-3">
               {chadhavaWebDetail?.["chadhavaFaqs"]?.map((faq, i) => (

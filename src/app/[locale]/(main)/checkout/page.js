@@ -99,7 +99,7 @@ export default function CheckoutPage() {
   const handleCheckboxChange = (e) => {
     const checked = e.target.checked;
     setDontKnow(checked);
-    if (checked) setGotra("Kshyapa");
+    if (checked) setGotra("Kashyap");
     else setGotra("");
   };
 
@@ -428,42 +428,9 @@ export default function CheckoutPage() {
             )}
           </div>
 
-          {/* Address */}
-          {/* <div>
-        <label className="block font-medium mb-2 text-[var(--color-dark)]">
-          Address
-        </label>
-        <input
-          type="text"
-          placeholder="Street Address"
-          className="w-full border rounded-lg px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--color-primary)] transition"
-          value={form.address}
-          onChange={(e) => setForm({ ...form, address: e.target.value })}
-        />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
-          <input
-            type="text"
-            placeholder="Postal Code"
-            className="border rounded-lg px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--color-primary)] transition"
-            value={form.postalCode}
-            onChange={(e) => setForm({ ...form, postalCode: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="City"
-            className="border rounded-lg px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--color-primary)] transition"
-            value={form.city}
-            onChange={(e) => setForm({ ...form, city: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="State"
-            className="border rounded-lg px-3 py-2 shadow-sm focus:ring-2 focus:ring-[var(--color-primary)] transition"
-            value={form.state}
-            onChange={(e) => setForm({ ...form, state: e.target.value })}
-          />
-        </div>
-      </div> */}
+          <div>
+            <h2>Toggel button for Dev Prashadm</h2>
+          </div>
 
           {/* Address */}
           <div>
@@ -562,7 +529,7 @@ export default function CheckoutPage() {
               </h3>
               <p className="text-sm text-gray-700 mb-5 leading-relaxed">
                 If you do not know your lineage (gotra), in this situation, you can consider your
-                lineage as <b>Kshyapa</b> because Rishi Kshyapa is a sage whose descendants can be
+                lineage as <b>Kashyap</b> because Rishi Kashyap is a sage whose descendants can be
                 found in every caste. Therefore, he is considered a revered sage. The priest will
                 chant these details during the worship.
               </p>

@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Minus, Trash2, ArrowLeft } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestOfferingDataAction } from "@/redux/actions/offeringActions";
 import LazyImage from "@/components/Atom/LazyImage";
 import {
-  addOfferingAction,
   removePackageAction,
   requestClearCartAction,
   updateOfferingCountAction,
@@ -15,6 +14,10 @@ import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
 
 const PujaCart = () => {
+
+  const [selectedAmount, setSelectedAmount] = useState("");
+  const presetAmounts = [51, 101, 151];
+
   const dispatch = useDispatch();
   const { allCarts } = useSelector((state) => state.cart);
   const router = useRouter();
@@ -34,6 +37,16 @@ const PujaCart = () => {
 
   const goToCheckout = () => router.push(withLang("/checkout"));
   const goHome = () => router.push(withLang("/"));
+
+  const handleSelect = (amount) => {
+    setSelectedAmount(amount);
+  };
+
+  const handleManualChange = (e) => {
+    setSelectedAmount(e.target.value);
+  };
+
+  console.log("allCartsallCarts", allCarts)
 
   // EMPTY STATE
   if (!allCarts?.grand_total) {
@@ -137,6 +150,48 @@ const PujaCart = () => {
               </div>
             </div>
           ))}
+
+          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-2xl shadow-md my-2 w-full mx-auto">
+            <h2 className="text-lg font-semibold text-gray-800">
+              Select Pandit Daan Amount (₹)
+            </h2>
+
+            {/* Preset Buttons */}
+            <div className="flex justify-center gap-4">
+              {presetAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  type="button"
+                  onClick={() => handleSelect(amount)}
+                  className={`px-6 py-2 rounded-xl text-base font-medium border transition-all duration-200 ${
+                    selectedAmount == amount
+                      ? "bg-orange-500 text-white border-orange-500 shadow-md"
+                      : "bg-white text-gray-700 border-gray-300 hover:bg-orange-100"
+                  }`}
+                >
+                  ₹{amount}
+                </button>
+              ))}
+            </div>
+
+            {/* Manual Input */}
+            <div className="flex items-center gap-2 mt-4 w-full justify-center">
+              <label htmlFor="manual" className="text-gray-600 font-medium">
+                Other:
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-2 text-gray-500">₹</span>
+                <input
+                  id="manual"
+                  type="number"
+                  value={selectedAmount}
+                  onChange={handleManualChange}
+                  placeholder="Enter custom amount"
+                  className="pl-7 pr-3 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 text-gray-700 w-40"
+                />
+              </div>
+            </div>
+          </div>
 
           {/* BILL SUMMARY */}
           {allCarts?.add_ons.length > 0 && (

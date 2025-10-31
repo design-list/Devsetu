@@ -9,7 +9,7 @@ import { formatDate } from "../../../utils/localstorage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import Goldenline from "../../../public/icons/goldline.svg";
-import TempleIcon from "../../../public/icons/hindu-temple.svg";
+import TempleIcon from "../../../public/icons/puja-temple1.png";
 
 function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
   return (
@@ -70,7 +70,8 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-[#393939] text-base font-medium mb-2">
+                {/* Image Icon should be on baseline */}
+                <div className="flex items-center gap-2 my-2 text-[#393939] text-base font-medium mb-2">
                   <Image
                     src={TempleIcon}
                     alt="Temple Icon"
@@ -86,13 +87,13 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
                   />
-                  {formatDate(card.date, "full")}
+                  {formatDate(card.date, "full")} {card.tithi}
                 </div>
                 <div className="mt-3">
                   <ul className="flex flex-row justify-between">
                     {
                       card?.chadhavaFocus?.map((item) => {
-                        return <li key={item.id} className="flex flex-col justify-center text-center items-center gap-2.5 text-base text-[#393939] pb-2">
+                        return <li key={item.id} className="flex flex-col justify-center text-center text-sm items-center gap-2.5 text-base text-[#393939] pb-2">
                           {" "}
                           <Image
                             src={item.focusIcon}

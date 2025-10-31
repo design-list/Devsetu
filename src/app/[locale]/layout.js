@@ -38,8 +38,8 @@ const proximanovaFont = localFont({
 });
 
 export const metadata = {
-  title: "Dev Setu",
-  description: "Dev Setu",
+  title: "DevaSetu",
+  description: "Your Spiritual Partner",
   icons: {
     icon: [
       { url: "../../public/icons/devsetu-logo-icon.ico" },

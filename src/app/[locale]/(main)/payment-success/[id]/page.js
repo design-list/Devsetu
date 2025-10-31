@@ -32,22 +32,33 @@ const PaymentSuccess = () => {
     setOpenFAQ(openFAQ === index ? null : index);
   };
 
-  const faqs = [
+  const pujaFaqs = [
     {
-      q: "What should I do during the puja?",
-      a: "You can meditate, chant mantras, or simply sit in silence while the puja is being conducted.",
+      q: "How do I change puja participants or address details?",
+      a: "You can message us on WhatsApp or email at customerservices.devasetu@gmail.com with your Booking ID. Please note that changes can only be made up to 24 hours before the puja begins",
     },
     {
-      q: "How do I change the puja participants or address details?",
-      a: "You can update the details by contacting our support team before the puja date.",
+      q: "When will I receive the video with my name and gotra pronounced?",
+      a: "The entire video recording of your puja along with name & gotra sankalp will be shared within 3-4 days after the puja is done. After the Puja is completed, our temple team sends the Puja video to our central team. This includes the clips of Mandir darshan, Puja preparation, Hawan etc. Our editing team stitches these clips into a single video and adds subtitles for readability. They also include subtitles for your name and gotra sankalp. This entire process can take upto 3 days.",
     },
     {
-      q: "When will I get video with my name & gotra pronounced?",
-      a: "The video will be available shortly after the puja is completed.",
+      q: "When will I receive DevaPrasadam?",
+      a: "If you have opted to receive DevaPrasadam, our team will dispatch the box to your address within 24 hours of the puja. Delivery may take 4-10 days, depending on your location. We use top delivery partners like Delhivery to ensure fast delivery.",
+    },
+  ];
+
+  const chadhavaFaqs = [
+    {
+      q: "How do I change puja participants or address details?",
+      a: "You can message us on WhatsApp or email at customerservices.devasetu@gmail.com with your Booking ID. Please note that changes can only be made up to 24 hours before the puja begins",
     },
     {
-      q: "When will I get teerth prasad?",
-      a: "The teerth prasad is usually dispatched within a few days after the puja.",
+      q: "When will I receive the video with my name and gotra pronounced?",
+      a: "The entire video recording of your puja along with name & gotra sankalp will be shared within 3-4 days after the puja is done. After the Puja is completed, our temple team sends the Puja video to our central team. This includes the clips of Mandir darshan, Puja preparation, Hawan etc. Our editing team stitches these clips into a single video and adds subtitles for readability. They also include subtitles for your name and gotra sankalp. This entire process can take upto 3 days.",
+    },
+    {
+      q: "When will I receive DevaPrasadam?",
+      a: "If you have opted to receive DevaPrasadam, our team will dispatch the box to your address within 24 hours of the puja. Delivery may take 4-10 days, depending on your location. We use top delivery partners like Delhivery to ensure fast delivery.",
     },
   ];
 
@@ -70,7 +81,7 @@ const PaymentSuccess = () => {
             className="text-sm text-gray-600 mb-6"
           >
             <div className="flex justify-between">
-              {cartDetails?.['id'] && <>Booking ID: <span className="font-semibold text-orange-700">#{cartDetails?.id}</span></>}
+              {cartDetails?.['id'] && <> <span className="font-semibold text-orange-700">{`Booking ID: #${cartDetails?.id}`}</span></>}
               {cartDetails?.['paymentStatus'] && <spen className="font-semibold text-orange-700">Payment status: {cartDetails?.['paymentStatus']}</spen>}
             </div>
 
@@ -82,8 +93,7 @@ const PaymentSuccess = () => {
 
           {/* LEFT SECTION */}
           <div className="space-y-10">
-            {/* 🎥 Watch Puja Video */}
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="bg-gradient-to-r from-[#fef3e9] to-[#fffaf2] border border-orange-200 rounded-2xl p-6 flex flex-col sm:flex-row items-center justify-between shadow-sm"
@@ -99,7 +109,7 @@ const PaymentSuccess = () => {
               <button className="mt-4 sm:mt-0 flex items-center gap-2 bg-gradient-to-r from-[#f57e20] to-[#f15822] text-white font-semibold px-5 py-2.5 rounded-xl shadow-md hover:scale-[1.03] transition">
                 <PlayCircle className="w-5 h-5" /> Watch Now
               </button>
-            </motion.div>
+            </motion.div> */}
 
             {/* Puja & Participant's Details */}
              {/* {cartDetails?.['user_details'] && <div>
@@ -231,7 +241,7 @@ const PaymentSuccess = () => {
               {/* FAQ Accordion */}
               <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
                 <h3 className="text-lg font-semibold text-orange-800 mb-3">Frequently Asked Questions</h3>
-                {faqs.map((item, i) => (
+                {pujaFaqs.map((item, i) => (
                   <div key={i} className="border-t first:border-t-0">
                     <button
                       onClick={() => toggleFAQ(i)}
@@ -269,7 +279,7 @@ const PaymentSuccess = () => {
                   <div className="flex items-start gap-3">
                     <Phone className="text-green-700 w-5 h-5 mt-1" />
                     <p>
-                      <span className="font-semibold">080-711-74417</span>
+                      <span className="font-semibold">078-779-61501</span>
                       <br />
                       <span className="text-gray-600">
                         Available 10:30 AM - 7:30 PM
@@ -280,7 +290,7 @@ const PaymentSuccess = () => {
                   <div className="flex gap-3">
                     <button className="flex items-center gap-2 bg-white border px-3 py-2 rounded-md shadow-sm hover:bg-orange-50 transition">
                       <Mail className="w-4 h-4 text-gray-600" />
-                      <span>Email us</span>
+                      <span>customerservices.devasetu@gamil.com</span>
                     </button>
 
                     <button className="flex items-center gap-2 bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700 transition">

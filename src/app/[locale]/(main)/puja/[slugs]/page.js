@@ -54,11 +54,12 @@ const pujaData = {
     "Removal of Obstacles",
   ],
   process: [
-    "Pandit performs Sankalpa with devotee details",
-    "Offerings to Lord Vishnu with sacred mantras",
-    "Chanting of 1,00,000 Hare Krishna Maha Mantras",
-    "Vishnu Sahasranama Parayanam",
-    "Prasad distribution & blessings",
+  "Select Puja Package",
+  "Provide Your Details",
+  "Optional Add - Ons",
+  "Receive Puja Video and Blessings",
+  "Receive DevaPrasadam",
+
   ],
   reviews: [
     { rating: 5, text: "Amazing Puja experience, felt very blessed!" },
@@ -283,7 +284,10 @@ export default function PujaDetailsPage() {
     </div>
   )}
 
-  <div className="flex-1 space-y-6 bg-white/70 rounded-2xl md:p-6 transition-all duration-300">
+  <div className="flex-1 space-y-6 bg-white/70 rounded-2xl transition-all duration-300">
+    <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
+      {pujaDetailPage?.tags && pujaDetailPage.tags}
+    </div>
     {/* Title */}
     <h1 className="font-secondary text-2xl sm:text-3xl lg:text-4xl font-bold text-[var(--color-dark)] leading-tight text-center lg:text-left">
       {pujaDetailPage?.["title"]}
@@ -337,7 +341,7 @@ export default function PujaDetailsPage() {
         <Users className="text-[var(--color-primary)] w-5 h-5" />
         <span className="font-secondary font-bold text-base sm:text-xl text-[var(--color-dark)]">
           <strong className="text-xl sm:text-2xl font-extrabold text-[var(--color-primary)]">
-            3,00,000+
+            20,000+
           </strong>{" "}
           Devotees have participated
         </span>
@@ -459,7 +463,7 @@ export default function PujaDetailsPage() {
           <section ref={aboutRef} className="bg-white py-8 md:px-4">
             <Container>
               <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
-                <Info className="w-6 h-6" /> The Power of Devotion
+                About Puja
               </h2>
               <p className="text-sm md:text-lg text-[var(--color-dark)] md:leading-relaxed">
                 {pujaDetailPage?.["pujaDetails"]}
@@ -473,7 +477,7 @@ export default function PujaDetailsPage() {
             className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] py-8 md:px-4"
           >
             <Container>
-              <h2 className="font-secondary uppercase text-2xl md:text-3xl font-bold text-[var(--color-primary)] mb-6">
+              <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
                 Puja Benefits
               </h2>
 
@@ -495,11 +499,14 @@ export default function PujaDetailsPage() {
 
                     {/* Description */}
                     <p className="text-[var(--color-dark)]  text-sm leading-relaxed">
+                      {b.description}
+                    </p>
+                    {/* <p className="text-[var(--color-dark)]  text-sm leading-relaxed">
                       {b.description?.slice(0, 100)}...
                       <span className="text-[var(--color-primary)] font-semibold cursor-pointer hover:underline">
                         Read more
                       </span>
-                    </p>
+                    </p> */}
                   </div>
                 ))}
               </div>
@@ -513,7 +520,7 @@ export default function PujaDetailsPage() {
 >
   <Container>
     {/* Heading */}
-    <h2 className="font-secondary uppercase text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--color-primary)] text-center sm:text-left mb-8">
+    <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-8">
       Puja Process
     </h2>
 
@@ -551,8 +558,8 @@ export default function PujaDetailsPage() {
           {/* 🛕 Temple */}
           <section ref={templeRef} className="bg-white py-8 md:px-4">
             <Container>
-              <h2 className="font-secondary uppercase text-xl md:text-2xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
-                <Landmark className="w-12 md:w-6 h-12 md:h-6" />{" "}
+              <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
+                {/* <Landmark className="w-12 md:w-6 h-12 md:h-6" />{" "} */}
                 {pujaDetailPage?.["templeHistories"][0]?.["templeName"]}
               </h2>
               <div className="flex flex-col md:flex-row items-start gap-6">
@@ -584,7 +591,7 @@ export default function PujaDetailsPage() {
             className="bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9] py-8 md:px-4"
           >
             <Container>
-              <h2 className="font-secondary uppercase text-2xl font-bold text-[var(--color-primary)] mb-4">
+              <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
                 Select Puja Package
               </h2>
               <PujaPackages
@@ -619,7 +626,7 @@ export default function PujaDetailsPage() {
           <section ref={videosRef} className="relative py-8 px-4">
             <Container>
               {/* Heading */}
-              <h2 className="font-secondary uppercase text-2xl font-bold text-[var(--color-primary)] mb-4">
+              <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
                 Glimpses of our past puja experience
               </h2>
 
@@ -633,7 +640,7 @@ export default function PujaDetailsPage() {
             className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]"
           >
             <Container>
-              <h2 className="font-secondary uppercase text-2xl font-bold text-[var(--color-primary)] mb-4">
+              <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
                 Reviews
               </h2>
               {/* <h2 className="font-secondary text-center text-3xl font-bold mb-10">
@@ -646,8 +653,8 @@ export default function PujaDetailsPage() {
           {/* ❓ FAQ */}
           <section ref={faqRef} className="bg-white py-8 md:px-4">
             <Container>
-              <h2 className="font-secondary uppercase text-xl md:text-2xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
-                <HelpCircle className="w-6 h-6" /> Frequently Asked Questions
+              <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
+                Frequently Asked Questions
               </h2>
               <div className="space-y-3">
                 {pujaDetailPage?.["pujaFaqs"]?.map((faq, i) => (

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useWithLang } from "../../../../../helper/useWithLang";
 import Container from "@/components/Container";
 import ChadhavaHeroSlider from "@/components/HeroBanner/ChadhavaHeroSlider";
-import { Landmark, Users, Building, Sparkles } from "lucide-react";
+import { Landmark, Users, Building, Sparkles, Package, User, Gift, Building2, Globe2, Star } from "lucide-react";
 import Reviews from "@/components/Review";
 import HowPujaWorks from "@/components/OnlineSteps";
 
@@ -65,6 +65,30 @@ const reviews = [
     text: "Offered for my late father. Didn’t think online puja can touch heart like this. Truly divine feeling.",
   },
 ];
+
+  const steps = [
+    {
+      title: "Select Chadhava / Seva",
+      text: "Make your selection from our wide range of chadhavas and sevas.",
+      color: "var(--color-primary)",
+      icon: <Package className="w-5 h-5" />,
+      // img: SliderImg,
+    },
+    {
+      title: "Provide Your Details.",
+      text: "After selecting your preferred offering, fill-in your Name and Gotra for Sankalp.",
+      color: "var(--color-info)",
+      icon: <User className="w-5 h-5" />,
+      // img: SliderImg,
+    },
+    {
+      title: "Receive Chadhava Video and Blessings.",
+      text: "The video of your completed chadhava / seva with your name and Gotra will be shared on WhatsApp within 3-4 days.",
+      color: "var(--color-accent)",
+      icon: <Gift className="w-5 h-5" />,
+      // img: SliderImg,
+    }
+  ]
 
 const ChadhavaPage = () => {
   const dispatch = useDispatch();
@@ -205,10 +229,10 @@ const ChadhavaPage = () => {
           {/* Heading */}
           <h2 className="text-center font-secondary text-3xl font-bold mb-10 text-[var(--color-dark)]">
             How does <span className="text-[var(--color-info)]">DevaSetu</span>{" "}
-            Online Puja Work?
+            Online Chadhava Work?
           </h2>
 
-          <HowPujaWorks />
+          <HowPujaWorks steps={steps} />
         </section>
 
         {/* Stats */}
@@ -222,12 +246,64 @@ const ChadhavaPage = () => {
               with
               <span className="text-[var(--color-info)]">
                 {" "}
-                DevaSetu Puja Service
+                DevaSetu Chadhava Service
               </span>
             </h2>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
-              {/* Pujas Done */}
+            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
+            {/* Pujas Done */}
+            <div className="bg-[var(--color-info)]/10 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="flex justify-center mb-3">
+                <Globe2 className="w-8 h-8 text-[var(--color-info)]" />
+              </div>
+              <p className="text-2xl sm:text-3xl font-secondary font-bold text-[var(--color-info)] mb-1">
+                20+
+              </p>
+              <p className="text-lg sm:text-xl font-secondary font-medium text-[var(--color-dark)]">
+                Countries
+              </p>
+            </div>
+
+            {/* Famous Temples */}
+            <div className="bg-[var(--color-accent)]/10 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="flex justify-center mb-3">
+                <Building2 className="w-8 h-8 text-[var(--color-accent)]" />
+              </div>
+              <p className="text-2xl sm:text-3xl font-secondary font-bold text-[var(--color-accent)] mb-1">
+                100+
+              </p>
+              <p className="text-lg sm:text-xl font-secondary font-medium text-[var(--color-dark)]">
+                Temples
+              </p>
+            </div>
+
+            {/* Spreading Dharma */}
+            <div className="bg-[var(--color-dark)]/5 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="flex justify-center mb-3">
+                < Users className="w-8 h-8 text-[var(--color-dark)]" />
+              </div>
+              <p className="text-2xl sm:text-3xl font-secondary font-bold text-[var(--color-dark)] mb-1">
+                20,000+
+              </p>
+              <p className="text-lg sm:text-xl font-secondary font-medium text-[var(--color-dark)]">
+                Happy Devotees
+              </p>
+            </div>
+
+            <div className="bg-[var(--color-primary-light)]/10 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div className="flex justify-center mb-3">
+                <Star className="w-8 h-8 text-[var(--color-primary)]" />
+              </div>
+              <p className="text-2xl sm:text-3xl font-secondary font-bold text-[var(--color-primary)] mb-1">
+                4.6
+              </p>
+              <p className="text-lg sm:text-xl font-secondary font-medium text-[var(--color-dark)]">
+                Average Rating
+              </p>
+            </div>
+          </div>
+
+            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
               <div className="bg-[var(--color-primary-light)]/10 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex justify-center mb-3">
                   <Landmark className="w-8 h-8 text-[var(--color-primary)]" />
@@ -240,7 +316,6 @@ const ChadhavaPage = () => {
                 </p>
               </div>
 
-              {/* Happy Devotees */}
               <div className="bg-[var(--color-info)]/10 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex justify-center mb-3">
                   <Users className="w-8 h-8 text-[var(--color-info)]" />
@@ -253,7 +328,6 @@ const ChadhavaPage = () => {
                 </p>
               </div>
 
-              {/* Famous Temples */}
               <div className="bg-[var(--color-accent)]/10 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex justify-center mb-3">
                   <Building className="w-8 h-8 text-[var(--color-accent)]" />
@@ -266,7 +340,6 @@ const ChadhavaPage = () => {
                 </p>
               </div>
 
-              {/* Spreading Dharma */}
               <div className="bg-[var(--color-dark)]/5 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex justify-center mb-3">
                   <Sparkles className="w-8 h-8 text-[var(--color-dark)]" />
@@ -278,7 +351,7 @@ const ChadhavaPage = () => {
                   Spreading Sanatan Dharma
                 </p>
               </div>
-            </div>
+            </div> */}
           </Container>
         </section>
     </main>

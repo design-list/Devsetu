@@ -8,7 +8,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import Goldenline from "../../../public/icons/goldline.svg";
-import TempleIcon from "../../../public/icons/hindu-temple.svg";
+import TempleIcon from "../../../public/icons/puja-temple1.png";
 
 const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
   return (
@@ -51,7 +51,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
               {/* Details */}
               <div className="px-4 py-2 flex flex-col flex-1 bg-gradient-to-b from-white to-[var(--forcast)]">
                 <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
-                  {puja?.tags}
+                  {puja?.tags ? puja.tags : <span className="opacity-0">""</span>}
                   <Image
                     src={Goldenline}
                     alt="Golden under"
@@ -85,7 +85,8 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                   {puja.sub_title}
                 </p>
 
-                <div className="flex items-center gap-2 text-[#393939] text-base font-medium mb-2">
+                {/* tample icon should align baseline */}
+                <div className="flex items-center gap-2 my-2 text-[#393939] text-base font-medium mb-2"> 
                   <Image
                     src={TempleIcon}
                     alt="Temple Icon"
@@ -101,7 +102,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
                   />
-                  {formatDate(puja.date, "full")}
+                  {formatDate(puja.date, "full")} {puja.specialDay}
                 </div>
               </div>
 

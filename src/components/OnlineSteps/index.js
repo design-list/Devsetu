@@ -7,51 +7,13 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { CheckCircle, User, Gift, Video, Package } from "lucide-react";
+
 import Image from "next/image";
 import Container from "../Container";
 import SliderImg from "../../../public/images/pujaslider.webp";
-export default function HowPujaWorks() {
+export default function HowPujaWorks({steps}) {
   const [activeStep, setActiveStep] = useState(0);
   const swiperRef = useRef(null);
-
-  const steps = [
-    {
-      title: "Select Puja Package",
-      text: "Make your selection from our wide range of pujas.",
-      color: "var(--color-primary)",
-      icon: <Package className="w-5 h-5" />,
-      img: SliderImg,
-    },
-    {
-      title: "Provide Your Details",
-      text: "After selecting your preferred puja, fill in your Name and Gotra for Sankalp.",
-      color: "var(--color-info)",
-      icon: <User className="w-5 h-5" />,
-      img: SliderImg,
-    },
-    {
-      title: "Optional Add-Ons",
-      text: "Include Chadhava, Seva, or other offerings to enhance your puja experience.",
-      color: "var(--color-accent)",
-      icon: <Gift className="w-5 h-5" />,
-      img: SliderImg,
-    },
-    {
-      title: "Receive Puja Video & Blessings",
-      text: "The video of your completed puja will be shared on WhatsApp within 3–4 days.",
-      color: "var(--color-primary-light)",
-      icon: <Video className="w-5 h-5" />,
-      img: SliderImg,
-    },
-    {
-      title: "Receive DevaPrasadam",
-      text: "A box of DevaPrasadam* will be delivered to your home at no extra cost.",
-      color: "var(--color-dark)",
-      icon: <CheckCircle className="w-5 h-5" />,
-      img: SliderImg,
-    },
-  ];
 
   const handleStepClick = (index) => {
     setActiveStep(index);
@@ -60,7 +22,8 @@ export default function HowPujaWorks() {
 
   return (
     <Container>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center max-w-6xl mx-auto"> */}
+      <div className="flex justify-center gap-10 items-center max-w-6xl mx-auto">
         {/* Left - Steps List */}
         <div className="space-y-8">
           {steps.map((step, index) => (
@@ -105,7 +68,7 @@ export default function HowPujaWorks() {
         </div>
 
         {/* Right - Swiper */}
-        <div className="relative rounded-3xl h-96">
+        {/* <div className="relative rounded-3xl h-96">
           <Swiper
             modules={[Pagination, Autoplay, Navigation]}
             pagination={{ clickable: true }}
@@ -125,7 +88,7 @@ export default function HowPujaWorks() {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        </div> */}
       </div>
 
       {/* Note */}
