@@ -16,6 +16,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { fetchCartDetailAction } from "@/redux/actions/cartActions";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
+import LazyImage from "@/components/Atom/LazyImage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import { formatDate } from "../../../../../../utils/localstorage";
+import TempleIcon from "../../../../../../public/icons/puja-temple1.png"
 
 const PaymentSuccess = () => {
   const [openFAQ, setOpenFAQ] = useState(null);
@@ -161,6 +166,26 @@ const PaymentSuccess = () => {
                     <div className="py-2">
                       <p className="font-semibold text-gray-800">{cartDetails.package.productTitle}</p>
                       <p className="text-gray-500 text-sm">{cartDetails.package.name}</p>
+                      <div className="my-2 flex flex-col gap-2 text-gray-600 text-sm">
+                        <div className="flex items-center gap-2">
+                          <LazyImage
+                            src={TempleIcon}
+                            alt="Temple Icon"
+                            width={22}
+                            height={22}
+                            className="mr-2 relative -top-1.5 "
+                          />
+                          {cartDetails?.package?.location}
+                          
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <FontAwesomeIcon
+                            icon={faCalendarDays}
+                            className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
+                          />
+                          {formatDate(cartDetails?.package?.date, "full")}
+                        </div>
+                      </div>
                     </div>
                   )}
                   <div className="py-2">

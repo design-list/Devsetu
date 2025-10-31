@@ -314,8 +314,6 @@ const PujaPage = () => {
           </div>
         </Container>
 
-        {/* Optional decorative background */}
-        {/* <div className="absolute inset-0 bg-[url('/patterns/mandala-bg.svg')] bg-center bg-cover opacity-5 pointer-events-none"></div> */}
       </section>
 
       {/* Purohit Section */}

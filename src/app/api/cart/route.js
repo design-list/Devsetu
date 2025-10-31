@@ -41,6 +41,7 @@ export async function POST(request) {
       otherCharges: body.other_charges || {},
       couponCode: body.coupon_code || null,
       paymentStatus: "PENDING",
+      isActivePrasad: body.isActivePrasad,
     });
 
     // 2️⃣ Insert package
@@ -53,6 +54,9 @@ export async function POST(request) {
         price: body.package.packagePrice,
         quantity: body.package.quantity,
         type: body.package.type,
+        location: body.package.location,
+        tithi: body.package.tithi,
+        date: body.package.date,
         productId: body.package.productId,
         productTitle: body.package.productTitle,
         productSlug: body.package.productSlug,

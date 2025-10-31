@@ -94,7 +94,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                     height={22}
                     className="mr-2 relative -top-1.5 "
                   />
-                  {puja.location || "Location unavailable"}
+                  {puja.location}
                 </div>
 
                 <div className="flex items-center gap-2 text-[#393939] text-base font-medium">

@@ -8,7 +8,8 @@ import {
   ADD_OFFERING_REQUEST,
   UPDATE_OFFERING_COUNT_REQUEST,
   REMOVE_PACKAGE_REQUEST,
-  CLEAR_CART
+  CLEAR_CART,
+  ADD_PANDIT_DAKSHINA
 } from "../types/cartTypes";
 
 // Fetch all carts
@@ -53,6 +54,12 @@ export const removePackageAction = () => ({
 // ✅ Add new offering
 export const addOfferingAction = (data) => ({
   type: ADD_OFFERING_REQUEST,
+  payload: data,
+});
+
+// ✅ Add new offering
+export const addPanditDakshinaAction = (data) => ({
+  type: ADD_PANDIT_DAKSHINA,
   payload: data,
 });
 

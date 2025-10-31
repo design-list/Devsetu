@@ -236,6 +236,9 @@ export default function PujaDetailsPage() {
       productId: pujaDetailPage?.id,
       productTitle: pujaDetailPage?.title,
       productSlug: pujaDetailPage?.slug,
+      location: pujaDetailPage?.location,
+      tithi: pujaDetailPage?.specialDay,
+      date: pujaDetailPage?.date,
       productImg: pujaDetailPage?.["pujaBanners"]?.[0]?.imageUrl || "",
       ...pkg,
     };

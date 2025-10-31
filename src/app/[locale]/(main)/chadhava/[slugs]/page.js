@@ -60,6 +60,9 @@ const ChadhavaDetailsPage = () => {
       productId : chadhavaWebDetail?.id,
       productTitle : chadhavaWebDetail?.title,
       productSlug : chadhavaWebDetail?.slug,
+      location: chadhavaWebDetail?.location,
+      tithi: chadhavaWebDetail?.tithi,
+      date: chadhavaWebDetail?.date,
       productImg : chadhavaWebDetail?.["chadhavaBanners"]?.[0]?.image_url || "",
     };
 
