@@ -9,15 +9,14 @@ import { formatDate } from "../../../utils/localstorage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import Goldenline from "../../../public/icons/goldline.svg";
-import DivineBlessings from "../../../public/icons/divine-blessings.png";
-import FamilyProsperity from "../../../public/icons/family-prosperity.png";
-import AncestralPeace from "../../../public/icons/ancestral-peace.png";
+import TempleIcon from "../../../public/icons/puja-temple1.png";
 
 function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 md:py-8 px-2 sm:px-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 py-8 px-2 sm:px-4">
         {chadhava?.map((card) => {
+          
           const bannerImage =
             card?.chadhavaBanners?.[0]?.image_url || "/images/herobanner.webp";
 
@@ -27,10 +26,10 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               onClick={() => handlaRedirect("chadhava", card.slug)}
               className="group flex flex-col bg-white overflow-visible shadow-md border border-gray-100 hover:shadow-[0_10px_25px_rgba(0,0,0,0.1)] hover:-translate-y-1 transition-all duration-300 cursor-pointer relative rounded-xl"
             >
-              {/* Floating Label Tag */}
-              <span className="puja-tag absolute -top-3 left-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-xs sm:text-sm font-bold text-white uppercase tracking-wide px-3 py-1 rounded-md shadow-md">
-                Label Tag
-              </span>
+              {/* Custom Tag — visible even with overflow-hidden */}
+              {card.tags && <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-xs font-bold text-white uppercase">
+                Special Chadhava
+              </span>}
 
               {/* Image Section */}
               <div className="relative h-44 sm:h-52 md:h-56 px-4 pt-4 pb-0 overflow-hidden">
@@ -45,9 +44,8 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
 
               {/* Details */}
               <div className="px-4 pt-2 pb-4 flex flex-col flex-1 justify-between">
-                {/* Highlight Text */}
-                <div className="glow-text text-xs sm:text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-2">
-                  {chadhava?.highlight || "NIVARAN MAHAPUJA SPECIAL"}
+                <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
+                  {card?.tags}
                   <Image
                     src={Goldenline}
                     alt="Golden underline"
@@ -72,20 +70,45 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   </div>
                 </div>
 
-                {/* Feature Icons */}
-                <ul className="flex flex-wrap justify-between items-center mt-3 sm:mt-4 gap-2">
-                  {[DivineBlessings, FamilyProsperity, AncestralPeace].map(
-                    (icon, i) => (
-                      <li
-                        key={i}
-                        className="flex flex-col items-center flex-1 text-center text-xs sm:text-sm text-[#393939] pb-2"
-                      >
-                        <Image src={icon} alt="Icons" width={28} height={28} />
-                        <span className="mt-1">Lorem Ipsum</span>
-                      </li>
-                    )
-                  )}
-                </ul>
+                {/* Image Icon should be on baseline */}
+                <div className="flex items-center gap-2 my-2 text-[#393939] text-base font-medium mb-2">
+                  <Image
+                    src={TempleIcon}
+                    alt="Temple Icon"
+                    width={22}
+                    height={22}
+                    className="mr-2 relative -top-1.5 "
+                  />
+                  {card.location || "Location unavailable"}
+                </div>
+
+                <div className="flex items-center gap-2 text-[#393939] text-base font-medium">
+                  <FontAwesomeIcon
+                    icon={faCalendarDays}
+                    className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
+                  />
+                  {formatDate(card.date, "full")} {card.tithi}
+                </div>
+                {/* <div className="mt-3">
+                  <ul className="flex flex-row justify-between">
+                    {
+                      card?.chadhavaFocus?.map((item) => {
+                        return <li key={item.id} className="flex flex-col justify-center text-center text-sm items-center gap-2.5 text-base text-[#393939] pb-2">
+                          {" "}
+                          <Image
+                            src={item.focusIcon}
+                            alt="Icons"
+                            width={30}
+                            height={30}
+                          />{" "}
+                          <span>
+                            {item.foucs}
+                          </span>{" "}
+                        </li>
+                      })
+                    }
+                  </ul>
+                </div> */}
               </div>
 
               {/* Button */}

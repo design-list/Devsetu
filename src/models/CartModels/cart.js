@@ -39,7 +39,12 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
         field: "coupon_code",
       },
-
+      isActivePrasad: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+      field: "isActivePrasad",
+    },
       // 🧾 Payment-related fields
       paymentStatus: {
         type: DataTypes.STRING,

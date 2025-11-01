@@ -31,125 +31,6 @@ export async function GET(req, { params }) {
   }
 }
 
-
-// ✅ PUT /api/pujas/:id
-
-// export async function PUT(req, { params }) {
-
-
-//   try {
-//     const body = await req.json();
-
-//     const updatedPujas = await pujas.findByPk(params.id);
-
-//     if (!updatedPujas) {
-//       return NextResponse.json({ error: "Puja not found" }, { status: 404 });
-//     }
-
-//     // ✅ Update main table
-//     await updatedPujas.update({
-//       title: body.title,
-//       subTitle: body.subTitle,
-//       slug: body.slug,
-//       ratingValue: body.ratingValue,
-//       ratingReviews: body.ratingReviews,
-//       specialDay: body.specialDay,
-//       location: body.location,
-//       date: body.date,
-//       pujaDetails: body.pujaDetails,
-//       isActive: body.isActive,
-//       isActiveOnHome: body.isActiveOnHome,
-
-//       // Flags
-//       commonOffer: body.commonOffer,
-//       commonPack: body.commonPack,
-//       commonFaqs: body.commonFaqs,
-
-//     });
-
-//     if (body.temple) {
-//       await templeHistory.destroy({ where: { pujaId: updatedPujas.id  } });
-//       await templeHistory.create({
-//         ...body.temple,
-//         pujaId: updatedPujas.id,
-//       });
-//     }
-
-//       if (body.banners && Array.isArray(body.banners)) {
-//       await pujaBanners.destroy({ where: { pujaId: updatedPujas.id } });
-
-//       await pujaBanners.bulkCreate(
-//         body.banners.map((banner) => ({
-//           imageUrl: banner.imgUrl,
-//           type: banner.type,
-//           position: banner.position ? parseInt(banner.position) : null,
-//           pujaId: updatedPujas.id,
-//         }))
-//       );
-//     }
-
-//     // 🧩 4️⃣ Update Packages
-//     if (body.packages) {
-//       await pujaPackages.destroy({ where: { pujaId: updatedPujas.id } });
-//       await pujaPackages.bulkCreate(
-//         body.packages.map((pkg) => ({
-//           packImg: pkg.packImg,
-//           packageType: pkg.packageType,
-//           packagePrice: parseFloat(pkg.packagePrice),
-//           pujaId: updatedPujas.id,
-//         }))
-//       );
-//     }
-
-
-//     // ✅ Update offerings (offers + offerimg)
-//     if (body.offerings) {
-//       await pujaOfferings.destroy({ where: { pujaId: updatedPujas.id } });
-
-//       const offersArray = body.offerings || [];
-
-//       await pujaOfferings.bulkCreate(
-//         offersArray.map((r) => ({
-//           offerimg: r.offerimg,
-//           title: r.title,
-//           price: r.price,
-//           description: r.description,
-//           pujaId: updatedPujas.id,
-//         }))
-//       );
-//     }
-
-
-//     // ✅ Update FAQs
-//     if (body.faqs) {
-//       await pujaFaqs.destroy({ where: { pujaId: updatedPujas.id } });
-//       await pujaFaqs.bulkCreate(
-//         body.faqs.map((f) => ({
-//           icon: f.icon,
-//           question: f.title,
-//           answer: f.description,
-//           pujaId: updatedPujas.id,
-//         }))
-//       );
-//     }
-
-//     // ✅ Fetch back with associations
-//     const finalData = await pujas.findByPk(updatedPujas.id, {
-//       include: [pujaPackages, pujaOfferings, pujaFaqs, pujaBanners, templeHistory],
-//     });
-
-//     return NextResponse.json({
-//       data: finalData,
-//       status: 200,
-//       message: "Puja updated successfully",
-//     });
-//   } catch (error) {
-//     console.error("PUT Error:", error);
-//     return NextResponse.json({ error: error.message }, { status: 500 });
-//   }
-// }
-
-
   export async function PUT(req, { params }) {
     try {
       const body = await req.json();
@@ -167,6 +48,7 @@ export async function GET(req, { params }) {
         ratingValue: parseFloat(body.ratingValue),
         ratingReviews: parseInt(body.ratingReviews),
         specialDay: body.specialDay,
+        tags: body.tags,
         location: body.location,
         date: new Date(body.date),
         pujaDetails: body.pujaDetails,
@@ -223,6 +105,7 @@ export async function GET(req, { params }) {
           body.offerings.map((r) => ({
             offerimg: r.offerimg,
             title: r.title,
+            tags: r.tags,
             price: r.price,
             description: r.description,
             pujaId: updatedPujas.id,

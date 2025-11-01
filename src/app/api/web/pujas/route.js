@@ -10,7 +10,7 @@ export async function GET() {
     // Pujas fetch
     const pujaData = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: true },
-      attributes: ["id", "title", "slug"],
+      attributes: ["id", "title", "slug", "tags"],
       include: [
         {
           model: pujaBanners,
@@ -22,7 +22,7 @@ export async function GET() {
 
     const pujaCard = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "location", "date"],
+      attributes: ["id", "title", "slug", "sub_title", "location", "date", "tags", "specialDay"],
       include: [
         {
           model: pujaBanners,
@@ -39,6 +39,7 @@ export async function GET() {
       id: p.id,
       title: p.title,
       slug: p.slug,
+      tags: p.tags,
       banners: p.pujaBanners || [],
       type: "puja"
     }));

@@ -7,6 +7,7 @@ import {
   REMOVE_PACKAGE_REQUEST,
   CART_DETAILS_RESPONSE,
   CART_DETAILS_FAILED,
+  ADD_PANDIT_DAKSHINA,
 } from "../types/cartTypes";
 
 const initialState = {
@@ -25,7 +26,6 @@ const initialState = {
   },
   cartDetails: null,
 };
-
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
@@ -81,11 +81,25 @@ export default function reducer(state = initialState, action) {
       return updateCart(state, { ...state.allCarts, add_ons: updatedAddOns });
     }
 
+    // ✅ Add Pandit Dakshina to Cart
+    case ADD_PANDIT_DAKSHINA: {
+      const updatedCart = {
+        ...state.allCarts,
+        other_charges: {
+          ...state.allCarts.other_charges,
+          pandit_charge: action.payload, // ← set pandit charge
+        },
+      };
+
+      return updateCart(state, updatedCart);
+    }
+
     case CART_DETAILS_RESPONSE:
       return {
         ...state,
         cartDetails: { ...action.payload },
       };
+
     case CART_DETAILS_FAILED:
       return {
         ...state,
@@ -106,12 +120,12 @@ export default function reducer(state = initialState, action) {
   }
 }
 
-
-// Helper: calculate grand total
+// 🧮 Helper: calculate grand total
 const calculateGrandTotal = (cart) => {
-  const packageTotal = cart.package && cart.package.type === "puja"  
-    ? cart.package.packagePrice * (cart.package.quantity || 1)
-    : 0;
+  const packageTotal =
+    cart.package && cart.package.type === "puja"
+      ? cart.package.packagePrice * (cart.package.quantity || 1)
+      : 0;
 
   const addOnsTotal = cart.add_ons.reduce(
     (sum, item) => sum + item.price * (item.quantity || 1),
@@ -128,7 +142,7 @@ const calculateGrandTotal = (cart) => {
   return packageTotal + addOnsTotal + otherChargesTotal + tip;
 };
 
-// Helper: update cart and recalc grand_total
+// ♻️ Helper: update cart and recalc grand_total
 const updateCart = (state, updatedCart) => ({
   ...state,
   allCarts: {
@@ -136,4 +150,3 @@ const updateCart = (state, updatedCart) => ({
     grand_total: calculateGrandTotal(updatedCart),
   },
 });
-

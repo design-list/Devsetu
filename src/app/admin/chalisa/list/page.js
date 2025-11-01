@@ -73,7 +73,7 @@ const ChalisaPage = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-3">
         <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-          <BookOpen className="text-green-600" /> Chalisa List
+          <BookOpen className="text-yellow-600" /> Chalisa List
         </h1>
 
         <div className="relative w-full sm:w-80">

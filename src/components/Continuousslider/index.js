@@ -26,7 +26,7 @@ export default function ContinuousSlider() {
   ];
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary)] py-2 md:py-4">
+    <div className="relative overflow-hidden bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary)] py-1 md:py-2">
       <Swiper
         modules={[Autoplay]}
         loop={true}
@@ -51,7 +51,7 @@ export default function ContinuousSlider() {
             key={index}
             className="flex items-center justify-center gap-3 text-[var(--color-white)] font-semibold text-base sm:text-lg md:text-xl whitespace-nowrap"
           >
-            <div className="flex items-center justify-center gap-3 px-3 sm:px-4 py-2 bg-white/10 rounded-lg shadow-md hover:bg-white/20 transition-all duration-300">
+            <div className="flex items-center justify-center gap-3 px-3 sm:px-4 py-1 rounded-lg shadow-md transition-all duration-300">
               {item.icon}
               <span className="text-sm md:text-xl">{item.text}</span>
             </div>

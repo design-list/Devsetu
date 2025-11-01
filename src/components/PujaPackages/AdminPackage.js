@@ -22,11 +22,11 @@ const PujaPackages = ({ pujaPackages = [], handleDelete }) => {
             className="relative rounded-2xl cursor-pointer overflow-hidden border-2 border-gray-200 hover:border-orange-400 transition-all"
           >
             {/* 🗑 Delete Button */}
-            <div className="absolute top-3 left-3 w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center shadow-sm z-10">
+            <div className="absolute top-3 left-3 w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center shadow-sm z-10 hover:bg-orange-400">
               <button
                 type="button"
                 onClick={() => handleDelete(pkg)}
-                className="text-gray-600 hover:text-red-500 transition-colors"
+                className="text-gray-600 hover:text-white transition-colors cursor-pointer"
               >
                 <Trash height={14} width={14} />
               </button>
@@ -49,7 +49,8 @@ const PujaPackages = ({ pujaPackages = [], handleDelete }) => {
               <h3 className="font-semibold text-lg truncate">
                 {pkg.packageType || pkg.name}
               </h3>
-              <p className="font-bold text-xl mt-1">₹{pkg.packagePrice}</p>
+              <p className="font-bold text-xl mt-1">₹{pkg.packagePrice}</p> 
+              <span className="font-normal text-small">{pkg.packageDescription}</span> 
             </div>
           </div>
         ))}

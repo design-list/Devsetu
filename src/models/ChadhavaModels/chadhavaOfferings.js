@@ -23,6 +23,11 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
       field: "description",
     },
+    tags: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "tags",
+    },
     price: {
       type: DataTypes.FLOAT,
       allowNull: false,

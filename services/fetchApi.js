@@ -368,4 +368,14 @@ export default class fetchApi extends Api {
         }
     }
 
+    SendMobileOtp(data) {
+        let url = this.buildUrl(endpoints.MobileLogin.sendotp, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    VerifyMobileOtp(data) {
+        let url = this.buildUrl(endpoints.MobileLogin.sendotp, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
 }

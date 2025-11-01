@@ -29,6 +29,7 @@ const ChadhavaDetailsPage = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedOffering, setSelectedOffering] = useState(false);
+  const [readMore, setReadMore] = useState(false);
 
   const { chadhavaWebDetail } = useSelector((state) => state.chadhavas);
   const { allCarts } = useSelector((state) => state.cart);
@@ -53,13 +54,22 @@ const ChadhavaDetailsPage = () => {
     dispatch(updateOfferingCountAction(id, changeType));
   };
 
+  // Example text
+  const pujaText = chadhavaWebDetail?.["pujaDetails"] || "";
+
+  const shortText =
+    pujaText.length > 550 ? pujaText.slice(0, 550) + "..." : pujaText;
+
   const handlaRedirect = () => {
     const packageData = {
       type: "chadhava",
-      productId: chadhavaWebDetail?.id,
-      productTitle: chadhavaWebDetail?.title,
-      productSlug: chadhavaWebDetail?.slug,
-      productImg: chadhavaWebDetail?.["chadhavaBanners"]?.[0]?.image_url || "",
+      productId : chadhavaWebDetail?.id,
+      productTitle : chadhavaWebDetail?.title,
+      productSlug : chadhavaWebDetail?.slug,
+      location: chadhavaWebDetail?.location,
+      tithi: chadhavaWebDetail?.tithi,
+      date: chadhavaWebDetail?.date,
+      productImg : chadhavaWebDetail?.["chadhavaBanners"]?.[0]?.image_url || "",
     };
 
     dispatch(addPackageAction(packageData));
@@ -103,24 +113,38 @@ const ChadhavaDetailsPage = () => {
               </p>
             )}
 
-            <p className="text-base sm:text-lg md:text-xl text-[var(--color-dark)] text-left font-medium leading-relaxed mb-4 sm:mb-6">
+             <p className="text-lg text-[var(--color-dark)] font-medium mb-4">
+              🌟 <span className="font-bold">According to sacred scriptures</span>,{" "}
+              {readMore ? pujaText : shortText}
+              {pujaText.length > 150 && (
+                <button
+                  onClick={() => setReadMore(!readMore)}
+                  className="text-blue-600 underline ml-1"
+                >
+                  {readMore ? "Read less" : "Read more"}
+                </button>
+              )}
+            </p>
+
+            {/* <p className=" text-lg text-[var(--color-dark)] font-medium mb-4">
               🌟{" "}
               <span className="font-bold">According to sacred scriptures</span>,
               {chadhavaWebDetail?.["pujaDetails"]}
-            </p>
+              <a href="#" className="text-blue-600 underline ml-1">Read more</a>
+            </p> */}
 
-            {/* <p className="text-base sm:text-lg md:text-xl text-[var(--color-dark)] leading-snug">
-      Till now{" "}
-      <span className="font-secondary font-bold text-xl sm:text-2xl md:text-3xl text-[var(--color-primary)]">
-        1,50,000+ Devotees
-      </span>{" "}
-      have participated in Chadava conducted by DevaSetu Chadava Seva.
-    </p> */}
+            <p className="text-[var(--color-dark)] text-xl">
+              Till now{" "}
+              <span className="font-secondary font-bold text-2xl text-[var(--color-primary)]">
+                20,000+ Devotees
+              </span>{" "}
+              have participated in Chadhava conducted by DevaSetu Chadhava Seva.
+            </p>
           </div>
         </div>
 
         {/* Content Sections */}
-        <div className="md:p-6 md:max-w-5xl mx-auto space-y-16">
+        <div className="p-6 max-w-5xl mx-auto my-8 space-y-16">
           <div className="max-w-5xl mx-auto">
             {/* Title */}
             <h1 className="font-secondary text-3xl font-bold text-[var(--color-dark)] mb-6">
@@ -228,7 +252,7 @@ const ChadhavaDetailsPage = () => {
           {/* FAQ */}
           <section className="bg-white rounded-2xl md:p-6">
             <h2 className="font-secondary text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
-              <HelpCircle className="w-6 h-6" /> Frequently Asked Questions
+              Frequently Asked Questions
             </h2>
             <div className="space-y-3">
               {chadhavaWebDetail?.["chadhavaFaqs"]?.map((faq, i) => (

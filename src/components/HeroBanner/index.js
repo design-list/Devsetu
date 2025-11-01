@@ -42,7 +42,8 @@ const HeroBanner = ({ slides }) => {
           const {title, id, slug, type, banners} = slide
 
           return <SwiperSlide key={index}>
-            <div className="h-full min-h-[550px] md:min-h-[600px] max-h-[600px] cursor-pointer" onClick={() => handleExplore(type, slug)}>
+              <div className="relative w-full sm:h-[600px] h-auto"
+              onClick={() => handleExplore(type, slug)}>
               {
                 banners?.map((item) => {
                   return <LazyImage
@@ -56,21 +57,19 @@ const HeroBanner = ({ slides }) => {
                 })
               }
 
-              {/* Centered Content */}
-              <div className="relative top-60 text-left pl-28 z-10 text-[var(--secondary)]">
-                {/* <h2 className="font-bold text-3xl md:text-4xl">
-                  {title}
-                  <span className="text-[var(--orange)]">{slide.highlight}</span>
-                </h2> */}
+              <div className="relative sm:top-60 sm:pl-28 px-6 py-0 sm:py-0 text-left z-10 text-[var(--secondary)]">
+                <p className="mt-0 text-base md:text-lg text-[var(--forcast)]">
+                  {slide.desc}
+                </p>
+              </div>
+             
+              {/* <div className="relative top-60 text-left pl-28 z-10 text-[var(--secondary)]">
                 <p className="mt-4 text-base md:text-lg text-[var(--forcast)]">
                   {slide.desc}
                 </p>
                 <div className="mt-6 flex justify-start gap-4">
-                  {/* <button onClick={() => handleExplore(type, slug)} className=" cursor-pointer px-6 py-2 border border-[var(--forcast)] rounded-md font-medium hover:bg-[var(--forcast)] hover:text-[var(--primary)] transition">
-                    Explore More
-                  </button> */}
                 </div>
-              </div>
+              </div> */}
 
             </div>
           </SwiperSlide>

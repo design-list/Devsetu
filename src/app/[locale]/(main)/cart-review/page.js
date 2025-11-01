@@ -1,20 +1,30 @@
 "use client";
 
-import { useEffect } from "react";
-import { Plus, Minus, Trash2, ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Plus, Minus, Trash2, ArrowLeft, ChevronDown, ChevronUp, Lock, Calendar } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestOfferingDataAction } from "@/redux/actions/offeringActions";
 import LazyImage from "@/components/Atom/LazyImage";
 import {
-  addOfferingAction,
+  addPanditDakshinaAction,
   removePackageAction,
   requestClearCartAction,
   updateOfferingCountAction,
 } from "@/redux/actions/cartActions";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
+import TempleIcon from "../../../../../public/icons/puja-temple1.png"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { formatDate } from "../../../../../utils/localstorage";
+import BreadcrumbSteps from "@/components/Breadcrumbs/Breadcrumb";
 
 const PujaCart = () => {
+
+  const [selectedAmount, setSelectedAmount] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const presetAmounts = [51, 101, 151];
+
   const dispatch = useDispatch();
   const { allCarts } = useSelector((state) => state.cart);
   const router = useRouter();
@@ -23,6 +33,15 @@ const PujaCart = () => {
   useEffect(() => {
     dispatch(requestOfferingDataAction());
   }, [dispatch]);
+
+  useEffect(() => {
+    if(selectedAmount){
+        const amount = parseInt(selectedAmount)
+       dispatch(addPanditDakshinaAction(amount))
+    }else{
+      dispatch(addPanditDakshinaAction(0))
+    }
+  }, [selectedAmount]);
 
   const handleQuantityChange = (id, type) =>
     dispatch(updateOfferingCountAction(id, type));
@@ -34,6 +53,16 @@ const PujaCart = () => {
 
   const goToCheckout = () => router.push(withLang("/checkout"));
   const goHome = () => router.push(withLang("/"));
+
+  const handleSelect = (amount) => {
+    setSelectedAmount(amount);
+  };
+
+  const handleManualChange = (e) => {
+    setSelectedAmount(e.target.value);
+  };
+
+  console.log("allCartsallCarts", allCarts)
 
   // EMPTY STATE
   if (!allCarts?.grand_total) {
@@ -63,6 +92,7 @@ const PujaCart = () => {
   // FILLED CART
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#fffaf4] via-[#fffefd] to-[#fff] py-12 px-4">
+      <BreadcrumbSteps currentStep={3} />
       <div className="max-w-3xl mx-auto grid grid-cols-1 gap-10">
         {/* LEFT SECTION */}
         <div className="bg-white/90 backdrop-blur-md border border-orange-100 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.05)] p-3 md:p-6 relative overflow-hidden">
@@ -72,32 +102,66 @@ const PujaCart = () => {
             Review Your Booking 🪔
           </h2>
 
-          {/* PACKAGE CARD */}
-          {allCarts?.package && (
-            <div className="border border-[var(--color-dark)]/10 rounded-2xl p-2.5 md:p-5 shadow-sm bg-gradient-to-br from-white to-orange-50/30 hover:shadow-lg transition-all duration-300">
-              <div className="flex justify-between items-center">
-                <div className="flex flex-col">
-                  <p className="text-lg font-semibold text-gray-800">
-                    {allCarts.package.productTitle}
-                  </p>
-                  <span className="text-sm text-gray-500">
-                    {allCarts.package.packageType}
-                  </span>
-                </div>
-                <button
-                  onClick={handleRemovePackages}
-                  className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md transition"
-                >
-                  <Trash2 size={18} />
-                </button>
+          <div className="border border-[var(--color-dark)]/10 rounded-2xl p-5 shadow-sm bg-gradient-to-br from-white to-orange-50/30 hover:shadow-lg transition-all duration-300"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            <div className="flex justify-between items-center cursor-pointer">
+              <div className="flex flex-col">
+                <p className="text-lg font-semibold text-gray-800">
+                  {allCarts?.package?.productTitle}
+                </p>
+                
               </div>
-             {allCarts.package.packagePrice && <div className="flex justify-between items-center mt-3">
-                <span className="font-secondary font-bold text-[var(--color-dark)] text-xl">
-                  ₹{allCarts.package.packagePrice}
-                </span>
-              </div>}
+              <button
+                onClick={handleRemovePackages}
+                className="absolute top-[85px] right-[50px] bg-yellow-500 hover:bg-red-600 text-white p-2 rounded-md transition"
+              >
+                <Trash2 size={14} />
+              </button>
+
+              {isOpen ? (
+                <ChevronUp className="w-4 h-4 text-gray-700 top-0" />
+              ) : (
+                <ChevronDown className="w-4 h-4 text-gray-700 top-0" />
+              )}
             </div>
-          )}
+
+            <span className="text-sm text-gray-500">
+              {allCarts?.package?.packageType}
+            </span>
+              {allCarts?.package?.packagePrice && <div className="flex justify-between items-center mt-2">
+              <span className="font-secondary font-bold text-[var(--color-dark)] text-xl">
+                ₹{allCarts?.package?.packagePrice}
+              </span>
+            </div>}
+
+              <hr />
+            {/* Expandable Content */}
+            {isOpen && (
+              <div className="p-4 flex flex-col gap-2 text-gray-600 text-sm">
+                <div className="flex items-center gap-2">
+                  <LazyImage
+                    src={TempleIcon}
+                    alt="Temple Icon"
+                    width={22}
+                    height={22}
+                    className="mr-2 relative -top-1.5 "
+                  />
+                  {allCarts?.package?.location}
+                  
+                </div>
+                <div className="flex items-center gap-2">
+                  <FontAwesomeIcon
+                    icon={faCalendarDays}
+                    className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
+                  />
+                  {formatDate(allCarts?.package?.date, "full")}
+                </div>
+              </div>
+            )}
+          </div>
+
+            
 
           {/* ADD-ONS */}
           {allCarts?.add_ons.map((item) => (
@@ -138,6 +202,48 @@ const PujaCart = () => {
             </div>
           ))}
 
+          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-2xl shadow-md my-2 w-full mx-auto">
+            <h2 className="text-lg font-semibold text-gray-800">
+              Select Pandit Dakhina Amount (₹)
+            </h2>
+
+            {/* Preset Buttons */}
+            <div className="flex justify-center gap-4">
+              {presetAmounts.map((amount) => (
+                <button
+                  key={amount}
+                  type="button"
+                  onClick={() => handleSelect(amount)}
+                  className={`px-6 py-2 rounded-xl text-base font-medium border transition-all duration-200 ${
+                    selectedAmount == amount
+                      ? "bg-orange-500 text-white border-orange-500 shadow-md"
+                      : "bg-white text-gray-700 border-gray-300 hover:bg-orange-100"
+                  }`}
+                >
+                  ₹{amount}
+                </button>
+              ))}
+            </div>
+
+            {/* Manual Input */}
+            <div className="flex items-center gap-2 mt-4 w-full justify-center">
+              <label htmlFor="manual" className="text-gray-600 font-medium">
+                Other:
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-2 text-gray-500">₹</span>
+                <input
+                  id="manual"
+                  type="number"
+                  value={selectedAmount}
+                  onChange={handleManualChange}
+                  placeholder="Custom amount"
+                  className="pl-7 pr-3 py-2 border text-sm border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 text-gray-700 w-40"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* BILL SUMMARY */}
           {allCarts?.add_ons.length > 0 && (
             <div className="border-t pt-6 mt-6">
@@ -156,6 +262,16 @@ const PujaCart = () => {
                     </span>
                   </div>
                 ))}
+                <div className="flex justify-between text-gray-700">
+                { selectedAmount && parseInt(selectedAmount) > 0 && <>
+                  <span>Pandit Dakhina</span>
+                    <span className="font-secondary font-semibold">
+                      ₹{selectedAmount}
+                    </span>
+                  </>
+                }
+                </div>
+
 
                 <div className="flex justify-between font-semibold border-t pt-4 mt-3 text-lg">
                   <span className="text-[var(--color-primary)]">Total</span>

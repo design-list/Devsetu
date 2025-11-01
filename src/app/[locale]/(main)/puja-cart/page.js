@@ -11,11 +11,15 @@ import {
 import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
 import Container from "@/components/Container";
+import BreadcrumbSteps from "@/components/Breadcrumbs/Breadcrumb";
+// import Breadcrumbs from "@/components/Breadcrumbs";
 
 const PujaCart = () => {
   const dispatch = useDispatch();
   const { allCarts } = useSelector((state) => state.cart);
   const { allOffering } = useSelector((state) => state.offering);
+
+  // const pathname = ["Puja Package","Optional Offerings"]
   const router = useRouter();
   const withLang = useWithLang();
 
@@ -31,8 +35,11 @@ const PujaCart = () => {
     router.push(withLang("/cart-review"));
   };
 
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] md:px-6 py-6 md:py-12">
+    <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] md:px-6 py-12">
+      <BreadcrumbSteps currentStep={2} />
+      
       <Container>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-8 text-center md:text-left">
           <h3 className="font-secondary text-2xl md:text-3xl font-bold text-[var(--color-primary)] tracking-tight md:mb-4 sm:mb-0">
@@ -68,7 +75,7 @@ const PujaCart = () => {
                       {off.description}
                     </p>
                   </div>
-                   <div className="w-28 h-28 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
+                   <div className="w-24 h-24 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
                     <LazyImage
                       src={off.offerimg}
                       alt={off.title}
@@ -78,18 +85,18 @@ const PujaCart = () => {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="font-secondary text-lg text-[var(--color-primary)] font-bold">
+                  <span className="font-secondary text-2xl text-[var(--color-primary)] font-bold">
                     ₹{off.price}
                   </span>
 
                   {isAdded ? (
-                    <button className="-mt-[10px] mr-[17px] border border-green-400 text-green-600 text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default">
+                    <button className="-mt-[40px] mr-[18px] border border-green-400 text-green-600 text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default">
                       <CheckCircle size={14} /> Added
                     </button>
                   ) : (
                     <button
                       onClick={() => handleAddOtherOffers(off)}
-                      className="-mt-[10px] mr-[17px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-sm px-3 py-1.5 rounded-md flex items-center gap-1 font-medium hover:bg-orange-50 transition-all z-10"
+                      className="-mt-[40px] mr-[18px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-sm px-3 py-1.5 rounded-md flex items-center gap-1 bg-orange-50 font-medium hover:bg-orange-50 transition-all z-10"
                     >
                       <Plus size={14} /> Add
                     </button>

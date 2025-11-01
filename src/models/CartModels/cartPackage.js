@@ -32,6 +32,16 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
       field: "product_type",
     },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "location",
+    },
+    tithi: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "tithi",
+    },
     productTitle: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -46,6 +56,11 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
       field: "product_img",
+    },
+    date: {
+      type: DataTypes.DATE,
+      field: "created_at",
+      field: "data"
     },
     hsnCode: {
       type: DataTypes.STRING,

@@ -26,7 +26,7 @@ const LoginForm = () => {
 
       if (res.status === 200) {
         // window.location.reload();
-        router.push('/admin')
+        router.push('/admin/puja/list')
       } else {
         alert(res.message)
         setReserr(res.message)

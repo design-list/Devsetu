@@ -3,13 +3,13 @@
 import { NextResponse } from "next/server";
 import models from "@/models";
 
-const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa } = models;
+const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, chadhavaFocus } = models;
 
 
 export async function GET(req, { params }) {
   try {
     const chadhavas = await chadhava.findByPk(params.id, {
-      include: [chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa ], order: [["id", "DESC"]],
+      include: [chadhavaBanner, chadhavaFaqs, chadhavaPackages, chadhavaFocus ], order: [["id", "DESC"]],
     });
     if (!chadhavas) {
       return NextResponse.json({ error: "chadhavas not found" }, { status: 404 });
@@ -55,20 +55,16 @@ export async function PUT(req, { params }) {
       title: body.title,
       subTitle: body.subTitle,
       slug: body.slug,
-      ratingValue: body.ratingValue,
-      ratingReviews: body.ratingReviews,
+      tags: body.tags,
       specialDay: body.specialDay,
       location: body.location,
       date: body.date,
       pujaDetails: body.pujaDetails,
-      // templeHistory: body.templeHistory,
       isActive: body.isActive,
       isActiveOnHome: body.isActiveOnHome,
-
+      tithi: body.tithi,
       isRecommended: body.isRecommended,
       commonFaqs: body.commonFaqs,
-      isActivePandit: body.isActivePandit,
-        
     });
 
     // ✅ Update banners
@@ -96,28 +92,18 @@ export async function PUT(req, { params }) {
       );
     }
 
-    // ✅ Update recommended chadhawas
-
-    if (body.isRecommended && body.recommendedChadawa) {
-      await recommendedChadawa.destroy({ where: { chadhavaId: updatedChadhava.id } });
-      await recommendedChadawa.bulkCreate(
-        body.recommendedChadawa.map((r) => ({
-          ...r,
+    // ✅ Update Focuse
+    if (body.chadhavaFocus){
+      await chadhavaFocus.destroy({ where: { chadhavaId: updatedChadhava.id } });
+      await chadhavaFocus.bulkCreate(
+        body.chadhavaFocus.map((f) => ({
+          ...f,
           chadhavaId: updatedChadhava.id,
         }))
       );
     }
 
-    // // ✅ Update templeHistory
-    // if (body.temple) {
-    //   await templeHistory.destroy({ where: { chadhavaId: updatedChadhava.id } });
-    //   await templeHistory.create({
-    //     ...body.temple,
-    //     chadhavaId: updatedChadhava.id,
-    //   });
-    // }
-
-    // ✅ Update FAQs
+     // ✅ Update FAQs
     if (!body.commonFaqs && body.faqs) {
       await chadhavaFaqs.destroy({ where: { chadhavaId: updatedChadhava.id } });
       await chadhavaFaqs.bulkCreate(
@@ -130,18 +116,41 @@ export async function PUT(req, { params }) {
       );
     }
 
+    // ✅ Update recommended chadhawas
+
+    // if (body.isRecommended && body.recommendedChadawa) {
+    //   await recommendedChadawa.destroy({ where: { chadhavaId: updatedChadhava.id } });
+    //   await recommendedChadawa.bulkCreate(
+    //     body.recommendedChadawa.map((r) => ({
+    //       ...r,
+    //       chadhavaId: updatedChadhava.id,
+    //     }))
+    //   );
+    // }
+
+    // // ✅ Update templeHistory
+    // if (body.temple) {
+    //   await templeHistory.destroy({ where: { chadhavaId: updatedChadhava.id } });
+    //   await templeHistory.create({
+    //     ...body.temple,
+    //     chadhavaId: updatedChadhava.id,
+    //   });
+    // }
+
+   
+
     // ✅ Update Puja Performed By (assuming only one)
-    if (body.isActivePandit && body.pujaPerformedBy) {
-      await pujaPerformed.destroy({ where: { chadhavaId: updatedChadhava.id } });
-      await pujaPerformed.create({
-        ...body.pujaPerformedBy,
-        chadhavaId: updatedChadhava.id,
-      });
-    }
+    // if (body.isActivePandit && body.pujaPerformedBy) {
+    //   await pujaPerformed.destroy({ where: { chadhavaId: updatedChadhava.id } });
+    //   await pujaPerformed.create({
+    //     ...body.pujaPerformedBy,
+    //     chadhavaId: updatedChadhava.id,
+    //   });
+    // }
 
     // ✅ Fetch back with associations
     const finalData = await chadhava.findByPk(updatedChadhava.id, {
-      include: [chadhavaBanner, chadhavaPackages, recommendedChadawa, chadhavaFaqs, pujaPerformed ],
+      include: [chadhavaBanner, chadhavaPackages, chadhavaFaqs, chadhavaFocus ],
     });
 
     return NextResponse.json({

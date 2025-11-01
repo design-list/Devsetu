@@ -94,7 +94,7 @@ const MantrasList = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-3">
         <h1 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-          <BookOpen className="text-green-600" /> 🕉️ Manage Mantras
+          <BookOpen className="text-yellow-600" /> 🕉️ Manage Mantras
         </h1>
 
         <div className="flex gap-3 items-center w-full sm:w-auto">

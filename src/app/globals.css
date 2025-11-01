@@ -43,7 +43,7 @@
 
   /* 🖋 Fonts */
   --font-primary: var(--font-inter), sans-serif;
-  --font-secondary: var(--font-philosopher), serif;
+  /* --font-secondary: var(--font-philosopher), serif; */
 
   /* 📦 Container sizes */
   --container-padding: 1rem;
@@ -70,6 +70,7 @@
 ------------------------------ */
 body {
   @apply text-foreground font-primary;
+  scroll-behavior: smooth;
 }
 
 /* ------------------------------

@@ -3,7 +3,7 @@
 import { NextResponse } from "next/server";
 import models from "@/models";
 
-const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, pujaPerformed, recommendedChadawa } = models;
+const { chadhava, chadhavaBanner, chadhavaFaqs, chadhavaPackages, chadhavaFocus } = models;
 
 //
 // GET: fetch all chadhavas with relations
@@ -15,8 +15,7 @@ export async function GET() {
         { model: chadhavaBanner },
         { model: chadhavaFaqs },
         { model: chadhavaPackages },
-        { model: pujaPerformed },
-        { model: recommendedChadawa },
+        { model: chadhavaFocus }, 
       ],
     });
 
@@ -39,59 +38,40 @@ export async function POST(req) {
         title: body.title,
         subTitle: body.subTitle,
         slug: body.slug,
-        ratingValue: body.ratingValue,
-        ratingReviews: body.ratingReviews,
+        tags: body.tags,
         specialDay: body.specialDay,
         location: body.location,
         date: body.date,
         pujaDetails: body.pujaDetails,
         isActive: body.isActive,
         isActiveOnHome: body.isActiveOnHome,
-
+        tithi: body.tithi,
         isRecommended: body.isRecommended,
         commonFaqs: body.commonFaqs,
-        isActivePandit: body.isActivePandit,
 
-
-        // ✅ Use correct association keys
         chadhavaPackages: body.packages || [],
-        recommendedChadawas: body.isRecommended && body.recommendedChadawa.map(item => ({
-          title: item.title,
-          recommendedImg: item.recommendedImg,
-          status: item.status,
-          location: item.location,
-          currency: item.currency,
-          date: item.date,
-          price: parseFloat(item.price)
-        })) || [],
-        chadhavaFaqs: !body.commonFaqs && body.faqs?.map(f => ({
+
+        chadhavaFocus: body.chadhavaFocus || [],
+
+         chadhavaFaqs: !body.commonFaqs && body.faqs?.map(f => ({
           question: f.title,
           answer: f.description,
         })) || [],
 
-        // templeHistories: body.temple ? [{
-        //   templeImg: body.temple.templeImg,
-        //   templeName: body.temple.templeName,
-        //   templeHistory: body.temple.templeHistory
-        // }] : [],
-
-        // ✅ Banners
         chadhavaBanners:
-          body.banners?.map(banner => ({
-            image_url: banner.imgUrl,
-            type: banner.type,
-            position: banner.position,
-          })) || [],
-
-        pujaPerformeds: body.isActivePandit && body.pujaPerformedBy || [],
+        body.banners?.map(banner => ({
+          image_url: banner.imgUrl,
+          type: banner.type,
+          position: banner.position,
+        })) || [],
+        
       },
       {
         include: [
           { model: chadhavaPackages },
-          { model: recommendedChadawa },
           { model: chadhavaFaqs },
           { model: chadhavaBanner },
-          { model: pujaPerformed },
+          { model: chadhavaFocus },
         ],
       }
     );

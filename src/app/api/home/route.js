@@ -3,14 +3,14 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
-const { pujas, pujaBanners, chadhava, chadhavaBanner } = models;
+const { pujas, pujaBanners, chadhava, chadhavaBanner,chadhavaFocus } = models;
 
 export async function GET() {
   try {
     // Pujas fetch
     const pujaData = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: true },
-      attributes: ["id", "title", "slug"],
+      attributes: ["id", "title", "slug", "tags" ],
       include: [
         {
           model: pujaBanners,
@@ -22,7 +22,7 @@ export async function GET() {
 
     const pujaCard = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "location", "date"],
+      attributes: ["id", "title", "slug", "sub_title", "location","tags", "date", "specialDay"],
       include: [
         {
           model: pujaBanners,
@@ -37,7 +37,7 @@ export async function GET() {
     // Chadhavas fetch
     const chadhavaData = await chadhava.findAll({
       where: { isActive: true, isActiveOnHome: true },
-      attributes: ["id", "title", "slug"],
+      attributes: ["id", "title", "slug", "tags"],
       include: [
         {
           model: chadhavaBanner,
@@ -49,12 +49,15 @@ export async function GET() {
 
     const chadhavaCard = await chadhava.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "chadhava_details", "date"],
+      attributes: ["id", "title", "slug", "location", "date", "tags", "tithi"],
       include: [
         {
           model: chadhavaBanner,
           where: { position: 2 },
           attributes: ["id", "image_url", "position", "type"],
+        },
+        {
+          model: chadhavaFocus
         },
       ],
         limit: 3,
