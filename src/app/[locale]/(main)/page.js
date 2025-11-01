@@ -103,7 +103,7 @@ const Home = () => {
 
   return (
     <Main className="HomePage">
-      <HeroBanner slides={heroBanner} />
+      <HeroBanner height={600} width={1521} slides={heroBanner} />
       <ContinuousSlider />
       <Container>
         <section className="py-3 md:py-8">
