@@ -32,11 +32,11 @@ const PujaPackages = ({ pujaPackages = [], onAddToCart }) => {
 
             {/* Text */}
             <div className="p-4 bg-white">
-              <h3 className="font-semibold text-lg truncate">
+              <h3 className="font-semibold text-base md:text-lg truncate">
                 {pkg.packageType || pkg.name}
               </h3>
-              <p className="font-bold text-xl mt-1">₹{pkg.packagePrice}</p>
-              <span>{pkg.packageDescription}</span>
+              <p className="font-bold text-sm md:text-xl mt-1 line-clamp-3">₹{pkg.packagePrice}</p>
+              <span className="text-sm line-clamp-3">{pkg.packageDescription}</span>
             </div>
           </div>
         ))}

@@ -10,22 +10,22 @@ export default function BreadcrumbSteps({ currentStep = 2 }) {
   ];
 
   return (
-    <div className="flex items-center space-x-2 bg-gray-50 p-3 rounded-md">
+    <div className="flex items-center justify-start flex-wrap gap-2 md:space-x-2 md:p-3">
       {steps.map((step, index) => (
         <div key={step.id} className="flex items-center">
           <div className="flex items-center space-x-2">
             {/* Step Icon */}
             {step.id < currentStep ? (
-              <div className="w-6 h-6 flex items-center justify-center rounded-full bg-green-600 text-white text-sm">
-                <Check size={14} />
+              <div className="md:w-6 w-3 md:h-6 h-3 flex items-center justify-center rounded-full bg-green-600 text-white text-sm">
+                <Check size={12} />
               </div>
             ) : (
               <div
-                className={`w-6 h-6 flex items-center justify-center rounded-full border-2 ${
+                className={`w-4 md:w-6 h-4 md:h-6 flex items-center justify-center rounded-full border-1 md:border-2 ${
                   step.id === currentStep
                     ? "border-blue-500 text-blue-500"
                     : "border-gray-300 text-gray-400"
-                } text-sm font-medium`}
+                } text-xs md:text-sm font-medium`}
               >
                 {step.id}
               </div>
@@ -33,7 +33,7 @@ export default function BreadcrumbSteps({ currentStep = 2 }) {
 
             {/* Step Label */}
             <span
-              className={`text-sm font-medium ${
+              className={`text-xs md:text-sm font-medium ${
                 step.id === currentStep
                   ? "text-blue-600"
                   : step.id < currentStep

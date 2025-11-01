@@ -45,7 +45,7 @@ export default function HowPujaWorks({steps}) {
               {/* Content */}
               <div>
                 <h3
-                  className={`text-lg md:text-2xl font-bold transition-colors duration-300 ${
+                  className={`text-base md:text-2xl font-bold transition-colors duration-300 ${
                     activeStep === index
                       ? "text-[var(--color-primary)]"
                       : "text-[var(--color-dark)]"

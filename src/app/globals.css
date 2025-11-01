@@ -68,6 +68,9 @@
 /* ------------------------------
    4. Global Styles (with @apply)
 ------------------------------ */
+html, body{
+  scroll-behavior: smooth;
+}
 body {
   @apply text-foreground font-primary;
   scroll-behavior: smooth;
@@ -162,7 +165,12 @@ body {
   animation: glow 3s ease-in-out infinite;
 }
 
-@media (min-width: 640px) {
+@media (max-width: 640px) {
+  .HomePage .swiper-button-prev{top: 60% !important; width: 30px !important; height: 30px !important;}
   .puja-page .swiper .swiper-button-prev,
   .puja-page .swiper .swiper-button-next{top: 60% !important; width: 30px !important; height: 30px !important;}
+  .puja-tag{    padding: 2px 4px;
+    top: 3px; font-size: 10px;}
+    .pdp-page .swiper .swiper-button-prev,
+  .pdp-page .swiper .swiper-button-next{top: 60% !important; width: 30px !important; height: 30px !important;}
 }

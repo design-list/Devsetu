@@ -13,7 +13,7 @@ import TempleIcon from "../../../public/icons/puja-temple1.png";
 const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
   return (
     <>
-      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 py-10">
+      <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8 md:py-10">
         {pujas?.map((puja) => {
           const bannerImage =
             puja?.pujaBanners?.[0]?.image_url || "/images/herobanner.webp";
@@ -30,7 +30,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
               {/* Image Section */}
               <div
                 onClick={() => handlaRedirect("puja", puja.slug)}
-                className="relative h-52 px-4 pt-4 pb-0 cursor-pointer overflow-hidden"
+                className="relative h-[170px] px-2 md:px-4 pt-2 md:pt-4 pb-0 cursor-pointer overflow-hidden object-fill"
               >
                 <LazyImage
                   src={bannerImage}
@@ -51,7 +51,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
               {/* Details */}
               <div className="px-4 py-2 flex flex-col flex-1 bg-gradient-to-b from-white to-[var(--forcast)]">
                 <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
-                  {puja?.tags ? puja.tags : <span className="opacity-0">""</span>}
+                  {puja?.tags ? puja.tags : <span className="opacity-0">&quot</span>}
                   <Image
                     src={Goldenline}
                     alt="Golden under"
@@ -86,18 +86,18 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                 </p>
 
                 {/* tample icon should align baseline */}
-                <div className="flex items-center gap-2 my-2 text-[#393939] text-base font-medium mb-2"> 
+                <div className="flex items-center gap-[3.1px] md:gap-2 my-2 text-[#393939] text-sm md:text-base font-medium mb-2"> 
                   <Image
                     src={TempleIcon}
                     alt="Temple Icon"
                     width={22}
                     height={22}
-                    className="mr-2 relative -top-1.5 "
+                    className="mr-2 relative -top-0.5 -left-[1px]"
                   />
                   {puja.location}
                 </div>
 
-                <div className="flex items-center gap-2 text-[#393939] text-base font-medium">
+                <div className="flex items-center gap-2 text-[#393939] text-sm md:text-base font-medium">
                   <FontAwesomeIcon
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"

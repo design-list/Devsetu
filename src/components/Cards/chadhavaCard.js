@@ -32,7 +32,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               </span>}
 
               {/* Image Section */}
-              <div className="relative h-44 sm:h-52 md:h-56 px-4 pt-4 pb-0 overflow-hidden">
+              <div className="relative h-44 sm:h-52 md:h-56 px-2 md:px-4 pt-2 md:pt-4 pb-0 overflow-hidden">
                 <LazyImage
                   src={bannerImage}
                   alt={card.title}
@@ -44,7 +44,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
 
               {/* Details */}
               <div className="px-4 pt-2 pb-4 flex flex-col flex-1 justify-between">
-                <div className="glow-text text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
+                <div className="glow-text text-xs md:text-sm inline-block text-center text-transparent bg-clip-text bg-gradient-to-b from-[#d42f0e] via-[#f15822] to-[#f8b500] font-bold uppercase tracking-widest mb-1">
                   {card?.tags}
                   <Image
                     src={Goldenline}
@@ -71,18 +71,18 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                 </div>
 
                 {/* Image Icon should be on baseline */}
-                <div className="flex items-center gap-2 my-2 text-[#393939] text-base font-medium mb-2">
+                <div className="flex items-center my-2 text-[#393939] text-sm md:text-base font-medium mb-2">
                   <Image
                     src={TempleIcon}
                     alt="Temple Icon"
                     width={22}
                     height={22}
-                    className="mr-2 relative -top-1.5 "
+                    className="mr-2 relative -top-0.5 -left-[1px]"
                   />
                   {card.location || "Location unavailable"}
                 </div>
 
-                <div className="flex items-center gap-2 text-[#393939] text-base font-medium">
+                <div className="flex items-center gap-[6px] md:gap-0 text-[#393939] text-sm md:text-base font-medium">
                   <FontAwesomeIcon
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
@@ -90,10 +90,10 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   {formatDate(card.date, "full")} {card.tithi}
                 </div>
                 <div className="mt-3">
-                  <ul className="flex flex-row justify-between">
+                  <ul className="grid grid-cols-3 items-center ">
                     {
                       card?.chadhavaFocus?.map((item) => {
-                        return <li key={item.id} className="flex flex-col justify-center text-center text-sm items-center gap-2.5 text-base text-[#393939] pb-2">
+                        return <li key={item.id} className="flex flex-col justify-start text-center text-sm items-center gap-2.5 md:text-base text-[#393939] pb-2/ h-full">
                           {" "}
                           <Image
                             src={item.focusIcon}
@@ -101,7 +101,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                             width={30}
                             height={30}
                           />{" "}
-                          <span>
+                          <span className="text-xs md:text-sm font-bold">
                             {item.foucs}
                           </span>{" "}
                         </li>

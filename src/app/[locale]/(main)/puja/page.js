@@ -179,19 +179,21 @@ const PujaPage = () => {
       {/* Hero Section */}
 
       <section className="relative py-8 px-2 md:px-6 text-center">
-        <h1 className="font-secondary text-2xl md:text-4xl font-bold text-[var(--color-dark)] mb-4">
+       <Container>
+         <h1 className="font-secondary text-lg md:text-4xl font-bold text-[var(--color-dark)] mb-4">
           Perform Puja as per Vedic rituals at Famous Hindu Temples in India
         </h1>
         <PageHeroSlider
           heroBanner={heroBanner}
           handlaRedirect={handlaRedirect}
         />
+       </Container>
       </section>
 
       {/* Featured Puja */}
       <Container>
         <section className="pb-8 md:px-6">
-          <h2 className="font-secondary text-center text-3xl md:text-4xl uppercase font-bold text-[var(--primary)] md:mt-5">
+          <h2 className="font-secondary text-center text-xl md:text-4xl uppercase font-bold text-[var(--primary)] md:mt-5">
             Featured Pujas
           </h2>
           <PujaCard
@@ -224,9 +226,9 @@ const PujaPage = () => {
       </Container>
 
       {/* Review */}
-      <section className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
+      <section className="py-4 md:py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
         <Container>
-          <h2 className="font-secondary text-center text-3xl font-bold mb-10">
+          <h2 className="font-secondary text-center text-lg md:text-3xl font-bold mb-4 md:mb-10">
             What devotees Say about DevaSetu Puja?
           </h2>
           <Reviews reviews={reviews} />
@@ -236,7 +238,7 @@ const PujaPage = () => {
       {/* How Puja Works */}
       <section className="relative py-8 md:px-6 overflow-hidden">
         {/* Heading */}
-        <h2 className="text-center font-secondary text-3xl font-bold mb-10 text-[var(--color-dark)]">
+        <h2 className="text-center font-secondary text-lg font-bold mb-10 text-[var(--color-dark)]">
           How does <span className="text-[var(--color-info)]">DevaSetu</span>{" "}
           Online Puja Work?
         </h2>

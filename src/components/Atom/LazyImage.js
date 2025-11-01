@@ -21,7 +21,7 @@ const LazyImage = ({ src, alt, width, height, fill, className, priority }) => {
       alt={alt || ""}
       width={width || 600}
       height={height || 300}
-      className={className || "object-cover rounded-lg"}
+      className={className || "object-fill rounded-lg"}
       loading="lazy"
 
     />

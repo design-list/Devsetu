@@ -125,7 +125,7 @@ const ChadhavaPage = () => {
     <main className="bg-gradient-to-b from-orange-50 via-white to-gray-50 text-gray-800">
       <Container>
         {/* 🌅 Hero Banner */}
-        <section className="relative py-8 overflow-hidden">
+        <section className="relative pt-4 pb-0 md:py-8 overflow-hidden">
           {/* <div className="absolute inset-0 bg-[url('/patterns/sacred-bg.svg')] opacity-10 bg-repeat" /> */}
           {/* <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
           <div className="animate-fadeIn">
@@ -168,7 +168,7 @@ const ChadhavaPage = () => {
             />
           </div>
         </div> */}
-          <h1 className="font-secondary text-2xl md:text-4xl text-center font-bold text-[var(--color-dark)] leading-snug mb-6">
+          <h1 className="font-secondary text-lg md:text-4xl text-center font-bold text-[var(--color-dark)] leading-snug mb-2 md:mb-6">
             Offer <span className="text-[var(--color-primary)]">Chadhava</span>{" "}
             as per Vedic rituals at sacred temples across India
           </h1>
@@ -180,15 +180,16 @@ const ChadhavaPage = () => {
       </Container>
 
       {/* 🕉️ Upcoming Chadhava Section */}
-      <section className="max-w-7xl mx-auto px-6 py-8">
-        <div className="text-center mb-12">
-          <h2 className="font-secondary text-3xl md:text-4xl font-extrabold text-[var(--color-dark)] mb-4">
+      <section className=" py-4 md:py-8">
+        <Container>
+          <div className="text-center">
+          <h2 className="font-secondary text-xl md:text-4xl font-extrabold text-[var(--color-dark)] mb-1 md:mb-4">
             Upcoming{" "}
             <span className="text-[var(--color-primary)]">
               Chadhava Offerings
             </span>
           </h2>
-          <p className=" text-lg text-[var(--color-dark)] max-w-2xl mx-auto">
+          <p className=" text-sm md:text-lg text-[var(--color-dark)] md:max-w-2xl mx-auto">
             Participate in auspicious Chadhava ceremonies organized at holy
             temples. Each offering is conducted by priests according to Vedic
             traditions.
@@ -222,12 +223,13 @@ const ChadhavaPage = () => {
               </button>
             </div>
           )} */}
+        </Container>
       </section>
 
       {/* Review */}
-      <section className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
+      <section className="py-4 md:py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
         <Container>
-          <h2 className="font-secondary text-center text-3xl font-bold mb-10">
+          <h2 className="font-secondary text-center text-lg md:text-3xl font-bold mb-4 md:mb-10">
             What devotees Say about DevaSetu Puja?
           </h2>
           <Reviews reviews={reviews} />
@@ -235,9 +237,9 @@ const ChadhavaPage = () => {
       </section>
 
       {/* How Puja Works */}
-      <section className="relative py-20 px-6 overflow-hidden">
+      <section className="relative py-5 md:py-20 px-6 overflow-hidden">
         {/* Heading */}
-        <h2 className="text-center font-secondary text-3xl font-bold mb-10 text-[var(--color-dark)]">
+        <h2 className="text-center font-secondary text-lg font-bold mb-10 text-[var(--color-dark)]">
           How does <span className="text-[var(--color-info)]">DevaSetu</span>{" "}
           Online Chadhava Work?
         </h2>
@@ -246,9 +248,9 @@ const ChadhavaPage = () => {
       </section>
 
       {/* Stats */}
-      <section className="bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] py-16 px-6 text-center text-[var(--color-foreground)]">
+      <section className="bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] py-4 md:py-16 px-3 md:px-6 text-center text-[var(--color-foreground)]">
         <Container>
-          <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-10 text-[var(--color-dark)]">
+          <h2 className="font-secondary text-xl md:text-4xl font-bold mb-4 md:mb-10 text-[var(--color-dark)]">
             Start your{" "}
             <span className="text-[var(--color-primary)]">Sacred Journey</span>{" "}
             with

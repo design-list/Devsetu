@@ -21,7 +21,7 @@ const Breadcrumbs = ({ pathname }) => {
   });
 
   return (
-    <nav className="flex items-center space-x-2 text-[var(--color-dark)] text-sm font-secondary py-4">
+    <nav className="flex items-center space-x-2 text-[var(--color-dark)] text-xs md:text-sm font-secondary py-2 md:py-4">
       <Link href={`/${lang}`} className="hover:underline">
         {lang === "en" ? "Home" : "होम"}
       </Link>

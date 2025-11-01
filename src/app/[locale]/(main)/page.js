@@ -111,7 +111,7 @@ const Home = () => {
             <h2 className="font-secondary text-center text-3xl md:text-4xl uppercase font-bold text-[var(--primary)] mb-2 mt-5 drop-shadow-lg">
               Special <span className="text-[var(--color-info)]">puja</span>
             </h2>
-            <p className="text-base md:text-xl text-[var(--color-dark)] text-center md:text-center">
+            <p className="text-sm md:text-xl text-[var(--color-dark)] text-center md:text-center">
               Connect with the divine from home. Get your puja performed in your
               name at India’s holy temples and invite peace, joy, and prosperity
               into your life.

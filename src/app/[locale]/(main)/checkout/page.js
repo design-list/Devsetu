@@ -268,39 +268,39 @@ export default function CheckoutPage() {
 
   return (
 
-    <section className="min-h-screen bg-gradient-to-br from-[var(--color-accent)]/15 via-[var(--color-background)] to-[var(--color-primary-light)]/10 py-10 px-4 md:px-10 font-[var(--font-primary)]">
+    <section className="min-h-screen bg-gradient-to-br from-[var(--color-accent)]/15 via-[var(--color-background)] to-[var(--color-primary-light)]/10 pt-4 md:py-10 px-4 md:px-10 font-[var(--font-primary)]">
       <BreadcrumbSteps currentStep={4} />
-      <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl p-6 md:p-10 relative overflow-hidden border border-[var(--color-primary-light)]/30">
+      <div className="mt-4 md:mt-0 max-w-3xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl p-3 md:p-8 relative overflow-hidden border border-[var(--color-primary-light)]/30">
         {/* Decorative Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-light)]/10 to-transparent pointer-events-none rounded-3xl"></div>
 
-        <h1 className="text-3xl md:text-4xl font-[var(--font-secondary)] text-[var(--color-dark)] mb-8 text-center relative z-10 tracking-tight">
+        <h1 className="text-xl md:text-3xl font-[var(--font-secondary)] text-[var(--color-dark)] mb-4 text-center relative z-10 tracking-tight">
           🛕 Secure Checkout
         </h1>
 
         {/* Cart Summary Section */}
-        <div className="border border-[var(--color-primary-light)] rounded-2xl p-6 mb-8 bg-gradient-to-br from-white to-[var(--color-background)]/60 shadow-md relative z-10 transition hover:shadow-lg">
-          <h2 className="font-semibold text-lg text-[var(--color-primary)] mb-4">
+        <div className="border border-[var(--color-primary-light)] rounded-2xl p-3 md:p-6 mb-8 bg-gradient-to-br from-white to-[var(--color-background)]/60 shadow-md relative z-10 transition hover:shadow-lg">
+          <h2 className="font-semibold text-lg text-[var(--color-primary)] mb-2 md:mb-4">
             Your Cart Summary
           </h2>
 
           {allCarts?.["package"] && (
-            <div className="border-t border-dashed border-[var(--color-accent)] pt-4 mt-4 space-y-3" onClick={() => setIsOpen(!isOpen)}>
-              <div className="flex justify-between items-center">
-                <span className="font-medium text-gray-800 text-base">
+            <div className="border-t border-dashed border-[var(--color-accent)] pt-4 mt-4" onClick={() => setIsOpen(!isOpen)}>
+              <div className="flex justify-between items-center cursor-pointer">
+                <span className="font-medium text-gray-800 text-sm md:text-base">
                   {allCarts?.["package"]?.productTitle}
                 </span>
                 {isOpen ? (
-                    <ChevronUp className="w-4 h-4 text-gray-700 top-0" />
+                    <ChevronUp className="w-6 h-6 text-[var(--color-dark)] top-0" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-gray-700 top-0" />
+                    <ChevronDown className="w-6 h-6 text-[var(--color-dark)] top-0" />
                   )}
-                <span className="bg-[var(--color-accent)]/20 text-[var(--color-dark)] px-3 py-1 rounded-full text-sm font-semibold">
+              </div>
+              <span className="bg-[var(--color-accent)]/20 text-[var(--color-dark)] px-3 py-1 rounded-full text-sm md:text-base font-semibold mt-2 md:mt-0 inline-block">
                   {allCarts?.["package"]?.packageType}
                 </span>
-              </div>
               {allCarts?.["package"]?.packagePrice && (
-                <div className="flex justify-between text-gray-700 font-medium">
+                <div className="flex justify-between text-[var(--color-dark)] font-medium mt-4">
                   <span>Base Price</span>
                   <span>₹{allCarts?.["package"]?.packagePrice}</span>
                 </div>
@@ -365,10 +365,10 @@ export default function CheckoutPage() {
         </div>
 
         {/* Form Section */}
-        <form className="space-y-6 relative z-10">
+        <form className="space-y-2 md:space-y-6 relative z-10">
           {/* WhatsApp */}
           <div>
-            <label className="block font-medium mb-2 text-[var(--color-dark)]">
+            <label className=" text-sm md:text-base block font-medium mb-2 text-[var(--color-dark)]">
               WhatsApp Number*
             </label>
             <div className="flex gap-2">
@@ -378,7 +378,7 @@ export default function CheckoutPage() {
               <input
                 type="tel"
                 placeholder="Enter your mobile number"
-                className={`flex-1 border rounded-lg px-3 py-2 shadow-sm transition focus:ring-2 ${errors.whatsapp
+                className={` text-sm md:text-base flex-1 border rounded-lg px-3 py-2 shadow-sm transition focus:ring-2 ${errors.whatsapp
                     ? "border-red-500 focus:ring-red-400"
                     : "focus:ring-[var(--color-primary)]"
                   }`}
@@ -390,13 +390,13 @@ export default function CheckoutPage() {
 
           {/* Name */}
           <div>
-            <label className="block font-medium mb-2 text-[var(--color-dark)]">
+            <label className=" text-sm md:text-base block font-medium mb-2 text-[var(--color-dark)]">
               Full Name*
             </label>
             <input
               type="text"
               placeholder="Enter your name"
-              className={`w-full border rounded-lg px-3 py-2 shadow-sm transition focus:ring-2 ${errors.name
+              className={`text-sm md:text-base w-full border rounded-lg px-3 py-2 shadow-sm transition focus:ring-2 ${errors.name
                   ? "border-red-500 focus:ring-red-400"
                   : "focus:ring-[var(--color-primary)]"
                 }`}
@@ -413,13 +413,13 @@ export default function CheckoutPage() {
               value={gotra}
               onChange={(e) => setGotra(e.target.value)}
               disabled={dontKnow}
-              className={`w-full border rounded-lg px-3 py-3 pr-10 shadow-sm transition ${dontKnow
+              className={`text-sm md:text-base w-full border rounded-lg px-3 py-2 md:py-3 pr-10 shadow-sm transition ${dontKnow
                   ? "bg-gray-100 cursor-not-allowed"
                   : "focus:ring-2 focus:ring-[var(--color-primary)]"
                 }`}
             />
             <Info
-              className="absolute right-3 top-3.5 text-[var(--color-info)] cursor-pointer hover:text-[var(--color-primary)] transition"
+              className="absolute right-3 top-[9px] md:top-3.5 text-[var(--color-info)] cursor-pointer hover:text-[var(--color-primary)] transition"
               size={20}
               onClick={() => setShowPopup(true)}
             />
@@ -481,8 +481,8 @@ export default function CheckoutPage() {
             )}
           </div>
 
-          {allCarts?.package?.type === "puja" && <div className="flex items-center justify-between border p-3 rounded">
-            <label className="font-semibold">Toggel button for Dev Prashadm</label>
+          {allCarts?.package?.type === "puja" && <div className="flex items-center justify-between border p-2 md:p-3 rounded">
+            <label className="text-sm md:text-lg font-semibold">Wanted Dev Prashadm ?</label>
             <button
               type="button"
               onClick={() => setDevaPrashadm((prev) => !prev)} 
@@ -572,12 +572,12 @@ export default function CheckoutPage() {
 
           {/* Total + Pay */}
           <div className="flex justify-between items-center pt-5 border-t border-[var(--color-primary-light)]">
-            <p className="text-xl font-semibold text-[var(--color-dark)]">
+            <p className="text-base md:text-xl font-semibold text-[var(--color-dark)]">
               Total: ₹{finalTotal}/-
             </p>
             <button
               type="button"
-              className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-white px-8 py-3 rounded-xl font-semibold shadow-md hover:scale-[1.03] hover:shadow-lg transition-transform"
+              className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-white px-4 md:px-8 py-2 md:py-3 rounded-md md:rounded-xl font-semibold shadow-md hover:scale-[1.03] hover:shadow-lg transition-transform"
               onClick={handleSubmit}
             >
               Pay Now
