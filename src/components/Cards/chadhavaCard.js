@@ -28,7 +28,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
             >
               {/* Custom Tag — visible even with overflow-hidden */}
               {card.tags && <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-xs font-bold text-white uppercase">
-                Special Tag
+                Special Chadhava
               </span>}
 
               {/* Image Section */}
@@ -89,7 +89,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   />
                   {formatDate(card.date, "full")} {card.tithi}
                 </div>
-                <div className="mt-3">
+                {/* <div className="mt-3">
                   <ul className="flex flex-row justify-between">
                     {
                       card?.chadhavaFocus?.map((item) => {
@@ -108,7 +108,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                       })
                     }
                   </ul>
-                </div>
+                </div> */}
               </div>
 
               {/* Button */}

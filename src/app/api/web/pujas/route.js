@@ -22,7 +22,7 @@ export async function GET() {
 
     const pujaCard = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: false },
-      attributes: ["id", "title", "slug", "sub_title", "location", "date", "tags"],
+      attributes: ["id", "title", "slug", "sub_title", "location", "date", "tags", "specialDay"],
       include: [
         {
           model: pujaBanners,
