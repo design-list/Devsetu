@@ -31,7 +31,7 @@ const PageDetailHeroSlider = ({ heroSlides }) => {
                 src={item.imageUrl}
                 alt={item.id+ "puja image"}
                 className="object-cover"
-                width={660}
+                width={692}
                 height={400}
               />
           </SwiperSlide>

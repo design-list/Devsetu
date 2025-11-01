@@ -29,6 +29,7 @@ const ChadhavaDetailsPage = () => {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedOffering, setSelectedOffering] = useState(false);
+  const [readMore, setReadMore] = useState(false);
 
   const { chadhavaWebDetail } = useSelector((state) => state.chadhavas);
   const { allCarts } = useSelector((state) => state.cart);
@@ -53,6 +54,12 @@ const ChadhavaDetailsPage = () => {
     dispatch(updateOfferingCountAction(id, changeType));
   };
 
+  // Example text
+  const pujaText = chadhavaWebDetail?.["pujaDetails"] || "";
+
+  // Short text (पहले 150 characters)
+  const shortText =
+    pujaText.length > 150 ? pujaText.slice(0, 550) + "..." : pujaText;
 
   const handlaRedirect = () => {
     const packageData = {
@@ -103,12 +110,25 @@ const ChadhavaDetailsPage = () => {
               </p>
             )}
 
-            <p className=" text-lg text-[var(--color-dark)] font-medium mb-4">
+             <p className="text-lg text-[var(--color-dark)] font-medium mb-4">
+              🌟 <span className="font-bold">According to sacred scriptures</span>,{" "}
+              {readMore ? pujaText : shortText}
+              {pujaText.length > 150 && (
+                <button
+                  onClick={() => setReadMore(!readMore)}
+                  className="text-blue-600 underline ml-1"
+                >
+                  {readMore ? "Read less" : "Read more"}
+                </button>
+              )}
+            </p>
+
+            {/* <p className=" text-lg text-[var(--color-dark)] font-medium mb-4">
               🌟{" "}
               <span className="font-bold">According to sacred scriptures</span>,
               {chadhavaWebDetail?.["pujaDetails"]}
-              {/* <a href="#" className="text-blue-600 underline ml-1">Read more</a> */}
-            </p>
+              <a href="#" className="text-blue-600 underline ml-1">Read more</a>
+            </p> */}
 
             <p className="text-[var(--color-dark)] text-xl">
               Till now{" "}
@@ -121,7 +141,7 @@ const ChadhavaDetailsPage = () => {
         </div>
 
         {/* Content Sections */}
-        <div className="p-6 max-w-5xl mx-auto space-y-16">
+        <div className="p-6 max-w-5xl mx-auto my-8 space-y-16">
           <div className="max-w-5xl mx-auto">
             {/* Title */}
             <h1 className="font-secondary text-3xl font-bold text-[var(--color-dark)] mb-6">
