@@ -57,9 +57,8 @@ const ChadhavaDetailsPage = () => {
   // Example text
   const pujaText = chadhavaWebDetail?.["pujaDetails"] || "";
 
-  // Short text (पहले 150 characters)
   const shortText =
-    pujaText.length > 150 ? pujaText.slice(0, 550) + "..." : pujaText;
+    pujaText.length > 550 ? pujaText.slice(0, 550) + "..." : pujaText;
 
   const handlaRedirect = () => {
     const packageData = {
