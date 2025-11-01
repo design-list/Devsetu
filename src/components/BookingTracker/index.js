@@ -18,7 +18,7 @@ const BookingTracker = ({ bookingId, type, pujaDate, currentStep = 1, paymentSta
            {`Your ${type === 'puja' ? "Puja" : "Chadhava" } Booking is Confirmed!`}
         </h2>
          <div className="flex justify-between my-2">
-            {bookingId&& <span className="font-semibold text-orange-500">{`Booking ID: #${bookingId}`}</span>}
+            {bookingId && <span className="font-semibold text-orange-500">{`Booking ID: #${bookingId}`}</span>}
             {paymentStatus && <spen className="font-semibold text-green-500">Payment status: {paymentStatus}</spen>}
         </div>
         {type === "puja" && <span className="text-orange-500">{`Your Puja will be Performed on: ${pujaDate}`}</span>}

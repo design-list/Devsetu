@@ -324,7 +324,7 @@ export default function CheckoutPage() {
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
                   />
-                  {formatDate(allCarts?.package?.date, "full")}
+                  {formatDate(allCarts?.package?.date, "full")} {allCarts?.package?.tithi}
                 </div>
               </div>
             )}
@@ -345,7 +345,7 @@ export default function CheckoutPage() {
                 </div>
               ))}
 
-              { allCarts?.['other_charges']?.pandit_charge &&
+              { (allCarts?.['other_charges']?.pandit_charge > 0 && allCarts?.package?.type === "puja") &&
                 <div
                   className="flex justify-between text-gray-700 font-medium"
                 >
@@ -383,7 +383,11 @@ export default function CheckoutPage() {
                     : "focus:ring-[var(--color-primary)]"
                   }`}
                 value={form.whatsapp}
-                onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9]/g, "");
+                  setForm({ ...form, whatsapp: value });
+                }}
+                maxLength={10}
               />
             </div>
           </div>
@@ -482,7 +486,7 @@ export default function CheckoutPage() {
           </div>
 
           {allCarts?.package?.type === "puja" && <div className="flex items-center justify-between border p-3 rounded">
-            <label className="font-semibold">Toggel button for Dev Prashadm</label>
+            <label className="font-semibold">DevaPrasadam?</label>
             <button
               type="button"
               onClick={() => setDevaPrashadm((prev) => !prev)} 

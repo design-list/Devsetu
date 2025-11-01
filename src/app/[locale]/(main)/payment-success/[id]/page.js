@@ -171,7 +171,7 @@ useEffect(() => {
                             icon={faCalendarDays}
                             className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
                           />
-                          {formatDate(cartDetails?.package?.date, "full")}
+                          {formatDate(cartDetails?.package?.date, "full")} {cartDetails?.package?.tithi}
                         </div>
                       </div>
                     </div>
@@ -197,7 +197,7 @@ useEffect(() => {
                   ))}
 
                   {
-                    otherChargesData?.pandit_charge && <div
+                    otherChargesData?.pandit_charge > 0 && <div
                       className="flex justify-between text-gray-700"
                     >
                       <span>{"Pandit Dakshina"}</span>
@@ -213,10 +213,10 @@ useEffect(() => {
 
                   <div className="py-2">
                     <p className="font-semibold text-gray-800">
-                      {cartDetails.user_details.name}
+                      {cartDetails?.user_details?.name}
                     </p>
                     <p className="text-gray-500 text-sm">
-                      {cartDetails.user_details.whatsapp} • {cartDetails.user_details.name}
+                      {cartDetails?.user_details?.whatsapp} • {cartDetails?.user_details?.name}
                     </p>
                     {cartDetails?.user_details?.members?.map((m, i) => (
                       <p key={i} className="text-gray-500 text-sm">{m}</p>
@@ -227,15 +227,14 @@ useEffect(() => {
               </div>
             )} 
 
-            <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
-             {cartDetails?.isActivePrasad && <div className="space-y-3 text-sm text-gray-700">
+            {cartDetails?.isActivePrasad &&  <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
+             <div className="space-y-3 text-sm text-gray-700">
                 <p className="text-orange-600">Puja Prashadm will Delhiverd on address : </p>
                 <p>
                   {cartDetails?.user_details?.address}, {cartDetails?.user_details?.city}, {cartDetails?.user_details?.state} - {cartDetails?.user_details?.postalCode}
                 </p>
-                
-              </div>}
-            </div>
+              </div>
+            </div>}
             {/* <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
               <h3 className="text-lg font-semibold text-orange-800 mb-4">Puja Video & Updates</h3>
               <div className="space-y-3 text-sm text-gray-700">

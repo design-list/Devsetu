@@ -27,8 +27,8 @@ const proximanovaFont = localFont({
 });
 
 export const metadata = {
-  title: "Dev Setu",
-  description: "Dev Setu",
+  title: "DevaSetu",
+  description: "DevaSetu",
   icons: {
     icon: [
       { url: "../../public/icons/devsetu-logo-icon.ico" },
@@ -41,9 +41,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${philosopherFont.variable} ${proximanovaFont.variable}`}>
+      <>
         {children}
-      </body>
+      </>
     </html>
   );
 }

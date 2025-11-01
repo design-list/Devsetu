@@ -155,7 +155,7 @@ const PujaCart = () => {
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
                   />
-                  {formatDate(allCarts?.package?.date, "full")}
+                  {formatDate(allCarts?.package?.date, "full")} {allCarts?.package?.tithi}
                 </div>
               </div>
             )}
@@ -202,9 +202,9 @@ const PujaCart = () => {
             </div>
           ))}
 
-          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-2xl shadow-md my-2 w-full mx-auto">
+         {allCarts?.package?.type ==="puja" && <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-2xl shadow-md my-2 w-full mx-auto">
             <h2 className="text-lg font-semibold text-gray-800">
-              Select Pandit Dakhina Amount (₹)
+              Select Pandit Dakshina Amount (₹)
             </h2>
 
             {/* Preset Buttons */}
@@ -242,7 +242,7 @@ const PujaCart = () => {
                 />
               </div>
             </div>
-          </div>
+          </div>}
 
           {/* BILL SUMMARY */}
           {allCarts?.add_ons.length > 0 && (
