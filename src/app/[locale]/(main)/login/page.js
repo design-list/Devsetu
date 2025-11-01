@@ -10,36 +10,45 @@ const MobileLogin = () => {
   const [message, setMessage] = useState("");
 
   const sendOtp = async () => {
-    const res = await fetch("/api/send-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      setStep(2);
-      setMessage("Otp sent");
-    } else {
-      setMessage("Error: " + data.error);
+    try {
+      // ✅ Ensure +91 prefix for Twilio (E.164 format)
+      const formattedPhone = phone.startsWith("+") ? phone : `+91${phone}`;
+
+      // ✅ Await API response
+      const res = await api.SendMobileOtp({ phone: formattedPhone });
+
+      if (res?.success) {
+        setStep(2);
+        setMessage("OTP sent successfully ✅");
+      } else {
+        setMessage("Error: " + (res?.error || "Failed to send OTP"));
+      }
+    } catch (err) {
+      console.error("Send OTP Error:", err);
+      setMessage("Something went wrong ❌");
     }
   };
 
   const verifyOtp = async () => {
-    const res = await fetch("/api/verify-otp", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ phone, code: otp }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      setMessage("Login successful 🎉");
-    } else {
-      setMessage("Invalid OTP ❌");
+    try {
+      const formattedPhone = phone.startsWith("+") ? phone : `+91${phone}`;
+
+      // ✅ Include OTP payload too
+      const res = await api.VerifyMobileOtp({ phone: formattedPhone, otp });
+
+      if (res?.success) {
+        setMessage("Login successful 🎉");
+      } else {
+        setMessage("Invalid OTP ❌");
+      }
+    } catch (err) {
+      console.error("Verify OTP Error:", err);
+      setMessage("Something went wrong ❌");
     }
   };
 
   return (
-    <div className="max-w-sm mx-auto mt-10 p-6 border rounded-lg shadow-md">
+    <div className="max-w-sm mx-auto mt-10 mb-6 p-6 border rounded-lg shadow-md">
       {step === 1 && (
         <>
           <h2 className="text-xl font-semibold mb-3">Mobile Login</h2>
@@ -52,7 +61,7 @@ const MobileLogin = () => {
           />
           <button
             onClick={sendOtp}
-            className="bg-blue-600 text-white px-4 py-2 rounded w-full"
+            className="bg-yellow-600 text-white px-4 py-2 rounded w-full"
           >
             Send OTP
           </button>
@@ -81,6 +90,6 @@ const MobileLogin = () => {
       <p className="text-sm text-gray-600 mt-3">{message}</p>
     </div>
   );
-}
+};
 
 export default MobileLogin;
