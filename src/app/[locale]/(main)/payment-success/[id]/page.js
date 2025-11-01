@@ -21,9 +21,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { formatDate } from "../../../../../../utils/localstorage";
 import TempleIcon from "../../../../../../public/icons/puja-temple1.png"
+import BookingTracker from "@/components/BookingTracker";
 
 const PaymentSuccess = () => {
+
   const [openFAQ, setOpenFAQ] = useState(null);
+  const [otherChargesData, setOtherChargesData] = useState(null);
+
   const params = useParams();
   const dispatch = useDispatch();
   const { cartDetails } = useSelector((state) => state.cart);
@@ -33,9 +37,28 @@ const PaymentSuccess = () => {
     dispatch(fetchCartDetailAction(params.id));
   }, [params]);
 
+useEffect(() => {
+  if (cartDetails?.otherCharges) {
+    try {
+      const parsed =
+        typeof cartDetails.otherCharges === "string"
+          ? JSON.parse(cartDetails.otherCharges)
+          : cartDetails.otherCharges;
+      setOtherChargesData(parsed);
+    } catch (err) {
+      console.error("❌ Failed to parse otherCharges:", err);
+      setOtherChargesData({});
+    }
+  } else {
+    setOtherChargesData({});
+  }
+}, [cartDetails]);
+
+
   const toggleFAQ = (index) => {
     setOpenFAQ(openFAQ === index ? null : index);
   };
+
 
   const pujaFaqs = [
     {
@@ -54,16 +77,12 @@ const PaymentSuccess = () => {
 
   const chadhavaFaqs = [
     {
-      q: "How do I change puja participants or address details?",
-      a: "You can message us on WhatsApp or email at customerservices.devasetu@gmail.com with your Booking ID. Please note that changes can only be made up to 24 hours before the puja begins",
+      q: "How do I change the chadhava participant name or address details?",
+      a: "You can WhatsApp us or email us at customerservices.devasetu@gmail.com with your Booking ID. Changes can be made up to 24 hours before the chadhava.",
     },
     {
-      q: "When will I receive the video with my name and gotra pronounced?",
-      a: "The entire video recording of your puja along with name & gotra sankalp will be shared within 3-4 days after the puja is done. After the Puja is completed, our temple team sends the Puja video to our central team. This includes the clips of Mandir darshan, Puja preparation, Hawan etc. Our editing team stitches these clips into a single video and adds subtitles for readability. They also include subtitles for your name and gotra sankalp. This entire process can take upto 3 days.",
-    },
-    {
-      q: "When will I receive DevaPrasadam?",
-      a: "If you have opted to receive DevaPrasadam, our team will dispatch the box to your address within 24 hours of the puja. Delivery may take 4-10 days, depending on your location. We use top delivery partners like Delhivery to ensure fast delivery.",
+      q: "When will I receive the video of my chadhava?",
+      a: "You will receive the video within 2 to 3 days after the chadhava. Our temple team records the offering and darshan, and we share the final video with you once compiled.",
     },
   ];
 
@@ -78,6 +97,14 @@ const PaymentSuccess = () => {
     <section className="min-h-screen bg-gradient-to-b from-[#fffaf5] via-[#fff6ee] to-[#fffaf2] py-14 px-6">
       <div className="max-w-6xl mx-auto bg-white/80 backdrop-blur-lg rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-orange-100 p-8 md:p-12">
 
+      <BookingTracker
+        type= {cartDetails?.package?.type}
+        paymentStatus= {cartDetails?.['paymentStatus']}
+        bookingId={cartDetails?.id}
+        pujaDate={formatDate(cartDetails?.package?.date, "full")}
+        currentStep={1}
+      />
+
         {/* Booking Header */}
         {cartDetails?.id && (
           <motion.div
@@ -85,10 +112,10 @@ const PaymentSuccess = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-sm text-gray-600 mb-6"
           >
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               {cartDetails?.['id'] && <> <span className="font-semibold text-orange-700">{`Booking ID: #${cartDetails?.id}`}</span></>}
               {cartDetails?.['paymentStatus'] && <spen className="font-semibold text-orange-700">Payment status: {cartDetails?.['paymentStatus']}</spen>}
-            </div>
+            </div> */}
 
           </motion.div>
         )}
@@ -116,45 +143,6 @@ const PaymentSuccess = () => {
               </button>
             </motion.div> */}
 
-            {/* Puja & Participant's Details */}
-             {/* {cartDetails?.['user_details'] && <div>
-              <h3 className="text-lg font-semibold mb-3">
-                Puja and Participant's Details
-              </h3>
-              <div className="border rounded-md divide-y">
-                <div className="p-3">
-                  <p className="font-medium">{cartDetails?.['user_details'].name}</p>
-                  <p className="text-gray-500 text-sm">{`${cartDetails?.['user_details'].whatsapp} • ${cartDetails?.['user_details'].name}`}</p>
-                  {
-                    cartDetails?.['user_details']?.members?.map((member, index) => (
-                      <p key={index} className="text-gray-500 text-sm">{member}</p>
-                    ))
-                  }
-                </div>
-
-               {cartDetails?.['package'] && <div className="p-3">
-                  <p className="font-medium">{cartDetails?.['package'].productTitle}</p>
-                  <p className="text-gray-500 text-sm">{cartDetails?.['package'].name}</p>
-                </div>}
-
-                <div className="space-y-2 text-sm">
-                  {cartDetails?.["add_ons"].map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex justify-between text-gray-700"
-                    >
-                      <span>{item?.name}</span>
-                      <span>₹{`${item?.price}* ${item?.quantity}`}</span>
-                    </div>
-                  ))}
-                  {cartDetails?.["grandTotal"] && <div className="flex justify-between font-semibold border-t pt-2">
-                    <span>Total Amount</span>
-                    <span>₹{cartDetails?.["grandTotal"]}</span>
-                  </div>}
-                </div>
-              </div>
-            </div>
-            } */}
 
              {cartDetails?.user_details && (
               <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
@@ -164,7 +152,7 @@ const PaymentSuccess = () => {
                 <div className="divide-y">
                   {cartDetails?.package && (
                     <div className="py-2">
-                      <p className="font-semibold text-gray-800">{cartDetails.package.productTitle}</p>
+                      <p className="font-semibold text-yellow-600">{cartDetails.package.productTitle}</p>
                       <p className="text-gray-500 text-sm">{cartDetails.package.name}</p>
                       <div className="my-2 flex flex-col gap-2 text-gray-600 text-sm">
                         <div className="flex items-center gap-2">
@@ -188,6 +176,41 @@ const PaymentSuccess = () => {
                       </div>
                     </div>
                   )}
+
+                  <div className="space-y-2 text-sm">
+                  {
+                    cartDetails?.package?.basePrice && <div
+                      className="flex justify-between text-gray-700"
+                    >
+                      <span>{cartDetails.package.name}</span>
+                      <span>₹{`${cartDetails?.package?.basePrice}`}</span>
+                    </div>
+                  }
+                  {cartDetails?.["add_ons"].map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex justify-between text-gray-700"
+                    >
+                      <span>{item?.name}</span>
+                      <span>₹{`${item?.price}* ${item?.quantity}`}</span>
+                    </div>
+                  ))}
+
+                  {
+                    otherChargesData?.pandit_charge && <div
+                      className="flex justify-between text-gray-700"
+                    >
+                      <span>{"Pandit Dakshina"}</span>
+                      <span>₹{`${otherChargesData?.pandit_charge}`}</span>
+                    </div>
+                  }
+
+                  {cartDetails?.["grandTotal"] && <div className="flex justify-between font-semibold border-t pt-2">
+                    <span>Total Amount</span>
+                    <span>₹{cartDetails?.["grandTotal"]}</span>
+                  </div>}
+                </div>
+
                   <div className="py-2">
                     <p className="font-semibold text-gray-800">
                       {cartDetails.user_details.name}
@@ -205,8 +228,7 @@ const PaymentSuccess = () => {
             )}
 
 
-            {/* 🌸 Puja Video & Updates */}
-            <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
+            {/* <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
               <h3 className="text-lg font-semibold text-orange-800 mb-4">Puja Video & Updates</h3>
               <div className="space-y-3 text-sm text-gray-700">
                 <p>✅ Your Puja was conducted by Sri Mandir on 23rd August (Bhadrapada Krishna Amavasya).</p>
@@ -217,7 +239,6 @@ const PaymentSuccess = () => {
               </div>
             </div>
 
-            {/* 🌺 Glimpses Section */}
             <div className="border-l-4 border-orange-400 pl-5 space-y-4">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="text-orange-500 w-5 h-5" />
@@ -245,7 +266,6 @@ const PaymentSuccess = () => {
               </div>
             </div>
 
-            {/* 🙏 Message from Panditji */}
             <div className="border-l-4 border-orange-400 pl-5 space-y-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="text-orange-500 w-5 h-5" />
@@ -257,14 +277,15 @@ const PaymentSuccess = () => {
               <div className="rounded-lg overflow-hidden bg-orange-50 aspect-video">
                 <video controls className="w-full h-full object-cover rounded-md" />
               </div>
-            </div>
+            </div> */}
+
           </div>
 
 
             {/* RIGHT SECTION */}
             <div className="space-y-8">
               {/* FAQ Accordion */}
-              <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
+              { cartDetails?.package?.type === "puja" &&  <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
                 <h3 className="text-lg font-semibold text-orange-800 mb-3">Frequently Asked Questions</h3>
                 {pujaFaqs.map((item, i) => (
                   <div key={i} className="border-t first:border-t-0">
@@ -293,7 +314,38 @@ const PaymentSuccess = () => {
                     </AnimatePresence>
                   </div>
                 ))}
-              </div>
+              </div> }
+
+             { cartDetails?.package?.type === "chadhava" && <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
+                <h3 className="text-lg font-semibold text-orange-800 mb-3">Frequently Asked Questions</h3>
+                {chadhavaFaqs.map((item, i) => (
+                  <div key={i} className="border-t first:border-t-0">
+                    <button
+                      onClick={() => toggleFAQ(i)}
+                      className="w-full py-3 flex justify-between items-center text-left text-gray-800 font-medium"
+                    >
+                      {item.q}
+                      <ChevronDown
+                        className={`w-4 h-4 text-orange-500 transition-transform ${openFAQ === i ? "rotate-180" : ""
+                          }`}
+                      />
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {openFAQ === i && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="pb-3 text-sm text-gray-600"
+                        >
+                          {item.a}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>}
 
               {/* Support Card */}
               <div className="bg-gradient-to-br from-orange-100 via-orange-50 to-white border border-orange-200 rounded-2xl p-6 shadow-sm">
@@ -328,6 +380,7 @@ const PaymentSuccess = () => {
             </div>
 
         </div>
+         
       </div>
     </section>
   );
