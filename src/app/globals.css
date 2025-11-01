@@ -70,6 +70,7 @@
 ------------------------------ */
 body {
   @apply text-foreground font-primary;
+  scroll-behavior: smooth;
 }
 
 /* ------------------------------

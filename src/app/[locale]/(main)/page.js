@@ -188,7 +188,7 @@ const Home = () => {
 
       <StatsSection />
 
-      <section className="relative bg-white py-20 overflow-hidden text-center">
+      <section className="relative bg-white py-8 md:py-20 overflow-hidden text-center">
         {/* Top Ornament */}
         {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 opacity-80">
           <Image

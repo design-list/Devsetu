@@ -9,7 +9,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { useWithLang } from "../../../../../helper/useWithLang";
 import Container from "@/components/Container";
 import ChadhavaHeroSlider from "@/components/HeroBanner/ChadhavaHeroSlider";
-import { Landmark, Users, Building, Sparkles, Package, User, Gift, Building2, Globe2, Star } from "lucide-react";
+import {
+  Landmark,
+  Users,
+  Building,
+  Sparkles,
+  Package,
+  User,
+  Gift,
+  Building2,
+  Globe2,
+  Star,
+} from "lucide-react";
 import Reviews from "@/components/Review";
 import HowPujaWorks from "@/components/OnlineSteps";
 
@@ -66,29 +77,29 @@ const reviews = [
   },
 ];
 
-  const steps = [
-    {
-      title: "Select Chadhava / Seva",
-      text: "Make your selection from our wide range of chadhavas and sevas.",
-      color: "var(--color-primary)",
-      icon: <Package className="w-5 h-5" />,
-      // img: SliderImg,
-    },
-    {
-      title: "Provide Your Details.",
-      text: "After selecting your preferred offering, fill-in your Name and Gotra for Sankalp.",
-      color: "var(--color-info)",
-      icon: <User className="w-5 h-5" />,
-      // img: SliderImg,
-    },
-    {
-      title: "Receive Chadhava Video and Blessings.",
-      text: "The video of your completed chadhava / seva with your name and Gotra will be shared on WhatsApp within 3-4 days.",
-      color: "var(--color-accent)",
-      icon: <Gift className="w-5 h-5" />,
-      // img: SliderImg,
-    }
-  ]
+const steps = [
+  {
+    title: "Select Chadhava / Seva",
+    text: "Make your selection from our wide range of chadhavas and sevas.",
+    color: "var(--color-primary)",
+    icon: <Package className="w-5 h-5" />,
+    // img: SliderImg,
+  },
+  {
+    title: "Provide Your Details.",
+    text: "After selecting your preferred offering, fill-in your Name and Gotra for Sankalp.",
+    color: "var(--color-info)",
+    icon: <User className="w-5 h-5" />,
+    // img: SliderImg,
+  },
+  {
+    title: "Receive Chadhava Video and Blessings.",
+    text: "The video of your completed chadhava / seva with your name and Gotra will be shared on WhatsApp within 3-4 days.",
+    color: "var(--color-accent)",
+    icon: <Gift className="w-5 h-5" />,
+    // img: SliderImg,
+  },
+];
 
 const ChadhavaPage = () => {
   const dispatch = useDispatch();
@@ -168,41 +179,40 @@ const ChadhavaPage = () => {
         </section>
       </Container>
 
+      {/* 🕉️ Upcoming Chadhava Section */}
+      <section className="max-w-7xl mx-auto px-6 py-8">
+        <div className="text-center mb-12">
+          <h2 className="font-secondary text-3xl md:text-4xl font-extrabold text-[var(--color-dark)] mb-4">
+            Upcoming{" "}
+            <span className="text-[var(--color-primary)]">
+              Chadhava Offerings
+            </span>
+          </h2>
+          <p className=" text-lg text-[var(--color-dark)] max-w-2xl mx-auto">
+            Participate in auspicious Chadhava ceremonies organized at holy
+            temples. Each offering is conducted by priests according to Vedic
+            traditions.
+          </p>
+        </div>
 
-        {/* 🕉️ Upcoming Chadhava Section */}
-        <section className="max-w-7xl mx-auto px-6 py-8">
-          <div className="text-center mb-12">
-            <h2 className="font-secondary text-3xl md:text-4xl font-extrabold text-[var(--color-dark)] mb-4">
-              Upcoming{" "}
-              <span className="text-[var(--color-primary)]">
-                Chadhava Offerings
-              </span>
-            </h2>
-            <p className=" text-lg text-[var(--color-dark)] max-w-2xl mx-auto">
-              Participate in auspicious Chadhava ceremonies organized at holy
-              temples. Each offering is conducted by priests according to Vedic
-              traditions.
+        {/* 🪔 Cards Grid */}
+        <div className="">
+          {chadhavaCard?.length ? (
+            <ChadhavaCard
+              handlaRedirect={handlaRedirect}
+              withLang={withLang}
+              chadhava={chadhavaCard}
+              viewmore={false}
+            />
+          ) : (
+            <p className="text-center text-gray-500 col-span-full">
+              No upcoming Chadhava available right now.
             </p>
-          </div>
+          )}
+        </div>
 
-          {/* 🪔 Cards Grid */}
-          <div className="">
-            {chadhavaCard?.length ? (
-              <ChadhavaCard
-                handlaRedirect={handlaRedirect}
-                withLang={withLang}
-                chadhava={chadhavaCard}
-                viewmore={false}
-              />
-            ) : (
-              <p className="text-center text-gray-500 col-span-full">
-                No upcoming Chadhava available right now.
-              </p>
-            )}
-          </div>
-
-          {/* 🌼 View More Button */}
-          {/* {chadhavaCard?.length > 6 && (
+        {/* 🌼 View More Button */}
+        {/* {chadhavaCard?.length > 6 && (
             <div className="text-center mt-10">
               <button
                 onClick={() => router.push(withLang("/chadhava/all"))}
@@ -212,45 +222,43 @@ const ChadhavaPage = () => {
               </button>
             </div>
           )} */}
-        </section>
+      </section>
 
-        {/* Review */}
-        <section className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
-          <Container>
-            <h2 className="font-secondary text-center text-3xl font-bold mb-10">
-              What devotees Say about DevaSetu Puja?
-            </h2>
-            <Reviews reviews={reviews} />
-          </Container>
-        </section>
+      {/* Review */}
+      <section className="py-14 bg-gradient-to-br from-[#fff8f3] via-[#fff3e6] to-[#fff0d9]">
+        <Container>
+          <h2 className="font-secondary text-center text-3xl font-bold mb-10">
+            What devotees Say about DevaSetu Puja?
+          </h2>
+          <Reviews reviews={reviews} />
+        </Container>
+      </section>
 
-        {/* How Puja Works */}
-        <section className="relative py-20 px-6 overflow-hidden">
-          {/* Heading */}
-          <h2 className="text-center font-secondary text-3xl font-bold mb-10 text-[var(--color-dark)]">
-            How does <span className="text-[var(--color-info)]">DevaSetu</span>{" "}
-            Online Chadhava Work?
+      {/* How Puja Works */}
+      <section className="relative py-20 px-6 overflow-hidden">
+        {/* Heading */}
+        <h2 className="text-center font-secondary text-3xl font-bold mb-10 text-[var(--color-dark)]">
+          How does <span className="text-[var(--color-info)]">DevaSetu</span>{" "}
+          Online Chadhava Work?
+        </h2>
+
+        <HowPujaWorks steps={steps} />
+      </section>
+
+      {/* Stats */}
+      <section className="bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] py-16 px-6 text-center text-[var(--color-foreground)]">
+        <Container>
+          <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-10 text-[var(--color-dark)]">
+            Start your{" "}
+            <span className="text-[var(--color-primary)]">Sacred Journey</span>{" "}
+            with
+            <span className="text-[var(--color-info)]">
+              {" "}
+              DevaSetu Chadhava Service
+            </span>
           </h2>
 
-          <HowPujaWorks steps={steps} />
-        </section>
-
-        {/* Stats */}
-        <section className="bg-gradient-to-b from-[#fff3e2] to-[#fffaf5] py-16 px-6 text-center text-[var(--color-foreground)]">
-          <Container>
-            <h2 className="font-secondary text-3xl md:text-4xl font-bold mb-10 text-[var(--color-dark)]">
-              Start your{" "}
-              <span className="text-[var(--color-primary)]">
-                Sacred Journey
-              </span>{" "}
-              with
-              <span className="text-[var(--color-info)]">
-                {" "}
-                DevaSetu Chadhava Service
-              </span>
-            </h2>
-
-            <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
             {/* Pujas Done */}
             <div className="bg-[var(--color-info)]/10 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="flex justify-center mb-3">
@@ -280,7 +288,7 @@ const ChadhavaPage = () => {
             {/* Spreading Dharma */}
             <div className="bg-[var(--color-dark)]/5 p-6 sm:p-8 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="flex justify-center mb-3">
-                < Users className="w-8 h-8 text-[var(--color-dark)]" />
+                <Users className="w-8 h-8 text-[var(--color-dark)]" />
               </div>
               <p className="text-2xl sm:text-3xl font-secondary font-bold text-[var(--color-dark)] mb-1">
                 20,000+
@@ -303,7 +311,7 @@ const ChadhavaPage = () => {
             </div>
           </div>
 
-            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
+          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-5xl mx-auto">
               <div className="bg-[var(--color-primary-light)]/10 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300">
                 <div className="flex justify-center mb-3">
                   <Landmark className="w-8 h-8 text-[var(--color-primary)]" />
@@ -352,8 +360,8 @@ const ChadhavaPage = () => {
                 </p>
               </div>
             </div> */}
-          </Container>
-        </section>
+        </Container>
+      </section>
     </main>
   );
 };

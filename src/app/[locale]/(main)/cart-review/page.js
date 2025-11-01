@@ -95,10 +95,10 @@ const PujaCart = () => {
       <BreadcrumbSteps currentStep={3} />
       <div className="max-w-3xl mx-auto grid grid-cols-1 gap-10">
         {/* LEFT SECTION */}
-        <div className="bg-white/90 backdrop-blur-md border border-orange-100 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.05)] p-6 relative overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-md border border-orange-100 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.05)] p-3 md:p-6 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] rounded-t-3xl"></div>
 
-          <h2 className="font-secondary text-2xl font-bold text-[var(--color-primary)] mb-6 flex items-center gap-2">
+          <h2 className="font-secondary text-2xl font-bold text-[var(--color-primary)] my-4 md:mb-6 flex justify-center md:justify-baseline items-center gap-2">
             Review Your Booking 🪔
           </h2>
 
@@ -167,11 +167,11 @@ const PujaCart = () => {
           {allCarts?.add_ons.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-200 rounded-2xl p-5 mt-5 bg-white/90 hover:shadow-md transition-all duration-300"
+              className="border border-gray-200 rounded-xl md:rounded-2xl p-2.5 md:p-5 mt-5 bg-white/90 hover:shadow-md transition-all duration-300"
             >
               <div className="flex justify-between items-start">
                 <div className="flex-1 pr-3">
-                  <h3 className="font-medium text-lg text-gray-800">
+                  <h3 className="font-medium text-base md:text-lg text-[var(--color-dark)]">
                     {item.title}
                   </h3>
                 </div>
@@ -183,7 +183,7 @@ const PujaCart = () => {
                   <div className="flex items-center border border-gray-300 rounded-md mt-2 bg-gray-50">
                     <button
                       onClick={() => handleQuantityChange(item.id, "decrement")}
-                      className="p-1.5 text-gray-600 hover:text-black"
+                      className="p-1.5 text-[var(--color-dark)] hover:text-black"
                     >
                       <Minus size={14} />
                     </button>
@@ -192,7 +192,7 @@ const PujaCart = () => {
                     </span>
                     <button
                       onClick={() => handleQuantityChange(item.id, "increment")}
-                      className="p-1.5 text-gray-600 hover:text-black"
+                      className="p-1.5 text-[var(--color-dark)] hover:text-black"
                     >
                       <Plus size={14} />
                     </button>
@@ -247,14 +247,14 @@ const PujaCart = () => {
           {/* BILL SUMMARY */}
           {allCarts?.add_ons.length > 0 && (
             <div className="border-t pt-6 mt-6">
-              <h3 className="text-lg uppercase font-semibold mb-3 text-gray-800 tracking-wide">
+              <h3 className="text-lg uppercase font-semibold mb-3 text-[var(--color-dark)] tracking-wide">
                 Bill Summary
               </h3>
               <div className="space-y-2 text-base">
                 {allCarts.add_ons.map((item) => (
                   <div
                     key={item.id}
-                    className="flex justify-between text-gray-700"
+                    className="flex justify-between text-[var(--color-dark)]"
                   >
                     <span>{item.title}</span>
                     <span className="font-secondary font-semibold">
@@ -285,7 +285,7 @@ const PujaCart = () => {
           {/* CTA */}
           <button
             onClick={goToCheckout}
-            className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-4 rounded-xl mt-8 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex justify-between items-center px-6"
+            className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-4 rounded-xl mt-8 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex justify-between items-center px-3 md:px-6"
           >
             <span className="font-secondary text-xl">
               ₹{allCarts.grand_total}

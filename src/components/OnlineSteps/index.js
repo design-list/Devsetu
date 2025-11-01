@@ -26,7 +26,7 @@ export default function HowPujaWorks({steps}) {
       <div className="flex justify-center gap-10 items-center max-w-6xl mx-auto">
         {/* Left - Steps List */}
         <div className="space-y-8">
-          {steps.map((step, index) => (
+          {steps?.map((step, index) => (
             <div
               key={index}
               onClick={() => handleStepClick(index)}

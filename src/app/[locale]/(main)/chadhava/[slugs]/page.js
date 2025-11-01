@@ -80,7 +80,7 @@ const ChadhavaDetailsPage = () => {
   const handleShowModal = (item) => {
     setShowModal(true);
     setSelectedOffering(item);
-  }
+  };
 
   // console.log("chadhavaWebDetail", chadhavaWebDetail);
 
@@ -89,21 +89,25 @@ const ChadhavaDetailsPage = () => {
   }
 
   return (
-    <div className="w-full font-sans">
+    <div className="w-full">
       <Container>
         <Breadcrumbs pathname={pathname} />
-        <div className="bg-white lg:px-8 flex flex-col lg:flex-row gap-6">
-          <div className="flex-1 w-[600px] h-[400px] relative">
+        <div className="bg-white sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-10">
+          {/* Left: Image Slider */}
+          <div className="w-full lg:w-[600px] flex-shrink-0 h-[220px] sm:h-[300px] md:h-[380px] lg:h-[420px] relative">
             <ChadhavaDetailHeroSlider
               heroSlides={chadhavaWebDetail?.["chadhavaBanners"]}
             />
           </div>
-          <div>
-            <h2 className="font-secondary text-2xl md:text-3xl font-bold text-[var(--color-dark)] mb-4">
+
+          {/* Right: Content */}
+          <div className="flex-1 text-center lg:text-left">
+            <h2 className="font-secondary text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--color-dark)] mb-3 sm:mb-4">
               {chadhavaWebDetail?.["title"]}
             </h2>
+
             {chadhavaWebDetail?.["subTitle"] && (
-              <p className="text-gray-600 mb-3">
+              <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base md:text-lg">
                 <span className="mr-2">🕉</span>
                 {chadhavaWebDetail?.["subTitle"]}
               </p>
@@ -152,24 +156,28 @@ const ChadhavaDetailsPage = () => {
               {chadhavaWebDetail?.["chadhavaPackages"].map((item) => (
                 <div
                   key={item.id}
-                  className={`flex items-start justify-between rounded-lg border p-4 ${
+                  className={`flex items-start gap-4 md:gap-0 justify-between flex-col-reverse md:flex-row w-full md:w-auto rounded-lg border p-4 ${
                     item.highlight
                       ? "bg-gradient-to-r from-pink-50 to-white border-pink-300"
                       : "bg-white border-gray-200"
                   }`}
                 >
                   {/* Left Content */}
-                  <div className="pr-4" onClick={() => handleShowModal(item)}>
+                  <div className="md:pr-4" onClick={() => handleShowModal(item)}>
                     {item.tags && (
                       <h2
                         className={`text-base font-medium ${
-                          item.tags ? "text-[var(--color-primary)]" : "text-[var(--color-dark)]"
+                          item.tags
+                            ? "text-[var(--color-primary)]"
+                            : "text-[var(--color-dark)]"
                         }`}
                       >
                         {item.tags}
                       </h2>
                     )}
-                    <h2 className={`font-secondary text-xl font-bold text-[var(--color-dark)] }`}>
+                    <h2
+                      className={`font-secondary text-xl font-bold text-[var(--color-dark)] }`}
+                    >
                       {item.title}
                     </h2>
                     <p className="text-[var(--color-dark)] text-sm mt-1">
@@ -182,18 +190,20 @@ const ChadhavaDetailsPage = () => {
                   </div>
 
                   {/* Right Image + Button */}
-                  <div className="flex flex-col items-center h-full">
-                    <div className="w-24 h-24 relative cursor-pointer" onClick={() => handleShowModal(item)}>
+                  <div className="flex flex-row items-start justify-between md:justify-baseline md:flex-col md:items-center w-full">
+                    <div
+                      className="w-28 h-28 relative cursor-pointer"
+                      onClick={() => handleShowModal(item)}
+                    >
                       <LazyImage
                         src={item.packImg}
                         alt={item.title}
-                        width={80}
-                        height={80}
-                        className="rounded-md object-cover cursor-pointer"
+                        width={200}
+                        height={200}
+                        className="rounded-md w-full h-full object-cover cursor-pointer"
                       />
                     </div>
                     {(() => {
-                      
                       const matchedAddOn = allCarts?.add_ons?.find(
                         (add) => add.id === item.id
                       );
@@ -240,7 +250,7 @@ const ChadhavaDetailsPage = () => {
           </div>
 
           {/* FAQ */}
-          <section className="bg-white rounded-2xl p-6">
+          <section className="bg-white rounded-2xl md:p-6">
             <h2 className="font-secondary text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-4">
               Frequently Asked Questions
             </h2>
@@ -267,12 +277,13 @@ const ChadhavaDetailsPage = () => {
             </div>
           </section>
         </div>
+
         <div className="space-y-10">
           {/* Add to Cart Button */}
           {allCarts?.["add_ons"].length > 0 && (
-            <div className="fixed w-full left-0 bottom-0 bg-[var(--color-primary-light)] rounded text-white border-t shadow-md p-4 flex justify-center items-center">
+            <div className="fixed w-full left-0 bottom-0 bg-[var(--color-primary-light)] rounded text-white border-t shadow-md p-4 flex justify-between md:justify-center items-center">
               <div>
-                <p className=" text-xl font-medium uppercase">{`${allCarts?.["add_ons"].length} Offerings ₹${allCarts?.["grand_total"]}`}</p>
+                <p className=" text-base md:text-xl font-medium uppercase">{`${allCarts?.["add_ons"].length} Offerings ₹${allCarts?.["grand_total"]}`}</p>
               </div>
               <button
                 className=" absolute right-0 bg-[var(--color-primary-light)] text-white px-5 py-2 rounded-lg hover:bg-[var(--color-primary)] cursor-pointer"
@@ -292,7 +303,6 @@ const ChadhavaDetailsPage = () => {
           handleQuantityChange={handleQuantityChange}
           onAdd={hanldeAddChadhava}
         />
-
       </Container>
     </div>
   );
