@@ -225,9 +225,17 @@ useEffect(() => {
                 </div>
                 
               </div>
-            )}
+            )} 
 
-
+            <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
+             {cartDetails?.isActivePrasad && <div className="space-y-3 text-sm text-gray-700">
+                <p className="text-orange-600">Puja Prashadm will Delhiverd on address : </p>
+                <p>
+                  {cartDetails?.user_details?.address}, {cartDetails?.user_details?.city}, {cartDetails?.user_details?.state} - {cartDetails?.user_details?.postalCode}
+                </p>
+                
+              </div>}
+            </div>
             {/* <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
               <h3 className="text-lg font-semibold text-orange-800 mb-4">Puja Video & Updates</h3>
               <div className="space-y-3 text-sm text-gray-700">
