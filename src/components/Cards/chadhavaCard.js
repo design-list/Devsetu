@@ -89,7 +89,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   />
                   {formatDate(card.date, "full")} {card.tithi}
                 </div>
-                {/* <div className="mt-3">
+                <div className="mt-3">
                   <ul className="flex flex-row justify-between">
                     {
                       card?.chadhavaFocus?.map((item) => {
@@ -108,7 +108,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                       })
                     }
                   </ul>
-                </div> */}
+                </div>
               </div>
 
               {/* Button */}
