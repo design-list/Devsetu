@@ -64,6 +64,11 @@ export const endpoints = {
         horoscope: `${baseApiUrl}/articles/horoscope`,
     },
 
+    MobileLogin: {
+        sendotp: `${baseApiUrl}/send-otp`,
+        verifyotp: `${baseApiUrl}/verify-otp`,
+    },
+
     Web: {
         puja:`${baseApiUrl}/web/pujas`,
         chadhava:`${baseApiUrl}/web/chadhavas`,
