@@ -48,27 +48,27 @@ export function fetchWithWait({ dispatch, action }) {
 }
 
 
-export function generateOrderId() {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  const charactersLength = characters.length;
-  for (let i = 0; i < 6; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  let orderId = result + Date.now()
-  return orderId;
-}
+// export function generateOrderId() {
+//   let result = '';
+//   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+//   const charactersLength = characters.length;
+//   for (let i = 0; i < 6; i++) {
+//     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+//   }
+//   let orderId = result + Date.now()
+//   return orderId;
+// }
 
-export function generateCartId() {
-  let result = '';
-  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  const charactersLength = characters.length;
-  for (let i = 0; i < 4; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  let orderId = result + Date.now()
-  return orderId;
-}
+// export function generateCartId() {
+//   let result = '';
+//   const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+//   const charactersLength = characters.length;
+//   for (let i = 0; i < 4; i++) {
+//     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+//   }
+//   let orderId = result + Date.now()
+//   return orderId;
+// }
 
 export function sessionId() {
   var appuser = loadState("appuser");
@@ -110,33 +110,6 @@ export function getToken(key) {
 }
 
 
-// export const checkTokenExpiration = () => {
-//   let accessToken = null;
-
-//   const token = loadState("token");
-//   const expiration = loadState("expInToken") * 1000;
-//   const refToken = { "refreshToken": loadState("refreshToken") }
-
-//   if (token && expiration && Date.now() < expiration) {
-//     accessToken = token;
-//     return accessToken;
-//   } else {
-//     api.RefreshToken(refToken)
-//       .then(res => {
-//         const { refreshToken, token, refresh_token_expiration } = res;
-//         const expirationTime = parseInt(refresh_token_expiration);
-
-//         saveState("token", token)
-//         saveState("refreshToken", refreshToken)
-//         saveState("expInToken", expirationTime)
-
-//         accessToken = token;
-//       })
-//       .catch(err => {
-//         console.log(err);
-//       });
-//   }
-// }
 
 
 export const finalSellPrice = (data) => {
