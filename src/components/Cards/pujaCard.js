@@ -25,7 +25,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
             >
               {/* Custom Tag — visible even with overflow-hidden */}
               {puja.tags && <span className="puja-tag bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-xs font-bold text-white uppercase">
-                Label Tag
+                Special Tag
               </span> }
               {/* Image Section */}
               <div
