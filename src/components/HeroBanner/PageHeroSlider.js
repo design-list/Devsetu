@@ -12,7 +12,7 @@ const PageHeroSlider = ({ heroBanner, handlaRedirect }) => {
   // 👉 Slider Data
 
   return (
-    <div className="relative overflow-hidden max-w-7xl mx-auto">
+    <div className="relative overflow-hidden mx-auto">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -31,14 +31,14 @@ const PageHeroSlider = ({ heroBanner, handlaRedirect }) => {
               slide?.banners?.map((item) => {
               return <SwiperSlide key={item.id}>
                   <div
-                    className={`${slide.bgColor} rounded-lg p-6 h-52 md:h-80 flex flex-col justify-center cursor-pointer`}
+                    className={`${slide.bgColor} rounded-lg p-6 h-[150px] md:h-80 flex flex-col justify-center cursor-pointer`}
                      onClick={() => handlaRedirect('puja',slide.slug)}
                   >
                     <LazyImage
                       src={item.image_url}
                       alt={slide.title}
                       fill
-                      className="w-full object-cover"
+                      className="w-full object-fill"
                       priority
                       height={300}
                       width={800}

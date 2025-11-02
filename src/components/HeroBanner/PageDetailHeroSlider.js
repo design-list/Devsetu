@@ -30,7 +30,7 @@ const PageDetailHeroSlider = ({ heroSlides }) => {
               <LazyImage
                 src={item.imageUrl}
                 alt={item.id+ "puja image"}
-                className="object-cover"
+                className="object-fill"
                 width={692}
                 height={400}
               />

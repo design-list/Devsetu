@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Minus, Trash2, ArrowLeft, ChevronDown, ChevronUp, Lock, Calendar } from "lucide-react";
+import {
+  Plus,
+  Minus,
+  Trash2,
+  ArrowLeft,
+  ChevronDown,
+  ChevronUp,
+  Lock,
+  Calendar,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { requestOfferingDataAction } from "@/redux/actions/offeringActions";
 import LazyImage from "@/components/Atom/LazyImage";
@@ -14,13 +23,12 @@ import {
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
-import TempleIcon from "../../../../../public/icons/puja-temple1.png"
+import TempleIcon from "../../../../../public/icons/puja-temple1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatDate } from "../../../../../utils/localstorage";
 import BreadcrumbSteps from "@/components/Breadcrumbs/Breadcrumb";
 
 const PujaCart = () => {
-
   const [selectedAmount, setSelectedAmount] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const presetAmounts = [51, 101, 151];
@@ -35,11 +43,11 @@ const PujaCart = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if(selectedAmount){
-        const amount = parseInt(selectedAmount)
-       dispatch(addPanditDakshinaAction(amount))
-    }else{
-      dispatch(addPanditDakshinaAction(0))
+    if (selectedAmount) {
+      const amount = parseInt(selectedAmount);
+      dispatch(addPanditDakshinaAction(amount));
+    } else {
+      dispatch(addPanditDakshinaAction(0));
     }
   }, [selectedAmount]);
 
@@ -62,7 +70,7 @@ const PujaCart = () => {
     setSelectedAmount(e.target.value);
   };
 
-  console.log("allCartsallCarts", allCarts)
+  console.log("allCartsallCarts", allCarts);
 
   // EMPTY STATE
   if (!allCarts?.grand_total) {
@@ -91,51 +99,53 @@ const PujaCart = () => {
 
   // FILLED CART
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fffaf4] via-[#fffefd] to-[#fff] py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-[#fffaf4] via-[#fffefd] to-[#fff] pt-4 pb-6 md:py-12 px-4">
       <BreadcrumbSteps currentStep={3} />
       <div className="max-w-3xl mx-auto grid grid-cols-1 gap-10">
         {/* LEFT SECTION */}
-        <div className="bg-white/90 backdrop-blur-md border border-orange-100 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.05)] p-3 md:p-6 relative overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-md border border-orange-100 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.05)] p-3 md:p-6 relative overflow-hidden mt-8 md:mt-0">
           <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] rounded-t-3xl"></div>
 
-          <h2 className="font-secondary text-2xl font-bold text-[var(--color-primary)] my-4 md:mb-6 flex justify-center md:justify-baseline items-center gap-2">
+          <h2 className="font-secondary text-lg md:text-2xl font-bold text-[var(--color-primary)] my-2 md:my-4 md:mb-6 flex justify-center md:justify-baseline items-center gap-2">
             Review Your Booking 🪔
           </h2>
 
-          <div className="border border-[var(--color-dark)]/10 rounded-2xl p-5 shadow-sm bg-gradient-to-br from-white to-orange-50/30 hover:shadow-lg transition-all duration-300"
+          <div
+            className="md:border md:border-[var(--color-dark)]/10 rounded-2xl p-2.5 md:p-5 md:shadow-sm bg-gradient-to-br from-white to-orange-50/30 hover:shadow-lg transition-all duration-300"
             onClick={() => setIsOpen(!isOpen)}
           >
             <div className="flex justify-between items-center cursor-pointer">
               <div className="flex flex-col">
-                <p className="text-lg font-semibold text-gray-800">
+                <p className="text-base md:text-lg font-semibold text-[var(--color-dark)]">
                   {allCarts?.package?.productTitle}
                 </p>
-                
               </div>
               <button
                 onClick={handleRemovePackages}
-                className="absolute top-[85px] right-[50px] bg-yellow-500 hover:bg-red-600 text-white p-2 rounded-md transition"
+                className="absolute top-[22%] md:top-[16%] right-[7%] md:right-[50px] bg-yellow-500 hover:bg-red-600 text-white p-1 md:p-2 rounded-md transition"
               >
-                <Trash2 size={14} />
+                <Trash2 size={18} />
               </button>
 
               {isOpen ? (
-                <ChevronUp className="w-4 h-4 text-gray-700 top-0" />
+                <ChevronUp className="w-6 h-6 text-[var(--color-dark)] top-0" />
               ) : (
-                <ChevronDown className="w-4 h-4 text-gray-700 top-0" />
+                <ChevronDown className="w-6 h-6 text-[var(--color-dark)] top-0" />
               )}
             </div>
 
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-[var(--color-dark)]">
               {allCarts?.package?.packageType}
             </span>
-              {allCarts?.package?.packagePrice && <div className="flex justify-between items-center mt-2">
-              <span className="font-secondary font-bold text-[var(--color-dark)] text-xl">
-                ₹{allCarts?.package?.packagePrice}
-              </span>
-            </div>}
+            {allCarts?.package?.packagePrice && (
+              <div className="flex justify-between items-center mt-2">
+                <span className="font-secondary font-bold text-[var(--color-dark)] text-base md:text-xl">
+                  ₹{allCarts?.package?.packagePrice}
+                </span>
+              </div>
+            )}
 
-              <hr />
+            <hr className="mt-4 md:mt-0" />
             {/* Expandable Content */}
             {isOpen && (
               <div className="p-4 flex flex-col gap-2 text-gray-600 text-sm">
@@ -148,7 +158,6 @@ const PujaCart = () => {
                     className="mr-2 relative -top-1.5 "
                   />
                   {allCarts?.package?.location}
-                  
                 </div>
                 <div className="flex items-center gap-2">
                   <FontAwesomeIcon
@@ -161,88 +170,117 @@ const PujaCart = () => {
             )}
           </div>
 
-            
-
           {/* ADD-ONS */}
-          {allCarts?.add_ons.map((item) => (
-            <div
-              key={item.id}
-              className="border border-gray-200 rounded-xl md:rounded-2xl p-2.5 md:p-5 mt-5 bg-white/90 hover:shadow-md transition-all duration-300"
-            >
-              <div className="flex justify-between items-start">
-                <div className="flex-1 pr-3">
-                  <h3 className="font-medium text-base md:text-lg text-[var(--color-dark)]">
-                    {item.title}
-                  </h3>
-                </div>
+          <div className=" grid grid-cols-2 md:grid-cols-3 gap-2">
+            {allCarts?.add_ons.map((item) => (
+              <div
+                key={item.id}
+                className="border border-gray-200 rounded-xl md:rounded-xl p-2.5 md:p-3 md:mt-5 bg-white/90 hover:shadow-md transition-all duration-300"
+              >
+                <div className="flex justify-between items-start flex-col">
+                  <div className="flex-1 pr-3">
+                    <h3 className="font-bold text-sm md:text-lg text-[var(--color-dark)]">
+                      {item.title}
+                    </h3>
+                  </div>
 
-                <div className="flex flex-col items-end">
-                  <span className="font-secondary font-semibold text-[var(--color-primary)] text-lg">
-                    ₹{item.price}
-                  </span>
-                  <div className="flex items-center border border-gray-300 rounded-md mt-2 bg-gray-50">
-                    <button
-                      onClick={() => handleQuantityChange(item.id, "decrement")}
-                      className="p-1.5 text-[var(--color-dark)] hover:text-black"
-                    >
-                      <Minus size={14} />
-                    </button>
-                    <span className="px-3 text-sm font-semibold">
-                      {item.quantity}
+                  <div className="w-full flex flex-row justify-between items-end ">
+                    <span className="font-secondary font-semibold text-[var(--color-primary)] text-base md:text-lg">
+                      ₹{item.price}
                     </span>
-                    <button
-                      onClick={() => handleQuantityChange(item.id, "increment")}
-                      className="p-1.5 text-[var(--color-dark)] hover:text-black"
-                    >
-                      <Plus size={14} />
-                    </button>
+                    <div className="flex items-center border border-gray-300 rounded-md mt-2 bg-gray-50">
+                      <button
+                        onClick={() =>
+                          handleQuantityChange(item.id, "decrement")
+                        }
+                        className="p-1.5 text-[var(--color-dark)] hover:text-black cursor-pointer"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="px-1 md:px-3 text-sm md:text-sm font-semibold">
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() =>
+                          handleQuantityChange(item.id, "increment")
+                        }
+                        className="p-1.5 text-[var(--color-dark)] hover:text-black cursor-pointer"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+         { allCarts?.package?.type === "puja" && <>
+            <h2 className="text-base md:text-lg font-semibold text-[var(--color-dark)] mt-4">
+              Select Pandit Dakshina Amount (₹)
+            </h2>
+            <div className="flex flex-row items-center gap-4 bg-white my-2 w-full mx-auto">
+              {/* Preset Buttons */}
+              <div className="flex md:justify-center gap-4 w-full md:w-auto">
+                {presetAmounts.map((amount) => (
+                  <button
+                    key={amount}
+                    type="button"
+                    onClick={() => handleSelect(amount)}
+                    className={`px-3 md:px-6 py-1 md:py-2 rounded-xl text-sm
+                    md:text-base font-medium border transition-all duration-200 ${
+                      selectedAmount == amount
+                        ? "bg-orange-500 text-white border-orange-500 shadow-md"
+                        : "bg-white text-[var(--color-dark)] border-gray-300 hover:bg-orange-100"
+                    }`}
+                  >
+                    ₹{amount}
+                  </button>
+                ))}
+                {/* Manual Input */}
+                <div className="hidden md:flex items-center gap-2 w-full justify-center">
+                  <label htmlFor="manual" className="text-gray-600 font-medium">
+                    Custom:
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-2 text-[var(--color-dark)]">
+                      ₹
+                    </span>
+                    <input
+                      id="manual"
+                      type="number"
+                      value={selectedAmount}
+                      onChange={handleManualChange}
+                      placeholder="Custom amount"
+                      className="pl-7 pr-3 py-2 border-b text-base border-gray-300 focus:outline-none text-[var(--color-dark)] w-full appearance-none"
+                    />
                   </div>
                 </div>
               </div>
             </div>
-          ))}
+          </>
+          }
 
-         {allCarts?.package?.type ==="puja" && <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-2xl shadow-md my-2 w-full mx-auto">
-            <h2 className="text-lg font-semibold text-gray-800">
-              Select Pandit Dakshina Amount (₹)
-            </h2>
 
-            {/* Preset Buttons */}
-            <div className="flex justify-center gap-4">
-              {presetAmounts.map((amount) => (
-                <button
-                  key={amount}
-                  type="button"
-                  onClick={() => handleSelect(amount)}
-                  className={`px-6 py-2 rounded-xl text-base font-medium border transition-all duration-200 ${
-                    selectedAmount == amount
-                      ? "bg-orange-500 text-white border-orange-500 shadow-md"
-                      : "bg-white text-gray-700 border-gray-300 hover:bg-orange-100"
-                  }`}
-                >
-                  ₹{amount}
-                </button>
-              ))}
-            </div>
-
-            {/* Manual Input */}
-            <div className="flex items-center gap-2 mt-4 w-full justify-center">
-              <label htmlFor="manual" className="text-gray-600 font-medium">
-                Other:
+          {/* Manual Input */}
+            {allCarts?.package?.type === "puja" && <div className="flex md:hidden items-center gap-2 mt-4 w-full md:justify-center">
+              <label htmlFor="manual" className=" text-sm md:text-base text-gray-600 font-medium">
+                Custom:
               </label>
               <div className="relative">
-                <span className="absolute left-3 top-2 text-gray-500">₹</span>
+                <span className="absolute left-3 top-2 text-[var(--color-dark)]">
+                  ₹
+                </span>
                 <input
                   id="manual"
                   type="number"
                   value={selectedAmount}
                   onChange={handleManualChange}
                   placeholder="Custom amount"
-                  className="pl-7 pr-3 py-2 border text-sm border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 text-gray-700 w-40"
+                  className="pl-7 pr-3 py-2 border-b text-base border-gray-300 focus:outline-none text-[var(--color-dark)] w-full appearance-none"
                 />
               </div>
-            </div>
-          </div>}
+            </div> }
 
           {/* BILL SUMMARY */}
           {allCarts?.add_ons.length > 0 && (
@@ -262,16 +300,16 @@ const PujaCart = () => {
                     </span>
                   </div>
                 ))}
-                <div className="flex justify-between text-gray-700">
-                { selectedAmount && parseInt(selectedAmount) > 0 && <>
-                  <span>Pandit Dakhina</span>
-                    <span className="font-secondary font-semibold">
-                      ₹{selectedAmount}
-                    </span>
-                  </>
-                }
+                <div className="flex justify-between text-[var(--color-dark)]">
+                  {selectedAmount && parseInt(selectedAmount) > 0 && (
+                    <>
+                      <span>Pandit Dakshina</span>
+                      <span className="font-secondary font-semibold">
+                        ₹{selectedAmount}
+                      </span>
+                    </>
+                  )}
                 </div>
-
 
                 <div className="flex justify-between font-semibold border-t pt-4 mt-3 text-lg">
                   <span className="text-[var(--color-primary)]">Total</span>
@@ -285,12 +323,12 @@ const PujaCart = () => {
           {/* CTA */}
           <button
             onClick={goToCheckout}
-            className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-4 rounded-xl mt-8 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex justify-between items-center px-3 md:px-6"
+            className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 md:py-4 rounded-xl mt-4 md:mt-8 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300 flex justify-between items-center px-3 md:px-6"
           >
-            <span className="font-secondary text-xl">
+            <span className="font-secondary text-base md:text-xl">
               ₹{allCarts.grand_total}
             </span>
-            <span className="text-lg font-medium">Proceed to Checkout →</span>
+            <span className="text-base md:text-lg font-medium">Proceed to Checkout →</span>
           </button>
         </div>
       </div>

@@ -37,11 +37,11 @@ const PujaCart = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] md:px-6 py-12">
-      <BreadcrumbSteps currentStep={2} />
-      
+    <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] md:px-6 pb-12 pt-4">      
       <Container>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-8 text-center md:text-left">
+      <BreadcrumbSteps currentStep={2} />
+
+        <div className="max-w-5xl m-auto flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-2 mt-8 text-center md:text-left">
           <h3 className="font-secondary text-2xl md:text-3xl font-bold text-[var(--color-primary)] tracking-tight md:mb-4 sm:mb-0">
             Add More Offering Items 🪔
           </h3>
@@ -54,7 +54,7 @@ const PujaCart = () => {
         </div>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 gap-8 max-w-5xl m-auto">
           {allOffering?.map((off) => {
             const isAdded = allCarts?.add_ons?.some((add) => add.id === off.id);
 
@@ -68,14 +68,14 @@ const PujaCart = () => {
 
                 <div className="flex gap-4 items-start">
                   <div className="flex-1">
-                    <h4 className="font-semibold text-[var(--color-dark)] text-xl leading-tight">
+                    <h4 className="font-semibold text-[var(--color-dark)] text-base md:text-xl leading-tight">
                       {off.title}
                     </h4>
-                    <p className="text-[var(--color-dark)] text-base mt-2 line-clamp-4 leading-snug">
+                    <p className="text-[var(--color-dark)] text-sm md:text-base mt-2 line-clamp-4 leading-snug">
                       {off.description}
                     </p>
                   </div>
-                   <div className="w-24 h-24 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
+                   <div className="w-20 md:w-28 h-20 md:h-28 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
                     <LazyImage
                       src={off.offerimg}
                       alt={off.title}
@@ -85,18 +85,18 @@ const PujaCart = () => {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="font-secondary text-2xl text-[var(--color-primary)] font-bold">
+                  <span className="font-secondary text-lg md:text-2xl text-[var(--color-primary)] font-bold mt-2 md:mt-0">
                     ₹{off.price}
                   </span>
 
                   {isAdded ? (
-                    <button className="-mt-[40px] mr-[18px] border border-green-400 text-green-600 text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default">
+                    <button className="md:-mt-[24px] mr-2 md:mr-[20px] border border-green-400 text-green-600 text-xs md:text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default">
                       <CheckCircle size={14} /> Added
                     </button>
                   ) : (
                     <button
                       onClick={() => handleAddOtherOffers(off)}
-                      className="-mt-[40px] mr-[18px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-sm px-3 py-1.5 rounded-md flex items-center gap-1 bg-orange-50 font-medium hover:bg-orange-50 transition-all z-10"
+                      className="md:-mt-[24px] mr-2 md:mr-[20px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-xs md:text-sm px-3 py-1.5 rounded-md flex items-center gap-1 bg-orange-50 font-medium hover:bg-orange-50 transition-all z-10"
                     >
                       <Plus size={14} /> Add
                     </button>
@@ -109,7 +109,7 @@ const PujaCart = () => {
 
          <button
             onClick={handleRedirect}
-            className="font-secondary block md:hidden bg-[var(--color-primary-light)] hover:bg-[var(--color-primary)] text-white font-semibold py-3 px-8 rounded-lg text-lg shadow-md transition-all duration-300 mt-5 m-auto"
+            className="font-secondary block md:hidden bg-[var(--color-primary-light)] hover:bg-[var(--color-primary)] text-white font-semibold py-2 md:py-3 px-5 md:px-8 rounded-lg text-lg shadow-md transition-all duration-300 mt-5 m-auto"
           >
             Next →
           </button>

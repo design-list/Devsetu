@@ -29,7 +29,7 @@ const Reviews = ({ reviews }) => {
         {reviews.map((r, idx) => (
           <SwiperSlide key={idx} className="flex">
             <div className="flex flex-col justify-between bg-white shadow-md rounded-xl p-6 w-full">
-              <p className="text-[var(--color-dark)] italic mb-4">“{r.text}”</p>
+              <p className="text-[var(--color-dark)] italic mb-2 md:mb-4">“{r.text}”</p>
               <div>
                 <h4 className="font-secondary font-semibold">{r.name}</h4>
                 <p className="text-sm text-[var(--color-dark)]">{r.city}</p>
