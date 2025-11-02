@@ -5,11 +5,18 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
-    }, image_url: {
+    },
+     image_url: {
       type: DataTypes.STRING,
       allowNull: true,
       field: "image_url",
-    }, type: {
+    }, 
+    mobileImageUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "mobile_image_url",
+    },
+    type: {
       type: DataTypes.STRING,
       allowNull: true,
       field: "type",

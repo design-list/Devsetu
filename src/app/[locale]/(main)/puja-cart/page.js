@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { Plus, CheckCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { requestOfferingDataAction } from "@/redux/actions/offeringActions";
 import LazyImage from "@/components/Atom/LazyImage";
 import {
   addOfferingAction,
@@ -12,20 +11,23 @@ import { useRouter } from "next/navigation";
 import { useWithLang } from "../../../../../helper/useWithLang";
 import Container from "@/components/Container";
 import BreadcrumbSteps from "@/components/Breadcrumbs/Breadcrumb";
-// import Breadcrumbs from "@/components/Breadcrumbs";
+import { fetchPujaDetailPageAction } from "@/redux/actions/pujaActions";
 
 const PujaCart = () => {
   const dispatch = useDispatch();
   const { allCarts } = useSelector((state) => state.cart);
-  const { allOffering } = useSelector((state) => state.offering);
+  const { pujaoffering } = useSelector((state) => state.pujas);
 
-  // const pathname = ["Puja Package","Optional Offerings"]
   const router = useRouter();
   const withLang = useWithLang();
 
+
   useEffect(() => {
-    dispatch(requestOfferingDataAction());
-  }, [dispatch]);
+  
+    if (allCarts?.package?.productSlug) {
+        dispatch(fetchPujaDetailPageAction(allCarts?.package?.productSlug));
+      }
+  }, [allCarts]);
 
   const handleAddOtherOffers = (item) => {
     dispatch(addOfferingAction(item));
@@ -35,6 +37,7 @@ const PujaCart = () => {
     router.push(withLang("/cart-review"));
   };
 
+  // console.log("pujaofferingpujaoffering",pujaoffering)
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#fff9f4] to-[#fff] md:px-6 pb-12 pt-4">      
@@ -55,7 +58,7 @@ const PujaCart = () => {
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 gap-8 max-w-5xl m-auto">
-          {allOffering?.map((off) => {
+          {pujaoffering?.map((off) => {
             const isAdded = allCarts?.add_ons?.some((add) => add.id === off.id);
 
             return (

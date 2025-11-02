@@ -32,7 +32,7 @@ const PujaForm = () => {
     faqs: [{ title: "", description: "" }],
     pujaBenefits: [{ title: "", description: "" }],
     temple: { templeImg: null, templeName: "", templeHistory: "" },
-    banners: [{imgUrl: null, type: "", position: 1}],
+    banners: [{imgUrl: null, mobileImageUrl: null, type: "", position: 1}],
 
   });
 
@@ -465,7 +465,7 @@ const PujaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                banners: [...formData?.banners, { imgUrl: "", type: "", position: "" }],
+                banners: [...formData?.banners, { imgUrl: "",mobileImageUrl: "", type: "", position: "" }],
               })
             }
             className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"

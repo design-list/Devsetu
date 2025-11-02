@@ -197,7 +197,8 @@ const ChadhavaDetailsPage = () => {
                   </div>
 
                   {/* Right Image + Button */}
-                  <div className="flex flex-row items-start justify-between md:justify-baseline md:flex-col md:items-center w-full">
+                  {/* <div className="flex flex-row items-start justify-between md:justify-baseline md:flex-col md:items-center w-full"> */}
+                  <div className="flex flex-col items-center justify-center w-32 ml-auto">
                     <div
                       className="w-28 h-28 relative cursor-pointer"
                       onClick={() => handleShowModal(item)}
