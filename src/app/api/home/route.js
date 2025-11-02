@@ -21,7 +21,7 @@ export async function GET() {
     });
 
     const pujaCard = await pujas.findAll({
-      where: { isActive: true, isActiveOnHome: false },
+      where: { isActive: true },
       attributes: ["id", "title", "slug", "sub_title", "location","tags", "date", "specialDay"],
       include: [
         {
@@ -48,7 +48,7 @@ export async function GET() {
     });
 
     const chadhavaCard = await chadhava.findAll({
-      where: { isActive: true, isActiveOnHome: false },
+      where: { isActive: true },
       attributes: ["id", "title", "slug", "location", "date", "tags", "tithi"],
       include: [
         {

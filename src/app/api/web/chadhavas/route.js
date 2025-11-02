@@ -22,7 +22,7 @@ export async function GET() {
     });
 
     const chadhavaCard = await chadhava.findAll({
-      where: { isActive: true, isActiveOnHome: false },
+      where: { isActive: true },
       attributes: ["id", "title", "slug", "sub_title", "location", "date", "tags", "tithi"],
       include: [
         {

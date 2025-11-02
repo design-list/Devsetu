@@ -486,7 +486,7 @@ export default function CheckoutPage() {
           </div>
 
           {allCarts?.package?.type === "puja" && <div className="flex items-center justify-between border p-2 md:p-3 rounded">
-            <label className="text-sm md:text-lg font-semibold">Wanted Deva Prashadm ?</label>
+            <label className="text-sm md:text-lg font-semibold">Want DevaPrasadam?</label>
             <button
               type="button"
               onClick={() => setDevaPrashadm((prev) => !prev)} 

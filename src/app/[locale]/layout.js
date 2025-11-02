@@ -94,6 +94,9 @@ export default function RootLayout({ children, mainClass }) {
             />
           </noscript>
           {/* End Meta Pixel Code */}
+
+          <meta name="facebook-domain-verification" content="htued4topu7h00zjnalm3btj0exzdp" />
+          
         </>
       </head>
 

@@ -178,7 +178,14 @@ const ChadhavaDetailsPage = () => {
                     <h2
                       className={`font-secondary text-xl font-bold text-[var(--color-dark)] }`}
                     >
-                      {item.title}
+                      {item.title.endsWith("(₹51)") ? (
+                          <>
+                            {item.title.replace("(₹51)", "")}
+                            <span className="line-through">(₹51)</span>
+                          </>
+                        ) : (
+                          <span>{item.title}</span>
+                        )}
                     </h2>
                     <p className="text-[var(--color-dark)] text-sm mt-1">
                       {item.description}
