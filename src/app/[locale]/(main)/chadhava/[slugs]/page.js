@@ -113,13 +113,13 @@ const ChadhavaDetailsPage = () => {
               </p>
             )}
 
-             <p className="text-lg text-[var(--color-dark)] font-medium mb-4">
+             <p className="text-lg text-[var(--color-dark)] font-medium mb-4 cursor-pointer">
               🌟 <span className="font-bold">According to sacred scriptures</span>,{" "}
               {readMore ? pujaText : shortText}
               {pujaText.length > 150 && (
                 <button
                   onClick={() => setReadMore(!readMore)}
-                  className="text-blue-600 underline ml-1"
+                  className="text-[var(--color-info)] underline ml-1 font-bold text-base"
                 >
                   {readMore ? "Read less" : "Read more"}
                 </button>
@@ -133,9 +133,9 @@ const ChadhavaDetailsPage = () => {
               <a href="#" className="text-blue-600 underline ml-1">Read more</a>
             </p> */}
 
-            <p className="text-[var(--color-dark)] text-xl">
+            <p className="text-[var(--color-dark)] text-base md:text-lg">
               Till now{" "}
-              <span className="font-secondary font-bold text-2xl text-[var(--color-primary)]">
+              <span className="font-secondary font-bold text-base md:text-xl text-[var(--color-primary)]">
                 20,000+ Devotees
               </span>{" "}
               have participated in Chadhava conducted by DevaSetu Chadhava Seva.
@@ -190,7 +190,7 @@ const ChadhavaDetailsPage = () => {
                   </div>
 
                   {/* Right Image + Button */}
-                  <div className="flex flex-row items-start justify-between md:justify-baseline md:flex-col md:items-center w-full">
+                  <div className="flex flex-row items-start justify-between md:justify-end md:flex-col md:items-center w-full md:w-auto">
                     <div
                       className="w-28 h-28 relative cursor-pointer"
                       onClick={() => handleShowModal(item)}
@@ -209,7 +209,7 @@ const ChadhavaDetailsPage = () => {
                       );
                       if (matchedAddOn) {
                         return (
-                          <div className="flex items-center border rounded-lg px-2 py-1 mt-4">
+                          <div className="flex items-center border rounded-lg px-2 py-1 -mt-2 z-10">
                             <button
                               onClick={() =>
                                 handleQuantityChange(item.id, "decrement")
@@ -237,7 +237,7 @@ const ChadhavaDetailsPage = () => {
                       return (
                         <button
                           onClick={() => hanldeAddChadhava(item)}
-                          className=" cursor-pointer whitespace-nowrap mt-3 border border-[var(--color-primary)] text-[var(--color-primary)] px-3 py-1 rounded-lg hover:bg-green-50"
+                          className=" cursor-pointer whitespace-nowrap -mt-2 border border-[var(--color-primary)] text-[var(--color-primary)] px-3 py-1 rounded-lg hover:bg-green-50 z-10"
                         >
                           + Add
                         </button>
@@ -278,7 +278,7 @@ const ChadhavaDetailsPage = () => {
           </section>
         </div>
 
-        <div className="space-y-10">
+        <div className="">
           {/* Add to Cart Button */}
           {allCarts?.["add_ons"].length > 0 && (
             <div className="fixed w-full left-0 bottom-0 bg-[var(--color-primary-light)] rounded text-white border-t shadow-md p-4 flex justify-between md:justify-center items-center">

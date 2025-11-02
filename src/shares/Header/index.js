@@ -116,17 +116,17 @@ const Header = () => {
                     <div className="bg-gray-50 border rounded-lg p-3 mb-3 flex items-center gap-3">
                       <Phone size={18} className="text-[var(--color-primary)]" />
                       <div>
-                        <Link href={'tel:08000090999'} className="text-sm font-semibold text-gray-700">08000090999</Link>
+                        <Link href={'tel:7877961501'} className="text-sm font-semibold text-gray-700">7877961501</Link>
                         <p className="text-xs text-gray-500">10:30 AM - 7:30 PM</p>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button className="flex-1 flex items-center justify-center gap-2 border rounded-lg py-2 hover:bg-gray-50 transition">
+                      <Link href={'mailto:customerservices.devasetu@gmail.com'} className="flex-1 flex items-center justify-center gap-2 border rounded-lg py-2 hover:bg-gray-50 transition">
                         <Mail size={16} className="text-[var(--color-primary)]" /> Email Us
-                      </button>
-                      <button className="flex-1 flex items-center justify-center gap-2 border rounded-lg py-2 hover:bg-gray-50 transition">
+                      </Link>
+                      <Link href={'https://wa.me/7877961501'} className="flex-1 flex items-center justify-center gap-2 border rounded-lg py-2 hover:bg-gray-50 transition">
                         <MessageCircle size={16} className="text-green-600" /> WhatsApp
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
