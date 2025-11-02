@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronDown, User, Mail, Phone, MessageCircle, Flame, BookOpen, Home, FileText, X, Menu } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
@@ -23,6 +23,18 @@ const Header = () => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const withLang = (path) => `/${lang}${path}`;
   const normalize = (path) =>
@@ -77,7 +89,7 @@ const Header = () => {
             {/* Profile Dropdown */}
             <div className="relative hidden md:block">
               <button
-                onClick={() => setMenuOpen(true)}
+                onClick={() => setMenuOpen(!menuOpen)}
                 className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition cursor-pointer"
               >
                 <User size={20} />
