@@ -14,7 +14,7 @@ export async function GET() {
       include: [
         {
           model: pujaBanners,
-          where: { position: 1 },
+          where: { position: 11 },
           attributes: ["id", "image_url", "position", "type"],
         },
       ],
@@ -41,7 +41,7 @@ export async function GET() {
       include: [
         {
           model: chadhavaBanner,
-          where: { position: 1 },
+          where: { position: 11 },
           attributes: ["id", "image_url", "position", "type"],
         },
       ],
