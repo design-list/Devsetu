@@ -203,8 +203,9 @@ export default class fetchApi extends Api {
     }
 
     UpdetePackage(data) {
+        console.log("UpdetePackage", data);
         let url = this.buildUrl(endpoints.Packages.package, "full")
-        return this.fetchNormal(url, "PUT", JSON.stringify(data)).then(response => response)
+        return this.fetchNormal(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response)
     }
 
     DeletePackage(data) {

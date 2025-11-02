@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchWithWait } from "../../../../helper/method";
 import PackagesComponent from "@/components/PujaPackages/AdminPackage";
 
-import { addNewPackageDataAction, deletePackageAction, requestPackageDataAction } from "@/redux/actions/packageActions";
+import { addNewPackageDataAction, deletePackageAction, updatePackageAction, requestPackageDataAction } from "@/redux/actions/packageActions";
 import { addNewOfferingDataAction, deleteOfferingAction, requestOfferingDataAction } from "@/redux/actions/offeringActions";
 import AdminOfferingCard from "@/components/OfferingCard/adminCard";
 import SectionLoader from "@/components/Atom/loader/sectionLoader";
@@ -177,6 +177,19 @@ const PujaPackages = () => {
         })
     }
 
+    const handleUpdatePackage = (data) => {
+        fetchWithWait({ dispatch, action: updatePackageAction(data) }).then((res) => {
+            if (res.status === 200) {
+                dispatch(requestPackageDataAction());
+            } else {
+                console.log("Error:", res.error);
+                alert(res.message)
+            }
+        }).catch((e) => {
+            console.log(`error`, e)
+        })
+    }
+
     return (
         <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
             <div>
@@ -193,10 +206,10 @@ const PujaPackages = () => {
                 </button>
 
             </div>
-           { Array.isArray(allPackage) && allPackage.length > 0 && !addNewPackage ?
+                { Array.isArray(allPackage) && allPackage.length > 0 && !addNewPackage ?
                 <>
                     { isLoading ? <SectionLoader /> : <><h2 className="text-xl font-bold mb-4">Available Common Packages</h2>
-                    <PackagesComponent pujaPackages={allPackage} handleDelete={handleDelete}  /> </>}
+                    <PackagesComponent handleUpdate={handleUpdatePackage} pujaPackages={allPackage} handleDelete={handleDelete} handleChange={handleChange}  /> </>}
                 </>
 
                 : 
