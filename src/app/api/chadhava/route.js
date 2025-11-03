@@ -61,6 +61,7 @@ export async function POST(req) {
         chadhavaBanners:
         body.banners?.map(banner => ({
           image_url: banner.imgUrl,
+          mobileImageUrl: banner.mobileImageUrl,
           type: banner.type,
           position: banner.position,
         })) || [],

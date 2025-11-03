@@ -35,7 +35,7 @@ const EditChadhavaForm = () => {
       { packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" },
     ],
     faqs: [{ title: "", description: "" }],
-    banners: [{ imgUrl: "", type: "", position: 0 }],
+    banners: [{ imgUrl: "", mobileImageUrl: "", type: "", position: 0 }],
   });
 
   const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -88,10 +88,11 @@ const EditChadhavaForm = () => {
         banners: chadhavaDetail.chadhavaBanners
           ? chadhavaDetail.chadhavaBanners.map((b) => ({
               imgUrl: b.image_url || "",
+              mobileImageUrl: b.mobileImageUrl || "",
               type: b.type || "",
               position: b.position || ""
           }))
-          : [{imgUrl: null, type: "", position: 0}],
+          : [{imgUrl: "", mobileImageUrl: "", type: "", position: 0}],
 
         chadhavaFocus: chadhavaDetail.chadhavaFocus
           ? chadhavaDetail.chadhavaFocus.map((b) => ({
@@ -166,7 +167,15 @@ const EditChadhavaForm = () => {
           updated[index].imgUrl = localPreview.toString();
           return { ...prev, banners: updated };
         });
-      }else if (name === "focusIcon") {
+      }
+      else if (name === "mobileImageUrl") {
+        setFormData((prev) => {
+          const updated = [...prev.banners];
+          updated[index].mobileImageUrl = localPreview.toString();
+          return { ...prev, banners: updated };
+        });
+      }
+      else if (name === "focusIcon") {
         setFormData((prev) => {
           const updated = [...prev.chadhavaFocus];
           updated[index].focusIcon = localPreview.toString();
@@ -225,6 +234,13 @@ const EditChadhavaForm = () => {
               return { ...prev, banners: updated };
             });
           } 
+          else if (name === "mobileImageUrl") {
+            setFormData((prev) => {
+              const updated = [...prev.banners];
+              updated[index].mobileImageUrl = (data.storedAs).toString(); // server path
+              return { ...prev, banners: updated };
+            });
+          } 
           else if (name === "focusIcon") {
             console.log("data.storedAs", data.storedAs)
 
@@ -269,6 +285,7 @@ const EditChadhavaForm = () => {
         console.error("Upload error:", err);
         alert("Error while uploading file");
       }
+      
     } else {
       // Handle nested fields using destructuring and dynamic key access
       if (name.startsWith("pujaPerformedBy.")) {
@@ -341,29 +358,7 @@ const EditChadhavaForm = () => {
         console.error("Toggle error:", e);
       });
   };
-  
-  // const handleToggle = (id, field, currentValue) => {
-  //   // field = "isActive" | "isActiveOnHome"
-  //   const payload = {
-  //     id,
-  //     [field]: !currentValue,
-  //   };
-    
-  //   const data  = {...formData, ...payload}
 
-  //   fetchWithWait({ dispatch, action: updateChadhavaAction(data) })
-  //     .then((res) => {
-  //       if (res.status === 200) {
-  //         // alert(res.message || `${field} updated successfully`);
-  //         dispatch(fetchChadhavaDetailAction(params.id))
-  //       } else {
-  //         alert(res.error || "Something went wrong");
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.error("Toggle error:", e);
-  //     });
-  // };
 
   
   return (
@@ -484,7 +479,7 @@ const EditChadhavaForm = () => {
                         <img
                           src={item.imgUrl}
                           alt={`banner-${index}`}
-                          className="w-24 h-24 object-cover rounded-lg border"
+                          className="w-50 h-30 object-cover rounded-lg border"
                         />
                         <button
                           type="button"
@@ -502,6 +497,31 @@ const EditChadhavaForm = () => {
                       <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
                         <span className="text-sm text-gray-500">Upload</span>
                         <input type="file" name="imgUrl" className="hidden" accept="image/*" onChange={(e) => handleChange(e, index)} />
+                      </label>
+                    )}
+                    {item.mobileImageUrl ? (
+                      <div className="relative">
+                        <img
+                          src={item.mobileImageUrl}
+                          alt={`mobile banner-${index}`}
+                          className="w-50 h-30 object-cover rounded-lg border"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = [...formData.banners];
+                            updated[index].mobileImageUrl = null;
+                            setFormData({ ...formData, banners: updated });
+                          }}
+                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    ) : (
+                      <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                        <span className="text-sm text-gray-500">Upload</span>
+                        <input type="file" name="mobileImageUrl" className="hidden" accept="image/*" onChange={(e) => handleChange(e, index)} />
                       </label>
                     )}
     
@@ -541,7 +561,7 @@ const EditChadhavaForm = () => {
                 onClick={() =>
                   setFormData({
                     ...formData,
-                    banners: [...formData.banners, { imgUrl: "", type: "", position: 0 }],
+                    banners: [...formData.banners, { imgUrl: "", mobileImageUrl: "", type: "", position: 0 }],
                   })
                 }
                 className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"

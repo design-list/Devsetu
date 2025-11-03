@@ -35,7 +35,7 @@ const EditPujaForm = () => {
         offerings: [{ offerimg: null, title: "", description: "", tags: "", price: "" }],
         pujaBenefits: [{ title: "", description: "" }],
         faqs: [{ title: "", description: "" }],
-        banners: [{imgUrl: null, type: "", position: 0}],
+        banners: [{imgUrl: null, mobileImageUrl: null, type: "", position: 1}],
     });
 
     const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -132,6 +132,7 @@ const EditPujaForm = () => {
                 banners: pujaDetail.pujaBanners
                     ? pujaDetail.pujaBanners.map((b) => ({
                     imgUrl: b.imageUrl || "",
+                    mobileImageUrl: b.mobileImageUrl || "",
                     type: b.type || "",
                     position: b.position || ""
                 }))
@@ -144,11 +145,11 @@ const EditPujaForm = () => {
 
 
     const slugify = (text) => {
-        return text
-            .toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .trim()
-            .replace(/\s+/g, '-');
+      return text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
     }
 
 
@@ -171,7 +172,17 @@ const EditPujaForm = () => {
             updated[index].imgUrl = localPreview.toString();
             return { ...prev, banners: updated };
             });
-        } else if (name === "icon") {
+        } 
+        else if (name === "mobileImageUrl") {
+            // Update images preview
+            setFormData((prev) => {
+            const updated = [...prev.banners];
+            updated[index].mobileImageUrl = localPreview.toString();
+            return { ...prev, banners: updated };
+            });
+        } 
+        
+        else if (name === "icon") {
             // Update FAQ icon preview
             setFormData((prev) => {
             const updated = [...prev.faqs];
@@ -217,12 +228,20 @@ const EditPujaForm = () => {
 
             if (res.ok) {
             if (name === "imgUrl") {
-                setFormData((prev) => {
-                const updated = [...prev.banners];
-                updated[index].imgUrl = (data.storedAs).toString(); // server path
-                return { ...prev, banners: updated };
-                });
-            } else if (name === "icon") {
+              setFormData((prev) => {
+              const updated = [...prev.banners];
+              updated[index].imgUrl = (data.storedAs).toString(); // server path
+              return { ...prev, banners: updated };
+              });
+            } 
+            else if (name === "mobileImageUrl") {
+              setFormData((prev) => {
+              const updated = [...prev.banners];
+              updated[index].mobileImageUrl = (data.storedAs).toString(); // server path
+              return { ...prev, banners: updated };
+              });
+            } 
+            else if (name === "icon") {
                 setFormData((prev) => {
                 const updated = [...prev.faqs];
                 updated[index].icon = (data.storedAs).toString(); // server path
@@ -460,7 +479,7 @@ const EditPujaForm = () => {
                             <img
                               src={item.imgUrl}
                               alt={`banner imgUrl ${index}`}
-                              className="w-24 h-24 object-cover rounded-lg border"
+                              className="w-50 h-30 object-cover rounded-lg border"
                             />
                             <button
                               type="button"
@@ -484,6 +503,38 @@ const EditPujaForm = () => {
                                 onChange={(e) => handleChange(e, index)} // ✅ index now works
                                 className="hidden"
                               />
+                          </label>
+                        )}
+
+                        {item.mobileImageUrl ? (
+                          <div className="relative">
+                            <img
+                              src={item.mobileImageUrl}
+                              alt={`banner mobile ${index}`}
+                              className="w-50 h-24 object-cover rounded-lg border"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = [...formData?.banners];
+                                updated[index].mobileImageUrl = null;
+                                setFormData({ ...formData, banners: updated });
+                              }}
+                              className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        ) : (
+                          <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                            <span className="text-sm text-gray-500">Upload</span>
+                            <input
+                              type="file"
+                              name="mobileImageUrl"
+                              accept="image/*"
+                              onChange={(e) => handleChange(e, index)} // ✅ index now works
+                              className="hidden"
+                            />
                           </label>
                         )}
                       
@@ -521,7 +572,7 @@ const EditPujaForm = () => {
                     onClick={() =>
                       setFormData({
                         ...formData,
-                        banners: [...formData?.banners, { imgUrl: "", type: "", position: "" }],
+                        banners: [...formData?.banners, { imgUrl: "", mobileImageUrl: "", type: "", position: "" }],
                       })
                     }
                     className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
