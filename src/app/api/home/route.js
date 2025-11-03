@@ -15,7 +15,7 @@ export async function GET() {
         {
           model: pujaBanners,
           where: { position: 11 },
-          attributes: ["id", "image_url", "position", "type"],
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
       ],
     });
@@ -27,7 +27,7 @@ export async function GET() {
         {
           model: pujaBanners,
           where: { position: 2 },
-          attributes: ["id", "image_url", "position", "type"],
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
       ],
         limit: 3,
@@ -42,7 +42,7 @@ export async function GET() {
         {
           model: chadhavaBanner,
           where: { position: 11 },
-          attributes: ["id", "image_url", "position", "type"],
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
       ],
     });
@@ -54,7 +54,7 @@ export async function GET() {
         {
           model: chadhavaBanner,
           where: { position: 2 },
-          attributes: ["id", "image_url", "position", "type"],
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
         {
           model: chadhavaFocus

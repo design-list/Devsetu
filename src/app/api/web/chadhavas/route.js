@@ -16,7 +16,7 @@ export async function GET() {
         {
           model: chadhavaBanner,
           where: { position: 1 },
-          attributes: ["id", "image_url", "position", "type"],
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
       ],
     });

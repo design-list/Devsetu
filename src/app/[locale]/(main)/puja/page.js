@@ -3,17 +3,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Landmark,
   Users,
-  Building,
-  Sparkles,
-  ListChecks,
   User,
   Video,
   Gift,
-  MapPin,
-  Clock,
-  Home,
   Package,
   CheckCircle,
   Globe2, Building2, Star
@@ -25,10 +18,10 @@ import PujaCard from "@/components/Cards/pujaCard";
 import Container from "@/components/Container";
 import PageHeroSlider from "@/components/HeroBanner/PageHeroSlider";
 import { requestPujaWebPageAction } from "@/redux/actions/pujaActions";
-import SectionLoader from "@/components/Atom/loader/sectionLoader";
+// import SectionLoader from "@/components/Atom/loader/sectionLoader";
 import { useWithLang } from "../../../../../helper/useWithLang";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+// import Image from "next/image";
 import PanditJi from "../../../../../public/images/pandit-ji.png";
 import Reviews from "@/components/Review";
 import HowPujaWorks from "@/components/OnlineSteps";
