@@ -166,7 +166,14 @@ const EditChadhavaForm = () => {
           updated[index].imgUrl = localPreview.toString();
           return { ...prev, banners: updated };
         });
-      } else if (name === "recommendedImg") {
+      }else if (name === "focusIcon") {
+        setFormData((prev) => {
+          const updated = [...prev.chadhavaFocus];
+          updated[index].focusIcon = localPreview.toString();
+          return { ...prev, chadhavaFocus: updated };
+        });
+      } 
+      else if (name === "recommendedImg") {
         // Update FAQ icon preview
         setFormData((prev) => {
           const updated = [...prev.recommendedChadawa];
@@ -217,7 +224,18 @@ const EditChadhavaForm = () => {
               updated[index].imgUrl = (data.storedAs).toString(); // server path
               return { ...prev, banners: updated };
             });
-          } else if (name === "recommendedImg") {
+          } 
+          else if (name === "focusIcon") {
+            console.log("data.storedAs", data.storedAs)
+
+            setFormData((prev) => {
+              
+              const updated = [...prev.chadhavaFocus];
+              updated[index].focusIcon = (data.storedAs).toString();
+              return { ...prev, chadhavaFocus: updated };
+            });
+          }
+          else if (name === "recommendedImg") {
             setFormData((prev) => {
               const updated = [...prev.recommendedChadawa];
               updated[index].recommendedImg = (data.storedAs).toString(); // server path
@@ -547,103 +565,96 @@ const EditChadhavaForm = () => {
     
             </section>
     
+
             <section className="p-4 border rounded-xl space-y-4">
-              <h2 className="text-xl font-bold text-gray-700 border-b pb-2">
-                Chadhava Focus
-              </h2>
-    
-              {formData.chadhavaFocus.map((item, index) => (
-                <div
-                  key={index}
-                  className="relative border p-4 rounded-lg bg-gray-50 mb-3"
-                >
-                  {formData.chadhavaFocus.length > 1 && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const updated = formData.chadhavaFocus.filter((_, i) => i !== index);
-                        setFormData({ ...formData, chadhavaFocus: updated });
-                      }}
-                      className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                    >
-                      <Trash2 size={18} />
-                    </button>
-                  )}
-    
-                  <div className="flex items-center gap-4">
-                    {item.focusIcon ? (
-                      <div className="relative">
-                        <img
-                          src={item.focusIcon}
-                          alt={`focus-${index}`}
-                          className="w-24 h-24 object-cover rounded-lg border"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const updated = [...formData.chadhavaFocus];
-                            updated[index].focusIcon = null;
-                            setFormData({ ...formData, chadhavaFocus: updated });
-                          }}
-                          className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                      <h2 className="text-xl font-bold text-gray-700 border-b pb-2">
+                        Chadhava Focus
+                      </h2>
+            
+                      {formData.chadhavaFocus.map((item, index) => (
+                        <div
+                          key={index}
+                          className="relative border p-4 rounded-lg bg-gray-50 mb-3"
                         >
-                          <Trash2 size={12} />
-                        </button>
-                      </div>
-                    ) : (
-                      <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
-                        <span className="text-sm text-gray-500">Upload</span>
-                        <input
-                          type="file"
-                          name="focusIcon"
-                          className="hidden"
-                          accept="image/*"
-                          onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (file) {
-                              const imageUrl = URL.createObjectURL(file);
-                              const updated = [...formData.chadhavaFocus];
-                              updated[index].focusIcon = imageUrl;
-                              setFormData({ ...formData, chadhavaFocus: updated });
-                            }
-                          }}
-                        />
-                      </label>
-                    )}
-    
-                    <div className="flex-1">
-                      <input
-                        type="text"
-                        placeholder="Enter focus text"
-                        value={item.foucs}
-                        onChange={(e) => {
-                          const updated = [...formData.chadhavaFocus];
-                          updated[index].foucs = e.target.value;
-                          setFormData({ ...formData, chadhavaFocus: updated });
-                        }}
-                        className="border p-2 rounded-lg w-full"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-    
-              <button
-                type="button"
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    chadhavaFocus: [
-                      ...formData.chadhavaFocus,
-                      { focusIcon: null, foucs: "" },
-                    ],
-                  })
-                }
-                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-              >
-                + Add Focus
-              </button>
-            </section>
+                          {formData.chadhavaFocus.length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const updated = formData.chadhavaFocus.filter((_, i) => i !== index);
+                                setFormData({ ...formData, chadhavaFocus: updated });
+                              }}
+                              className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          )}
+            
+                          <div className="flex items-center gap-4">
+                            {item.focusIcon ? (
+                              <div className="relative">
+                                <img
+                                  src={item.focusIcon}
+                                  alt={`focus-${index}`}
+                                  className="w-24 h-24 object-cover rounded-lg border"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const updated = [...formData.chadhavaFocus];
+                                    updated[index].focusIcon = null;
+                                    setFormData({ ...formData, chadhavaFocus: updated });
+                                  }}
+                                  className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                                >
+                                  <Trash2 size={12} />
+                                </button>
+                              </div>
+                            ) : (
+                              <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                                <span className="text-sm text-gray-500">Upload</span>
+                                <input
+                                  type="file"
+                                  name="focusIcon"
+                                  className="hidden"
+                                  accept="image/*"
+                                  onChange={(e) => handleChange(e, index)}
+                                />
+                              </label>
+                            )}
+            
+                            <div className="flex-1">
+                              <input
+                                type="text"
+                                placeholder="Enter focus text"
+                                value={item.foucs}
+                                onChange={(e) => {
+                                  const updated = [...formData.chadhavaFocus];
+                                  updated[index].foucs = e.target.value;
+                                  setFormData({ ...formData, chadhavaFocus: updated });
+                                }}
+                                className="border p-2 rounded-lg w-full"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+            
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setFormData({
+                            ...formData,
+                            chadhavaFocus: [
+                              ...formData.chadhavaFocus,
+                              { focusIcon: null, foucs: "" },
+                            ],
+                          })
+                        }
+                        className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+                      >
+                        + Add Focus
+                      </button>
+                    </section>
     
     
             {/* Packages */}
