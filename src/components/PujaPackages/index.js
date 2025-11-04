@@ -10,7 +10,7 @@ const PujaPackages = ({ pujaPackages = [], onAddToCart }) => {
   };
 
   return (
-    <section id="packages" className="pb-8">
+    <section id="packages" className="md:pb-8">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
         {pujaPackages.map((pkg, index) => (
           <div
@@ -20,7 +20,7 @@ const PujaPackages = ({ pujaPackages = [], onAddToCart }) => {
           >
             {/* Image */}
             {pkg?.packImg && (
-              <div className="w-full h-48 relative bg-gray-100">
+              <div className="w-full h-36 md:h-48 relative bg-gray-100">
                 <LazyImage
                   src={pkg.packImg}
                   alt={pkg.packageType}
@@ -31,12 +31,12 @@ const PujaPackages = ({ pujaPackages = [], onAddToCart }) => {
             )}
 
             {/* Text */}
-            <div className="p-4 bg-white">
+            <div className="p-2 py-3 md:p-4 bg-white">
               <h3 className="font-semibold text-base md:text-lg truncate">
                 {pkg.packageType || pkg.name}
               </h3>
               <p className="font-bold text-sm md:text-xl mt-1 line-clamp-3">₹{pkg.packagePrice}</p>
-              <span className="text-sm line-clamp-3">{pkg.packageDescription}</span>
+              <span className="text-sm line-clamp-2 md:line-clamp-3">{pkg.packageDescription}</span>
             </div>
           </div>
         ))}

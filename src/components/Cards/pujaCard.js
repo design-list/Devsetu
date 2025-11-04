@@ -30,14 +30,14 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
               {/* Image Section */}
               <div
                 onClick={() => handlaRedirect("puja", puja.slug)}
-                className="relative h-[170px] px-2 md:px-4 pt-2 md:pt-4 pb-0 cursor-pointer overflow-hidden object-fill"
+                className="relative h-44 sm:h-52 md:h-56 px-2 md:px-4 pt-2 md:pt-4 pb-0 cursor-pointer overflow-hidden object-fill"
               >
                 <LazyImage
                   src={bannerImage}
                   alt={puja.title}
                   width={400}
                   height={320}
-                  className="w-full h-full object-cover rounded-xl "
+                  className="w-full h-full object-fill rounded-xl "
                 />
 
                 {/* Label Tag */}

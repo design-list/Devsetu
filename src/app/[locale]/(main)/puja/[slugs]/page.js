@@ -628,7 +628,7 @@ export default function PujaDetailsPage() {
               </div>
             </section> */}
 
-          <section ref={videosRef} className="relative py-8 px-4">
+          <section ref={videosRef} className="relative py-8 md:px-4">
             <Container>
               {/* Heading */}
               <h2 className="font-secondary uppercase text-xl md:text-3xl font-bold flex items-center gap-2 text-[var(--color-primary)] mb-3">
@@ -669,7 +669,7 @@ export default function PujaDetailsPage() {
                   >
                     <button
                       onClick={() => toggleFaq(i)}
-                      className="font-secondary text-lg font-bold w-full text-left text-[var(--color-dark)] flex justify-between items-center"
+                      className="font-secondary text-sm md:text-lg font-bold w-full text-left text-[var(--color-dark)] flex justify-between items-center"
                     >
                       {faq.question}
                       <span className="text-[var(--color-primary)] text-lg">
@@ -677,7 +677,7 @@ export default function PujaDetailsPage() {
                       </span>
                     </button>
                     {openFaqIndex === i && (
-                      <p className="mt-2 text-[--color-dark] leading-relaxed">
+                      <p className=" text-sm md:text-base mt-2 text-[--color-dark] md:leading-relaxed">
                         {faq.answer}
                       </p>
                     )}
@@ -733,7 +733,7 @@ export default function PujaDetailsPage() {
             {/* Participate Button */}
             <button
               onClick={handlaRedirect}
-              className="flex justify-center items-center font-secondary text-lg font-bold w-full bg-[var(--color-primary)] text-white py-3 rounded-xl hover:[var(--color-primary-light)] transition-colors uppercase cursor-pointer"
+              className="flex justify-center items-center font-secondary text-base md:text-lg font-bold w-full bg-[var(--color-primary)] text-white py-3 rounded-xl hover:[var(--color-primary-light)] transition-colors uppercase cursor-pointer"
             >
               Participate Now <ArrowRight />
             </button>
