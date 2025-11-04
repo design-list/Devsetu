@@ -20,7 +20,7 @@ export async function GET() {
       order: [["createdAt", "DESC"]],
     });
 
-    return NextResponse.json({ data: carts }, { status: 200 });
+    return NextResponse.json({ data: carts, status: 200 });
   } catch (error) {
     console.error("GET /api/cart error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });

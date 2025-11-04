@@ -31,7 +31,7 @@ const ChadhavaHeroSlider = ({ heroBanner, handlaRedirect }) => {
               slide?.banners?.map((item) => {
               return <SwiperSlide key={item.id}>
                   <div
-                    className={`${slide.bgColor} rounded-lg p-6 h-[150px] md:h-80 flex flex-col justify-center cursor-pointer`}
+                    className={`${slide.bgColor} rounded-lg p-6 h-[180px] md:h-80 flex flex-col justify-center cursor-pointer`}
                      onClick={() => handlaRedirect('chadhava',slide.slug)}
                   >
                     <LazyImage

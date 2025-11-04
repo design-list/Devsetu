@@ -1,5 +1,8 @@
 "use client";
 
+
+// shares/AdminSidebar/index.js
+
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, BookOpen, List, Gift, Flame, Leaf } from "lucide-react"; // icons
@@ -102,6 +105,15 @@ const Sidebar = () => {
               >
                 <Gift size={24} />
                 {open && <span>Common Packages & Offerings</span>}
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin/booking-details"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
+              >
+                <Gift size={24} />
+                {open && <span>Booking Details</span>}
               </Link>
             </li>
           </ul>
