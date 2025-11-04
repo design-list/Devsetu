@@ -10,7 +10,7 @@ export default function BreadcrumbSteps({ currentStep = 2 }) {
   ];
 
   return (
-    <div className="flex items-center justify-start flex-wrap gap-2 md:space-x-2 md:p-3">
+    <div className="flex items-center justify-start flex-nowrap overflow-scroll md:flex-wrap gap-2 md:space-x-2 md:p-3">
       {steps.map((step, index) => (
         <div key={step.id} className="flex items-center">
           <div className="flex items-center space-x-2">
@@ -33,7 +33,7 @@ export default function BreadcrumbSteps({ currentStep = 2 }) {
 
             {/* Step Label */}
             <span
-              className={`text-xs md:text-sm font-medium ${
+              className={`text-xs md:text-sm font-medium whitespace-nowrap ${
                 step.id === currentStep
                   ? "text-blue-600"
                   : step.id < currentStep
