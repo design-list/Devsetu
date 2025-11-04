@@ -95,6 +95,7 @@ export async function POST(req) {
         pujaBanners:
           body.banners?.map(banner => ({
             imageUrl: banner.imgUrl,
+            mobileImageUrl: banner.mobileImageUrl,
             type: banner.type,
             position: banner.position
               ? parseInt(banner.position)

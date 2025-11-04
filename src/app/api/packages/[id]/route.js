@@ -58,3 +58,43 @@ export async function DELETE(req, context) {
     );
   }
 }
+
+
+export async function PUT(req) {
+  try {
+    const body = await req.json();
+    const { id, packImg, packageType, packageDescription, packagePrice, noOfPeople } = body;
+
+    if (!id) {
+      return NextResponse.json({ success: false, error: "Package ID is required" }, { status: 400 });
+    }
+
+    // ✅ Find existing package
+    const existingPackage = await packageModel.findByPk(id);
+    if (!existingPackage) {
+      return NextResponse.json({ success: false, error: "Package not found" }, { status: 404 });
+    }
+
+    // ✅ Update fields
+    existingPackage.packImg = packImg || existingPackage.packImg;
+    existingPackage.packageType = packageType || existingPackage.packageType;
+    existingPackage.packageDescription = packageDescription || existingPackage.packageDescription;
+    existingPackage.packagePrice = packagePrice || existingPackage.packagePrice;
+    existingPackage.noOfPeople = noOfPeople || existingPackage.noOfPeople;
+
+    // ✅ Save to database
+    await existingPackage.save();
+
+    return NextResponse.json({
+      success: true,
+      message: "Package updated successfully",
+      data: existingPackage,
+    });
+  } catch (error) {
+    console.error("Update package error:", error);
+    return NextResponse.json(
+      { success: false, error: error.message || "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+}

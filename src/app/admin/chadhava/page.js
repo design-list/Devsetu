@@ -27,7 +27,7 @@ const ChadhavaForm = () => {
     chadhavaFocus: [{ focusIcon: null, foucs: "" }],
     packages: [{ packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
     faqs: [{ title: "", description: "" }],
-    banners: [{ imgUrl: null, type: "", position: 0 }],
+    banners: [{ imgUrl: null, mobileImageUrl: null, type: "", position: 1 }],
 
   });
 
@@ -271,7 +271,7 @@ const ChadhavaForm = () => {
                     <img
                       src={item.imgUrl}
                       alt={`banner-${index}`}
-                      className="w-24 h-24 object-cover rounded-lg border"
+                      className="w-50 h-30 object-cover rounded-lg border"
                     />
                     <button
                       type="button"
@@ -289,6 +289,32 @@ const ChadhavaForm = () => {
                   <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
                     <span className="text-sm text-gray-500">Upload</span>
                     <input type="file" name="imgUrl" className="hidden" accept="image/*" onChange={(e) => handleChange(e, index)} />
+                  </label>
+                )}
+
+                {item.mobileImageUrl ? (
+                  <div className="relative">
+                    <img
+                      src={item.mobileImageUrl}
+                      alt={`mobile banner-${index}`}
+                      className="w-50 h-30 object-cover rounded-lg border"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const updated = [...formData.banners];
+                        updated[index].mobileImageUrl = null;
+                        setFormData({ ...formData, banners: updated });
+                      }}
+                      className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-100">
+                    <span className="text-sm text-gray-500">Upload</span>
+                    <input type="file" name="mobileImageUrl" className="hidden" accept="image/*" onChange={(e) => handleChange(e, index)} />
                   </label>
                 )}
 

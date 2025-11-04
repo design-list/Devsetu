@@ -12,6 +12,11 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
       field: "image_url",
     },
+    mobileImageUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: "mobile_image_url",
+    },
     type: {
       type: DataTypes.STRING,
       allowNull: true,

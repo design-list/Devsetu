@@ -296,9 +296,9 @@ export default function CheckoutPage() {
                     <ChevronDown className="w-6 h-6 text-[var(--color-dark)] top-0" />
                   )}
               </div>
-              <span className="bg-[var(--color-accent)]/20 text-[var(--color-dark)] px-3 py-1 rounded-full text-sm md:text-base font-semibold mt-2 md:mt-0 inline-block">
+              { allCarts?.["package"]?.packageType && <span className="bg-[var(--color-accent)]/20 text-[var(--color-dark)] px-3 py-1 rounded-full text-sm md:text-base font-semibold mt-2 md:mt-0 inline-block">
                   {allCarts?.["package"]?.packageType}
-                </span>
+                </span> }
               {allCarts?.["package"]?.packagePrice && (
                 <div className="flex justify-between text-[var(--color-dark)] font-medium mt-4">
                   <span>Base Price</span>
@@ -324,7 +324,7 @@ export default function CheckoutPage() {
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
                   />
-                  {formatDate(allCarts?.package?.date, "full")}
+                  {formatDate(allCarts?.package?.date, "full")} {allCarts?.package?.tithi}
                 </div>
               </div>
             )}
@@ -345,7 +345,7 @@ export default function CheckoutPage() {
                 </div>
               ))}
 
-              { allCarts?.['other_charges']?.pandit_charge &&
+              { (allCarts?.['other_charges']?.pandit_charge > 0 && allCarts?.package?.type === "puja") &&
                 <div
                   className="flex justify-between text-gray-700 font-medium"
                 >
@@ -383,7 +383,11 @@ export default function CheckoutPage() {
                     : "focus:ring-[var(--color-primary)]"
                   }`}
                 value={form.whatsapp}
-                onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9]/g, "");
+                  setForm({ ...form, whatsapp: value });
+                }}
+                maxLength={10}
               />
             </div>
           </div>
@@ -482,7 +486,7 @@ export default function CheckoutPage() {
           </div>
 
           {allCarts?.package?.type === "puja" && <div className="flex items-center justify-between border p-2 md:p-3 rounded">
-            <label className="text-sm md:text-lg font-semibold">Wanted Dev Prashadm ?</label>
+            <label className="text-sm md:text-lg font-semibold">Want DevaPrasadam?</label>
             <button
               type="button"
               onClick={() => setDevaPrashadm((prev) => !prev)} 

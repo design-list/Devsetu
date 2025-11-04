@@ -178,7 +178,14 @@ const ChadhavaDetailsPage = () => {
                     <h2
                       className={`font-secondary text-xl font-bold text-[var(--color-dark)] }`}
                     >
-                      {item.title}
+                      {item.title.endsWith("(₹51)") ? (
+                          <>
+                            {item.title.replace("(₹51)", "")}
+                            <span className="line-through">(₹51)</span>
+                          </>
+                        ) : (
+                          <span>{item.title}</span>
+                        )}
                     </h2>
                     <p className="text-[var(--color-dark)] text-sm mt-1">
                       {item.description}
@@ -190,7 +197,8 @@ const ChadhavaDetailsPage = () => {
                   </div>
 
                   {/* Right Image + Button */}
-                  <div className="flex flex-row items-start justify-between md:justify-end md:flex-col md:items-center w-full md:w-auto">
+                  {/* <div className="flex flex-row items-start justify-between md:justify-baseline md:flex-col md:items-center w-full"> */}
+                  <div className="flex flex-col items-center justify-center w-32 ml-auto">
                     <div
                       className="w-28 h-28 relative cursor-pointer"
                       onClick={() => handleShowModal(item)}

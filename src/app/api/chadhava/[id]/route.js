@@ -74,6 +74,7 @@ export async function PUT(req, { params }) {
       await chadhavaBanner.bulkCreate(
         body.banners.map((banner) => ({
           image_url: banner.imgUrl,
+          mobileImageUrl: banner.mobileImageUrl,
           type: banner.type,
           position: banner.position,
           chadhavaId: updatedChadhava.id, // ✅ FK

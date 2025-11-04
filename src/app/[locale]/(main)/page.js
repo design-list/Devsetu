@@ -156,15 +156,15 @@ const Home = () => {
 
       <HowItWorks />
 
-      <section className="py-8">
+      {/* <section className="py-8"> */}
         {/* <div className="mx-auto max-w-screen-md text-left md:text-center lg:mb-0">
             <h2 className="font-secondary capitalize text-center text-3xl font-bold text-[var(--primary)] mb-2 mt-5">
              Explore Knowledge
             </h2>
             <p className="text-base"></p>
           </div> */}
-        <LibraryCards />
-      </section>
+        {/* <LibraryCards />
+      </section> */}
 
       {/* <section className="bg-white text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-6">

@@ -81,8 +81,6 @@ const slugify = (text) => {
       setLoading(true);
       const res = await api.AddNewAartis(formData );
 
-      console.log("Submit response:", res);
-
       if (res.status === 200) {
         alert("Aarti added successfully!");
         setFormData({

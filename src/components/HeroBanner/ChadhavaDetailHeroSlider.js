@@ -24,7 +24,7 @@ const ChadhavaDetailHeroSlider = ({ heroSlides }) => {
         className="mx-auto rounded-lg shadow"
       >
         {heroSlides?.
-        filter((item) => item.position !== 1)
+        filter((item) => item.position !== 1 && item.position !== 11)
         .map((item) => (
 
           <SwiperSlide key={item.id}>

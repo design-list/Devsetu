@@ -14,20 +14,20 @@ export async function GET() {
       include: [
         {
           model: pujaBanners,
-          where: { position: 1 },
-          attributes: ["id", "image_url", "position", "type"],
+          where: { position: 11 },
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
       ],
     });
 
     const pujaCard = await pujas.findAll({
-      where: { isActive: true, isActiveOnHome: false },
+      where: { isActive: true },
       attributes: ["id", "title", "slug", "sub_title", "location","tags", "date", "specialDay"],
       include: [
         {
           model: pujaBanners,
           where: { position: 2 },
-          attributes: ["id", "image_url", "position", "type"],
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
       ],
         limit: 3,
@@ -41,20 +41,20 @@ export async function GET() {
       include: [
         {
           model: chadhavaBanner,
-          where: { position: 1 },
-          attributes: ["id", "image_url", "position", "type"],
+          where: { position: 11 },
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
       ],
     });
 
     const chadhavaCard = await chadhava.findAll({
-      where: { isActive: true, isActiveOnHome: false },
+      where: { isActive: true },
       attributes: ["id", "title", "slug", "location", "date", "tags", "tithi"],
       include: [
         {
           model: chadhavaBanner,
           where: { position: 2 },
-          attributes: ["id", "image_url", "position", "type"],
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
         {
           model: chadhavaFocus

@@ -10,6 +10,7 @@ const initialState = {
     addedPuja: null,
     pujaDetail: null,
     pujaDetailPage: null,
+    pujaoffering: null
 }
 
 export default function reducer(state = initialState, action) {
@@ -36,7 +37,7 @@ export default function reducer(state = initialState, action) {
             return { ...state, pujaDetail: action.payload }
 
         case PUJA_DETAILS_BY_SLUG_RESPONSE:
-            return { ...state, pujaDetailPage: action.payload }
+            return { ...state, pujaDetailPage: action.payload, pujaoffering: action.payload.pujaOfferings }
         case PUJA_DETAILS_BY_SLUG_FAILED:
             return { ...state, pujaDetailPage: action.payload }
 

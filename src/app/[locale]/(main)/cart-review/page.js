@@ -164,7 +164,7 @@ const PujaCart = () => {
                     icon={faCalendarDays}
                     className="relative -left-1 text-2xl text-[var(--color-primary-light)]"
                   />
-                  {formatDate(allCarts?.package?.date, "full")}
+                  {formatDate(allCarts?.package?.date, "full")} {allCarts?.package?.tithi}
                 </div>
               </div>
             )}
@@ -215,51 +215,55 @@ const PujaCart = () => {
             ))}
           </div>
 
-          <h2 className="text-base md:text-lg font-semibold text-[var(--color-dark)] mt-4">
-            Select Pandit Dakhina Amount (₹)
-          </h2>
-          <div className="flex flex-row items-center gap-4 bg-white my-2 w-full mx-auto">
-            {/* Preset Buttons */}
-            <div className="flex md:justify-center gap-4 w-full md:w-auto">
-              {presetAmounts.map((amount) => (
-                <button
-                  key={amount}
-                  type="button"
-                  onClick={() => handleSelect(amount)}
-                  className={`px-3 md:px-6 py-1 md:py-2 rounded-xl text-sm
-                   md:text-base font-medium border transition-all duration-200 ${
-                    selectedAmount == amount
-                      ? "bg-orange-500 text-white border-orange-500 shadow-md"
-                      : "bg-white text-[var(--color-dark)] border-gray-300 hover:bg-orange-100"
-                  }`}
-                >
-                  ₹{amount}
-                </button>
-              ))}
-              {/* Manual Input */}
-              <div className="hidden md:flex items-center gap-2 w-full justify-center">
-                <label htmlFor="manual" className="text-gray-600 font-medium">
-                  Custom:
-                </label>
-                <div className="relative">
-                  <span className="absolute left-3 top-2 text-[var(--color-dark)]">
-                    ₹
-                  </span>
-                  <input
-                    id="manual"
-                    type="number"
-                    value={selectedAmount}
-                    onChange={handleManualChange}
-                    placeholder="Custom amount"
-                    className="pl-7 pr-3 py-2 border-b text-base border-gray-300 focus:outline-none text-[var(--color-dark)] w-full appearance-none"
-                  />
+         { allCarts?.package?.type === "puja" && <>
+            <h2 className="text-base md:text-lg font-semibold text-[var(--color-dark)] mt-4">
+              Select Pandit Dakshina Amount (₹)
+            </h2>
+            <div className="flex flex-row items-center gap-4 bg-white my-2 w-full mx-auto">
+              {/* Preset Buttons */}
+              <div className="flex md:justify-center gap-4 w-full md:w-auto">
+                {presetAmounts.map((amount) => (
+                  <button
+                    key={amount}
+                    type="button"
+                    onClick={() => handleSelect(amount)}
+                    className={`px-3 md:px-6 py-1 md:py-2 rounded-xl text-sm
+                    md:text-base font-medium border transition-all duration-200 ${
+                      selectedAmount == amount
+                        ? "bg-orange-500 text-white border-orange-500 shadow-md"
+                        : "bg-white text-[var(--color-dark)] border-gray-300 hover:bg-orange-100"
+                    }`}
+                  >
+                    ₹{amount}
+                  </button>
+                ))}
+                {/* Manual Input */}
+                <div className="hidden md:flex items-center gap-2 w-full justify-center">
+                  <label htmlFor="manual" className="text-gray-600 font-medium">
+                    Custom:
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-2 text-[var(--color-dark)]">
+                      ₹
+                    </span>
+                    <input
+                      id="manual"
+                      type="number"
+                      value={selectedAmount}
+                      onChange={handleManualChange}
+                      placeholder="Custom amount"
+                      className="pl-7 pr-3 py-2 border-b text-base border-gray-300 focus:outline-none text-[var(--color-dark)] w-full appearance-none"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </>
+          }
+
 
           {/* Manual Input */}
-            <div className="flex md:hidden items-center gap-2 mt-4 w-full md:justify-center">
+            {allCarts?.package?.type === "puja" && <div className="flex md:hidden items-center gap-2 mt-4 w-full md:justify-center">
               <label htmlFor="manual" className=" text-sm md:text-base text-gray-600 font-medium">
                 Custom:
               </label>
@@ -276,7 +280,7 @@ const PujaCart = () => {
                   className="pl-7 pr-3 py-2 border-b text-base border-gray-300 focus:outline-none text-[var(--color-dark)] w-full appearance-none"
                 />
               </div>
-            </div>
+            </div> }
 
           {/* BILL SUMMARY */}
           {allCarts?.add_ons.length > 0 && (
@@ -299,7 +303,7 @@ const PujaCart = () => {
                 <div className="flex justify-between text-[var(--color-dark)]">
                   {selectedAmount && parseInt(selectedAmount) > 0 && (
                     <>
-                      <span>Pandit Dakhina</span>
+                      <span>Pandit Dakshina</span>
                       <span className="font-secondary font-semibold">
                         ₹{selectedAmount}
                       </span>

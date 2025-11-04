@@ -15,13 +15,13 @@ export async function GET() {
         {
           model: pujaBanners,
           where: { position: 1 },
-          attributes: ["id", "image_url", "position", "type"],
+          attributes: ["id", "image_url", "mobile_image_url", "position", "type"],
         },
       ],
     });
 
     const pujaCard = await pujas.findAll({
-      where: { isActive: true, isActiveOnHome: false },
+      where: { isActive: true },
       attributes: ["id", "title", "slug", "sub_title", "location", "date", "tags", "specialDay"],
       include: [
         {

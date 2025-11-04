@@ -160,7 +160,8 @@ const PaymentSuccess = () => {
                             icon={faCalendarDays}
                             className="text-[var(--color-primary-light)] text-lg"
                           />
-                          {formatDate(cartDetails?.package?.date, "full")}
+                          {formatDate(cartDetails?.package?.date, "full")}{" "}
+                          {cartDetails?.package?.tithi}
                         </div>
                       </div>
                     </div>
@@ -174,17 +175,12 @@ const PaymentSuccess = () => {
                       </div>
                     )}
 
-                    {cartDetails?.["add_ons"].map((item) => (
-                      <div
-                        key={item.id}
-                        className="flex justify-between text-gray-700"
-                      >
-                        <span>{item?.name}</span>
-                        <span>
-                          ₹{item?.price} × {item?.quantity}
-                        </span>
+                    {otherChargesData?.pandit_charge > 0 && (
+                      <div className="flex justify-between text-gray-700">
+                        <span>{"Pandit Dakshina"}</span>
+                        <span>₹{`${otherChargesData?.pandit_charge}`}</span>
                       </div>
-                    ))}
+                    )}
 
                     {otherChargesData?.pandit_charge && (
                       <div className="flex justify-between text-gray-700">
@@ -203,11 +199,11 @@ const PaymentSuccess = () => {
 
                   <div className="pt-3">
                     <p className="font-semibold text-gray-800">
-                      {cartDetails.user_details.name}
+                      {cartDetails?.user_details?.name}
                     </p>
                     <p className="text-gray-500 text-sm">
-                      {cartDetails.user_details.whatsapp} •{" "}
-                      {cartDetails.user_details.name}
+                      {cartDetails?.user_details?.whatsapp} •{" "}
+                      {cartDetails?.user_details?.name}
                     </p>
                     <div className="mt-1 space-y-1">
                       {cartDetails?.user_details?.members?.map((m, i) => (
@@ -222,123 +218,136 @@ const PaymentSuccess = () => {
             )}
 
             {cartDetails?.isActivePrasad && (
-              <div className="bg-gradient-to-br from-white via-orange-50/30 to-[#fff8ee] border border-orange-100 rounded-2xl shadow-sm p-6 text-sm text-gray-700 transition-all hover:shadow-md">
-                <p className="text-orange-600 font-semibold mb-2">
-                  Puja Prashad will be delivered to:
-                </p>
-                <p className="leading-relaxed">
-                  {cartDetails?.user_details?.address},{" "}
-                  {cartDetails?.user_details?.city},{" "}
-                  {cartDetails?.user_details?.state} -{" "}
-                  {cartDetails?.user_details?.postalCode}
-                </p>
+              <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
+                <div className="space-y-3 text-sm text-gray-700">
+                  <p className="text-orange-600">
+                    Puja Prashadm will Delhiverd on address :{" "}
+                  </p>
+                  <p>
+                    {cartDetails?.user_details?.address},{" "}
+                    {cartDetails?.user_details?.city},{" "}
+                    {cartDetails?.user_details?.state} -{" "}
+                    {cartDetails?.user_details?.postalCode}
+                  </p>
+                </div>
+              </div>
+            )}
+            {/* <div className="bg-white border border-orange-100 rounded-2xl shadow-sm p-6">
+              <h3 className="text-lg font-semibold text-orange-800 mb-4">Puja Video & Updates</h3>
+              <div className="space-y-3 text-sm text-gray-700">
+                <p>✅ Your Puja was conducted by Sri Mandir on 23rd August (Bhadrapada Krishna Amavasya).</p>
+                <p>✅ Conducted between <strong>11:00 AM - 6:52 PM</strong>.</p>
+                <button className="text-orange-600 font-medium hover:underline mt-2">
+                  What to do during Puja →
+                </button>
               </div>
             )}
           </div>
 
           {/* RIGHT SECTION */}
-          <div className="space-y-8">
-            {cartDetails?.package?.type === "puja" && (
-              <div className="bg-white border border-orange-100 rounded-2xl shadow-md p-6">
-                <h3 className="text-lg font-semibold text-orange-800 mb-3">
-                  Frequently Asked Questions
-                </h3>
-                {pujaFaqs.map((item, i) => (
-                  <div key={i} className="border-t first:border-t-0">
-                    <button
-                      onClick={() => toggleFAQ(i)}
-                      className="w-full py-3 flex justify-between items-center text-left text-gray-800 font-medium hover:text-orange-700 transition"
-                    >
-                      {item.q}
-                      <ChevronDown
-                        className={`w-4 h-4 text-orange-500 transition-transform ${
-                          openFAQ === i ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    <AnimatePresence initial={false}>
-                      {openFAQ === i && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="pb-3 text-sm text-gray-600 leading-relaxed"
-                        >
-                          {item.a}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {cartDetails?.package?.type === "chadhava" && (
-              <div className="bg-white border border-orange-100 rounded-2xl shadow-md p-6">
-                <h3 className="text-lg font-semibold text-orange-800 mb-3">
-                  Frequently Asked Questions
-                </h3>
-                {chadhavaFaqs.map((item, i) => (
-                  <div key={i} className="border-t first:border-t-0">
-                    <button
-                      onClick={() => toggleFAQ(i)}
-                      className="w-full py-3 flex justify-between items-center text-left text-gray-800 font-medium hover:text-orange-700 transition"
-                    >
-                      {item.q}
-                      <ChevronDown
-                        className={`w-4 h-4 text-orange-500 transition-transform ${
-                          openFAQ === i ? "rotate-180" : ""
-                        }`}
-                      />
-                    </button>
-                    <AnimatePresence initial={false}>
-                      {openFAQ === i && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="pb-3 text-sm text-gray-600 leading-relaxed"
-                        >
-                          {item.a}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* SUPPORT */}
-            <div className="bg-gradient-to-br from-orange-50 via-white to-orange-100 border border-orange-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition">
-              <h3 className="text-lg font-semibold text-orange-800 mb-3">
-                Help & Support for Puja Booking
-              </h3>
-              <div className="space-y-4 text-sm text-gray-700">
-                <div className="flex items-start gap-3">
-                  <Phone className="text-green-700 w-5 h-5 mt-1" />
-                  <p>
-                    <span className="font-semibold text-gray-800">
-                      078-779-61501
-                    </span>
-                    <br />
-                    <span className="text-gray-500">
-                      Available 10:30 AM - 7:30 PM
-                    </span>
-                  </p>
+            <div className="space-y-8">
+              {cartDetails?.package?.type === "puja" && (
+                <div className="bg-white border border-orange-100 rounded-2xl shadow-md p-6">
+                  <h3 className="text-lg font-semibold text-orange-800 mb-3">
+                    Frequently Asked Questions
+                  </h3>
+                  {pujaFaqs.map((item, i) => (
+                    <div key={i} className="border-t first:border-t-0">
+                      <button
+                        onClick={() => toggleFAQ(i)}
+                        className="w-full py-3 flex justify-between items-center text-left text-gray-800 font-medium hover:text-orange-700 transition"
+                      >
+                        {item.q}
+                        <ChevronDown
+                          className={`w-4 h-4 text-orange-500 transition-transform ${
+                            openFAQ === i ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {openFAQ === i && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="pb-3 text-sm text-gray-600 leading-relaxed"
+                          >
+                            {item.a}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
                 </div>
+              )}
 
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <button className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-2 rounded-md shadow-sm hover:bg-orange-50 transition">
-                    <Mail className="w-4 h-4 text-gray-600" />
-                    <span>customerservices.devasetu@gmail.com</span>
-                  </button>
+              {cartDetails?.package?.type === "chadhava" && (
+                <div className="bg-white border border-orange-100 rounded-2xl shadow-md p-6">
+                  <h3 className="text-lg font-semibold text-orange-800 mb-3">
+                    Frequently Asked Questions
+                  </h3>
+                  {chadhavaFaqs.map((item, i) => (
+                    <div key={i} className="border-t first:border-t-0">
+                      <button
+                        onClick={() => toggleFAQ(i)}
+                        className="w-full py-3 flex justify-between items-center text-left text-gray-800 font-medium hover:text-orange-700 transition"
+                      >
+                        {item.q}
+                        <ChevronDown
+                          className={`w-4 h-4 text-orange-500 transition-transform ${
+                            openFAQ === i ? "rotate-180" : ""
+                          }`}
+                        />
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {openFAQ === i && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="pb-3 text-sm text-gray-600 leading-relaxed"
+                          >
+                            {item.a}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-                  <button className="flex items-center justify-center gap-2 bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700 transition">
-                    <MessageCircle className="w-4 h-4" />
-                    <span>WhatsApp</span>
-                  </button>
+              {/* SUPPORT */}
+              <div className="bg-gradient-to-br from-orange-50 via-white to-orange-100 border border-orange-200 rounded-2xl p-6 shadow-md hover:shadow-lg transition">
+                <h3 className="text-lg font-semibold text-orange-800 mb-3">
+                  Help & Support for Puja Booking
+                </h3>
+                <div className="space-y-4 text-sm text-gray-700">
+                  <div className="flex items-start gap-3">
+                    <Phone className="text-green-700 w-5 h-5 mt-1" />
+                    <p>
+                      <span className="font-semibold text-gray-800">
+                        078-779-61501
+                      </span>
+                      <br />
+                      <span className="text-gray-500">
+                        Available 10:30 AM - 7:30 PM
+                      </span>
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-2 rounded-md shadow-sm hover:bg-orange-50 transition">
+                      <Mail className="w-4 h-4 text-gray-600" />
+                      <span>customerservices.devasetu@gmail.com</span>
+                    </button>
+
+                    <button className="flex items-center justify-center gap-2 bg-green-600 text-white px-3 py-2 rounded-md hover:bg-green-700 transition">
+                      <MessageCircle className="w-4 h-4" />
+                      <span>WhatsApp</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
