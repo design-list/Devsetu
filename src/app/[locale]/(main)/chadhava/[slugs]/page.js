@@ -270,7 +270,7 @@ const ChadhavaDetailsPage = () => {
                 >
                   <button
                     onClick={() => toggleFaq(i)}
-                    className="font-secondary text-lg font-bold w-full text-left text-[var(--color-dark)] flex justify-between items-center"
+                    className="font-secondary text-sm md:text-lg font-bold w-full text-left text-[var(--color-dark)] flex justify-between items-center"
                   >
                     {faq.question}
                     <span className="text-[var(--color-primary)] text-lg">
@@ -278,7 +278,7 @@ const ChadhavaDetailsPage = () => {
                     </span>
                   </button>
                   {openFaqIndex === i && (
-                    <p className="mt-2 text-gray-700">{faq.answer}</p>
+                    <p className=" text-sm md:text-base mt-2 text-[var(--color-dark)]">{faq.answer}</p>
                   )}
                 </div>
               ))}
