@@ -17,10 +17,23 @@ const BookingTracker = ({ bookingId, type, pujaDate, currentStep = 1, paymentSta
         <h2 className="text-2xl text-center font-semibold text-yellow-600">
            {`Your ${type === 'puja' ? "Puja" : "Chadhava" } Booking is Confirmed!`}
         </h2>
-         <div className="flex justify-between my-2">
-            {bookingId && <span className="font-semibold text-orange-500">{`Booking ID: #${bookingId}`}</span>}
-            {paymentStatus && <span className="font-semibold text-green-500">Payment status: {paymentStatus}</span>}
-        </div>
+        <div className="flex justify-between items-center flex-wrap gap-2 my-4">
+              <span className="font-semibold text-orange-700 bg-orange-50 px-3 py-1.5 rounded-full shadow-sm">
+                Booking ID: #{bookingId}
+              </span>
+              {paymentStatus && (
+                <span
+                  className={`font-semibold px-3 py-1.5 rounded-full shadow-sm ${
+                    paymentStatus === "success"
+                      ? "bg-green-50 text-green-700"
+                      : "bg-red-50 text-red-600"
+                  }`}
+                >
+                  Payment: {paymentStatus}
+                </span>
+              )}
+            </div>
+            
         {type === "puja" && <span className="text-orange-500">{`Your Puja will be Performed on: ${pujaDate}`}</span>}
         {type === "chadhava" && <span className="text-orange-500">{`Your Chadhava will be Offered on: ${pujaDate}`}</span>}
        
@@ -71,22 +84,18 @@ const BookingTracker = ({ bookingId, type, pujaDate, currentStep = 1, paymentSta
             </div>
 
             {/* Step label below circle */}
-            <p
-              className={`text-sm mt-3 font-medium text-center ${
-                step.id <= currentStep ? "text-green-600" : "text-gray-500"
-              }`}
-            >
-              {step.label}
-            </p>
 
-            {/* Text between circles */}
-            {/* {index < steps.length - 1 && (
-              <div className="absolute top-1/2 right-[-12.5%] w-1/2 text-xs text-gray-500 text-center translate-y-[-50%]">
-                <p className="whitespace-nowrap">
-                  {steps[index + 1].label.split(" ")[1]}
-                </p>
-              </div>
-            )} */}
+            <p
+            className={`text-sm mt-3 font-medium text-center ${
+              step.id <= currentStep ? "text-green-600" : "text-gray-500"
+            }`}
+          >
+            {step.label.split(" ").map((word, index) => (
+              <span key={index} className="block sm:inline">
+                {`${word} `}
+              </span>
+            ))}
+          </p>
           </div>
         ))}
       </div>
