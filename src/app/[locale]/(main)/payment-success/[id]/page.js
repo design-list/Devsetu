@@ -18,7 +18,7 @@ import { fetchCartDetailAction } from "@/redux/actions/cartActions";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
 import LazyImage from "@/components/Atom/LazyImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays, faUser } from "@fortawesome/free-solid-svg-icons";
 import { formatDate } from "../../../../../../utils/localstorage";
 import TempleIcon from "../../../../../../public/icons/puja-temple1.png";
 import BookingTracker from "@/components/BookingTracker";
