@@ -37,7 +37,16 @@ export default function OfferingModal({
 
         {/* Content */}
         <div className="p-4">
-          <h2 className="font-semibold text-lg">{selectedOffering?.title}</h2>
+          <h2 className="font-semibold text-lg">
+            {selectedOffering.title.endsWith("(₹51)") ? (
+                <>
+                  {selectedOffering.title.replace("(₹51)", "")}
+                  <span className="line-through text-red-500">(₹51)</span>
+                </>
+              ) : (
+                <span>{selectedOffering.title}</span>
+              )}
+            </h2>
           {selectedOffering?.price && (
             <p className="text-green-600 font-semibold mt-1">
               ₹{selectedOffering?.price}
@@ -71,6 +80,8 @@ export default function OfferingModal({
 
                     <button
                         onClick={() =>
+                        selectedOffering.title.endsWith("(₹51)")
+                        ? alert("One person can add only 1"):
                         handleQuantityChange(selectedOffering.id, "increment")
                         }
                         className="text-gray-600 hover:text-black cursor-pointer"

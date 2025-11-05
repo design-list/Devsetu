@@ -181,7 +181,7 @@ const ChadhavaDetailsPage = () => {
                       {item.title.endsWith("(₹51)") ? (
                           <>
                             {item.title.replace("(₹51)", "")}
-                            <span className="line-through">(₹51)</span>
+                            <span className="line-through text-red-500">(₹51)</span>
                           </>
                         ) : (
                           <span>{item.title}</span>
@@ -222,24 +222,26 @@ const ChadhavaDetailsPage = () => {
                               onClick={() =>
                                 handleQuantityChange(item.id, "decrement")
                               }
-                              className="text-gray-600 hover:text-black"
+                              className="text-yellow-700 hover:text-yellow-600"
                             >
                               <Minus size={14} />
                             </button>
 
-                            <span className="mx-2 text-sm font-semibold">
+                            <span className="mx-2 text-sm font-semibold text-yellow-600">
                               {matchedAddOn.quantity ?? 1}
                             </span>
 
-                            <button
-                              onClick={() =>
-                                handleQuantityChange(item.id, "increment")
-                              }
-                              className="text-gray-600 hover:text-black"
-                            >
-                              <Plus size={14} />
-                            </button>
-                          </div>
+                              
+                                <button
+                                  onClick={() => 
+                                    item.title.endsWith("(₹51)")
+                                    ? alert("One person can add only 1"):
+                                    handleQuantityChange(item.id, "increment")}
+                                  className="text-yellow-700 hover:text-yellow-600"
+                                >
+                                  <Plus size={14} />
+                                </button>
+                          </div> 
                         );
                       }
                       return (
