@@ -166,6 +166,20 @@ useEffect(() => {
                       </div>
                     )}
 
+                    {cartDetails?.add_ons && (
+                      <>
+                        {
+                          cartDetails?.add_ons?.map((item) => {
+                            return<div className="flex justify-between text-gray-700">
+                            <span>{item.name}</span>
+                            <span>₹{item.price}</span>
+                            </div>
+                          })
+                        }
+                        
+                      </>
+                    )}
+
                     {otherChargesData?.pandit_charge > 0 && (
                       <div className="flex justify-between text-gray-700">
                         <span>{"Pandit Dakshina"}</span>
