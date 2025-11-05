@@ -145,7 +145,7 @@ export default function CheckoutPage() {
     setIsLoading(true);
 
 
-    const userDetails = { ...form, members };
+    const userDetails = { ...form, members, gotra };
     // const payload = { ...allCarts, store_id: storeId, userDetails };
 
     const payload = { ...allCarts, store_id: storeId, isActivePrasad, userDetails, grand_total: finalTotal };

@@ -261,9 +261,10 @@ const BookingDetails = () => {
                                 .map(
                                 (word) =>
                                     word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                                ).join(" ")
+                                ).join("  ")
                                 
                             || "N/A"}
+                            <strong className="block-inline mx-1">Gotra:</strong> {user?.gotra ? user?.gotra : "Kashyap"}
                         </p>
                     <p>
                     <strong>Members:</strong>{" "}

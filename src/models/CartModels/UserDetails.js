@@ -20,6 +20,11 @@ export default (sequelize, DataTypes) => {
         allowNull: true,
         field: "name",
       },
+      gotra: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        field: "gotra",
+      },
       address: {
         type: DataTypes.STRING,
         allowNull: true,
