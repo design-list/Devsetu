@@ -57,20 +57,29 @@ const PujaCart = () => {
         </div>
 
         {/* Grid Layout */}
+
+
         <div className="grid grid-cols-1 gap-8 max-w-5xl m-auto">
           {pujaoffering?.map((off) => {
             const isAdded = allCarts?.add_ons?.some((add) => add.id === off.id);
+            const hasTags = off.tags && off.tags.trim() !== "";
 
             return (
               <div
-                key={off.id}
-                className="group bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 relative overflow-hidden"
+              key={off.id}
+              className={`group rounded-2xl p-5 shadow-sm border transition-all duration-300 relative overflow-hidden 
+                ${hasTags ? "bg-yellow-50 border-yellow-400 shadow-md" : "bg-white border-gray-100 hover:shadow-lg"}`}
               >
-                {/* Glow Effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-[var(--color-primary)] to-yellow-400 transition-all duration-300 rounded-2xl"></div>
+            
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-[var(--color-primary)] to-yellow-400 transition-all duration-300 rounded-2xl"></div>
 
                 <div className="flex gap-4 items-start">
                   <div className="flex-1">
+                    {hasTags && (
+                      <span className="inline-block bg-yellow-500 text-white text-xs font-semibold px-3 mb-2 py-1 rounded-full shadow">
+                        {off.tags}
+                      </span>
+                    )}
                     <h4 className="font-semibold text-[var(--color-dark)] text-base md:text-xl leading-tight">
                       {off.title}
                     </h4>

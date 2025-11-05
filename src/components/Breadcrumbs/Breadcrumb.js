@@ -10,7 +10,8 @@ export default function BreadcrumbSteps({ currentStep = 2 }) {
   ];
 
   return (
-    <div className="flex items-center justify-start flex-nowrap overflow-scroll md:flex-wrap gap-2 md:space-x-2 md:p-3">
+    <div className="flex items-center justify-start flex-nowrap overflow-x-auto md:overflow-visible gap-2 md:space-x-2 md:p-3 scrollbar-hide">
+
       {steps.map((step, index) => (
         <div key={step.id} className="flex items-center">
           <div className="flex items-center space-x-2">
