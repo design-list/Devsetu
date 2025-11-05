@@ -85,6 +85,7 @@ export async function POST(request) {
         cartId: newCart.id,
         whatsapp: user.whatsapp,
         name: user.name,
+        gotra: user.gotra,
         address: user.address,
         postalCode: user.postalCode,
         city: user.city,

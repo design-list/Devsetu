@@ -174,3 +174,13 @@ body {
     .pdp-page .swiper .swiper-button-prev,
   .pdp-page .swiper .swiper-button-next{top: 60% !important; width: 30px !important; height: 30px !important;}
 }
+
+
+.notranslate, [translate="no"] {
+  translate: no;
+}
+
+
+.google-translate-container label{
+ display: none !important;
+}

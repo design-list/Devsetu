@@ -128,7 +128,6 @@ export default function CheckoutPage() {
     ];
   }
 
-  // ✅ validation चलाएं
   const { isValid, errors: validationErrors } = validateFields([form], fieldsToValidate);
 
   if (allCarts?.package) {
@@ -264,7 +263,7 @@ export default function CheckoutPage() {
     }
   };
 
-  console.log("Rendered Checkout Page with storeId:", allCarts);
+  // console.log("Rendered Checkout Page with storeId:", allCarts);
 
   return (
 

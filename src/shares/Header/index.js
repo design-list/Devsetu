@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useLang } from "@/app/langProviders";
 import Logo from "../../../public/icons/devasetu-logo_vertical.svg";
 import Container from "@/components/Container";
+import GoogleTranslate from "@/components/GoogleTranslate";
 // import { useWithLang } from "../../../helper/useWithLang";
 
 const menu = [
@@ -82,6 +83,8 @@ const Header = () => {
                 </Link>
               );
             })}
+
+            <GoogleTranslate />
           </nav>
 
           {/* Right Side */}

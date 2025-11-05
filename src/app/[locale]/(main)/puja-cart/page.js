@@ -102,13 +102,16 @@ const PujaCart = () => {
                   </span>
 
                   {isAdded ? (
-                    <button className="md:-mt-[24px] mr-2 md:mr-[20px] border border-green-400 text-green-600 text-xs md:text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default">
+                    <button className="md:-mt-[24px] mr-2 md:mr-[20px] border border-green-400 text-green-600 text-xs md:text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default notranslate"
+                     translate="no"
+                    >
                       <CheckCircle size={14} /> Added
                     </button>
                   ) : (
                     <button
                       onClick={() => handleAddOtherOffers(off)}
-                      className="md:-mt-[24px] mr-2 md:mr-[20px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-xs md:text-sm px-3 py-1.5 rounded-md flex items-center gap-1 bg-orange-50 font-medium hover:bg-orange-50 transition-all z-10"
+                      className="md:-mt-[24px] mr-2 md:mr-[20px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-xs md:text-sm px-3 py-1.5 rounded-md flex items-center gap-1 bg-orange-50 font-medium hover:bg-orange-50 transition-all z-10 notranslate"
+                      translate="no"
                     >
                       <Plus size={14} /> Add
                     </button>

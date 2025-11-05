@@ -8,28 +8,12 @@ import { translateText } from "../../helper/translate";
 
 const LangContext = createContext(null);
 
-// Local static translations
-const staticTranslations = {
-  hi: {
-    Home: "घर",
-    Puja: "पूजा",
-    Chadhava: "चढ़ावा",
-    Library: "पुस्तकालय",
-    "About Us": "हमारे बारे में",
-    "Special pujas": "विशेष पूजाएं",
-    "Special chadhavas": "विशेष चढ़ावे",
-    "Explore Knowledge": "ज्ञान का अन्वेषण करें",
-    "Reviews & Ratings": "समीक्षाएँ और रेटिंग्स",
-  },
-};
-
 const cache = {};
 
 export function LangProvider({ children }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  // detect initial lang from URL (Next.js i18n gives locale in URL)
   const initialLang = pathname?.split("/")[1] || "en";
   const [lang, setLangState] = useState(initialLang);
 
@@ -78,37 +62,3 @@ export function useLang() {
   if (!ctx) throw new Error("useLang must be used inside LangProvider");
   return ctx;
 }
-
-
-
-
-
-
-
-
-// "use client";
-// import { createContext, useContext, useState } from "react";
-// import { translateText } from "../../helper/translate";
-
-// const LangContext = createContext(null);
-
-// export function LangProvider({ children }) {
-//   const [lang, setLang] = useState("en");
-
-//   async function t(text) {
-//     if (lang === "en") return text;
-//     return await translateText(text, lang);
-//   }
-
-//   return (
-//     <LangContext.Provider value={{ lang, setLang, t }}>
-//       {children}
-//     </LangContext.Provider>
-//   );
-// }
-
-// export function useLang() {
-//   const ctx = useContext(LangContext);
-//   if (!ctx) throw new Error("useLang must be used inside LangProvider");
-//   return ctx;
-// }

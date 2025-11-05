@@ -12,6 +12,7 @@ import "../globals.css";
 import { LangProvider } from "../langProviders";
 import Header from "@/shares/Header";
 import Footer from "@/shares/Footer";
+import GoogleTranslate from "@/components/GoogleTranslate";
 
 const philosopherFont = Philosopher({
   subsets: ["latin"],
@@ -114,7 +115,6 @@ export default function RootLayout({ children, mainClass }) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-
 
         <ReduxProvider>
           <LangProvider>
