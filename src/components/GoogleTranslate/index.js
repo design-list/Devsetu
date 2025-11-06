@@ -191,6 +191,12 @@ export default function GoogleTranslate() {
           display: none !important;
           visibility: hidden !important;
         }
+        .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
+        .VIpgJd-ZVi9od-aZ2wEe-wOHMyf-ti6hGc,
+        .VIpgJd-ZVi9od-aZ2wEe-wOHMyf * {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
         body {
           top: 0px !important;
         }
