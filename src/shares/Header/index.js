@@ -84,7 +84,7 @@ const Header = () => {
               );
             })}
 
-            {/* <GoogleTranslate /> */}
+            <GoogleTranslate />
           </nav>
 
           {/* Right Side */}
