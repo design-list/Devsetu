@@ -84,7 +84,7 @@ const Header = () => {
               );
             })}
 
-            <GoogleTranslate />
+            {/* <GoogleTranslate /> */}
           </nav>
 
           {/* Right Side */}
@@ -156,7 +156,7 @@ const Header = () => {
                 </div>
               )}
             </div>
-
+            <GoogleTranslate />
             {/* Mobile Hamburger */}
             <button
               className="md:hidden w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition"
