@@ -10,19 +10,16 @@ export default function GoogleTranslate() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // ✅ Hide Google Translate UI (banner, frames etc.)
-  useEffect(() => {
+    useEffect(() => {
     const hideUI = () => {
-      document
-        .querySelectorAll(
-          ".goog-te-banner-frame, .goog-te-menu-frame, .goog-te-balloon-frame, .goog-logo-link, .skiptranslate, .goog-te-gadget"
-        )
-        .forEach((el) => {
-          if (el?.style) {
-            el.style.display = "none";
-            el.style.visibility = "hidden";
-          }
-        });
+      document.querySelectorAll(
+        ".goog-te-banner-frame, .goog-te-menu-frame, .goog-te-balloon-frame, .goog-logo-link, .skiptranslate, .goog-te-gadget"
+      ).forEach((el) => {
+        if (el?.style) {
+          el.style.display = "none";
+          el.style.visibility = "hidden";
+        }
+      });
       document.body.style.top = "0px";
     };
 
@@ -36,6 +33,37 @@ export default function GoogleTranslate() {
       clearInterval(interval);
     };
   }, []);
+
+
+useEffect(() => {
+  const getCookie = (name) => {
+    const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+    return match ? match[2] : null;
+  };
+
+  const googTransCookie = getCookie("googtrans");
+  const pathLang = pathname.startsWith("/hi") ? "hi" : "en";
+
+  if (googTransCookie && googTransCookie.includes("/en/hi")) {
+    setLang("hi");
+    robustApply("hi");
+  } else {
+    // ✅ No cookie → force English
+    setLang("en");
+    const combo = document.querySelector(".goog-te-combo");
+    if (combo) {
+      combo.value = "";
+      combo.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    // ✅ Redirect to /en if URL still /hi
+    if (pathLang === "hi") {
+      const newPath = pathname.replace(/^\/hi/, "/en");
+      router.replace(newPath);
+    }
+  }
+}, [pathname,lang]);
+
 
   // ✅ Helper to fully delete all googtrans cookies
   const clearGoogleCookies = () => {
@@ -77,72 +105,68 @@ export default function GoogleTranslate() {
     tryApply();
   };
 
-  // ✅ Initial language detection & sync
-  useEffect(() => {
-    const getCookie = (name) => {
-      const match = document.cookie.match(
-        new RegExp("(^| )" + name + "=([^;]+)")
-      );
-      return match ? match[2] : null;
-    };
 
-    const googTransCookie = getCookie("googtrans");
-    const pathLang = pathname.startsWith("/hi") ? "hi" : "en";
+  // ✅ Set googtrans cookie
+  // const setGoogleCookie = (from, to) => {
+  //   const cookieValue = `/${from}/${to}`;
+  //   const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+  //   document.cookie = `googtrans=${cookieValue}; expires=${expires}; path=/`;
+  // };
 
-    if (googTransCookie && googTransCookie.includes("/en/hi")) {
-      setLang("hi");
-      setGoogleCookie("en", "hi");
-      robustApply("hi");
-    } else {
-      setLang("en");
-      const combo = document.querySelector(".goog-te-combo");
-      if (combo) {
-        combo.value = "";
-        combo.dispatchEvent(new Event("change", { bubbles: true }));
-      }
+  // ✅ Apply translation
+  // const applyTranslate = (targetLang) => {
+  //   const combo = document.querySelector(".goog-te-combo");
+  //   if (!combo) return false;
+  //   combo.value = targetLang === "en" ? "" : targetLang;
+  //   combo.dispatchEvent(new Event("change", { bubbles: true }));
+  //   return true;
+  // };
 
-      // ✅ If cookie says English but URL is Hindi → fix it
-      if (pathLang === "hi") {
-        const newPath = pathname.replace(/^\/hi/, "/en");
-        router.replace(newPath);
-      }
-    }
-  }, [pathname]);
+  // const robustApply = (targetLang) => {
+  //   let tries = 15;
+  //   const tryApply = () => {
+  //     if (applyTranslate(targetLang)) return;
+  //     if (--tries > 0) setTimeout(tryApply, 400);
+  //   };
+  //   tryApply();
+  // };
 
-  // ✅ Handle dropdown change
+
   const handleLangChange = (newLang) => {
-    if (newLang === lang) return;
 
-    if (newLang === "en") {
-      // 🧹 Clear all translation cookies
-      clearGoogleCookies();
+  if (newLang === "en") {
+  // ✅ Delete cookies
+  document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
 
-      setLang("en");
-      const combo = document.querySelector(".goog-te-combo");
-      if (combo) {
-        combo.value = "";
-        combo.dispatchEvent(new Event("change", { bubbles: true }));
-      }
-
-      // ✅ Update URL to /en
-      const newPath = pathname.replace(/^\/(en|hi)/, "");
-      router.push(`/en${newPath || ""}`);
-
-      setTimeout(() => window.location.reload(), 300);
-      return;
-    }
-
+  setLang("en");
+  const iframe = document.querySelector(".goog-te-banner-frame");
+  if (iframe) iframe.remove();
+  const combo = document.querySelector(".goog-te-combo");
+  if (combo) {
+    combo.value = "";
+    combo.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+  setTimeout(() => window.location.reload(), 300);
+  return;
+}
+  else
     if (newLang === "hi") {
       const fromLang = pathname.startsWith("/hi") ? "hi" : "en";
       setGoogleCookie(fromLang, newLang);
       robustApply(newLang);
+      setTimeout(() => window.location.reload(), 800);
+  } 
 
-      const newPath = pathname.replace(/^\/(en|hi)/, "");
-      router.push(`/hi${newPath || ""}`);
+  
 
-      setTimeout(() => window.location.reload(), 600);
-    }
-  };
+  // ✅ Update URL
+  const newPath = pathname.replace(/^\/(en|hi)/, "");
+  router.push(`/${newLang}${newPath || ""}`);
+
+};
+
+console.log("set language ", lang)
 
   return (
     <>

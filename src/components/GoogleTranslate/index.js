@@ -10,7 +10,8 @@ export default function GoogleTranslate() {
   const pathname = usePathname();
   const router = useRouter();
 
-    useEffect(() => {
+  // ✅ Hide Google Translate UI elements
+  useEffect(() => {
     const hideUI = () => {
       document.querySelectorAll(
         ".goog-te-banner-frame, .goog-te-menu-frame, .goog-te-balloon-frame, .goog-logo-link, .skiptranslate, .goog-te-gadget"
@@ -34,60 +35,48 @@ export default function GoogleTranslate() {
     };
   }, []);
 
-
-useEffect(() => {
-  const getCookie = (name) => {
-    const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
-    return match ? match[2] : null;
-  };
-
-  const googTransCookie = getCookie("googtrans");
-  const pathLang = pathname.startsWith("/hi") ? "hi" : "en";
-
-  if (googTransCookie && googTransCookie.includes("/en/hi")) {
-    setLang("hi");
-    robustApply("hi");
-  } else {
-    // ✅ No cookie → force English
-    setLang("en");
-    const combo = document.querySelector(".goog-te-combo");
-    if (combo) {
-      combo.value = "";
-      combo.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    // ✅ Redirect to /en if URL still /hi
-    if (pathLang === "hi") {
-      const newPath = pathname.replace(/^\/hi/, "/en");
-      router.replace(newPath);
-    }
-  }
-}, [pathname,lang]);
-
-
-  // ✅ Helper to fully delete all googtrans cookies
+  // ✅ Fully clear ALL googtrans cookies (all domain/path variants)
   const clearGoogleCookies = () => {
-    const domains = [
-      window.location.hostname,
-      `.${window.location.hostname}`,
-    ];
-    domains.forEach((domain) => {
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain};`;
+    const cookies = document.cookie.split(";");
+    const cookieName = "googtrans";
+
+    const hostParts = window.location.hostname.split(".");
+    const domains = [];
+
+    // generate all domain variants like example.com, .example.com, www.example.com
+    for (let i = 0; i < hostParts.length - 1; i++) {
+      const domain = hostParts.slice(i).join(".");
+      domains.push(domain);
+      domains.push(`.${domain}`);
+    }
+
+    const paths = ["/", "/en", "/hi", window.location.pathname];
+
+    cookies.forEach((cookie) => {
+      const name = cookie.split("=")[0].trim();
+      if (name === cookieName) {
+        domains.forEach((domain) => {
+          paths.forEach((path) => {
+            document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path}; domain=${domain};`;
+          });
+        });
+        // also remove current domain without domain param
+        paths.forEach((path) => {
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};`;
+        });
+      }
     });
   };
 
-  // ✅ Set googtrans cookie safely (after cleaning duplicates)
+  // ✅ Set googtrans cookie (after clearing old ones)
   const setGoogleCookie = (from, to) => {
     clearGoogleCookies();
     const cookieValue = `/${from}/${to}`;
-    const expires = new Date(
-      Date.now() + 365 * 24 * 60 * 60 * 1000
-    ).toUTCString();
+    const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
     document.cookie = `googtrans=${cookieValue}; expires=${expires}; path=/; domain=${window.location.hostname};`;
   };
 
-  // ✅ Trigger translation
+  // ✅ Translate apply helper
   const applyTranslate = (targetLang) => {
     const combo = document.querySelector(".goog-te-combo");
     if (!combo) return false;
@@ -105,68 +94,59 @@ useEffect(() => {
     tryApply();
   };
 
+  // ✅ Detect cookie and apply language
+  useEffect(() => {
+    const getCookie = (name) => {
+      const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+      return match ? match[2] : null;
+    };
 
-  // ✅ Set googtrans cookie
-  // const setGoogleCookie = (from, to) => {
-  //   const cookieValue = `/${from}/${to}`;
-  //   const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
-  //   document.cookie = `googtrans=${cookieValue}; expires=${expires}; path=/`;
-  // };
+    const googTransCookie = getCookie("googtrans");
+    const pathLang = pathname.startsWith("/hi") ? "hi" : "en";
 
-  // ✅ Apply translation
-  // const applyTranslate = (targetLang) => {
-  //   const combo = document.querySelector(".goog-te-combo");
-  //   if (!combo) return false;
-  //   combo.value = targetLang === "en" ? "" : targetLang;
-  //   combo.dispatchEvent(new Event("change", { bubbles: true }));
-  //   return true;
-  // };
+    if (googTransCookie && googTransCookie.includes("/en/hi")) {
+      setLang("hi");
+      robustApply("hi");
+    } else {
+      setLang("en");
+      const combo = document.querySelector(".goog-te-combo");
+      if (combo) {
+        combo.value = "";
+        combo.dispatchEvent(new Event("change", { bubbles: true }));
+      }
 
-  // const robustApply = (targetLang) => {
-  //   let tries = 15;
-  //   const tryApply = () => {
-  //     if (applyTranslate(targetLang)) return;
-  //     if (--tries > 0) setTimeout(tryApply, 400);
-  //   };
-  //   tryApply();
-  // };
+      // redirect to /en if current URL is /hi
+      if (pathLang === "hi") {
+        const newPath = pathname.replace(/^\/hi/, "/en");
+        router.replace(newPath);
+      }
+    }
+  }, [pathname]);
 
-
+  // ✅ Handle language change from dropdown
   const handleLangChange = (newLang) => {
-
-  if (newLang === "en") {
-  // ✅ Delete cookies
-  document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`;
-
-  setLang("en");
-  const iframe = document.querySelector(".goog-te-banner-frame");
-  if (iframe) iframe.remove();
-  const combo = document.querySelector(".goog-te-combo");
-  if (combo) {
-    combo.value = "";
-    combo.dispatchEvent(new Event("change", { bubbles: true }));
-  }
-  setTimeout(() => window.location.reload(), 300);
-  return;
-}
-  else
-    if (newLang === "hi") {
+    if (newLang === "en") {
+      clearGoogleCookies();
+      setLang("en");
+      const iframe = document.querySelector(".goog-te-banner-frame");
+      if (iframe) iframe.remove();
+      const combo = document.querySelector(".goog-te-combo");
+      if (combo) {
+        combo.value = "";
+        combo.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      setTimeout(() => window.location.reload(), 300);
+      return;
+    } else if (newLang === "hi") {
       const fromLang = pathname.startsWith("/hi") ? "hi" : "en";
       setGoogleCookie(fromLang, newLang);
       robustApply(newLang);
       setTimeout(() => window.location.reload(), 800);
-  } 
+    }
 
-  
-
-  // ✅ Update URL
-  const newPath = pathname.replace(/^\/(en|hi)/, "");
-  router.push(`/${newLang}${newPath || ""}`);
-
-};
-
-console.log("set language ", lang)
+    const newPath = pathname.replace(/^\/(en|hi)/, "");
+    router.push(`/${newLang}${newPath || ""}`);
+  };
 
   return (
     <>
