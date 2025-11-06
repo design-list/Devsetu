@@ -46,7 +46,6 @@ useEffect(() => {
 
   if (googTransCookie && googTransCookie.includes("/en/hi")) {
     setLang("hi");
-    // setGoogleCookie("en", "hi");
     robustApply("hi");
   } else {
     // ✅ No cookie → force English
@@ -118,9 +117,7 @@ useEffect(() => {
       setGoogleCookie(fromLang, newLang);
       robustApply(newLang);
       setTimeout(() => window.location.reload(), 800);
-  } else {
-    setTimeout(() => window.location.reload(), 400);
-  }
+  } 
 
   
 
