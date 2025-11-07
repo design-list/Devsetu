@@ -1,5 +1,5 @@
 "use client";
-import { Minus, Plus, X } from "lucide-react";
+import { IndianRupee, Minus, Plus, X } from "lucide-react";
 import LazyImage from "../Atom/LazyImage";
 
 export default function OfferingModal({
@@ -37,16 +37,14 @@ export default function OfferingModal({
 
         {/* Content */}
         <div className="p-4">
-          <h2 className="font-semibold text-lg">
-            {selectedOffering.title.endsWith("(₹51)") ? (
-                <>
-                  {selectedOffering.title.replace("(₹51)", "")}
-                  <span className="line-through text-red-500">(₹51)</span>
-                </>
-              ) : (
-                <span>{selectedOffering.title}</span>
-              )}
-            </h2>
+           <h2 className="flex items-center font-secondary text-xl font-bold text-[var(--color-dark)] gap-2">
+            <span>{selectedOffering.title}</span>
+            {selectedOffering.strikePrice > selectedOffering.price && (
+              <span className="flex items-center gap-1 text-red-500 line-through">
+                <IndianRupee size={16} /> {selectedOffering.strikePrice}
+              </span>
+            )}
+          </h2>
           {selectedOffering?.price && (
             <p className="text-green-600 font-semibold mt-1">
               ₹{selectedOffering?.price}
