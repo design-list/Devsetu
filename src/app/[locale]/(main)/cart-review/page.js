@@ -207,7 +207,7 @@ const PujaCart = () => {
                       </span>
                       <button
                         onClick={() =>
-                          item.title.endsWith("(₹51)")
+                          item.price == 1
                           ? alert("One person can add only 1"):
                           handleQuantityChange(item.id, "increment")
                         }

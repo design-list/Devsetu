@@ -78,7 +78,7 @@ export default function OfferingModal({
 
                     <button
                         onClick={() =>
-                        selectedOffering.title.endsWith("(₹51)")
+                        selectedOffering.price == 1
                         ? alert("One person can add only 1"):
                         handleQuantityChange(selectedOffering.id, "increment")
                         }
