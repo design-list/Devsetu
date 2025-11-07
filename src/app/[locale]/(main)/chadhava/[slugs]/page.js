@@ -63,13 +63,13 @@ const ChadhavaDetailsPage = () => {
   const handlaRedirect = () => {
     const packageData = {
       type: "chadhava",
-      productId : chadhavaWebDetail?.id,
-      productTitle : chadhavaWebDetail?.title,
-      productSlug : chadhavaWebDetail?.slug,
+      productId: chadhavaWebDetail?.id,
+      productTitle: chadhavaWebDetail?.title,
+      productSlug: chadhavaWebDetail?.slug,
       location: chadhavaWebDetail?.location,
       tithi: chadhavaWebDetail?.tithi,
       date: chadhavaWebDetail?.date,
-      productImg : chadhavaWebDetail?.["chadhavaBanners"]?.[0]?.image_url || "",
+      productImg: chadhavaWebDetail?.["chadhavaBanners"]?.[0]?.image_url || "",
     };
 
     dispatch(addPackageAction(packageData));
@@ -113,7 +113,7 @@ const ChadhavaDetailsPage = () => {
               </p>
             )}
 
-             <p className="text-lg text-[var(--color-dark)] font-medium mb-4 cursor-pointer">
+            <p className="text-lg text-[var(--color-dark)] font-medium mb-4 cursor-pointer">
               🌟 <span className="font-bold">According to sacred scriptures</span>,{" "}
               {readMore ? pujaText : shortText}
               {pujaText.length > 150 && (
@@ -152,110 +152,114 @@ const ChadhavaDetailsPage = () => {
             </h1>
 
             {/* Offerings List */}
+
             <div className="space-y-6">
-              {chadhavaWebDetail?.["chadhavaPackages"].map((item) => (
-                <div
-                  key={item.id}
-                  className={`flex items-start gap-4 md:gap-0 justify-between flex-col-reverse md:flex-row w-full md:w-auto rounded-lg border p-4 ${
-                    item.highlight
-                      ? "bg-gradient-to-r from-pink-50 to-white border-pink-300"
-                      : "bg-white border-gray-200"
-                  }`}
-                >
-                  {/* Left Content */}
-                  <div className="md:pr-4" onClick={() => handleShowModal(item)}>
-                    {item.tags && (
-                      <h2
-                        className={`text-base font-medium ${
-                          item.tags
-                            ? "text-[var(--color-primary)]"
-                            : "text-[var(--color-dark)]"
-                        }`}
-                      >
-                        {item.tags}
-                      </h2>
-                    )}
-                    <h2
-                      className={`font-secondary text-xl font-bold text-[var(--color-dark)] }`}
-                    >
-                      {item.title.endsWith("(₹51)") ? (
-                          <>
-                            {item.title.replace("(₹51)", "")}
-                            <span className="line-through text-red-500">(₹51)</span>
-                          </>
-                        ) : (
-                          <span>{item.title}</span>
-                        )}
-                    </h2>
-                    <p className="text-[var(--color-dark)] text-sm mt-1">
-                      {item.description}
-                    </p>
-                    <p className=" flex items-center text-[var(--color-dark)] font-bold mt-2">
-                      <IndianRupee size={16} />
-                      {item.price}
-                    </p>
-                  </div>
+              {(() => {
+                const chadhavaPackages = chadhavaWebDetail?.["chadhavaPackages"] || [];
 
-                  {/* Right Image + Button */}
-                  {/* <div className="flex flex-row items-start justify-between md:justify-baseline md:flex-col md:items-center w-full"> */}
-                  <div className="flex flex-col items-center justify-center w-32 ml-auto">
-                    <div
-                      className="w-28 h-28 relative cursor-pointer"
-                      onClick={() => handleShowModal(item)}
-                    >
-                      <LazyImage
-                        src={item.packImg}
-                        alt={item.title}
-                        width={200}
-                        height={200}
-                        className="rounded-md w-full h-full object-cover cursor-pointer"
-                      />
-                    </div>
-                    {(() => {
-                      const matchedAddOn = allCarts?.add_ons?.find(
-                        (add) => add.id === item.id
-                      );
-                      if (matchedAddOn) {
-                        return (
-                          <div className="flex items-center border rounded-lg px-2 py-1 -mt-2 z-10">
-                            <button
-                              onClick={() =>
-                                handleQuantityChange(item.id, "decrement")
-                              }
-                              className="text-yellow-700 hover:text-yellow-600"
-                            >
-                              <Minus size={14} />
-                            </button>
+                // Sort logic:
+                const sortedPackages = [...chadhavaPackages].sort((a, b) => {
+                  const posA = a.position ? Number(a.position) : Infinity;
+                  const posB = b.position ? Number(b.position) : Infinity;
+                  return posA - posB;
+                });
 
-                            <span className="mx-2 text-sm font-semibold text-yellow-600">
-                              {matchedAddOn.quantity ?? 1}
-                            </span>
-
-                              
-                                <button
-                                  onClick={() => 
-                                    item.title.endsWith("(₹51)")
-                                    ? alert("One person can add only 1"):
-                                    handleQuantityChange(item.id, "increment")}
-                                  className="text-yellow-700 hover:text-yellow-600"
-                                >
-                                  <Plus size={14} />
-                                </button>
-                          </div> 
-                        );
-                      }
-                      return (
-                        <button
-                          onClick={() => hanldeAddChadhava(item)}
-                          className=" cursor-pointer whitespace-nowrap -mt-2 border border-[var(--color-primary)] text-[var(--color-primary)] px-3 py-1 rounded-lg hover:bg-green-50 z-10"
+                return sortedPackages.map((item) => (
+                  <div
+                    key={item.id}
+                    className={`flex items-start gap-4 md:gap-0 justify-between flex-col-reverse md:flex-row w-full md:w-auto rounded-lg border p-4 ${item.highlight
+                        ? "bg-gradient-to-r from-pink-50 to-white border-pink-300"
+                        : "bg-white border-gray-200"
+                      }`}
+                  >
+                    {/* Left Content */}
+                    <div className="md:pr-4" onClick={() => handleShowModal(item)}>
+                      {item.tags && (
+                        <h2
+                          className={`text-base font-medium ${item.tags
+                              ? "text-[var(--color-primary)]"
+                              : "text-[var(--color-dark)]"
+                            }`}
                         >
-                          + Add
-                        </button>
-                      );
-                    })()}
+                          {item.tags}
+                        </h2>
+                      )}
+                      <h2 className="flex items-center font-secondary text-xl font-bold text-[var(--color-dark)] gap-2">
+                        <span>{item.title}</span>
+                        {item.strikePrice > item.price && (
+                          <span className="flex items-center gap-1 text-red-500 line-through">
+                            <IndianRupee size={16} /> {item.strikePrice}
+                          </span>
+                        )}
+                      </h2>
+
+                      <p className="text-[var(--color-dark)] text-sm mt-1">
+                        {item.description}
+                      </p>
+                      <p className="flex items-center text-[var(--color-dark)] font-bold mt-2">
+                        <IndianRupee size={16} />
+                        {item.price}
+                      </p>
+                    </div>
+
+                    {/* Right Image + Button */}
+                    <div className="flex flex-col items-center justify-center w-32 ml-auto">
+                      <div
+                        className="w-28 h-28 relative cursor-pointer"
+                        onClick={() => handleShowModal(item)}
+                      >
+                        <LazyImage
+                          src={item.packImg}
+                          alt={item.title}
+                          width={200}
+                          height={200}
+                          className="rounded-md w-full h-full object-cover cursor-pointer"
+                        />
+                      </div>
+                      {(() => {
+                        const matchedAddOn = allCarts?.add_ons?.find(
+                          (add) => add.id === item.id
+                        );
+                        if (matchedAddOn) {
+                          return (
+                            <div className="flex items-center border rounded-lg px-2 py-1 -mt-2 z-10">
+                              <button
+                                onClick={() => handleQuantityChange(item.id, "decrement")}
+                                className="text-yellow-700 hover:text-yellow-600"
+                              >
+                                <Minus size={14} />
+                              </button>
+
+                              <span className="mx-2 text-sm font-semibold text-yellow-600">
+                                {matchedAddOn.quantity ?? 1}
+                              </span>
+
+                              <button
+                                onClick={() =>
+                                  item.title.endsWith("(₹51)")
+                                    ? alert("One person can add only 1")
+                                    : handleQuantityChange(item.id, "increment")
+                                }
+                                className="text-yellow-700 hover:text-yellow-600"
+                              >
+                                <Plus size={14} />
+                              </button>
+                            </div>
+                          );
+                        }
+                        return (
+                          <button
+                            onClick={() => hanldeAddChadhava(item)}
+                            className="cursor-pointer whitespace-nowrap -mt-2 border border-[var(--color-primary)] text-[var(--color-primary)] px-3 py-1 rounded-lg hover:bg-green-50 z-10"
+                          >
+                            + Add
+                          </button>
+                        );
+                      })()}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </div>
 

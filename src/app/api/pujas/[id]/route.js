@@ -108,6 +108,8 @@ export async function GET(req, { params }) {
             title: r.title,
             tags: r.tags,
             price: r.price,
+            strikePrice: r.strikePrice,
+            position: r.position,
             description: r.description,
             pujaId: updatedPujas.id,
           }))

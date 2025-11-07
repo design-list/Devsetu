@@ -71,7 +71,9 @@ const BookingDetails = () => {
     const headers = [
       "Booking ID",
       "Name",
+      "Gotra",
       "WhatsApp",
+      "members",
       "Payment Status",
       "Grand Total",
       "Package Type",
@@ -85,11 +87,14 @@ const BookingDetails = () => {
       const pkg = item.package || {};
       const user = item.user_details || {};
       const addOns = item.add_ons?.map((a) => a.name).join(", ") || "";
+      const members = item?.user_details?.members ? JSON.parse(item?.user_details?.members) : [];
 
       return [
         item.id,
         user.name || "",
+        user.gotra || "",
         user.whatsapp || "",
+        members || "",
         item.paymentStatus || "",
         item.grandTotal || 0,
         pkg.type || "",

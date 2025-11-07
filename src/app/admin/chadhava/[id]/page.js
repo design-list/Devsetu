@@ -31,9 +31,7 @@ const EditChadhavaForm = () => {
     isRecommended: false,
     commonFaqs: true,
     chadhavaFocus: [{ focusIcon: "", foucs: "" }],
-    packages: [
-      { packImg: "", title: "", description: "", price: "", currency: "INR", tags: "" },
-    ],
+    packages: [{ packImg: "", title: "", description: "", price: 0, strikePrice: 0, position: "", currency: "INR", tags: "" }],
     faqs: [{ title: "", description: "" }],
     banners: [{ imgUrl: "", mobileImageUrl: "", type: "", position: 0 }],
   });
@@ -110,8 +108,10 @@ const EditChadhavaForm = () => {
             price: p.price || 0,
             currency: p.currency || "INR",
             tags: p.tags || "",
+            position: p.position || "",
+            strikePrice: p.strikePrice || "",
           }))
-          : [{ packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
+          : [{ packImg: "", title: "", description: "", price: 0, strikePrice: 0, position: "", currency: "INR", tags: "" }],
 
         // Recommended Chadawas
         recommendedChadawa: chadhavaDetail.isRecommended && chadhavaDetail.recommendedChadawas
@@ -729,18 +729,31 @@ const EditChadhavaForm = () => {
                       )}
                     </div>
     
-                    <input
-                      type="text"
-                      placeholder="Title"
-                      value={item.title}
-                      onChange={(e) => {
-                        const updated = [...formData?.packages];
-                        updated[index].title = e.target.value;
-                        setFormData({ ...formData, packages: updated });
-                      }}
-                      className="w-full border p-2 rounded mb-2"
-                    />
                     <div className="grid grid-cols-2 gap-3">
+                      <input
+                        type="text"
+                        placeholder="Title"
+                        value={item.title}
+                        onChange={(e) => {
+                          const updated = [...formData?.packages];
+                          updated[index].title = e.target.value;
+                          setFormData({ ...formData, packages: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Position"
+                        value={item.position}
+                        onChange={(e) => {
+                          const updated = [...formData?.packages];
+                          updated[index].position = e.target.value;
+                          setFormData({ ...formData, packages: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                      />
+                    </div>
+                    <div className="grid grid-cols-3 gap-3">
                       <input
                         type="number"
                         placeholder="price"
@@ -748,6 +761,17 @@ const EditChadhavaForm = () => {
                         onChange={(e) => {
                           const updated = [...formData?.packages];
                           updated[index].price = e.target.value;
+                          setFormData({ ...formData, packages: updated });
+                        }}
+                        className="w-full border p-2 rounded mb-2"
+                      />
+                      <input
+                        type="number"
+                        placeholder="Strike Off"
+                        value={item.strikePrice}
+                        onChange={(e) => {
+                          const updated = [...formData?.packages];
+                          updated[index].strikePrice = e.target.value;
                           setFormData({ ...formData, packages: updated });
                         }}
                         className="w-full border p-2 rounded mb-2"
@@ -782,7 +806,7 @@ const EditChadhavaForm = () => {
                   onClick={() =>
                     setFormData({
                       ...formData,
-                      packages: [...formData?.packages, { packImg: "", title: "", description: "", price: 0, currency: "INR", tags: "" }],
+                      packages: [...formData?.packages, { packImg: "", title: "", description: "", price: 0, strikePrice: 0, position: "", currency: "INR", tags: "" }],
                     })
                   }
                   className="bg-green-500 text-white px-4 py-1 rounded"

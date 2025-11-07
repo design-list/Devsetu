@@ -62,6 +62,8 @@ export async function POST(req) {
               tags: o.tags,
               offerimg: o.offerimg,
               price: o.price,
+              strikePrice: o.strikePrice,
+              position: o.strikePrice,
             }))
           : [],
 

@@ -37,6 +37,16 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       field: "price",
     },
+    position: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "position",
+    },
+    strikePrice: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      field: "strike_price",
+    },
     chadhavaId: {
       type: DataTypes.BIGINT,
       allowNull: false,
