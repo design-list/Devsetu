@@ -28,7 +28,7 @@ const PujaForm = () => {
     commonFaqs: true,
     isActiveOnHome: false,
     packages: [{ packImg: null, packageType: "", packagePrice: "" }],
-    offerings: [{ offerimg: null, title: "", description: "",tags: "", price: "" }],
+    offerings: [{ offerimg: null, title: "", description: "",tags: "", price: 0, strikePrice: 0, position: "" }],
     faqs: [{ title: "", description: "" }],
     pujaBenefits: [{ title: "", description: "" }],
     temple: { templeImg: null, templeName: "", templeHistory: "" },
@@ -831,11 +831,11 @@ const PujaForm = () => {
                 )}
               </div>
 
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <input
                     type="text"
-                    placeholder="Offering Type"
+                    placeholder="Offering Title"
                     value={offering.title}
                     onChange={(e) => {
                       const updated = [...formData?.offerings];
@@ -844,8 +844,49 @@ const PujaForm = () => {
                     }}
                     className="w-full border p-2 rounded mb-2"
                   />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Position"
+                      value={offering.position}
+                      onChange={(e) => {
+                        const updated = [...formData?.offerings];
+                        updated[index].position = e.target.value;
+                        setFormData({ ...formData, offerings: updated });
+                      }}
+                      className="w-full border p-2 rounded mb-2"
+                    />
                 </div>
+              </div>
 
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <input
+                    type="number"
+                    placeholder="Offering price"
+                    value={offering.price}
+                    onChange={(e) => {
+                      const updated = [...formData?.offerings];
+                      updated[index].price = e.target.value;
+                      setFormData({ ...formData, offerings: updated });
+                    }}
+                    className="w-full border p-2 rounded mb-2"
+                  />
+                </div>
+                <div>
+                  <input
+                    type="number"
+                    placeholder="Strike Off"
+                    value={offering.strikePrice}
+                    onChange={(e) => {
+                      const updated = [...formData?.offerings];
+                      updated[index].strikePrice = e.target.value;
+                      setFormData({ ...formData, offerings: updated });
+                    }}
+                    className="w-full border p-2 rounded mb-2"
+                  />
+                </div>
                 <div>
                   <input
                     type="text"
@@ -854,20 +895,6 @@ const PujaForm = () => {
                     onChange={(e) => {
                       const updated = [...formData?.offerings];
                       updated[index].tags = e.target.value;
-                      setFormData({ ...formData, offerings: updated });
-                    }}
-                    className="w-full border p-2 rounded mb-2"
-                  />
-                </div>
-
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Offering price"
-                    value={offering.price}
-                    onChange={(e) => {
-                      const updated = [...formData?.offerings];
-                      updated[index].price = e.target.value;
                       setFormData({ ...formData, offerings: updated });
                     }}
                     className="w-full border p-2 rounded mb-2"
@@ -891,7 +918,7 @@ const PujaForm = () => {
             onClick={() =>
               setFormData({
                 ...formData,
-                offerings: [...formData?.offerings, { offerimg: null, title: "", description: "", tags: "", price: "" }],
+                offerings: [...formData?.offerings, { offerimg: null, title: "", description: "",tags: "", price: 0, strikePrice: 0, position: "" }],
               })
             }
             className="bg-green-500 text-white px-4 py-1 rounded cursor-pointer"
