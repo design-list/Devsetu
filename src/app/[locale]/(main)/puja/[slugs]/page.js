@@ -170,30 +170,6 @@ export default function PujaDetailsPage() {
     }
   }, [params]);
 
-  // ScrollSpy: active tab on scroll
-  // useEffect(() => {
-  //   const handleScrollSpy = () => {
-  //     const sections = tabs;
-  //     const scrollPosition = window.scrollY + 150;
-
-  //     for (let i = sections.length - 1; i >= 0; i--) {
-  //       const section = sections[i].ref.current;
-  //       if (section && section.offsetTop <= scrollPosition) {
-  //         setActiveTab(sections[i].id);
-  //         break;
-  //       }
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", handleScrollSpy);
-  //   return () => window.removeEventListener("scroll", handleScrollSpy);
-  // }, [tabs]);
-
-  // const handleScroll = (ref, active) => {
-  //   ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  //   setActiveTab(active);
-  // };
-
   // 🔹 ScrollSpy: highlight active tab while scrolling
   useEffect(() => {
     const handleScrollSpy = () => {

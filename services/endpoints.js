@@ -2,6 +2,8 @@
 
 let baseApiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+let uploadFileUrl = process.env.NEXT_PUBLIC_CDN_BASE_URL;
+
 
 export const endpoints = {
 
@@ -25,7 +27,7 @@ export const endpoints = {
     },
 
     FileUpload: {
-        upload: `${baseApiUrl}/upload`,
+        upload: `/api/upload`,
     },
     
     Home: {

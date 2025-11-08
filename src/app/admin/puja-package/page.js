@@ -72,10 +72,12 @@ const PujaPackages = () => {
             uploadFormData.append("file", file);
 
             try {
-                const res = await fetch(`${baseAPIURL}/uploads`, {
+
+                const res = await fetch("/api/upload", {
                     method: "POST",
                     body: uploadFormData,
                 });
+                
 
                 const data = await res.json();
 

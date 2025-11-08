@@ -379,4 +379,9 @@ export default class fetchApi extends Api {
         return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
     }
 
+    FileUpload(data) {
+        let url = this.buildUrl(endpoints.FileUpload.upload, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
 }

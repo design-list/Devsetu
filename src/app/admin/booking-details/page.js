@@ -317,9 +317,14 @@ const BookingDetails = () => {
               <X size={22} />
             </button>
 
-            <h2 className="text-xl font-bold text-orange-600 mb-4">
-              Booking #{selectedBooking.id}
-            </h2>
+            <div className="flex justify-between">
+              <h2 className="text-xl font-bold text-orange-600 mb-4">
+                Booking #{selectedBooking.id}
+              </h2>
+              <h2 className={`text-xl font-bold ${selectedBooking.paymentStatus === "PENDING" ? "text-orange-600" : "text-green-600" }  mb-4`}>
+                Payment Status:{selectedBooking.paymentStatus}
+              </h2>
+            </div>
 
             <div className="space-y-2 text-sm text-gray-700">
                  {selectedBooking?.package?.productImg && (
@@ -335,8 +340,13 @@ const BookingDetails = () => {
                 )}
                 <div className="flex-1 text-sm">
                     <p className="font-semibold text-gray-800">
-                    {selectedBooking?.package?.productTitle || "No Title"}
+                      {selectedBooking?.package?.productTitle || "No Title"}
                     </p>
+                    { selectedBooking?.package?.type === "puja" &&
+                      <p className="text-xs text-gray-500 mt-1">
+                        <strong>Selected Package:</strong> {selectedBooking?.package?.name}  <strong> ₹{selectedBooking?.package?.price}</strong>
+                      </p>
+                    }
                     <p className="text-xs text-gray-500 mt-1">
                     <strong>Type:</strong> {selectedBooking?.package?.type}
                     </p>
@@ -344,7 +354,6 @@ const BookingDetails = () => {
                     <strong>Location:</strong> {selectedBooking?.package?.location} {selectedBooking?.package?.tithi}
                     </p>
                 </div>
-              <p><strong>Payment Status:</strong> {selectedBooking.paymentStatus}</p>
               <p><strong>Grand Total:</strong> ₹{selectedBooking.grandTotal}</p>
               <p><strong>Service Charge:</strong> ₹{JSON.parse(selectedBooking.otherCharges || "{}").service_charge}</p>
               <p><strong>Pandit Charge:</strong> ₹{JSON.parse(selectedBooking.otherCharges || "{}").pandit_charge}</p>
@@ -365,6 +374,11 @@ const BookingDetails = () => {
                         : "N/A"}</p>
 
               <div className="border-t pt-3 mt-3">
+                 { selectedBooking?.package?.type === "puja" &&
+                  <p className="text-sm text-gray-800 mt-1">
+                    <strong>Selected Package:</strong> {selectedBooking?.package?.name} — <strong> ₹{selectedBooking?.package?.price}</strong>
+                  </p>
+                }
                 <p className="font-semibold text-gray-800">Add-ons:</p>
                 {selectedBooking.add_ons?.length > 0 ? (
                   <ul className="list-disc list-inside text-gray-600">
@@ -377,7 +391,7 @@ const BookingDetails = () => {
                 ) : (
                   <p className="text-gray-500">No add-ons</p>
                 )}
-
+                <hr />
                 <p><strong>Grand Total:</strong> .₹{selectedBooking?.grandTotal}</p>
               </div>
             </div>
