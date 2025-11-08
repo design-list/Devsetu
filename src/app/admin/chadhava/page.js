@@ -17,6 +17,7 @@ const ChadhavaForm = () => {
     slug: "",
     tithi: "",
     tags: "",
+    focus: "",
     location: "",
     date: new Date(),
     pujaDetails: "",
@@ -24,11 +25,10 @@ const ChadhavaForm = () => {
     isActiveOnHome: false,
     isRecommended: false,
     commonFaqs: true,
-    chadhavaFocus: [{ focusIcon: null, foucs: "" }],
+    chadhavaFocus: [{ focusIcon: "", foucs: "" }],
     packages: [{ packImg: "", title: "", description: "", price: 0, strikePrice: 0, position: "", currency: "INR", tags: "" }],
     faqs: [{ title: "", description: "" }],
-    banners: [{ imgUrl: null, mobileImageUrl: null, type: "", position: 1 }],
-
+    banners: [{ imgUrl: "", mobileImageUrl: "", type: "", position: 0 }],
   });
 
   const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -48,88 +48,102 @@ const ChadhavaForm = () => {
 
 
   const handleChange = async (e, index) => {
+    e.preventDefault();
     const { name, value, files } = e.target;
 
+    // ✅ Helper function to update nested or direct field
+    const updateFormField = (path, val) => {
+      setFormData((prev) => {
+        let updatedData = { ...prev };
+
+        switch (path) {
+          case "banners": {
+            const updatedBanners = [...prev.banners];
+            updatedBanners[index][name] = val;
+            updatedData.banners = updatedBanners;
+            break;
+          }
+          case "faqs": {
+            const updatedFaqs = [...prev.faqs];
+            updatedFaqs[index][name] = val;
+            updatedData.faqs = updatedFaqs;
+            break;
+          }
+          case "packages": {
+            const updatedPackages = [...prev.packages];
+            updatedPackages[index][name] = val;
+            updatedData.packages = updatedPackages;
+            break;
+          }
+          case "chadhavaFocus": {
+            const updatedFocus = [...prev.chadhavaFocus];
+            updatedFocus[index][name] = val;
+            updatedData.chadhavaFocus = updatedFocus;
+            break;
+          }
+          default:
+            updatedData[name] = val;
+            break;
+        }
+
+        return updatedData;
+      });
+    };
+
+    // 🖼️ Handle file uploads
     if (files && files[0]) {
       const file = files[0];
-
       const localPreview = URL.createObjectURL(file);
 
+      // 1️⃣ Local preview update
+      if (["imgUrl", "mobileImageUrl"].includes(name)) updateFormField("banners", localPreview);
+      else if (name === "focusIcon") updateFormField("chadhavaFocus", localPreview);
+      else if (name === "icon") updateFormField("faqs", localPreview);
+      else if (name === "packImg") updateFormField("packages", localPreview);
+      else console.warn("Unexpected file field:", name);
 
-      if (name === "imgUrl") {
-        setFormData((prev) => {
-          const updated = [...prev.banners];
-          updated[index].imgUrl = localPreview.toString();
-          return { ...prev, banners: updated };
-        });
-      } else if (name === "focusIcon") {
-        setFormData((prev) => {
-          const updated = [...prev.chadhavaFocus];
-          updated[index].focusIcon = localPreview.toString();
-          return { ...prev, chadhavaFocus: updated };
-        });
-      } else if (name === "packImg") {
-        setFormData((prev) => {
-          const updated = [...prev.packages];
-          updated[index].packImg = localPreview.toString();
-          return { ...prev, packages: updated };
-        });
-      } else {
-        alert("Upload failed: ");
-      }
-
-      // Upload to server
+      // 2️⃣ Upload to backend
       const uploadFormData = new FormData();
       uploadFormData.append("file", file);
 
       try {
-        const res = await fetch(`${baseAPIURL}/uploads`, {
+        const res = await fetch("/api/upload", {
           method: "POST",
           body: uploadFormData,
         });
 
         const data = await res.json();
+        console.log("Upload response:", data);
 
-        if (res.ok) {
-          if (name === "imgUrl") {
-            setFormData((prev) => {
-              const updated = [...prev.banners];
-              updated[index].imgUrl = (data.storedAs).toString();
-              return { ...prev, banners: updated };
-            });
-          }
-          else if (name === "focusIcon") {
-            console.log("data.storedAs", data.storedAs)
-
-            setFormData((prev) => {
-              
-              const updated = [...prev.chadhavaFocus];
-              updated[index].focusIcon = (data.storedAs).toString();
-              return { ...prev, chadhavaFocus: updated };
-            });
-          }
-          else if (name === "packImg") {
-            setFormData((prev) => {
-              const updated = [...prev.packages];
-              updated[index].packImg = (data.storedAs).toString();
-              return { ...prev, packages: updated };
-            });
-          }
-        } else {
-          alert("Upload failed: " + data.error);
+        // ✅ handle both success types (boolean or status)
+        if (!data.success && data?.status !== 200 && !res.ok) {
+          console.error("Upload failed:", data);
+          alert("Upload failed: " + (data?.error || "Unknown error"));
+          return;
         }
+
+        const uploadedUrl = (data?.url || data?.storedAs || "").toString();
+
+        // 3️⃣ Replace preview with actual uploaded URL
+        if (["imgUrl", "mobileImageUrl"].includes(name)) updateFormField("banners", uploadedUrl);
+        else if (name === "focusIcon") updateFormField("chadhavaFocus", uploadedUrl);
+        else if (name === "icon") updateFormField("faqs", uploadedUrl);
+        else if (name === "packImg") updateFormField("packages", uploadedUrl);
       } catch (err) {
         console.error("Upload error:", err);
         alert("Error while uploading file");
       }
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+
+      return; // exit after file handling
     }
 
+    // ✏️ Handle text (non-file) fields
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
 
 
   const slugify = (text) => {

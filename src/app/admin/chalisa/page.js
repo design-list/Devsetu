@@ -4,10 +4,10 @@ import { Trash2 } from "lucide-react";
 
 import Api from "../../../../services/fetchApi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 const api = new Api();
 
 const ChalisasForm = () => {
-  const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const [formData, setFormData] = useState({
     icon: null,
@@ -19,6 +19,9 @@ const ChalisasForm = () => {
     chaupai: "",
   });
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
+
 
 useEffect(() => {
     setFormData((prev) => ({
@@ -35,44 +38,60 @@ const slugify = (text) => {
     .replace(/\s+/g, '-');
 }
 
-  // ✅ Handle input & file change
-  const handleChange = async (e) => {
+   const handleChange = async (e) => {
+    e.preventDefault();
     const { name, value, files } = e.target;
 
+    // 🖼 If file is selected
     if (files && files[0]) {
       const file = files[0];
       const localPreview = URL.createObjectURL(file);
 
-      // show preview first
-      setFormData((prev) => ({ ...prev, icon: localPreview }));
+      // 1️⃣ Show local preview immediately
+      setFormData((prev) => ({
+        ...prev,
+        [name]: localPreview,
+      }));
 
-      // upload to backend
+      // 2️⃣ Prepare file for upload
       const uploadFormData = new FormData();
       uploadFormData.append("file", file);
 
       try {
-        const res = await fetch(`${baseAPIURL}/uploads`, {
+        const res = await fetch("/api/upload", {
           method: "POST",
           body: uploadFormData,
         });
 
         const data = await res.json();
-        if (res.ok) {
-          setFormData((prev) => ({
-            ...prev,
-            icon: data.storedAs.toString(), // file path from server
-          }));
-        } else {
-          alert("Upload failed: " + data.error);
+
+        // 3️⃣ Validate upload response
+        if (!res.ok || !data?.url) {
+          console.error("Upload failed:", data);
+          alert("Upload failed: " + (data?.error || "Unknown error"));
+          return;
         }
+
+        // 4️⃣ Replace local preview with uploaded file URL
+        setFormData((prev) => ({
+          ...prev,
+          [name]: data.url.toString(),
+        }));
       } catch (err) {
         console.error("Upload error:", err);
-        alert("Error while uploading image");
+        alert("Error while uploading file");
       }
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+
+      return; // exit early after file handling
     }
+
+    // ✏️ Handle text inputs
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
 
   // ✅ Submit handler
   const handleSubmit = async (e) => {
@@ -93,6 +112,7 @@ const slugify = (text) => {
           closeDoha : "",
           chaupai: "",
         });
+        router.push("/admin/chalisa/list");
       } else {
         alert(data.message || "Something went wrong!");
       }

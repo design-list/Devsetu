@@ -354,7 +354,7 @@ const EditPujaForm = () => {
     uploadFormData.append("file", file);
 
     try {
-      const res = await fetch(`${baseAPIURL}/upload`, {
+      const res = await fetch("/api/upload", {
         method: "POST",
         body: uploadFormData,
       });
