@@ -38,6 +38,7 @@ import {
 import {
   addNewCartAction,
   addPackageAction,
+  requestClearCartAction,
 } from "@/redux/actions/cartActions";
 import { formatDate } from "../../../../../../utils/localstorage";
 import Link from "next/link";
@@ -162,6 +163,10 @@ export default function PujaDetailsPage() {
     { id: "reviews", label: "Reviews", ref: reviewsRef },
     { id: "faq", label: "FAQ", ref: faqRef },
   ];
+
+  useEffect(() => {
+    dispatch(requestClearCartAction ());
+  }, [router]);
 
   useEffect(() => {
     const { slugs } = params;

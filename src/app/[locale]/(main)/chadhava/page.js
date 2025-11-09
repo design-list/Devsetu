@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import Reviews from "@/components/Review";
 import HowPujaWorks from "@/components/OnlineSteps";
+import { requestClearCartAction } from "@/redux/actions/cartActions";
 
 const reviews = [
   {
@@ -112,6 +113,10 @@ const ChadhavaPage = () => {
   const handlaRedirect = (base, slug) => {
     router.push(withLang(`/${base}/${slug}`));
   };
+
+  useEffect(() => {
+    dispatch(requestClearCartAction());
+  }, [router]);
 
   useEffect(() => {
     dispatch(requestWebChadhavaAction());
