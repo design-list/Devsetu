@@ -1,4 +1,3 @@
-// src/app/api/db/sync/route.js
 import db from "@/models/index.js";
 import { NextResponse } from "next/server";
 
@@ -13,19 +12,41 @@ export async function GET(request) {
     await db.sequelize.authenticate();
     console.log("✅ DB Connected");
 
+    const createdModels = [];
     const alteredModels = [];
 
     for (const modelName of Object.keys(db)) {
       const model = db[modelName];
-      if (model?.sync) {
-        await model.sync({ alter: true });
-        alteredModels.push(modelName);
-        console.log(`✅ Synced model: ${modelName}`);
+      if (model?.getTableName) {
+        const tableName =
+          typeof model.getTableName === "string"
+            ? model.getTableName
+            : model.getTableName();
+
+        const tableExists = await db.sequelize
+          .getQueryInterface()
+          .showAllTables()
+          .then((tables) =>
+            tables.includes(
+              typeof tableName === "object" ? tableName.tableName : tableName
+            )
+          );
+
+        if (!tableExists) {
+          await model.sync({ force: true }); // create new table
+          createdModels.push(modelName);
+          console.log(`🆕 Created new table for: ${modelName}`);
+        } else {
+          await model.sync({ alter: true }); // update existing table
+          alteredModels.push(modelName);
+          console.log(`✅ Altered table for: ${modelName}`);
+        }
       }
     }
 
     return NextResponse.json({
       message: "✅ Database synced successfully!",
+      createdModels,
       alteredModels,
     });
   } catch (error) {
