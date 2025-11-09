@@ -348,7 +348,7 @@ export default function CheckoutPage() {
                 <div
                   className="flex justify-between text-gray-700 font-medium"
                 >
-                  <span>Pandit Dakhina </span>
+                  <span>Pandit Dakshina </span>
                   <span>
                     ₹{allCarts?.['other_charges']?.pandit_charge}
                   </span>
