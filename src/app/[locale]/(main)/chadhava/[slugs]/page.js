@@ -295,7 +295,7 @@ const ChadhavaDetailsPage = () => {
         <div className="">
           {/* Add to Cart Button */}
           {allCarts?.["add_ons"].length > 0 && (
-            <div className="fixed w-full left-0 bottom-0 bg-[var(--color-primary-light)] rounded text-white border-t shadow-md p-4 flex justify-between md:justify-center items-center">
+            <div className="fixed w-full left-0 bottom-0 bg-[var(--color-primary-light)] rounded text-white border-t shadow-md p-4 flex justify-between md:justify-center items-center z-20">
               <div>
                 <p className=" text-base md:text-xl font-medium uppercase">{`${allCarts?.["add_ons"].length} Offerings ₹${allCarts?.["grand_total"]}`}</p>
               </div>

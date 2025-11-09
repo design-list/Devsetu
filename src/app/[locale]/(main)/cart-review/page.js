@@ -70,7 +70,7 @@ const PujaCart = () => {
     setSelectedAmount(e.target.value);
   };
 
-  console.log("allCartsallCarts", allCarts);
+  // console.log("allCartsallCarts", allCarts);
 
   // EMPTY STATE
   if (!allCarts?.grand_total) {
