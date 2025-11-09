@@ -33,3 +33,14 @@ export const formatDate = (date, formatType = "full") => {
 
   return moment.utc(date).local().format(formats[formatType] || formats.full);
 };
+
+
+
+export const safeParse = (data, fallback = {}) => {
+  try {
+    if (typeof data === "string") return JSON.parse(data);
+    return data || fallback;
+  } catch {
+    return fallback;
+  }
+};

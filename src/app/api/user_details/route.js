@@ -13,7 +13,6 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    console.log("Add new user details", body);
 
     // 🟩 Extract user details safely
     const u = body.userDetails || {};

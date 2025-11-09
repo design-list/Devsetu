@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Search, Download, X } from "lucide-react";
 import Api from "../../../../services/fetchApi";
 import LazyImage from "@/components/Atom/LazyImage";
+import { safeParse } from "../../../../utils/localstorage";
 
 const api = new Api();
 
@@ -89,7 +90,7 @@ const BookingDetails = () => {
       const pkg = item.package || {};
       const user = item.user_details || {};
       const addOns = item.add_ons?.map((a) => a.name).join(", ") || "";
-      const members = item?.user_details?.members ? JSON.parse(item?.user_details?.members) : [];
+      const members = safeParse(item?.user_details?.members, []);
       const isActivePrasad = item?.isActivePrasad;
       const address = [
       user.address,
@@ -213,10 +214,10 @@ const BookingDetails = () => {
         (
           <div className="grid gap-6 md:grid-cols-2">
             {filteredBookings.map((item) => {
-              const otherCharges = JSON.parse(item.otherCharges || "{}");
+              const otherCharges = safeParse(item?.otherCharges, {});
               const pkg = item.package || {};
               const user = item.user_details || {};
-              const members = user?.members ? JSON.parse(user.members) : [];
+              const members = safeParse(item?.user_details?.members, []);
 
               return (
                 <div
@@ -369,15 +370,15 @@ const BookingDetails = () => {
                     </p>
                 </div>
               <p><strong>Grand Total:</strong> ₹{selectedBooking?.grandTotal}</p>
-              <p><strong>Service Charge:</strong> ₹{JSON.parse(selectedBooking?.otherCharges || "{}").service_charge}</p>
-              <p><strong>Pandit Charge:</strong> ₹{JSON.parse(selectedBooking?.otherCharges || "{}").pandit_charge}</p>
+              <p><strong>Service Charge:</strong> ₹{safeParse(item?.otherCharges, {}).service_charge}</p>
+              <p><strong>Pandit Charge:</strong> ₹{safeParse(item?.otherCharges, {}).pandit_charge}</p>
               <p><strong>Payment Method:</strong> {selectedBooking?.paymentMethod} <strong>UpiId:</strong> {selectedBooking?.upiId}</p>
               <p><strong>Razorpay Order ID:</strong> {selectedBooking?.razorpayOrderId}</p>
               <p><strong>Store ID:</strong> {selectedBooking?.storeId}</p>
               <p><strong>Razorpay Payment ID:</strong> {selectedBooking?.razorpayPaymentId}</p>
               <p><strong>Paid At:</strong> {selectedBooking?.paidAt ? new Date(selectedBooking?.paidAt).toLocaleString("en-IN") : "Not Paid"}</p>
               <p><strong>Created At:</strong> {new Date(selectedBooking?.createdAt).toLocaleString("en-IN")}</p>
-              <p><strong>Members:</strong> {selectedBooking?.user_details?.members ? JSON.parse(selectedBooking?.user_details?.members).map((name) =>
+              <p><strong>Members:</strong> {selectedBooking?.user_details?.members ? safeParse(item?.user_details?.members, []).map((name) =>
                             name
                                 .trim()
                                 .split(" ")
