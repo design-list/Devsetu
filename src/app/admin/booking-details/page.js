@@ -302,6 +302,8 @@ const BookingDetails = () => {
                         : "N/A"}
                     </p>
                     <p><strong>WhatsApp:</strong> {user?.whatsapp || "N/A"}</p>
+                    <p><strong>Payment Method:</strong> {item.paymentMethod} <strong>UpiId:</strong> {item.upiId}</p>
+                    <p><strong>Store ID:</strong> {item.storeId}</p>
                     <p><strong>Paid At:</strong> {item.paidAt ? new Date(item.paidAt).toLocaleString("en-IN") : "Not Paid"}</p>
                   </div>
 
@@ -370,7 +372,9 @@ const BookingDetails = () => {
               <p><strong>Grand Total:</strong> ₹{selectedBooking.grandTotal}</p>
               <p><strong>Service Charge:</strong> ₹{JSON.parse(selectedBooking.otherCharges || "{}").service_charge}</p>
               <p><strong>Pandit Charge:</strong> ₹{JSON.parse(selectedBooking.otherCharges || "{}").pandit_charge}</p>
+              <p><strong>Payment Method:</strong> {selectedBooking.paymentMethod} <strong>UpiId:</strong> {selectedBooking.upiId}</p>
               <p><strong>Razorpay Order ID:</strong> {selectedBooking.razorpayOrderId}</p>
+              <p><strong>Store ID:</strong> {selectedBooking.storeId}</p>
               <p><strong>Razorpay Payment ID:</strong> {selectedBooking.razorpayPaymentId}</p>
               <p><strong>Paid At:</strong> {selectedBooking.paidAt ? new Date(selectedBooking.paidAt).toLocaleString("en-IN") : "Not Paid"}</p>
               <p><strong>Created At:</strong> {new Date(selectedBooking.createdAt).toLocaleString("en-IN")}</p>
