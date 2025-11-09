@@ -74,13 +74,15 @@ const BookingDetails = () => {
       "Gotra",
       "WhatsApp",
       "members",
+      "isActivePrasad",
+      "Address",
       "Payment Status",
       "Grand Total",
       "Package Type",
       "Product Title",
       "Location",
       "Paid At",
-      "Add-ons",
+      "Add-ons"
     ];
 
     const rows = filteredBookings.map((item) => {
@@ -88,6 +90,15 @@ const BookingDetails = () => {
       const user = item.user_details || {};
       const addOns = item.add_ons?.map((a) => a.name).join(", ") || "";
       const members = item?.user_details?.members ? JSON.parse(item?.user_details?.members) : [];
+      const isActivePrasad = item?.isActivePrasad;
+      const address = [
+      user.address,
+      user.city,
+      user.state,
+      user.postalCode,
+    ]
+      .filter(Boolean)
+      .join(", ");
 
       return [
         item.id,
@@ -95,6 +106,8 @@ const BookingDetails = () => {
         user.gotra || "",
         user.whatsapp || "",
         members || "",
+        isActivePrasad,
+        address || "",
         item.paymentStatus || "",
         item.grandTotal || 0,
         pkg.type || "",
@@ -373,8 +386,24 @@ const BookingDetails = () => {
                             )
                         : "N/A"}</p>
 
+                {selectedBooking.isActivePrasad && <p>Deva Prasadam:- {selectedBooking.isActivePrasad ? "True" : "False" }</p>}
+                {selectedBooking.isActivePrasad && 
+                  <p>
+                    {selectedBooking?.user_details?.address},{" "}
+                    {selectedBooking?.user_details?.city},{" "}
+                    {selectedBooking?.user_details?.state} -{" "}
+                    {selectedBooking?.user_details?.postalCode}
+                  </p>
+                }
+
               <div className="border-t pt-3 mt-3">
                  { selectedBooking?.package?.type === "puja" &&
+                  <p className="text-sm text-gray-800 mt-1">
+                    <strong>Selected Package:</strong> {selectedBooking?.package?.name} — <strong> ₹{selectedBooking?.package?.price}</strong>
+                  </p>
+                }
+                
+                { selectedBooking?.package?.type === "puja" &&
                   <p className="text-sm text-gray-800 mt-1">
                     <strong>Selected Package:</strong> {selectedBooking?.package?.name} — <strong> ₹{selectedBooking?.package?.price}</strong>
                   </p>

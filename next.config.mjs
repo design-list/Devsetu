@@ -1,12 +1,13 @@
-// next.config.mjs
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // i18n: {
-  //   locales: ['en', 'hi'], // all supported languages
-  //   defaultLocale: 'en',   // default language
-  //   localeDetection: true,  // optional, stops auto-detection
-  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "setustorage.blr1.cdn.digitaloceanspaces.com",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

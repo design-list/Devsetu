@@ -11,23 +11,23 @@ const pujaVideos = [
   {
     title: "Mahashivratri 4 Prahar Abhishek",
     date: "8 March 2023",
-    embedUrl: "https://www.youtube.com/embed/mxIB9s3yM40",
+    embedUrl: "https://www.youtube.com/embed/d1pzlqLNvqY",
   },
   {
     title: "Divya Mahakali Midnight Tantrokta Yagya",
     date: "7 May 2023",
     embedUrl: "https://www.youtube.com/embed/-8Gmcp_2gFU",
   },
-  {
-    title: "Shani Shant Puja",
-    date: "4 May 2023",
-    embedUrl: "https://www.youtube.com/embed/H5wDRAmrrc0",
-  },
-  {
-    title: "Navratri Maha Yagya",
-    date: "12 April 2023",
-    embedUrl: "https://www.youtube.com/embed/jXSfifLFjD8",
-  },
+  // {
+  //   title: "Shani Shant Puja",
+  //   date: "4 May 2023",
+  //   embedUrl: "https://www.youtube.com/embed/H5wDRAmrrc0",
+  // },
+  // {
+  //   title: "Navratri Maha Yagya",
+  //   date: "12 April 2023",
+  //   embedUrl: "https://www.youtube.com/embed/jXSfifLFjD8",
+  // },
 ];
 
 export default function PujaExperience() {
