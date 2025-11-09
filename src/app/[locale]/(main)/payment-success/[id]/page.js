@@ -187,13 +187,6 @@ useEffect(() => {
                       </div>
                     )}
 
-                    {otherChargesData?.pandit_charge > 0 && (
-                      <div className="flex justify-between text-gray-700">
-                        <span>Pandit Dakshina</span>
-                        <span>₹{otherChargesData?.pandit_charge}</span>
-                      </div>
-                    )}
-
                     {cartDetails?.["grandTotal"] && (
                       <div className="flex justify-between font-semibold border-t border-orange-100 mt-2 pt-2 text-orange-700">
                         <span>Total Amount</span>

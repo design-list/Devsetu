@@ -13,7 +13,7 @@ export default (sequelize, DataTypes) => {
     },
     question: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "question",
     },
     answer: {

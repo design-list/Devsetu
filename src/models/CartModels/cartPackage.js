@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
     },
     cartId: {
       type: DataTypes.BIGINT,
-      allowNull: false,
+      allowNull: true,
       field: "cart_id",
     },
     packageId: {

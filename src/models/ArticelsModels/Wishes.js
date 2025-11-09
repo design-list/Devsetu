@@ -10,12 +10,12 @@ export default (sequelize, DataTypes) => {
     },
     icon: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "image",
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "title",
     },
     description: {

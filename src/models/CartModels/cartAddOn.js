@@ -9,17 +9,17 @@ export default (sequelize, DataTypes) => {
     },
     cartId: {
       type: DataTypes.BIGINT,
-      allowNull: false,
+      allowNull: true,
       field: "cart_id",
     },
     addOnId: {
       type: DataTypes.UUID,
-      allowNull: false,
+      allowNull: true,
       field: "add_on_id",
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "name",
     },
     hsnCode: {
@@ -34,16 +34,16 @@ export default (sequelize, DataTypes) => {
     },
     basePrice: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
       field: "base_price",
     },
     price: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
     },
     quantity: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       defaultValue: 1,
     },
     unitTaxRate: {

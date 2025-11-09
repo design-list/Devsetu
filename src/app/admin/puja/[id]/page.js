@@ -156,144 +156,253 @@ const EditPujaForm = () => {
 
 
 
+  // const handleChange = async (e, index) => {
+  //   e.preventDefault();
+
+  //   const { name, value, files } = e.target;
+
+  //   if (files && files[0]) {
+  //     const file = files[0];
+
+  //     // Local preview
+  //     const localPreview = URL.createObjectURL(file);
+
+  //     if (name === "imgUrl") {
+  //       // Update images preview
+  //       setFormData((prev) => {
+  //         const updated = [...prev.banners];
+  //         updated[index].imgUrl = localPreview.toString();
+  //         return { ...prev, banners: updated };
+  //       });
+  //     }
+  //     else if (name === "mobileImageUrl") {
+  //       // Update images preview
+  //       setFormData((prev) => {
+  //         const updated = [...prev.banners];
+  //         updated[index].mobileImageUrl = localPreview.toString();
+  //         return { ...prev, banners: updated };
+  //       });
+  //     }
+
+  //     else if (name === "icon") {
+  //       // Update FAQ icon preview
+  //       setFormData((prev) => {
+  //         const updated = [...prev.faqs];
+  //         updated[index].icon = localPreview.toString();
+  //         return { ...prev, faqs: updated };
+  //       });
+  //     } else if (name === "packImg") {
+  //       // Update Package Image preview
+  //       setFormData((prev) => {
+  //         const updated = [...prev.packages];
+  //         updated[index].packImg = localPreview.toString();
+  //         return { ...prev, packages: updated };
+  //       });
+  //     } else if (name === "offerimg") {
+  //       setFormData((prev) => {
+  //         const updated = [...prev.offerings];
+  //         updated[index].offerimg = localPreview.toString();
+  //         return { ...prev, offerings: updated };
+  //       });
+  //     } else if (name === "templeImg") {
+  //       setFormData((prev) => ({
+  //         ...prev,
+  //         temple: {
+  //           ...prev.temple,
+  //           templeImg: localPreview,
+  //         },
+  //       }));
+  //     } else {
+  //       alert("Upload failed: ");
+  //     }
+
+  //     // Upload to server
+  //     const uploadFormData = new FormData();
+  //     uploadFormData.append("file", file);
+
+  //     try {
+  //       const res = await fetch(`${baseAPIURL}/uploads`, {
+  //         method: "POST",
+  //         body: uploadFormData,
+  //       });
+
+  //       const data = await res.json();
+
+  //       if (res.ok) {
+  //         if (name === "imgUrl") {
+  //           setFormData((prev) => {
+  //             const updated = [...prev.banners];
+  //             updated[index].imgUrl = (data.storedAs).toString(); // server path
+  //             return { ...prev, banners: updated };
+  //           });
+  //         }
+  //         else if (name === "mobileImageUrl") {
+  //           setFormData((prev) => {
+  //             const updated = [...prev.banners];
+  //             updated[index].mobileImageUrl = (data.storedAs).toString(); // server path
+  //             return { ...prev, banners: updated };
+  //           });
+  //         }
+  //         else if (name === "icon") {
+  //           setFormData((prev) => {
+  //             const updated = [...prev.faqs];
+  //             updated[index].icon = (data.storedAs).toString(); // server path
+  //             return { ...prev, faqs: updated };
+  //           });
+  //         } else if (name === "packImg") {
+  //           setFormData((prev) => {
+  //             const updated = [...prev.packages];
+  //             updated[index].packImg = (data.storedAs).toString(); // server path
+  //             return { ...prev, packages: updated };
+  //           });
+  //         } else if (name === "offerimg") {
+  //           setFormData((prev) => {
+  //             const updated = [...prev.offerings];
+  //             updated[index].offerimg = (data.storedAs).toString(); // server path
+  //             return { ...prev, offerings: updated };
+  //           });
+  //         } else if (name === "templeImg") {
+  //           setFormData((prev) => ({
+  //             ...prev,
+  //             temple: {
+  //               ...prev.temple,
+  //               templeImg: data.storedAs.toString(),
+  //             },
+  //           }));
+  //         }
+  //       } else {
+  //         alert("Upload failed: " + data.error);
+  //       }
+  //     } catch (err) {
+  //       console.error("Upload error:", err);
+  //       alert("Error while uploading file");
+  //     }
+  //   } else if (name.startsWith("temple.")) {
+  //     const field = name.split(".")[1];
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       temple: {
+  //         ...prev.temple,
+  //         [field]: value, // Dynamically set the correct nested field
+  //       },
+  //     }));
+  //   } else {
+  //     setFormData((prev) => ({
+  //       ...prev,
+  //       [name]: value,
+  //     }));
+  //   }
+  // };
+
+
   const handleChange = async (e, index) => {
-    e.preventDefault();
+  e.preventDefault();
+  const { name, value, files } = e.target;
 
-    const { name, value, files } = e.target;
+  // Handle file uploads
+  if (files && files[0]) {
+    const file = files[0];
+    const localPreview = URL.createObjectURL(file);
 
-    if (files && files[0]) {
-      const file = files[0];
+    // Helper function to update formData for local preview or server URL
+    const updateFormField = (path, val) => {
+      setFormData((prev) => {
+        let updatedData = { ...prev };
 
-      // Local preview
-      const localPreview = URL.createObjectURL(file);
-
-      if (name === "imgUrl") {
-        // Update images preview
-        setFormData((prev) => {
-          const updated = [...prev.banners];
-          updated[index].imgUrl = localPreview.toString();
-          return { ...prev, banners: updated };
-        });
-      }
-      else if (name === "mobileImageUrl") {
-        // Update images preview
-        setFormData((prev) => {
-          const updated = [...prev.banners];
-          updated[index].mobileImageUrl = localPreview.toString();
-          return { ...prev, banners: updated };
-        });
-      }
-
-      else if (name === "icon") {
-        // Update FAQ icon preview
-        setFormData((prev) => {
-          const updated = [...prev.faqs];
-          updated[index].icon = localPreview.toString();
-          return { ...prev, faqs: updated };
-        });
-      } else if (name === "packImg") {
-        // Update Package Image preview
-        setFormData((prev) => {
-          const updated = [...prev.packages];
-          updated[index].packImg = localPreview.toString();
-          return { ...prev, packages: updated };
-        });
-      } else if (name === "offerimg") {
-        setFormData((prev) => {
-          const updated = [...prev.offerings];
-          updated[index].offerimg = localPreview.toString();
-          return { ...prev, offerings: updated };
-        });
-      } else if (name === "templeImg") {
-        setFormData((prev) => ({
-          ...prev,
-          temple: {
-            ...prev.temple,
-            templeImg: localPreview,
-          },
-        }));
-      } else {
-        alert("Upload failed: ");
-      }
-
-      // Upload to server
-      const uploadFormData = new FormData();
-      uploadFormData.append("file", file);
-
-      try {
-        const res = await fetch(`${baseAPIURL}/uploads`, {
-          method: "POST",
-          body: uploadFormData,
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          if (name === "imgUrl") {
-            setFormData((prev) => {
-              const updated = [...prev.banners];
-              updated[index].imgUrl = (data.storedAs).toString(); // server path
-              return { ...prev, banners: updated };
-            });
-          }
-          else if (name === "mobileImageUrl") {
-            setFormData((prev) => {
-              const updated = [...prev.banners];
-              updated[index].mobileImageUrl = (data.storedAs).toString(); // server path
-              return { ...prev, banners: updated };
-            });
-          }
-          else if (name === "icon") {
-            setFormData((prev) => {
-              const updated = [...prev.faqs];
-              updated[index].icon = (data.storedAs).toString(); // server path
-              return { ...prev, faqs: updated };
-            });
-          } else if (name === "packImg") {
-            setFormData((prev) => {
-              const updated = [...prev.packages];
-              updated[index].packImg = (data.storedAs).toString(); // server path
-              return { ...prev, packages: updated };
-            });
-          } else if (name === "offerimg") {
-            setFormData((prev) => {
-              const updated = [...prev.offerings];
-              updated[index].offerimg = (data.storedAs).toString(); // server path
-              return { ...prev, offerings: updated };
-            });
-          } else if (name === "templeImg") {
-            setFormData((prev) => ({
-              ...prev,
-              temple: {
-                ...prev.temple,
-                templeImg: data.storedAs.toString(),
-              },
-            }));
-          }
-        } else {
-          alert("Upload failed: " + data.error);
+        switch (path) {
+          case "banners":
+            const updatedBanners = [...prev.banners];
+            updatedBanners[index][name] = val;
+            updatedData.banners = updatedBanners;
+            break;
+          case "faqs":
+            const updatedFaqs = [...prev.faqs];
+            updatedFaqs[index][name] = val;
+            updatedData.faqs = updatedFaqs;
+            break;
+          case "packages":
+            const updatedPackages = [...prev.packages];
+            updatedPackages[index][name] = val;
+            updatedData.packages = updatedPackages;
+            break;
+          case "offerings":
+            const updatedOfferings = [...prev.offerings];
+            updatedOfferings[index][name] = val;
+            updatedData.offerings = updatedOfferings;
+            break;
+          case "temple":
+            updatedData.temple = { ...prev.temple, [name]: val };
+            break;
+          default:
+            updatedData[name] = val;
+            break;
         }
-      } catch (err) {
-        console.error("Upload error:", err);
-        alert("Error while uploading file");
-      }
-    } else if (name.startsWith("temple.")) {
-      const field = name.split(".")[1];
-      setFormData((prev) => ({
-        ...prev,
-        temple: {
-          ...prev.temple,
-          [field]: value, // Dynamically set the correct nested field
-        },
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
 
+        return updatedData;
+      });
+    };
+
+    // 1️⃣ Set local preview immediately
+    if (["imgUrl", "mobileImageUrl"].includes(name)) updateFormField("banners", localPreview);
+    else if (name === "icon") updateFormField("faqs", localPreview);
+    else if (name === "packImg") updateFormField("packages", localPreview);
+    else if (name === "offerimg") updateFormField("offerings", localPreview);
+    else if (name === "templeImg") updateFormField("temple", localPreview);
+
+    // 2️⃣ Upload to backend
+    const uploadFormData = new FormData();
+    uploadFormData.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: uploadFormData,
+      });
+
+      const data = await res.json();
+
+      console.log("Upload response data:", data);
+
+      if (!data.success  || data?.status !== 200) {
+        console.error("Upload failed:", data);
+        alert("Upload failed: " + (data?.error || "Unknown error"));
+        return;
+      }
+
+      const uploadedUrl = data.url.toString();
+
+      // 3️⃣ Replace local preview with server URL
+      if (["imgUrl", "mobileImageUrl"].includes(name)) updateFormField("banners", uploadedUrl);
+      else if (name === "icon") updateFormField("faqs", uploadedUrl);
+      else if (name === "packImg") updateFormField("packages", uploadedUrl);
+      else if (name === "offerimg") updateFormField("offerings", uploadedUrl);
+      else if (name === "templeImg") updateFormField("temple", uploadedUrl);
+    } catch (err) {
+      console.error("Upload error:", err);
+      alert("Error while uploading file");
+    }
+
+    return;
+  }
+
+  // Handle text input (non-file)
+  if (name.startsWith("temple.")) {
+    const field = name.split(".")[1];
+    setFormData((prev) => ({
+      ...prev,
+      temple: {
+        ...prev.temple,
+        [field]: value,
+      },
+    }));
+  } else {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+};
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -752,7 +861,7 @@ const EditPujaForm = () => {
                   <label className="block font-medium">Package Image</label>
                   {packaging.packImg ? (
                     <div className="relative w-32 h-32">
-                      <Image
+                      <img
                         src={packaging.packImg}
                         alt={`Packaging image ${index}`}
                         className="w-32 h-32 object-cover rounded border cursor-pointer"

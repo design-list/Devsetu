@@ -14,7 +14,7 @@ export default (sequelize, DataTypes) => {
       // Example: "Lord Ganesha", "Goddess Radha", "Lord Narayan"
       lordName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: "lord_name",
       },
 
