@@ -370,15 +370,16 @@ const BookingDetails = () => {
                     </p>
                 </div>
               <p><strong>Grand Total:</strong> ₹{selectedBooking?.grandTotal}</p>
-              <p><strong>Service Charge:</strong> ₹{safeParse(item?.otherCharges, {}).service_charge}</p>
-              <p><strong>Pandit Charge:</strong> ₹{safeParse(item?.otherCharges, {}).pandit_charge}</p>
+              <p><strong>Service Charge:</strong> ₹{safeParse(selectedBooking?.otherCharges, {}).service_charge}</p>
+              <p><strong>Pandit Charge:</strong> ₹{safeParse(selectedBooking?.otherCharges, {}).pandit_charge}</p>
               <p><strong>Payment Method:</strong> {selectedBooking?.paymentMethod} <strong>UpiId:</strong> {selectedBooking?.upiId}</p>
+              <p><strong>Payment Contact:</strong> {selectedBooking?.paymentContact}</p>
               <p><strong>Razorpay Order ID:</strong> {selectedBooking?.razorpayOrderId}</p>
               <p><strong>Store ID:</strong> {selectedBooking?.storeId}</p>
               <p><strong>Razorpay Payment ID:</strong> {selectedBooking?.razorpayPaymentId}</p>
               <p><strong>Paid At:</strong> {selectedBooking?.paidAt ? new Date(selectedBooking?.paidAt).toLocaleString("en-IN") : "Not Paid"}</p>
               <p><strong>Created At:</strong> {new Date(selectedBooking?.createdAt).toLocaleString("en-IN")}</p>
-              <p><strong>Members:</strong> {selectedBooking?.user_details?.members ? safeParse(item?.user_details?.members, []).map((name) =>
+              <p><strong>Members:</strong> {selectedBooking?.user_details?.members ? safeParse(selectedBooking?.user_details?.members, []).map((name) =>
                             name
                                 .trim()
                                 .split(" ")
