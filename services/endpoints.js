@@ -50,6 +50,10 @@ export const endpoints = {
         userdetail: `${baseApiUrl}/user_details`,
     },
 
+    HomeBanner: {
+        homebanner: `${baseApiUrl}/hero-banner`,
+    },
+
     Cart: {
         cart: `${baseApiUrl}/cart`,
     },

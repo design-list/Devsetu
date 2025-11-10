@@ -384,4 +384,33 @@ export default class fetchApi extends Api {
         return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
     }
 
+     AddHerobanner(data) {
+        let url = this.buildUrl(endpoints.HomeBanner.homebanner, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    GetAllHerobanner(data) {
+        let url = this.buildUrl(endpoints.HomeBanner.homebanner, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
+
+    GetHerobannerById(id) {
+        let url = this.buildUrl(endpoints.HomeBanner.homebanner, "full")
+        return this.fetchParams(url, "GET", null, `/${id}`).then(response => response)
+    }
+
+    UpdeteHerobanner(data) {
+        let url = this.buildUrl(endpoints.HomeBanner.homebanner, "full")
+        if (data.id) {
+            return this.fetchParams(url, "PUT", JSON.stringify(data), `/${data.id}`).then(response => response);
+        }
+    }
+
+    DeleteHerobanner(id) {
+        let url = this.buildUrl(endpoints.HomeBanner.homebanner, "full")
+        if (id) {
+            return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
+        }
+    }
+    
 }

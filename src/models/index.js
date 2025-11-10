@@ -13,6 +13,7 @@ const configFile = JSON.parse(
   fs.readFileSync(path.resolve('config/config.json'), 'utf-8')
 );
 
+import HeroBanner from './HeroBannerModel.js';
 
 import pujas from './PujaModels/pujas.js';
 import pujaPackages from './PujaModels/pujaPackages.js';
@@ -72,6 +73,8 @@ if (config.use_env_variable) {
 }
 
 // Initialize each model and add it to the 'db' object
+db.HeroBanner = HeroBanner(sequelize, Sequelize.DataTypes);
+
 db.pujas = pujas(sequelize, Sequelize.DataTypes);
 db.pujaPackages = pujaPackages(sequelize, Sequelize.DataTypes);
 db.pujaBanners  = pujaBanners(sequelize, Sequelize.DataTypes);
