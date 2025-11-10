@@ -33,6 +33,15 @@ const Sidebar = () => {
           <ul className="space-y-2">
             <li>
               <Link
+                href="/admin/hero-banner"
+                className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
+              >
+                <Flame size={24} className="text-yellow-500" />
+                {open && <span>All HeroBanner</span> }
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/admin/puja/list"
                 className="flex items-center gap-3 px-4 py-2 hover:bg-indigo-600 rounded-md"
               >

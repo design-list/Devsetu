@@ -38,6 +38,8 @@ const HeroBanner = ({ slides = [] }) => {
       router.push(withLang(`/puja/${slug}`));
     } else if (type === "chadhava") {
       router.push(withLang(`/chadhava/${slug}`));
+    } else if (type === "herobanner") {
+      router.push(withLang(`/${slug}`));
     }
   };
 
