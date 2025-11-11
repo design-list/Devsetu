@@ -71,8 +71,8 @@ export const endpoints = {
     },
 
     MobileLogin: {
-        sendotp: `${baseApiUrl}/send-otp`,
-        verifyotp: `${baseApiUrl}/verify-otp`,
+        sendotp: `${baseApiUrl}/whatsapp-otp`,
+        verifyotp: `${baseApiUrl}/whatsapp-otp/verify`,
     },
 
     Web: {
@@ -80,4 +80,8 @@ export const endpoints = {
         chadhava:`${baseApiUrl}/web/chadhavas`,
         cart:`${baseApiUrl}/web/cart`
     },
+
+    OrderConfirmationMessage: {
+        orderconfirmation: `${baseApiUrl}/order-confirmation-on-whatsapp`,
+    }
 }

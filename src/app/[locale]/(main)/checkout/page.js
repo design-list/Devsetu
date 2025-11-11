@@ -18,6 +18,10 @@ import TempleIcon from "../../../../../public/icons/puja-temple1.png"
 import { formatDate } from "../../../../../utils/localstorage";
 import BreadcrumbSteps from "@/components/Breadcrumbs/Breadcrumb";
 import PageLaoder from "@/components/Atom/loader/pageLaoder";
+import Api from '../../../../../services/fetchApi'
+
+
+const api = new Api();
 
 export default function CheckoutPage() {
   const [members, setMembers] = useState([""]);
@@ -113,158 +117,9 @@ export default function CheckoutPage() {
   };
 
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  // let fieldsToValidate = ["whatsapp", "name"];
-
-  // if (isActivePrasad && allCarts?.package?.type === "puja") {
-  //   fieldsToValidate = [
-  //     "whatsapp",
-  //     "name",
-  //     "address",
-  //     "postalCode",
-  //     "city",
-  //     "state",
-  //   ];
-  // }
-
-  // const { isValid, errors: validationErrors } = validateFields([form], fieldsToValidate);
-
-  // if (allCarts?.package) {
-  //   setErrors(validationErrors[0]);
-  //   if (!isValid) return;
-  // }
-
-
-  //   if (!gotra.trim() && !dontKnow) {
-  //     alert("Please enter your gotra or check the box if you don't know it.");
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-
-
-  //   const userDetails = { ...form, members, gotra };
-  //   // const payload = { ...allCarts, store_id: storeId, userDetails };
-
-  //   const payload = { ...allCarts, store_id: storeId, isActivePrasad, userDetails, grand_total: finalTotal };
-
-  //   try {
-  //     // Step 1: Save cart
-  //     const cartRes = await fetchWithWait({ dispatch, action: addNewCartAction(payload) });
-
-  //     if (cartRes.status !== 200) {
-  //       alert(cartRes.message || "Error saving cart.");
-  //       setIsLoading(false);
-  //       return;
-  //     }
-
-  //     // Step 2: Create Razorpay Order
-  //     const orderPayload = {
-  //       amount: cartRes.data.grand_total,
-  //       currency: "INR",
-  //       receipt: `cart_${cartRes.data.cart_id}`,
-  //       cart_id: cartRes.data.cart_id,
-  //     };
-
-  //     const orderRes = await fetchWithWait({
-  //       dispatch,
-  //       action: requestPaymentOrderAction(orderPayload),
-  //     });
-
-  //     if (orderRes.status !== 200) {
-  //       alert(orderRes.message || "Error creating payment order.");
-  //       setIsLoading(false);
-  //       return;
-  //     }
-
-  //     // Step 3: Ensure Razorpay SDK is loaded
-  //     const loadScript = (src) =>
-  //       new Promise((resolve) => {
-  //         const script = document.createElement("script");
-  //         script.src = src;
-  //         script.onload = () => resolve(true);
-  //         script.onerror = () => resolve(false);
-  //         document.body.appendChild(script);
-  //         setIsLoading(false);
-  //       });
-
-  //     const sdkLoaded = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
-  //     if (!sdkLoaded) {
-  //       alert("Razorpay SDK failed to load.");
-  //       setIsLoading(false);
-  //       return;
-  //     }
-
-  //     // Step 4: Open Razorpay Checkout
-  //     const options = {
-  //       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-  //       amount: orderRes.order.amount,
-  //       currency: "INR",
-  //       name: allCarts?.package?.packageType || "Checkout Payment",
-  //       description: "Payment for your cart",
-  //       order_id: orderRes.order.id,
-  //       handler: async (response) => {
-  //         try {
-  //           const verifyPayload = { ...response, cart_id: cartRes.data.cart_id };
-  //           const verifyRes = await fetchWithWait({
-  //             dispatch,
-  //             action: paymentVerifyAction(verifyPayload),
-  //           });
-
-  //           if (verifyRes.success) {
-  //             // alert("✅ Payment Successful!");
-  //             setForm({
-  //               whatsapp: "",
-  //               name: "",
-  //               address: "",
-  //               postalCode: "",
-  //               city: "",
-  //               state: "",
-  //             });
-  //             setMembers([]);
-  //             setErrors({});
-  //             setIsLoading(false);
-  //             router.push(withLang(`/payment-success/${cartRes.data.cart_id}`)); // ✅ custom redirect
-  //             dispatch(requestClearCartAction());
-
-  //           } else {
-  //             alert(verifyRes.message || "Payment verification failed.");
-  //             setIsLoading(false);
-  //             router.push(withLang(`/payment-failed`));
-  //           }
-
-  //           // if (verifyRes.success) {
-  //           //   alert("✅ Payment Successful!");
-  //           // } else {
-  //           //   alert(verifyRes.message || "Payment verification failed.");
-  //           // }
-  //         } catch (err) {
-  //           console.error("Verification error:", err);
-  //           alert("Error verifying payment.");
-  //         }
-  //       },
-  //       theme: { color: "#D32F2F" },
-  //     };
-
-  //     const rzp = new window.Razorpay(options);
-  //     rzp.open();
-
-  //     rzp.on("payment.failed", (response) => {
-  //       console.error("Payment Failed:", response.error);
-  //       alert("❌ Payment Failed. Please try again.");
-  //       setIsLoading(false);
-  //       router.push(withLang(`/payment-failed`));
-  //     });
-  //   } catch (error) {
-  //     console.error("Error in payment flow:", error);
-  //     setIsLoading(false);
-  //     alert("Something went wrong. Please try again.");
-  //   }
-  // };
-
-  // console.log("Rendered Checkout Page with storeId:", allCarts);
+  const handleOrderConfimationMsg = (data) =>{
+    api.OrderConfirmationMessage(data)
+  }
 
 
   const handleSubmit = async (e) => {
@@ -383,6 +238,13 @@ export default function CheckoutPage() {
             });
 
             if (verifyRes.success) {
+              const msgpayload = {
+                  phone: `${form.whatsapp}`,
+                  name: `${form.name}`,
+                  orderId: `${cartRes.data.cart_id}`,
+                  amount: `${finalTotal}`
+                }
+              handleOrderConfimationMsg(msgpayload);
               // success UI
               setForm({
                 whatsapp: "",

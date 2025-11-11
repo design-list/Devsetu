@@ -375,7 +375,7 @@ export default class fetchApi extends Api {
     }
 
     VerifyMobileOtp(data) {
-        let url = this.buildUrl(endpoints.MobileLogin.sendotp, "full")
+        let url = this.buildUrl(endpoints.MobileLogin.verifyotp, "full")
         return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
     }
 
@@ -411,6 +411,11 @@ export default class fetchApi extends Api {
         if (id) {
             return this.fetchParams(url, "DELETE", null, `/${id}`).then(response => response)
         }
+    }
+
+    OrderConfirmationMessage(data) {
+        let url = this.buildUrl(endpoints.OrderConfirmationMessage.orderconfirmation, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
     }
     
 }

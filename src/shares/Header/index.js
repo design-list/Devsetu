@@ -91,12 +91,12 @@ const Header = () => {
           <div className="flex items-center gap-3">
             {/* Profile Dropdown */}
             <div className="relative hidden md:block">
-              {/* <button
+              <button
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition cursor-pointer"
               >
                 <User size={20} />
-              </button> */}
+              </button>
 
               {menuOpen && (
                 <div className="absolute right-0 mt-3 w-80 bg-white rounded-2xl shadow-xl border overflow-hidden z-50">
