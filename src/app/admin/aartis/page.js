@@ -4,74 +4,92 @@ import { Trash2 } from "lucide-react";
 
 import Api from "../../../../services/fetchApi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 const api = new Api();
 
 const AartisForm = () => {
-  const baseAPIURL = process.env.NEXT_PUBLIC_API_BASE_URL;
-  let baseApiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const [formData, setFormData] = useState({
     icon: null,
     title: "",
     slug: "",
     aboutArticle: "",
-    Aartis: "",
+    aartis: "",
   });
   const [loading, setLoading] = useState(false);
 
-useEffect(() => {
-    setFormData((prev) => ({
-    ...prev,
-    slug: slugify(prev.title),
-    }));
-}, [formData?.title]);
+  const router = useRouter();
 
-const slugify = (text) => {
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      slug: slugify(prev.title),
+    }));
+  }, [formData?.title]);
+
+  const slugify = (text) => {
     return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-');
-}
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  }
 
   // ✅ Handle input & file change
   const handleChange = async (e) => {
+    e.preventDefault();
     const { name, value, files } = e.target;
 
+    // 🖼 If file is selected
     if (files && files[0]) {
       const file = files[0];
       const localPreview = URL.createObjectURL(file);
 
-      // show preview first
-      setFormData((prev) => ({ ...prev, icon: localPreview }));
+      // 1️⃣ Show local preview immediately
+      setFormData((prev) => ({
+        ...prev,
+        [name]: localPreview,
+      }));
 
-      // upload to backend
+      // 2️⃣ Prepare file for upload
       const uploadFormData = new FormData();
       uploadFormData.append("file", file);
 
       try {
-        const res = await fetch(`${baseAPIURL}/uploads`, {
+        const res = await fetch("/api/upload", {
           method: "POST",
           body: uploadFormData,
         });
 
         const data = await res.json();
-        if (res.ok) {
-          setFormData((prev) => ({
-            ...prev,
-            icon: data.storedAs.toString(), // file path from server
-          }));
-        } else {
-          alert("Upload failed: " + data.error);
+
+        // 3️⃣ Validate upload response
+        if (!res.ok || !data?.url) {
+          console.error("Upload failed:", data);
+          alert("Upload failed: " + (data?.error || "Unknown error"));
+          return;
         }
+
+        // 4️⃣ Replace local preview with uploaded file URL
+        setFormData((prev) => ({
+          ...prev,
+          [name]: data.url.toString(),
+        }));
       } catch (err) {
         console.error("Upload error:", err);
-        alert("Error while uploading image");
+        alert("Error while uploading file");
       }
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+
+      return; // exit early after file handling
     }
+
+    // ✏️ Handle text inputs
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
+
 
   // ✅ Submit handler
   const handleSubmit = async (e) => {
@@ -79,17 +97,19 @@ const slugify = (text) => {
 
     try {
       setLoading(true);
-      const res = await api.AddNewAartis(formData );
+      const res = await api.AddNewAartis(formData);
 
       if (res.status === 200) {
         alert("Aarti added successfully!");
+
         setFormData({
           icon: null,
           title: "",
           slug: "",
           aboutArticle: "",
-          Aartis: "",
+          aartis: "",
         });
+        router.push('/admin/aartis/list')
       } else {
         alert(data.message || "Something went wrong!");
       }
@@ -170,7 +190,7 @@ const slugify = (text) => {
             className="w-full border p-2 rounded"
           />
         </div>
-         
+
 
         {/* About Article */}
         <div>
@@ -189,8 +209,8 @@ const slugify = (text) => {
         <div>
           <label className="block font-medium mb-1">Aarti Content</label>
           <textarea
-            name="Aartis"
-            value={formData.Aartis}
+            name="aartis"
+            value={formData.aartis}
             onChange={handleChange}
             placeholder="Write full Aarti text here..."
             className="w-full border p-2 rounded"
@@ -202,9 +222,8 @@ const slugify = (text) => {
         <button
           type="submit"
           disabled={loading}
-          className={`bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition cursor-pointer ${
-            loading ? "opacity-70" : ""
-          }`}
+          className={`bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition cursor-pointer ${loading ? "opacity-70" : ""
+            }`}
         >
           {loading ? "Saving..." : "Submit"}
         </button>

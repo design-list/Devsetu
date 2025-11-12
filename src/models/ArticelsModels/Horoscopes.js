@@ -12,17 +12,17 @@ export default (sequelize, DataTypes) => {
       },
       zodiac_about: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: "zodiac_about",
       },
       zodiac_sign: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: "zodiac_sign",
       },
       slug: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: "slug",
       },
       date_range: {

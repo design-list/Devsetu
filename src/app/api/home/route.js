@@ -3,11 +3,13 @@
 import { NextResponse } from "next/server";
 import models from "@/models/index.js"; 
 
-const { pujas, pujaBanners, chadhava, chadhavaBanner,chadhavaFocus } = models;
+const { pujas, pujaBanners, chadhava, chadhavaBanner,chadhavaFocus, HeroBanner } = models;
 
 export async function GET() {
   try {
     // Pujas fetch
+    const herobanner = await HeroBanner.findAll();
+
     const pujaData = await pujas.findAll({
       where: { isActive: true, isActiveOnHome: true },
       attributes: ["id", "title", "slug", "tags" ],
@@ -64,7 +66,17 @@ export async function GET() {
         order: [["date", "DESC"]],
     });
 
+
+
     // Map data and rename pujaBanners / chadhavaBanners to banners
+    const formattedHeroBanner = herobanner.map(p => ({
+      id: p.id,
+      title: p.slug,
+      slug: p.slug,
+      banners: [{id : p.id, image_url: p.imageUrl,mobile_image_url: p.mobileImageUrl, type: p.type }] || [],
+      type: "herobanner"
+    }));
+
     const formattedPujaData = pujaData.map(p => ({
       id: p.id,
       title: p.title,
@@ -84,7 +96,7 @@ export async function GET() {
     return NextResponse.json({
       status: 200,
       message: "Home page data fetched successfully",
-      data: { heroBanner: [...formattedPujaData, ...formattedChadhavaData], 
+      data: { heroBanner: [ ...formattedHeroBanner, ...formattedPujaData, ...formattedChadhavaData], 
           pujaCard: pujaCard, 
           chadhavaCard: chadhavaCard
       },

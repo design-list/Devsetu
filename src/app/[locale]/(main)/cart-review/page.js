@@ -70,7 +70,7 @@ const PujaCart = () => {
     setSelectedAmount(e.target.value);
   };
 
-  console.log("allCartsallCarts", allCarts);
+  // console.log("allCartsallCarts", allCarts);
 
   // EMPTY STATE
   if (!allCarts?.grand_total) {
@@ -179,9 +179,14 @@ const PujaCart = () => {
               >
                 <div className="flex justify-between items-start flex-col">
                   <div className="flex-1 pr-3">
-                    <h3 className="font-bold text-sm md:text-lg text-[var(--color-dark)]">
-                      {item.title}
-                    </h3>
+                    {item?.title?.endsWith("(₹51)") ? (
+                        <>
+                          {item?.title?.replace("(₹51)", "")}
+                          <span className="line-through text-red-500">(₹51)</span>
+                        </>
+                      ) : (
+                        <h3 className="font-bold text-sm md:text-lg text-[var(--color-dark)]">{item?.title}</h3>
+                      )}
                   </div>
 
                   <div className="w-full flex flex-row justify-between items-end ">
@@ -202,6 +207,8 @@ const PujaCart = () => {
                       </span>
                       <button
                         onClick={() =>
+                          item.price == 1
+                          ? alert("One person can add only 1"):
                           handleQuantityChange(item.id, "increment")
                         }
                         className="p-1.5 text-[var(--color-dark)] hover:text-black cursor-pointer"

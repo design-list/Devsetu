@@ -166,17 +166,24 @@ useEffect(() => {
                       </div>
                     )}
 
-                    {otherChargesData?.pandit_charge > 0 && (
-                      <div className="flex justify-between text-gray-700">
-                        <span>{"Pandit Dakshina"}</span>
-                        <span>₹{`${otherChargesData?.pandit_charge}`}</span>
-                      </div>
+                    {cartDetails?.add_ons && (
+                      <>
+                        {
+                          cartDetails?.add_ons?.map((item) => {
+                            return<div className="flex justify-between text-gray-700">
+                            <span>{item.name}</span>
+                            <span>₹{item.price}</span>
+                            </div>
+                          })
+                        }
+                        
+                      </>
                     )}
 
                     {otherChargesData?.pandit_charge > 0 && (
                       <div className="flex justify-between text-gray-700">
-                        <span>Pandit Dakshina</span>
-                        <span>₹{otherChargesData?.pandit_charge}</span>
+                        <span>{"Pandit Dakshina"}</span>
+                        <span>₹{`${otherChargesData?.pandit_charge}`}</span>
                       </div>
                     )}
 
@@ -190,7 +197,7 @@ useEffect(() => {
 
                   <div className="pt-3">
                     <p className="font-semibold text-gray-800">
-                      {cartDetails?.user_details?.name}
+                      {cartDetails?.user_details?.name} <span>{` (${cartDetails?.user_details?.gotra})`}</span>
                     </p>
                     <p className="text-gray-500 text-sm">
                       {cartDetails?.user_details?.whatsapp} •{" "}

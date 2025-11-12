@@ -61,7 +61,9 @@ export async function POST(req) {
               description: o.description,
               tags: o.tags,
               offerimg: o.offerimg,
-              price: o.price,
+              strikePrice: o.strikePrice ? parseInt(o.strikePrice) : null,
+              price: o.price ? parseInt(o.price) : 0,
+              position: o.strikePrice,
             }))
           : [],
 

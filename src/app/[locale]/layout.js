@@ -12,6 +12,7 @@ import "../globals.css";
 import { LangProvider } from "../langProviders";
 import Header from "@/shares/Header";
 import Footer from "@/shares/Footer";
+import GoogleTranslate from "@/components/GoogleTranslate";
 
 const philosopherFont = Philosopher({
   subsets: ["latin"],

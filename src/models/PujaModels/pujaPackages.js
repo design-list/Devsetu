@@ -9,27 +9,27 @@ export default (sequelize, DataTypes) => {
     },
     packImg: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "packImg",
     },
     packageType: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "package_type",
     },
      packageDescription: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "package_description",
     },
     packagePrice: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
       field: "package_price",
     },
     noOfPeople: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
       field: "no_of_people",
     },
     createdAt: {

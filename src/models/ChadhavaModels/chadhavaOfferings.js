@@ -33,6 +33,16 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
       field: "price",
     },
+    position: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      field: "position",
+    },
+    strikePrice: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      field: "strike_price",
+    },
     createdAt: {
       type: DataTypes.DATE,
       field: "created_at",

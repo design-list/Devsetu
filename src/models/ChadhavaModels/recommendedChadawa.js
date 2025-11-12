@@ -15,32 +15,32 @@ export default (sequelize, DataTypes) => {
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "title",
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "status",
     },
     location: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "location",
     },
     currency: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "currency",
     },
     date: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       field: "date",
     },
     price: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: true,
       field: "price",
     },
     chadhavaId: {

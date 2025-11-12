@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Search, Download, X } from "lucide-react";
 import Api from "../../../../services/fetchApi";
 import LazyImage from "@/components/Atom/LazyImage";
+import { safeParse } from "../../../../utils/localstorage";
 
 const api = new Api();
 
@@ -71,25 +72,43 @@ const BookingDetails = () => {
     const headers = [
       "Booking ID",
       "Name",
+      "Gotra",
       "WhatsApp",
+      "members",
+      "isActivePrasad",
+      "Address",
       "Payment Status",
       "Grand Total",
       "Package Type",
       "Product Title",
       "Location",
       "Paid At",
-      "Add-ons",
+      "Add-ons"
     ];
 
     const rows = filteredBookings.map((item) => {
       const pkg = item.package || {};
       const user = item.user_details || {};
       const addOns = item.add_ons?.map((a) => a.name).join(", ") || "";
+      const members = safeParse(item?.user_details?.members, []);
+      const isActivePrasad = item?.isActivePrasad;
+      const address = [
+      user.address,
+      user.city,
+      user.state,
+      user.postalCode,
+    ]
+      .filter(Boolean)
+      .join(", ");
 
       return [
         item.id,
         user.name || "",
+        user.gotra || "",
         user.whatsapp || "",
+        members || "",
+        isActivePrasad,
+        address || "",
         item.paymentStatus || "",
         item.grandTotal || 0,
         pkg.type || "",
@@ -195,10 +214,10 @@ const BookingDetails = () => {
         (
           <div className="grid gap-6 md:grid-cols-2">
             {filteredBookings.map((item) => {
-              const otherCharges = JSON.parse(item.otherCharges || "{}");
+              const otherCharges = safeParse(item?.otherCharges, {});
               const pkg = item.package || {};
               const user = item.user_details || {};
-              const members = user?.members ? JSON.parse(user.members) : [];
+              const members = safeParse(item?.user_details?.members, []);
 
               return (
                 <div
@@ -246,9 +265,9 @@ const BookingDetails = () => {
                   </div>
 
                   <div className="bg-orange-50 rounded-xl p-3 mb-3 text-sm text-gray-700">
-                    <p>Service Charge: ₹{otherCharges.service_charge}</p>
-                    <p>Pandit Charge: ₹{otherCharges.pandit_charge}</p>
-                    <p>Media Charge: ₹{otherCharges.media_handling_charge}</p>
+                    <p>Service Charge: ₹{otherCharges?.service_charge}</p>
+                    <p>Pandit Charge: ₹{otherCharges?.pandit_charge}</p>
+                    <p>Media Charge: ₹{otherCharges?.media_handling_charge}</p>
                     <p className="font-semibold text-orange-600 mt-1">
                       Total: ₹{item.grandTotal}
                     </p>
@@ -268,9 +287,8 @@ const BookingDetails = () => {
                         </p>
                     <p>
                     <strong>Members:</strong>{" "}
-                    {members.length
-                        ? members
-                            .map((name) =>
+                    {members?.length
+                        ? members?.map((name) =>
                             name
                                 .trim()
                                 .split(" ")
@@ -284,7 +302,9 @@ const BookingDetails = () => {
                         : "N/A"}
                     </p>
                     <p><strong>WhatsApp:</strong> {user?.whatsapp || "N/A"}</p>
-                    <p><strong>Paid At:</strong> {item.paidAt ? new Date(item.paidAt).toLocaleString("en-IN") : "Not Paid"}</p>
+                    <p><strong>Payment Method:</strong> {item?.paymentMethod} <strong>UpiId:</strong> {item?.upiId}</p>
+                    <p><strong>Store ID:</strong> {item?.storeId}</p>
+                    <p><strong>Paid At:</strong> {item?.paidAt ? new Date(item?.paidAt).toLocaleString("en-IN") : "Not Paid"}</p>
                   </div>
 
                   {/* View More Button */}
@@ -312,9 +332,14 @@ const BookingDetails = () => {
               <X size={22} />
             </button>
 
-            <h2 className="text-xl font-bold text-orange-600 mb-4">
-              Booking #{selectedBooking.id}
-            </h2>
+            <div className="flex justify-between">
+              <h2 className="text-xl font-bold text-orange-600 mb-4">
+                Booking #{selectedBooking?.id}
+              </h2>
+              <h2 className={`text-xl font-bold ${selectedBooking?.paymentStatus === "PENDING" ? "text-orange-600" : "text-green-600" }  mb-4`}>
+                Payment Status:{selectedBooking?.paymentStatus}
+              </h2>
+            </div>
 
             <div className="space-y-2 text-sm text-gray-700">
                  {selectedBooking?.package?.productImg && (
@@ -330,8 +355,13 @@ const BookingDetails = () => {
                 )}
                 <div className="flex-1 text-sm">
                     <p className="font-semibold text-gray-800">
-                    {selectedBooking?.package?.productTitle || "No Title"}
+                      {selectedBooking?.package?.productTitle || "No Title"}
                     </p>
+                    { selectedBooking?.package?.type === "puja" &&
+                      <p className="text-xs text-gray-500 mt-1">
+                        <strong>Selected Package:</strong> {selectedBooking?.package?.name}  <strong> ₹{selectedBooking?.package?.price}</strong>
+                      </p>
+                    }
                     <p className="text-xs text-gray-500 mt-1">
                     <strong>Type:</strong> {selectedBooking?.package?.type}
                     </p>
@@ -339,15 +369,17 @@ const BookingDetails = () => {
                     <strong>Location:</strong> {selectedBooking?.package?.location} {selectedBooking?.package?.tithi}
                     </p>
                 </div>
-              <p><strong>Payment Status:</strong> {selectedBooking.paymentStatus}</p>
-              <p><strong>Grand Total:</strong> ₹{selectedBooking.grandTotal}</p>
-              <p><strong>Service Charge:</strong> ₹{JSON.parse(selectedBooking.otherCharges || "{}").service_charge}</p>
-              <p><strong>Pandit Charge:</strong> ₹{JSON.parse(selectedBooking.otherCharges || "{}").pandit_charge}</p>
-              <p><strong>Razorpay Order ID:</strong> {selectedBooking.razorpayOrderId}</p>
-              <p><strong>Razorpay Payment ID:</strong> {selectedBooking.razorpayPaymentId}</p>
-              <p><strong>Paid At:</strong> {selectedBooking.paidAt ? new Date(selectedBooking.paidAt).toLocaleString("en-IN") : "Not Paid"}</p>
-              <p><strong>Created At:</strong> {new Date(selectedBooking.createdAt).toLocaleString("en-IN")}</p>
-              <p><strong>Members:</strong> {selectedBooking.user_details?.members ? JSON.parse(selectedBooking.user_details.members).map((name) =>
+              <p><strong>Grand Total:</strong> ₹{selectedBooking?.grandTotal}</p>
+              <p><strong>Service Charge:</strong> ₹{safeParse(selectedBooking?.otherCharges, {}).service_charge}</p>
+              <p><strong>Pandit Charge:</strong> ₹{safeParse(selectedBooking?.otherCharges, {}).pandit_charge}</p>
+              <p><strong>Payment Method:</strong> {selectedBooking?.paymentMethod} <strong>UpiId:</strong> {selectedBooking?.upiId}</p>
+              <p><strong>Payment Contact:</strong> {selectedBooking?.paymentContact}</p>
+              <p><strong>Razorpay Order ID:</strong> {selectedBooking?.razorpayOrderId}</p>
+              <p><strong>Store ID:</strong> {selectedBooking?.storeId}</p>
+              <p><strong>Razorpay Payment ID:</strong> {selectedBooking?.razorpayPaymentId}</p>
+              <p><strong>Paid At:</strong> {selectedBooking?.paidAt ? new Date(selectedBooking?.paidAt).toLocaleString("en-IN") : "Not Paid"}</p>
+              <p><strong>Created At:</strong> {new Date(selectedBooking?.createdAt).toLocaleString("en-IN")}</p>
+              <p><strong>Members:</strong> {selectedBooking?.user_details?.members ? safeParse(selectedBooking?.user_details?.members, []).map((name) =>
                             name
                                 .trim()
                                 .split(" ")
@@ -359,7 +391,28 @@ const BookingDetails = () => {
                             )
                         : "N/A"}</p>
 
+                {selectedBooking?.isActivePrasad && <p>Deva Prasadam:- {selectedBooking?.isActivePrasad ? "True" : "False" }</p>}
+                {selectedBooking?.isActivePrasad && 
+                  <p>
+                    {selectedBooking?.user_details?.address},{" "}
+                    {selectedBooking?.user_details?.city},{" "}
+                    {selectedBooking?.user_details?.state} -{" "}
+                    {selectedBooking?.user_details?.postalCode}
+                  </p>
+                }
+
               <div className="border-t pt-3 mt-3">
+                 { selectedBooking?.package?.type === "puja" &&
+                  <p className="text-sm text-gray-800 mt-1">
+                    <strong>Selected Package:</strong> {selectedBooking?.package?.name} — <strong> ₹{selectedBooking?.package?.price}</strong>
+                  </p>
+                }
+                
+                { selectedBooking?.package?.type === "puja" &&
+                  <p className="text-sm text-gray-800 mt-1">
+                    <strong>Selected Package:</strong> {selectedBooking?.package?.name} — <strong> ₹{selectedBooking?.package?.price}</strong>
+                  </p>
+                }
                 <p className="font-semibold text-gray-800">Add-ons:</p>
                 {selectedBooking.add_ons?.length > 0 ? (
                   <ul className="list-disc list-inside text-gray-600">
@@ -372,7 +425,7 @@ const BookingDetails = () => {
                 ) : (
                   <p className="text-gray-500">No add-ons</p>
                 )}
-
+                <hr />
                 <p><strong>Grand Total:</strong> .₹{selectedBooking?.grandTotal}</p>
               </div>
             </div>

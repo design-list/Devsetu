@@ -27,7 +27,7 @@ export default (sequelize, DataTypes) => {
     },
     tags: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       field: "tags",
     },
     ratingValue: {

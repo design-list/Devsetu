@@ -2,6 +2,8 @@
 
 let baseApiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+let uploadFileUrl = process.env.NEXT_PUBLIC_CDN_BASE_URL;
+
 
 export const endpoints = {
 
@@ -25,7 +27,7 @@ export const endpoints = {
     },
 
     FileUpload: {
-        upload: `${baseApiUrl}/upload`,
+        upload: `/api/upload`,
     },
     
     Home: {
@@ -48,6 +50,10 @@ export const endpoints = {
         userdetail: `${baseApiUrl}/user_details`,
     },
 
+    HomeBanner: {
+        homebanner: `${baseApiUrl}/hero-banner`,
+    },
+
     Cart: {
         cart: `${baseApiUrl}/cart`,
     },
@@ -65,8 +71,8 @@ export const endpoints = {
     },
 
     MobileLogin: {
-        sendotp: `${baseApiUrl}/send-otp`,
-        verifyotp: `${baseApiUrl}/verify-otp`,
+        sendotp: `${baseApiUrl}/whatsapp-otp`,
+        verifyotp: `${baseApiUrl}/whatsapp-otp/verify`,
     },
 
     Web: {
@@ -74,4 +80,8 @@ export const endpoints = {
         chadhava:`${baseApiUrl}/web/chadhavas`,
         cart:`${baseApiUrl}/web/cart`
     },
+
+    OrderConfirmationMessage: {
+        orderconfirmation: `${baseApiUrl}/order-confirmation-on-whatsapp`,
+    }
 }

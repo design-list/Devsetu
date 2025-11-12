@@ -13,6 +13,7 @@ const configFile = JSON.parse(
   fs.readFileSync(path.resolve('config/config.json'), 'utf-8')
 );
 
+import HeroBanner from './HeroBannerModel.js';
 
 import pujas from './PujaModels/pujas.js';
 import pujaPackages from './PujaModels/pujaPackages.js';
@@ -52,6 +53,8 @@ import offerings from './offerings.js';
 import UserDetails from './CartModels/UserDetails.js';
 import Users from './UsersModel.js';
 
+import WhatsAppOtp from './WhatsappOtp.js';
+
 const env = process.env.NODE_ENV || 'development';
 const config = configFile[env];
 const db = {};
@@ -72,6 +75,8 @@ if (config.use_env_variable) {
 }
 
 // Initialize each model and add it to the 'db' object
+db.HeroBanner = HeroBanner(sequelize, Sequelize.DataTypes);
+
 db.pujas = pujas(sequelize, Sequelize.DataTypes);
 db.pujaPackages = pujaPackages(sequelize, Sequelize.DataTypes);
 db.pujaBanners  = pujaBanners(sequelize, Sequelize.DataTypes);
@@ -105,6 +110,8 @@ db.offerings = offerings(sequelize, Sequelize.DataTypes);
 db.commonPujaPackage = commonPujaPackage(sequelize, Sequelize.DataTypes);
 db.UserDetails = UserDetails(sequelize, Sequelize.DataTypes);
 db.Users = Users(sequelize, Sequelize.DataTypes);
+
+db.WhatsAppOtp = WhatsAppOtp(sequelize, Sequelize.DataTypes);
 
 // This part for setting up associations remains the same and will work correctly
 Object.keys(db).forEach((modelName) => {

@@ -126,7 +126,7 @@ const MantrasList = () => {
           {filteredMantras.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-xl shadow-md border hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col h-[500px]"
+              className="bg-white rounded-xl shadow-md border hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col h-[600px]"
             >
               {/* Image */}
               <div className="relative h-44">
@@ -160,13 +160,22 @@ const MantrasList = () => {
                   <span className="font-medium">Slug:</span> {item.slug || "—"}
                 </p>
 
+                {/* 🕉 Significance */}
+                {item.significance && (
+                  <p className="text-sm text-gray-700 mb-2 line-clamp-2">
+                    <span className="font-medium">Significance:</span>{" "}
+                    {item.significance}
+                  </p>
+                )}
+
                 {/* Introduction Section */}
                 <div className="flex-grow overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300">
                   <p className="text-sm text-gray-700 whitespace-pre-line">
                     {expanded[item.id]
                       ? item.introduction || "No introduction available."
-                      : (item.introduction?.slice(0, 200) || "No introduction available.") +
-                        (item.introduction?.length > 200 ? "..." : "")}
+                      : (item.introduction?.slice(0, 200) ||
+                        "No introduction available.") +
+                      (item.introduction?.length > 200 ? "..." : "")}
                   </p>
 
                   {item.introduction?.length > 200 && (
@@ -177,6 +186,30 @@ const MantrasList = () => {
                       {expanded[item.id] ? "Read Less" : "Read More"}
                     </button>
                   )}
+
+                  {/* 📜 Mantras List */}
+                  {item.mantrasList?.length > 0 && (
+                    <div className="mt-3 border-t pt-2">
+                      <h3 className="text-sm font-semibold text-gray-800 mb-1">
+                        Mantras:
+                      </h3>
+                      <ul className="space-y-1">
+                        {item.mantrasList.map((m, idx) => (
+                          <li key={idx} className="text-xs text-gray-700">
+                            <span className="font-medium">{m.mantraTitle}:</span>{" "}
+                            {m.meaning?.slice(0, 100)}
+                            {m.meaning?.length > 100 ? "..." : ""}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
+                {/* 📅 Created & Updated Info */}
+                <div className="mt-2 text-xs text-gray-400">
+                  <p>Created: {new Date(item.createdAt).toLocaleDateString()}</p>
+                  <p>Updated: {new Date(item.updatedAt).toLocaleDateString()}</p>
                 </div>
 
                 {/* Action Buttons */}
@@ -198,6 +231,7 @@ const MantrasList = () => {
             </div>
           ))}
         </div>
+
       )}
     </div>
   );

@@ -71,37 +71,57 @@ export default function UpdateMantraForm() {
 
   // ✅ Handle input and file upload
   const handleChange = async (e) => {
+    e.preventDefault();
     const { name, value, files } = e.target;
 
+    // 🖼 If file is selected
     if (files && files[0]) {
       const file = files[0];
       const localPreview = URL.createObjectURL(file);
-      setFormData((prev) => ({ ...prev, icon: localPreview }));
 
+      // 1️⃣ Show local preview immediately
+      setFormData((prev) => ({
+        ...prev,
+        [name]: localPreview,
+      }));
+
+      // 2️⃣ Prepare file for upload
       const uploadFormData = new FormData();
       uploadFormData.append("file", file);
 
       try {
-        const res = await fetch(`${baseAPIURL}/uploads`, {
+        const res = await fetch("/api/upload", {
           method: "POST",
           body: uploadFormData,
         });
+
         const data = await res.json();
-        if (res.ok) {
-          setFormData((prev) => ({
-            ...prev,
-            icon: data.storedAs.toString(),
-          }));
-        } else {
-          alert("Upload failed: " + data.error);
+
+        // 3️⃣ Validate upload response
+        if (!res.ok || !data?.url) {
+          console.error("Upload failed:", data);
+          alert("Upload failed: " + (data?.error || "Unknown error"));
+          return;
         }
+
+        // 4️⃣ Replace local preview with uploaded file URL
+        setFormData((prev) => ({
+          ...prev,
+          [name]: data.url.toString(),
+        }));
       } catch (err) {
         console.error("Upload error:", err);
-        alert("Error while uploading image");
+        alert("Error while uploading file");
       }
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+
+      return; // exit early after file handling
     }
+
+    // ✏️ Handle text inputs
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   // ✅ Mantra list update logic

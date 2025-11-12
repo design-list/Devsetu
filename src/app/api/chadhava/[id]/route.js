@@ -88,6 +88,8 @@ export async function PUT(req, { params }) {
       await chadhavaPackages.bulkCreate(
         body.packages.map((p) => ({
           ...p,
+          strikePrice: p.strikePrice ? parseInt(p.strikePrice) : null,
+          price: p.price ? parseInt(p.price) : 0,
           chadhavaId: updatedChadhava.id,
         }))
       );
