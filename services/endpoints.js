@@ -78,7 +78,9 @@ export const endpoints = {
     Web: {
         puja:`${baseApiUrl}/web/pujas`,
         chadhava:`${baseApiUrl}/web/chadhavas`,
-        cart:`${baseApiUrl}/web/cart`
+        cart:`${baseApiUrl}/web/cart`,
+        byPhone:`${baseApiUrl}/web/cart/by-phone`,
+        userdetail:`${baseApiUrl}/web/user-details`
     },
 
     OrderConfirmationMessage: {

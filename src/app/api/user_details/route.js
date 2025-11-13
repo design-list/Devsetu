@@ -44,37 +44,6 @@ export async function POST(req) {
 }
 
 
-// export async function POST(req) {
-//   try {
-//     const body = await req.json();
-
-//     console.log("Add new user details", body)
-
-//     const newUser = await UserDetails.create({
-//       whatsapp: body.whatsapp,
-//       name: body.name,
-//       gotra: body.gotra,
-//       address: body.address,
-//       postalCode: body.postalCode,
-//       city: body.city,
-//       state: body.state,
-//       members: body.members || [],
-//     });
-
-//     return NextResponse.json({
-//       status: 200,
-//       message: "User details added successfully",
-//       data: newUser,
-//     });
-//   } catch (error) {
-//     console.error("Error creating user details:", error);
-//     return NextResponse.json(
-//       { status: "error", message: "Failed to create user details", error },
-//       { status: 500 }
-//     );
-//   }
-// }
-
 // 🟩 GET → Fetch all user details
 export async function GET() {
   try {

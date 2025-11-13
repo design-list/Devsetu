@@ -4,8 +4,11 @@
 
 import { useState } from "react";
 import Api from "../../../../../services/fetchApi";
-import { saveState } from "../../../../../utils/localstorage";
 import { useRouter } from "next/navigation";
+import { requestOtpVerify } from "@/redux/actions/loginAction";
+import { useWithLang } from "../../../../../helper/useWithLang";
+import { fetchWithWait } from "../../../../../helper/method";
+import { useDispatch } from "react-redux";
 const api = new Api();
 
 export default function MobileLogin() {
@@ -14,9 +17,11 @@ export default function MobileLogin() {
   const [step, setStep] = useState(1);
   const [message, setMessage] = useState("");
 
+  const dispatch = useDispatch();
 
+
+  // const goHome = () => );
   const router = useRouter();
-
 
   const sendOtp = async () => {
     try {
@@ -37,26 +42,26 @@ export default function MobileLogin() {
   };
 
 
-  const verifyOtp = async () => {
-    try {
-      const formattedPhone = phone.startsWith("+") ? phone : `+91${phone}`;
+  const verifyOtp = async (e) => {
+    e.preventDefault();
 
-      const res = await api.VerifyMobileOtp({ phone: formattedPhone, otp });
+    const formattedPhone = phone.startsWith("+") ? phone : `+91${phone}`;
 
-      if (res?.success && res.status === 200) {
-        saveState("usertoken", res.token)
+    fetchWithWait({ dispatch, action: requestOtpVerify({ phone: formattedPhone, otp }) }).then((res) => {
+
+      if (res.status === 200) {
+        router.push("/");
         setPhone("");
         setOtp("")
-        setStep("");
+        setStep(1);
         setMessage("")
-        router.push("/en")
       } else {
-        setMessage("Invalid OTP ❌");
-      }
-    } catch (err) {
-      console.error("Verify OTP Error:", err);
-      setMessage("Something went wrong ❌");
-    }
+        alert(res.message)
+        setReserr(res.message)
+      } 
+    }).catch((e) => {
+      console.log(`error`, e)
+    })
   };
 
 
@@ -73,7 +78,7 @@ export default function MobileLogin() {
             placeholder="+91XXXXXXXXXX"
             className="border p-2 w-full mb-2"
           />
-          <button onClick={sendOtp} className="bg-green-600 text-white px-4 py-2 rounded">
+          <button onClick={sendOtp} className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer">
             Send OTP
           </button>
         </>
@@ -88,7 +93,7 @@ export default function MobileLogin() {
             placeholder="Enter OTP"
             className="border p-2 w-full mb-2"
           />
-          <button onClick={verifyOtp} className="bg-blue-600 text-white px-4 py-2 rounded">
+          <button onClick={(e) => verifyOtp(e)} className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
             Verify OTP
           </button>
         </>

@@ -417,5 +417,16 @@ export default class fetchApi extends Api {
         let url = this.buildUrl(endpoints.OrderConfirmationMessage.orderconfirmation, "full")
         return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
     }
+
+
+    Userdetail(data) {
+        let url = this.buildUrl(endpoints.Web.userdetail, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
+
+    CartByPhone(data) {
+        let url = this.buildUrl(endpoints.Web.byPhone, "full")
+        return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
+    }
     
 }

@@ -44,3 +44,13 @@ export const safeParse = (data, fallback = {}) => {
     return fallback;
   }
 };
+
+
+
+export const capitalizeWords = (str) => {
+  return str
+    ?.trim()
+    ?.split(/\s+/)
+    ?.map(w => w[0]?.toUpperCase() || "")
+    ?.join("");
+}

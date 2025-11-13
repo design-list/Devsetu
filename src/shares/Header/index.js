@@ -9,7 +9,11 @@ import { useLang } from "@/app/langProviders";
 import Logo from "../../../public/icons/devasetu-logo_vertical.svg";
 import Container from "@/components/Container";
 import GoogleTranslate from "@/components/GoogleTranslate";
+import { capitalizeWords, loadState } from "../../../utils/localstorage";
+import Api from "../../../services/fetchApi";
 // import { useWithLang } from "../../../helper/useWithLang";
+
+      const api = new Api();
 
 const menu = [
   { id: 1, title: { en: "Home", hi: "होम" }, path: "/" },
@@ -24,6 +28,7 @@ const Header = () => {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
+  const [loginUser, setLoginUser] = useState(null)
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -36,6 +41,27 @@ const Header = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+
+  useEffect(() => {
+    const phone = loadState("phone");
+    const token = loadState("token");
+
+    if (phone && token) {
+      triggerUserApi(phone);
+    } 
+  }, []);
+
+  const triggerUserApi = async (phone) => {
+    try {
+      const res = await api.Userdetail({ phone });
+      if(res.status === 200){
+        setLoginUser(res.data)
+      }
+    } catch (err) {
+      console.error("❌ API Error:", err);
+    }
+  };
 
   const withLang = (path) => `/${lang}${path}`;
   const normalize = (path) =>
@@ -95,7 +121,7 @@ const Header = () => {
                 onClick={() => setMenuOpen(!menuOpen)}
                 className="w-9 h-9 flex items-center justify-center border rounded-full hover:bg-[var(--color-primary-light)] transition cursor-pointer"
               >
-                <User size={20} />
+                {loginUser ? <span>{capitalizeWords(loginUser?.name)}</span> : <User size={20} />}
               </button>
 
               {menuOpen && (
@@ -115,21 +141,21 @@ const Header = () => {
                     <p className="text-sm text-gray-500 font-semibold mb-3">Account Details</p>
                     <ul className="space-y-2">
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <span className="flex items-center gap-2 text-gray-700"><User size={16} /> My Profile</span>
+                        <Link onClick={() => setMenuOpen(false)} href={withLang("/user/profile")} className="flex items-center gap-2 text-gray-700"><User size={16} /> My Profile</Link>
                       </li>
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <span className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Puja Bookings</span>
+                        <Link onClick={() => setMenuOpen(false)} href={withLang("/user/puja")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Puja Bookings</Link>
                       </li>
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <span className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Chadhava Bookings</span>
+                        <Link onClick={() => setMenuOpen(false)} href={withLang("/user/chadhava")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Chadhava Bookings</Link>
                       </li>
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <span className="flex items-center gap-2 text-gray-700"><Flame size={16} /> Book a Puja</span>
-                        <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</span>
+                        <Link href={withLang()} className="flex items-center gap-2 text-gray-700"><Flame size={16} /> Book a Puja</Link>
+                        <Link href={withLang()} className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</Link>
                       </li>
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <span className="flex items-center gap-2 text-gray-700"><BookOpen size={16} /> Book a Chadhava</span>
-                        <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</span>
+                        <Link href={withLang()} className="flex items-center gap-2 text-gray-700"><BookOpen size={16} /> Book a Chadhava</Link>
+                        <Link href={withLang()} className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</Link>
                       </li>
                     </ul>
                   </div>

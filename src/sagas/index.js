@@ -21,6 +21,8 @@ import { paymentOrderSaga, paymentOrderVerifySaga } from './paymentSaga';
 import { PAYMENT_OREDR_REQUEST, PAYMENT_OREDR_VERIFY_REQUEST } from '@/redux/types/paymentTypes';
 import { USER_LOGIN_REQUEST, USER_REGISTRATION_REQUEST } from '@/redux/types/usersLoginTypes';
 import { userLoginSaga, userRegistrationSaga } from './userLoginSaga';
+import { loginByOtpSaga } from './otpLoginSaga';
+import { OTP_VERIFY_REQUEST } from '@/redux/types/loginTypes';
 
 function* rootSaga() {
     yield all([
@@ -78,6 +80,9 @@ function* rootSaga() {
 
         takeLatest(USER_LOGIN_REQUEST, userLoginSaga),
         takeLatest(USER_REGISTRATION_REQUEST, userRegistrationSaga),
+
+        takeLatest(OTP_VERIFY_REQUEST, loginByOtpSaga),
+
 
     ]);
 }

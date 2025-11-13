@@ -6,9 +6,7 @@ import models from "@/models/index.js";
 
 const { cart, CartAddOn, CartPackage, UserDetails } = models;
 
-// =========================
-// GET ALL CARTS
-// =========================
+
 export async function GET() {
   try {
     const carts = await cart.findAll({
