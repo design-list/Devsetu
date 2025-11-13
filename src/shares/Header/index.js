@@ -31,6 +31,9 @@ const Header = () => {
   const [loginUser, setLoginUser] = useState(null)
   const menuRef = useRef(null);
 
+  const phone = loadState("phone");
+  const token = loadState("token");
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -44,8 +47,7 @@ const Header = () => {
 
 
   useEffect(() => {
-    const phone = loadState("phone");
-    const token = loadState("token");
+
 
     if (phone && token) {
       triggerUserApi(phone);
@@ -78,6 +80,12 @@ const Header = () => {
   const handleRedirect = () => {
     setMenuOpen(false)
     router.push(withLang("/login"));
+  };
+
+  const handleLogout = () => {
+    setMenuOpen(false)
+    localStorage.removeItem("phone");
+    localStorage.removeItem("token");
   };
 
 
@@ -131,9 +139,14 @@ const Header = () => {
                     <p className="text-sm text-gray-600 mb-3 font-medium">
                       To check all available pujas & offers:
                     </p>
-                    <button onClick={handleRedirect} className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2.5 rounded-lg hover:shadow-lg transition cursor-pointer">
+                   { (!phone && !token) ? <button onClick={handleRedirect} className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2.5 rounded-lg hover:shadow-lg transition cursor-pointer">
                       Login / Create an account
                     </button>
+                      : 
+                    <button onClick={handleLogout} className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2.5 rounded-lg hover:shadow-lg transition cursor-pointer">
+                      Logout
+                    </button>
+                    }
                   </div>
 
                   {/* Account Details */}
@@ -144,19 +157,19 @@ const Header = () => {
                         <Link onClick={() => setMenuOpen(false)} href={withLang("/user/profile")} className="flex items-center gap-2 text-gray-700"><User size={16} /> My Profile</Link>
                       </li>
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <Link onClick={() => setMenuOpen(false)} href={withLang("/user/puja")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Puja Bookings</Link>
+                        <Link onClick={() => setMenuOpen(false)} href={withLang("/user/orders")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Orders</Link>
                       </li>
-                      <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                      {/* <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
                         <Link onClick={() => setMenuOpen(false)} href={withLang("/user/chadhava")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Chadhava Bookings</Link>
-                      </li>
-                      <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                      </li> */}
+                      {/* <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
                         <Link href={withLang()} className="flex items-center gap-2 text-gray-700"><Flame size={16} /> Book a Puja</Link>
                         <Link href={withLang()} className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</Link>
                       </li>
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
                         <Link href={withLang()} className="flex items-center gap-2 text-gray-700"><BookOpen size={16} /> Book a Chadhava</Link>
                         <Link href={withLang()} className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</Link>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
 

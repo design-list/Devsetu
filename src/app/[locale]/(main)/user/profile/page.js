@@ -44,16 +44,10 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg shadow">
         <ProfileField label="Name" value={user?.name || "—"} />
         <ProfileField label="WhatsApp" value={user?.whatsapp || "—"} />
-        <ProfileField label="Gotra" value={user?.gotra || "—"} />
         <ProfileField label="Address" value={user?.address || "—"} />
         <ProfileField label="City" value={user?.city || "—"} />
         <ProfileField label="State" value={user?.state || "—"} />
         <ProfileField label="Postal Code" value={user?.postalCode || "—"} />
-        <ProfileField label="Cart ID" value={user?.cartId || "—"} />
-        <ProfileField
-          label="Created On"
-          value={new Date(user?.createdAt).toLocaleDateString()}
-        />
       </div>
     </div>
   );
