@@ -12,7 +12,7 @@ const ChadhavaHeroSlider = ({ heroBanner, handlaRedirect }) => {
   // 👉 Slider Data
 
   return (
-    <div className="relative overflow-hidden md:max-w-7xl md:mx-auto">
+    <div className="relative overflow-hidden">
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

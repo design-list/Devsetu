@@ -173,7 +173,7 @@ const ChadhavaPage = () => {
             />
           </div>
         </div> */}
-          <h1 className="font-secondary text-lg md:text-4xl text-center font-bold text-[var(--color-dark)] leading-snug mb-2 md:mb-6">
+          <h1 className="font-secondary text-lg md:text-4xl text-center font-bold text-[var(--color-dark)] leading-snug mb-2 md:mb-4">
             Offer <span className="text-[var(--color-primary)]">Chadhava</span>{" "}
             as per Vedic rituals at sacred temples across India
           </h1>

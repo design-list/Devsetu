@@ -55,7 +55,7 @@ export default function AboutPage() {
       <section className="bg-[var(--color-primary-light)] text-white py-16">
         <div className="container grid md:grid-cols-3 gap-8 text-center">
           <div className="p-6 bg-white/10 rounded-2xl">
-            <Sparkles className="mx-auto mb-3 w-10 h-10 text-[var(--color-accent)]" />
+            <Sparkles className="mx-auto mb-3 w-10 h-10 text-[var(--color-white)]" />
             <h3 className="font-secondary font-bold text-3xl mb-2">Our Mission</h3>
             <p className="text-sm leading-relaxed">
               To connect devotees with authentic spiritual experiences through
@@ -64,7 +64,7 @@ export default function AboutPage() {
           </div>
 
           <div className="p-6 bg-white/10 rounded-2xl">
-            <Building2 className="mx-auto mb-3 w-10 h-10 text-[var(--color-accent)]" />
+            <Building2 className="mx-auto mb-3 w-10 h-10 text-[var(--color-white)]" />
             <h3 className="font-secondary font-bold text-3xl mb-2">Our Vision</h3>
             <p className="text-sm leading-relaxed">
               To become India’s most loved platform for spiritual discovery and
@@ -73,7 +73,7 @@ export default function AboutPage() {
           </div>
 
           <div className="p-6 bg-white/10 rounded-2xl">
-            <HeartHandshake className="mx-auto mb-3 w-10 h-10 text-[var(--color-accent)]" />
+            <HeartHandshake className="mx-auto mb-3 w-10 h-10 text-[var(--color-white)]" />
             <h3 className="font-secondary font-bold text-3xl mb-2">Our Promise</h3>
             <p className="text-sm leading-relaxed">
               Authenticity, transparency, and devotion — every service is performed
@@ -134,7 +134,7 @@ export default function AboutPage() {
             from the comfort of your home.
           </p>
           <Link
-            href="/contact"
+            href="tel:7877961501"
             className="inline-block bg-[var(--color-primary)] text-white font-proxi-bold px-8 py-3 rounded-full hover:bg-[var(--color-primary-light)] transition"
           >
             Contact Us
