@@ -214,7 +214,7 @@ const Home = () => {
           </p>
 
           <div className="text-center">
-            <Link href={'#'} className="w-[160px] m-auto cursor-pointer bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] hover:scale-105 hover:shadow-lg transition-all duration-300 text-white px-4 py-2 rounded-lg font-semibold text-lg shadow-xl flex items-center">
+            <Link href={'/puja'} className="w-[160px] m-auto cursor-pointer bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] hover:scale-105 hover:shadow-lg transition-all duration-300 text-white px-4 py-2 rounded-lg font-semibold text-lg shadow-xl flex items-center">
             Begin Now <Image src={Namaste} alt="Namaste Icon" width={30} height={30}  />
           </Link>
           </div>

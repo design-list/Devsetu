@@ -24,12 +24,12 @@ const philosopherFont = Philosopher({
 const proximanovaFont = localFont({
   src: [
     // {
-    //   path: "../../../public/fonts/proximanova_regular.woff2", 
+    //   path: "../../../public/fonts/proximanova_regular.woff2",
     //   weight: "400",
     //   style: "normal",
     // },
     {
-      path: "../../../public/fonts/proximanova_bold.woff2", 
+      path: "../../../public/fonts/proximanova_bold.woff2",
       weight: "700",
       style: "normal",
     },
@@ -44,14 +44,17 @@ export const metadata = {
   icons: {
     icon: [
       { url: "../../public/icons/devsetu-logo-icon.ico" },
-      { url: "../../public/icons/devsetu-logo-icon.ico", type: "image/png", sizes: "32x32" },
+      {
+        url: "../../public/icons/devsetu-logo-icon.ico",
+        type: "image/png",
+        sizes: "32x32",
+      },
       { url: "../../public/icons/devsetu-logo-icon.ico", sizes: "180x180" },
     ],
   },
 };
 
 export default function RootLayout({ children, mainClass }) {
-
   return (
     <html lang="en">
       <head>
@@ -96,17 +99,24 @@ export default function RootLayout({ children, mainClass }) {
           </noscript>
           {/* End Meta Pixel Code */}
 
-          <meta name="facebook-domain-verification" content="htued4topu7h00zjnalm3btj0exzdp" />
-          
+          <meta
+            name="facebook-domain-verification"
+            content="htued4topu7h00zjnalm3btj0exzdp"
+          />
         </>
       </head>
 
-      <body className={`${philosopherFont.variable} ${proximanovaFont.variable}`}>
+      <body
+        className={`${philosopherFont.variable} ${proximanovaFont.variable}`}
+      >
         {/* ✅ Razorpay Script load */}
-        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+        />
 
         {/* ✅ Google Tag Manager (noscript fallback) */}
-        
+
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NDL5T2LK"
@@ -119,7 +129,7 @@ export default function RootLayout({ children, mainClass }) {
         <ReduxProvider>
           <LangProvider>
             <Header />
-              {children}
+            {children}
             <Footer />
           </LangProvider>
         </ReduxProvider>
