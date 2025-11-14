@@ -139,7 +139,7 @@ const Header = () => {
                     <p className="text-sm text-gray-600 mb-3 font-medium">
                       To check all available pujas & offers:
                     </p>
-                   { (!phone && !token) ? <button onClick={handleRedirect} className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2.5 rounded-lg hover:shadow-lg transition cursor-pointer">
+                   { !phone ? <button onClick={handleRedirect} className="w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2.5 rounded-lg hover:shadow-lg transition cursor-pointer">
                       Login / Create an account
                     </button>
                       : 
