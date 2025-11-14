@@ -156,7 +156,7 @@ export default function GoogleTranslate() {
         <select
           value={lang}
           onChange={(e) => handleLangChange(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 notranslate"
+          className="border border-gray-300 rounded-lg px-1 py-1 md:px-3 md:py-2 text-xs md:text-sm bg-white shadow-sm focus:outline-none focus:ring-2 notranslate"
           translate="no"
         >
           <option value="en">English</option>

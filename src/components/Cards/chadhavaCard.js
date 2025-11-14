@@ -49,7 +49,7 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
                   <Image
                     src={Goldenline}
                     alt="Golden underline"
-                    className="mx-auto rotate-[0.5deg] w-16 sm:w-20"
+                    className="rotate-[0.5deg]"
                   />
                 </div>
 

@@ -134,10 +134,10 @@ export default function AboutPage() {
             from the comfort of your home.
           </p>
           <Link
-            href="tel:7877961501"
+            href="https://wa.me/7877961501" target="_blank"
             className="inline-block bg-[var(--color-primary)] text-white font-proxi-bold px-8 py-3 rounded-full hover:bg-[var(--color-primary-light)] transition"
           >
-            Contact Us
+            Join Us
           </Link>
         </div>
       </section>

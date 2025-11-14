@@ -117,7 +117,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/contact-us"
+                  href="/contactus"
                   className="text-sm md:text-base hover:underline"
                 >
                   Contact Us

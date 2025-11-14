@@ -171,8 +171,10 @@ body {
   .puja-page .swiper .swiper-button-next{top: 60% !important; width: 30px !important; height: 30px !important;}
   .puja-tag{    padding: 2px 4px;
     top: 3px; font-size: 10px;}
-    .pdp-page .swiper .swiper-button-prev,
+  .pdp-page .swiper .swiper-button-prev,
   .pdp-page .swiper .swiper-button-next{top: 60% !important; width: 30px !important; height: 30px !important;}
+  .chadhava-pg .swiper .swiper-button-prev,
+  .chadhava-pg .swiper .swiper-button-next{top: 60% !important; width: 30px !important; height: 30px !important;}
 }
 
 
