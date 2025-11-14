@@ -5,6 +5,7 @@ import models from "@/models/index.js";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 import { safeParse } from "../../../../../utils/localstorage";
+import os from "os";
 
 const { cart, CartAddOn, CartPackage, UserDetails } = models;
 
@@ -44,21 +45,63 @@ function fileToBase64IfExists(relPath) {
 // }
 
 // UNIVERSAL BROWSER (Windows + Vercel)
-async function launchBrowser() {
-  const isDev = process.env.NODE_ENV === "development";
+// async function launchBrowser() {
+//   const isDev = process.env.NODE_ENV === "development";
 
-  const executablePath = isDev
-    ? LOCAL_CHROME_PATH
-    : await chromium.executablePath();
+//   const executablePath = isDev
+//     ? LOCAL_CHROME_PATH
+//     : await chromium.executablePath();
+
+//   return puppeteer.launch({
+//     executablePath,
+//     headless: isDev ? true : chromium.headless,
+//     args: isDev ? [] : chromium.args,
+//     defaultViewport: chromium.defaultViewport,
+//     ignoreHTTPSErrors: true,
+//   });
+// }
+
+
+
+export async function launchBrowser() {
+  const isDev = process.env.NODE_ENV === "development";
+  let executablePath = null;
+
+  if (isDev) {
+    const platform = os.platform();
+
+    // OS wise Chrome paths
+    const chromePaths = {
+      win32: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      darwin: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+      linux: "/usr/bin/google-chrome",
+    };
+
+    executablePath = chromePaths[platform] || null;
+
+    // Check if Chrome exists → otherwise fallback
+    if (executablePath && fs.existsSync(executablePath)) {
+      console.log(`🟢 Using Local Chrome: ${executablePath}`);
+    } else {
+      console.log(`⚠️ Chrome Not Found → Switching to Chromium fallback...`);
+      executablePath = await chromium.executablePath();
+    }
+
+  } else {
+    // Production → Always chromium
+    executablePath = await chromium.executablePath();
+    console.log(`🚀 Production Mode → Using Chromium`);
+  }
 
   return puppeteer.launch({
     executablePath,
-    headless: isDev ? true : chromium.headless,
+    headless: isDev ? false : chromium.headless,
     args: isDev ? [] : chromium.args,
     defaultViewport: chromium.defaultViewport,
     ignoreHTTPSErrors: true,
   });
 }
+
 
 export async function GET(request, { params }) {
   try {
