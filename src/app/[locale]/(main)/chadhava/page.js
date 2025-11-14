@@ -127,7 +127,7 @@ const ChadhavaPage = () => {
   }
 
   return (
-    <main className="bg-gradient-to-b from-orange-50 via-white to-gray-50 text-gray-800">
+    <main className="chadhava-pg bg-gradient-to-b from-orange-50 via-white to-gray-50 text-gray-800">
       <Container>
         {/* 🌅 Hero Banner */}
         <section className="relative pt-4 pb-0 md:py-8 overflow-hidden">

@@ -131,7 +131,7 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
         <div className="text-center">
           <Link
             href={withLang("/puja")}
-            className="inline-flex items-center gap-2 text-[var(--secondary)] text-lg font-semibold hover:underline transition-all duration-200 capitalize"
+            className="inline-flex items-center gap-2 text-[var(--secondary)] text-lg font-semibold hover:underline transition-all duration-200 capitalize mt-4 md:mt-0"
           >
             View All {PujaName} <ArrowUpRight className="w-5 h-5" />
           </Link>
