@@ -67,7 +67,7 @@ export default function MobileLogin() {
 
   return (
     <div className="max-w-sm mx-auto mt-10 mb-6 p-6 border rounded-lg shadow-md">
-      <h2 className="text-xl font-bold mb-4">Whats'app Number</h2>
+      <h2 className="text-xl font-bold mb-4">Whatsapp Number</h2>
 
       {step === 1 && (
         <>
