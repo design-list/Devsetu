@@ -218,6 +218,20 @@ const Header = () => {
                 </Link>
               );
             })}
+
+            {phone &&  
+              <div className="p-4 border-b">
+                <p className="text-sm text-gray-500 font-semibold mb-3">Account Details</p>
+                <ul className="space-y-2">
+                  <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                    <Link onClick={() => setMobileNav(false)} href={withLang("/user/profile")} className="flex items-center gap-2 text-gray-700"><User size={16} /> My Profile</Link>
+                  </li>
+                  <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
+                    <Link onClick={() => setMobileNav(false)} href={withLang("/user/orders")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Orders</Link>
+                  </li>
+                </ul>
+              </div>}
+
             {!phone ?  <button className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
               Login / Create an account
             </button> :
