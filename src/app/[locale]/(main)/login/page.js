@@ -78,7 +78,7 @@ export default function MobileLogin() {
             placeholder="+91XXXXXXXXXX"
             className="border p-2 w-full mb-2"
           />
-          <button onClick={sendOtp} className="bg-green-600 text-white px-4 py-2 rounded cursor-pointer">
+          <button onClick={sendOtp} className="bg-orange-600 text-white px-4 py-2 rounded cursor-pointer">
             Send OTP
           </button>
         </>
@@ -93,7 +93,7 @@ export default function MobileLogin() {
             placeholder="Enter OTP"
             className="border p-2 w-full mb-2"
           />
-          <button onClick={(e) => verifyOtp(e)} className="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+          <button onClick={(e) => verifyOtp(e)} className="bg-orange-600 text-white px-4 py-2 rounded cursor-pointer">
             Verify OTP
           </button>
         </>
