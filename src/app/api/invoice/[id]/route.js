@@ -32,18 +32,6 @@ function fileToBase64IfExists(relPath) {
   }
 }
 
-// function fileToBase64IfExists(relPath) {
-//   try {
-//     const abs = path.join(process.cwd(), "public", relPath);
-//     if (!fs.existsSync(abs)) return null;
-//     const data = fs.readFileSync(abs);
-//     const ext = path.extname(abs).slice(1);
-//     return `data:image/${ext};base64,${data.toString("base64")}`;
-//   } catch {
-//     return null;
-//   }
-// }
-
 // UNIVERSAL BROWSER (Windows + Vercel)
 // async function launchBrowser() {
 //   const isDev = process.env.NODE_ENV === "development";
@@ -224,9 +212,17 @@ export async function GET(request, { params }) {
   <div class="hr-muted"></div>
 
   <div style="margin-top:10px">
-    <div style="float:left; width:60%">
+    <div style="float:left; width:100%">
       <div><strong>Invoice Date:</strong> ${new Date(order.paidAt).toLocaleDateString("en-GB")}</div>
-      <div><strong>Invoice Number:</strong> ${order.id}</div>
+      <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
+        <div style="white-space: nowrap;">
+            Invoice Number: ${order.id}
+        </div>
+        <div style="text-align: right; max-width: 70%; word-wrap: break-word;">
+            ${ pkg?.type?.charAt(0).toUpperCase() + pkg?.type?.slice(1)} : ${pkg.productTitle}
+        </div>
+    </div>
+
     </div>
     <div style="clear:both;"></div>
   </div>
@@ -235,11 +231,11 @@ export async function GET(request, { params }) {
     <div class="box-left">
       <strong>Bill From:</strong><br/>
       <div class="small">
-        <strong>Name:</strong> Firstprinciple AppsforBharat Private Limited<br/>
-        <strong>Address:</strong> #435, First Floor, 17th Cross, 19th Main Rd, Above Axis Bank, Sector 4, HSR Layout, Bengaluru, Karnataka.<br/>
-        <strong>Pincode:</strong> 560102<br/>
-        <strong>GSTIN:</strong> 29AAECF3454C1ZT<br/>
-        <strong>PAN:</strong> AAECF3454C
+        <strong>Name:</strong> Devasetu Technologies Private Limited<br/>
+        <strong>Address:</strong> Pratap Nagar, Bhilwara, Rajasthan <br/>
+        <strong>Pincode:</strong> 311001<br/>
+        <strong>GSTIN:</strong> 08AALCD9543R1ZN<br/>
+        <strong>PAN:</strong> AALCD9543R
       </div>
     </div>
 
@@ -256,7 +252,7 @@ export async function GET(request, { params }) {
 
   <div class="place-supply" style="border:1px solid #333; border-top:none; padding:8px 10px; display:flex; justify-content:space-between;">
     <div><strong>Place of Supply</strong></div>
-    <div><strong>${user.state || "—"}</strong></div>
+    <div><strong>${pkg.location || "—"}</strong></div>
   </div>
 
   <div class="section-title">INVOICE SUMMARY</div>
@@ -386,7 +382,7 @@ export async function GET(request, { params }) {
     <div style="margin-top:10px;" class="small"><strong>Note:</strong> This is a system generated invoice and doesn't require to be signed</div>
     <div style="margin-top:12px; font-size:9px; color:#333;">
       <strong>Registered Office Address:</strong><br/>
-      #435, First Floor, 17th Cross, 19th Main Rd, Above Axis Bank, Sector 4, HSR Layout, Bengaluru, Karnataka, Pin: 560102
+      Registered Office: Pratap Nagar, Bhilwara, Rajasthan Pin - 311001
     </div>
   </div>
 

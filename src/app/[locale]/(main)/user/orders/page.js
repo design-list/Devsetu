@@ -241,14 +241,14 @@ export default function CartHistoryPage() {
             )}
 
             {/* 🧾 Download Invoice Button */}
-            <div className="mt-6 flex justify-end">
+            {selectedOrder?.paymentStatus === "PAID" && <div className="mt-6 flex justify-end">
               <button
                 onClick={() =>handleDownload(selectedOrder?.id)}
                 className="mt-3 w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
               >
                 ⬇️ Download Invoice
               </button>
-            </div>
+            </div>}
           </div>
         </div>
       )}

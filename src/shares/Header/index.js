@@ -159,17 +159,6 @@ const Header = () => {
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
                         <Link onClick={() => setMenuOpen(false)} href={withLang("/user/orders")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Orders</Link>
                       </li>
-                      {/* <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <Link onClick={() => setMenuOpen(false)} href={withLang("/user/chadhava")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Chadhava Bookings</Link>
-                      </li> */}
-                      {/* <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <Link href={withLang()} className="flex items-center gap-2 text-gray-700"><Flame size={16} /> Book a Puja</Link>
-                        <Link href={withLang()} className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</Link>
-                      </li>
-                      <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
-                        <Link href={withLang()} className="flex items-center gap-2 text-gray-700"><BookOpen size={16} /> Book a Chadhava</Link>
-                        <Link href={withLang()} className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-md">New</Link>
-                      </li> */}
                     </ul>
                   </div>
 
@@ -179,7 +168,7 @@ const Header = () => {
                     <div className="bg-gray-50 border rounded-lg p-3 mb-3 flex items-center gap-3">
                       <Phone size={18} className="text-[var(--color-primary)]" />
                       <div>
-                        <Link href={'tel:7877961501'} className="text-sm font-semibold text-gray-700">7877961501</Link>
+                        <Link href={'tel:7877961501'} className="text-sm font-semibold text-gray-700">+9178-779-61501</Link>
                         <p className="text-xs text-gray-500">10:30 AM - 7:30 PM</p>
                       </div>
                     </div>
@@ -229,9 +218,12 @@ const Header = () => {
                 </Link>
               );
             })}
-            <button className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
+            {!phone ?  <button className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
               Login / Create an account
-            </button>
+            </button> :
+            <button className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
+              Logout
+            </button>}
           </nav>
         </div>
       )}
