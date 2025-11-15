@@ -235,7 +235,7 @@ const Header = () => {
             {!phone ?  <button onClick={handleRedirect} className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
               Login / Create an account
             </button> :
-            <button className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
+            <button onClick={handleLogout} className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
               Logout
             </button>}
           </nav>
