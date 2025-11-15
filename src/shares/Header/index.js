@@ -88,6 +88,16 @@ const Header = () => {
     localStorage.removeItem("token");
   };
 
+  const handleLogoutby = () => {
+    setMobileNav(false)
+    localStorage.removeItem("phone");
+    localStorage.removeItem("token");
+  };
+
+  const handleRedirectby = () => {
+    setMobileNav(false)
+    router.push(withLang("/login"));
+  };
 
   return (
     <header className="w-full shadow-sm sticky top-0 z-50 bg-white">
@@ -232,10 +242,10 @@ const Header = () => {
                 </ul>
               </div>}
 
-            {!phone ?  <button onClick={handleRedirect} className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
+            {!phone ?  <button onClick={handleRedirectby} className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
               Login / Create an account
             </button> :
-            <button onClick={handleLogout} className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
+            <button onClick={handleLogoutby} className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
               Logout
             </button>}
           </nav>
