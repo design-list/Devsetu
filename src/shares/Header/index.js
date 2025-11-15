@@ -232,7 +232,7 @@ const Header = () => {
                 </ul>
               </div>}
 
-            {!phone ?  <button className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
+            {!phone ?  <button onClick={handleRedirect} className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
               Login / Create an account
             </button> :
             <button className="mt-3 w-full bg-gradient-to-r from-[var(--color-primary-light)] to-[var(--color-primary)] text-white font-semibold py-2 rounded-lg hover:shadow-lg transition">
