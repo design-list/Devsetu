@@ -10,18 +10,16 @@ const razorpay = new Razorpay({
 });
 
 
-// Start: 2 दिन पहले की midnight (15th 00:00)
 const startDate = new Date();
-startDate.setDate(startDate.getDate() - 9); // आज 16 है तो ये 15 होगा
+startDate.setDate(startDate.getDate() - 9);
 startDate.setHours(0, 0, 0, 0);
 
-// End: आज की रात के end तक (16th 23:59:59.999)
 const endDate = new Date();
 endDate.setHours(23, 59, 59, 999);
 
 export async function GET() {
   try {
-    // 1️⃣ Fetch all pending orders from today
+   
     const pendingOrders = await cart.findAll({
       where: {
         paymentStatus: "PENDING",
@@ -58,7 +56,6 @@ export async function GET() {
             paymentStatus: "PAID",
             razorpayOrderId: payment.order_id,
             razorpayPaymentId: payment.id,
-            razorpaySignature: signature,
             paymentMethod: payment.method || null,
             paymentEmail: payment.email || null,
             paymentContact: payment.contact || null,
