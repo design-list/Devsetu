@@ -624,7 +624,7 @@ export default function CheckoutPage() {
             </p>
             <button
               type="button"
-              className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-white px-4 md:px-8 py-2 md:py-3 rounded-md md:rounded-xl font-semibold shadow-md hover:scale-[1.03] hover:shadow-lg transition-transform"
+              className="bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] text-white px-4 md:px-8 py-2 md:py-3 rounded-md md:rounded-xl font-semibold shadow-md hover:scale-[1.03] hover:shadow-lg transition-transform cursor-pointer"
               onClick={handleSubmit}
             >
               Pay Now
