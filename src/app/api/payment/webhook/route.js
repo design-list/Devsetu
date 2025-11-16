@@ -9,46 +9,53 @@ const { cart } = models;
 
 export async function POST(req) {
   try {
-    // MUST read raw body, not JSON
+    // Read raw body for signature validation
     const rawBody = await req.text();
     const signature = req.headers.get("x-razorpay-signature");
 
-    const expected = crypto
+    // Validate webhook signature
+    const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_WEBHOOK_SECRET)
       .update(rawBody)
       .digest("hex");
 
-    if (expected !== signature) {
-      console.log("❌ Webhook signature mismatch");
-      return new NextResponse("Invalid signature", { status: 400 });
+    if (signature !== expectedSignature) {
+      console.log("❌ Invalid Webhook Signature");
+      return new NextResponse("Invalid Signature", { status: 400 });
     }
 
     const event = JSON.parse(rawBody);
-
-    console.log("📩 Webhook Received:", event.event);
+    console.log("📩 Webhook Event:", event.event);
 
     if (event.event === "payment.captured") {
       const payment = event.payload.payment.entity;
 
+      // Update full payment info in DB
       await cart.update(
         {
           paymentStatus: "PAID",
+          razorpayOrderId: payment.order_id,
           razorpayPaymentId: payment.id,
+          razorpaySignature: signature,
+          paymentMethod: payment.method || null,
+          paymentEmail: payment.email || null,
+          paymentContact: payment.contact || null,
+          upiId: payment.vpa || null,
+          paymentAmount: payment.amount / 100, // converting paise to rupees
+          paymentStatusRazorpay: payment.status,
           paidAt: new Date(),
         },
-        {
-          where: { razorpayOrderId: payment.order_id }
-        }
+        { where: { razorpayOrderId: payment.order_id } }
       );
 
-      console.log(`✅ Payment Verified for Order: ${payment.order_id}`);
+      console.log(`✅ Razorpay Payment Captured & Updated: ${payment.order_id}`);
     }
 
-    // Razorpay requires exactly 200 OK, else retries
+    // Razorpay expects exactly 200 response
     return new NextResponse("OK", { status: 200 });
 
   } catch (err) {
-    console.log("🔥 Webhook Error:", err);
+    console.error("🔥 Webhook Processing Error:", err);
     return new NextResponse("Server Error", { status: 500 });
   }
 }
