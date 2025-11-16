@@ -234,6 +234,11 @@ export default class fetchApi extends Api {
         let url = this.buildUrl(endpoints.Payment.Verify, "full")
         return this.fetchNormal(url, "POST", JSON.stringify(data)).then(response => response)
     }
+
+    ReconcilePayments(data) {
+        let url = this.buildUrl(endpoints.Payment.Reconcile, "full")
+        return this.fetch(url, "GET", null, data).then(response => response)
+    }
     
     CheckLogin(data) {
         let url = this.buildUrl(endpoints.AdminLogin.adminLogin, "full")

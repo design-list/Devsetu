@@ -9,7 +9,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-
+// Filter last 15 days
 const startDate = new Date();
 startDate.setDate(startDate.getDate() - 15);
 startDate.setHours(0, 0, 0, 0);
@@ -19,12 +19,13 @@ endDate.setHours(23, 59, 59, 999);
 
 export async function GET() {
   try {
-   
+
+    // Fetch pending payments in last 15 days
     const pendingOrders = await cart.findAll({
       where: {
         paymentStatus: "PENDING",
-         createdAt: {
-        [Op.between]: [startDate, endDate],
+        createdAt: {
+          [Op.between]: [startDate, endDate],
         },
       },
     });
@@ -33,23 +34,40 @@ export async function GET() {
       return NextResponse.json({
         message: "No pending payments found",
         totalChecked: 0,
-        updated: 0,
+        markedPaid: 0,
+        markedFailed: 0,
       });
     }
 
-    let updated = 0;
+    let paidCount = 0;
+    let failedCount = 0;
 
     for (const order of pendingOrders) {
-      if (!order.razorpayOrderId) continue;
+      if (!order.razorpayOrderId) {
+        // No RZP order, mark as failed
+        await cart.update(
+          { paymentStatus: "FAILED" },
+          { where: { id: order.id } }
+        );
+        failedCount++;
+        continue;
+      }
 
-      // 2️⃣ Fetch payments for this Order from Razorpay
+      // Fetch payment details from Razorpay
       const payments = await razorpay.orders.fetchPayments(order.razorpayOrderId);
-
       const payment = payments.items?.[0];
 
-      if (!payment) continue;
+      // Case: No payment found → Failed
+      if (!payment) {
+        await cart.update(
+          { paymentStatus: "FAILED" },
+          { where: { id: order.id } }
+        );
+        failedCount++;
+        continue;
+      }
 
-      // 3️⃣ If Razorpay says payment captured, update DB
+      // Case: Payment Captured → Mark Paid
       if (payment.status === "captured") {
         await cart.update(
           {
@@ -60,23 +78,36 @@ export async function GET() {
             paymentEmail: payment.email || null,
             paymentContact: payment.contact || null,
             upiId: payment.vpa || null,
-            paymentAmount: payment.amount / 100, // converting paise to rupees
+            paymentAmount: payment.amount / 100,
             paymentStatusRazorpay: payment.status,
             paidAt: new Date(),
           },
           { where: { id: order.id } }
         );
-
-        updated++;
+        paidCount++;
+      } 
+      else if (payment.status === "failed") {
+        // Case: Payment Failed
+        await cart.update(
+          {
+            paymentStatus: "FAILED",
+            paymentStatusRazorpay: payment.status
+          },
+          { where: { id: order.id } }
+        );
+        failedCount++;
       }
     }
 
+    // Response
     return NextResponse.json({
       message: "Reconciliation complete",
       totalChecked: pendingOrders.length,
-      updated,
+      updatedPaid: paidCount,
+      updatedFailed: failedCount,
       status: 200,
     });
+
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: err.message }, { status: 500 });

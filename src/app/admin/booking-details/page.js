@@ -5,6 +5,7 @@ import { Search, Download, X } from "lucide-react";
 import Api from "../../../../services/fetchApi";
 import LazyImage from "@/components/Atom/LazyImage";
 import { safeParse } from "../../../../utils/localstorage";
+import PageLaoder from "@/components/Atom/loader/pageLaoder";
 
 const api = new Api();
 
@@ -15,7 +16,8 @@ const BookingDetails = () => {
   const [paymentFilter, setPaymentFilter] = useState("All");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [selectedBooking, setSelectedBooking] = useState(null); // for modal
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -61,6 +63,23 @@ const BookingDetails = () => {
 
     setFilteredBookings(filtered);
   }, [searchQuery, paymentFilter, fromDate, toDate, bookingDetails]);
+
+  const handleReconcilePayments = async () => {
+    setIsLoading(true);
+    try {
+      const res = await api.ReconcilePayments();  
+      if (res.status === 200) {
+        setIsLoading(false);
+      } else {
+        alert(res.message || "Reconciliation failed");
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Reconciliation error:", error);
+      alert("An error occurred during reconciliation");
+    }
+  };
 
   // 📥 Convert JSON to CSV and Download
   const handleDownloadCSV = () => {
@@ -134,6 +153,13 @@ const BookingDetails = () => {
     document.body.removeChild(a);
   };
 
+
+  if(isLoading){
+    return (
+      <PageLaoder />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-orange-50 py-8 px-4">
       <div className="max-w-7xl mx-auto bg-white rounded-3xl shadow-md border border-orange-100 p-6 md:p-10">
@@ -159,6 +185,12 @@ const BookingDetails = () => {
             >
               <Download size={18} />
               Download CSV
+            </button>
+            <button
+              onClick={handleReconcilePayments}
+              className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl shadow-sm transition-all"
+            >
+              Reconcile Payments
             </button>
           </div>
         </div>

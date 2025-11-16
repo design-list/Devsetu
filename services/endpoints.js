@@ -61,6 +61,7 @@ export const endpoints = {
     Payment: {
         Order: `${baseApiUrl}/payment/order`,
         Verify: `${baseApiUrl}/payment/verify`,
+        Reconcile: `${baseApiUrl}/payment/reconcile`,
     },
 
     Articels: {
