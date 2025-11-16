@@ -160,7 +160,7 @@ const Header = () => {
                   </div>
 
                   {/* Account Details */}
-                  <div className="p-4 border-b">
+                 { phone && <div className="p-4 border-b">
                     <p className="text-sm text-gray-500 font-semibold mb-3">Account Details</p>
                     <ul className="space-y-2">
                       <li className="flex items-center justify-between hover:bg-gray-50 rounded-lg p-2 cursor-pointer">
@@ -170,7 +170,7 @@ const Header = () => {
                         <Link onClick={() => setMenuOpen(false)} href={withLang("/user/orders")} className="flex items-center gap-2 text-gray-700"><FileText size={16} /> My Orders</Link>
                       </li>
                     </ul>
-                  </div>
+                  </div> }
 
                   {/* Support */}
                   <div className="p-4">

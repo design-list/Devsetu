@@ -335,7 +335,7 @@ const PujaCart = () => {
             <span className="font-secondary text-base md:text-xl">
               ₹{allCarts.grand_total}
             </span>
-            <span className="text-base md:text-lg font-medium">Proceed to Checkout →</span>
+            <span className="text-base md:text-lg font-medium cursor-pointer">Proceed to Checkout →</span>
           </button>
         </div>
       </div>
