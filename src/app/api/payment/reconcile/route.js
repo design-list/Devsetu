@@ -11,7 +11,7 @@ const razorpay = new Razorpay({
 
 
 const startDate = new Date();
-startDate.setDate(startDate.getDate() - 9);
+startDate.setDate(startDate.getDate() - 15);
 startDate.setHours(0, 0, 0, 0);
 
 const endDate = new Date();
