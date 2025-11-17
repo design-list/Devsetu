@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import LazyImage from "../Atom/LazyImage";
-import { Trash, Edit2, Check, Upload } from "lucide-react";
+import { Trash, Edit2, Check, X, Upload } from "lucide-react";
 
 const PackagesComponent = ({ pujaPackages = [], handleDelete, handleUpdate }) => {
   const [editingIndex, setEditingIndex] = useState(null);
@@ -61,10 +61,10 @@ const PackagesComponent = ({ pujaPackages = [], handleDelete, handleUpdate }) =>
 
                 {/* Delete Button */}
                 <button
-                  onClick={() => handleDelete(pkg)}
+                  onClick={() => (!isEditing ? handleDelete(pkg) : setEditingIndex(null))}
                   className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition"
                 >
-                  <Trash size={14} />
+                  {isEditing ? <X size={14} /> : <Trash size={14} /> }
                 </button>
 
                 {/* Edit / Save Button */}
