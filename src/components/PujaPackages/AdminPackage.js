@@ -3,7 +3,7 @@ import { useState } from "react";
 import LazyImage from "../Atom/LazyImage";
 import { Trash, Edit2, Check, Upload } from "lucide-react";
 
-const PujaPackages = ({ pujaPackages = [], handleDelete, handleUpdate, handleChange }) => {
+const PackagesComponent = ({ pujaPackages = [], handleDelete, handleUpdate }) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [editData, setEditData] = useState({});
 
@@ -11,13 +11,37 @@ const PujaPackages = ({ pujaPackages = [], handleDelete, handleUpdate, handleCha
 
   const handleEditClick = (pkg, index) => {
     if (editingIndex === index) {
-      // 🟢 Update logic
-      handleUpdate?.(editData);
+      handleUpdate({ ...editData, id: pkg.id }); 
       setEditingIndex(null);
     } else {
-      // ✏️ Enter edit mode
       setEditingIndex(index);
       setEditData({ ...pkg });
+    }
+  };
+
+  const handleEditChange = (field, value) => {
+    setEditData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const previewURL = URL.createObjectURL(file);
+    setEditData((prev) => ({ ...prev, packImg: previewURL }));
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+
+    if (data?.url) {
+      setEditData((prev) => ({ ...prev, packImg: data.url }));
     }
   };
 
@@ -32,128 +56,89 @@ const PujaPackages = ({ pujaPackages = [], handleDelete, handleUpdate, handleCha
               key={index}
               className="relative rounded-2xl overflow-hidden border-2 border-gray-200 hover:border-orange-400 transition-all bg-white"
             >
-              {/* 🗑 Delete + ✏️ Edit Buttons */}
+              {/* ACTION BUTTONS */}
               <div className="absolute top-3 left-3 flex gap-2 z-10">
+
+                {/* Delete Button */}
                 <button
-                  type="button"
                   onClick={() => handleDelete(pkg)}
-                  className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center shadow-sm hover:bg-red-500 hover:text-white transition-colors"
+                  className="w-8 h-8 bg-white border border-gray-300 rounded-full flex items-center justify-center hover:bg-red-500 hover:text-white transition"
                 >
-                  <Trash height={14} width={14} />
+                  <Trash size={14} />
                 </button>
 
+                {/* Edit / Save Button */}
                 <button
-                  type="button"
                   onClick={() => handleEditClick(pkg, index)}
-                  className={`w-8 h-8 border border-gray-300 rounded-full flex items-center justify-center shadow-sm transition-colors ${
-                    isEditing
-                      ? "bg-green-500 text-white"
-                      : "bg-white text-gray-600 hover:bg-orange-400 hover:text-white"
+                  className={`w-8 h-8 rounded-full flex items-center justify-center border transition ${
+                    isEditing ? "bg-green-600 text-white" : "bg-white hover:bg-orange-500 hover:text-white"
                   }`}
                 >
-                  {isEditing ? <Check height={14} width={14} /> : <Edit2 height={14} width={14} />}
+                  {isEditing ? <Check size={14} /> : <Edit2 size={14} />}
                 </button>
               </div>
 
-              {/* 🖼 Image */}
+              {/* IMAGE */}
               <div className="w-full h-48 relative bg-gray-100 flex items-center justify-center">
-                {pkg?.packImg && (
-                  <LazyImage
-                    src={pkg.packImg}
-                    alt={pkg.packageType}
-                    fill
-                    className="object-contain"
-                  />
-                )}
+                <LazyImage
+                  src={isEditing ? editData.packImg : pkg.packImg}
+                  alt={pkg.packageType}
+                  fill
+                  className="object-contain"
+                />
 
-                {/* 🖼 Editable image upload (only in edit mode) */}
+                {/* Image Upload Only In Editing */}
                 {isEditing && (
-                  <div className="absolute bottom-2 left-0 right-0 flex flex-col items-center gap-2 bg-white/70 py-2 rounded-b-2xl">
-                    <label className="flex items-center gap-2 cursor-pointer bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600 transition">
-                      <Upload size={16} />
-                      <span className="text-sm">Change Image</span>
-                      <input
-                        type="file"
-                        name="packImg"
-                        accept="image/*"
-                        onChange={(e) => handleChange(e, index)}
-                        className="hidden"
-                      />
-                    </label>
-
-                    {pkg.packImg && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const updated = { ...editData, packImg: null };
-                          setEditData(updated);
-                        }}
-                        className="text-xs text-red-600 hover:underline"
-                      >
-                        Remove Image
-                      </button>
-                    )}
-                  </div>
+                  <label className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-orange-600 px-3 py-1 rounded text-white cursor-pointer hover:bg-orange-700 flex gap-2 items-center">
+                    <Upload size={14} />
+                    <span>Change</span>
+                    <input type="file" className="hidden" onChange={handleImageUpload} />
+                  </label>
                 )}
               </div>
 
-              {/* 📦 Editable / Non-editable Content */}
+              {/* CONTENT */}
               <div className="p-4">
                 {isEditing ? (
                   <div className="space-y-2">
+
                     <input
                       type="text"
                       value={editData.packageType}
-                      onChange={(e) =>
-                        setEditData({ ...editData, packageType: e.target.value })
-                      }
-                      className="w-full border p-2 rounded"
-                      placeholder="Package Type"
+                      onChange={(e) => handleEditChange("packageType", e.target.value)}
+                      className="border w-full p-2 rounded"
+                      placeholder="Package Title"
                     />
+
                     <input
                       type="number"
                       value={editData.packagePrice}
-                      onChange={(e) =>
-                        setEditData({ ...editData, packagePrice: e.target.value })
-                      }
-                      className="w-full border p-2 rounded"
+                      onChange={(e) => handleEditChange("packagePrice", e.target.value)}
+                      className="border w-full p-2 rounded"
                       placeholder="Price"
                     />
+
                     <textarea
                       value={editData.packageDescription}
-                      onChange={(e) =>
-                        setEditData({
-                          ...editData,
-                          packageDescription: e.target.value,
-                        })
-                      }
-                      className="w-full border p-2 rounded"
+                      onChange={(e) => handleEditChange("packageDescription", e.target.value)}
+                      className="border w-full p-2 rounded"
                       placeholder="Description"
                     />
+
                     <input
                       type="number"
                       value={editData.noOfPeople}
-                      onChange={(e) =>
-                        setEditData({ ...editData, noOfPeople: e.target.value })
-                      }
-                      className="w-full border p-2 rounded"
+                      onChange={(e) => handleEditChange("noOfPeople", e.target.value)}
+                      className="border w-full p-2 rounded"
                       placeholder="No. of People"
                     />
                   </div>
                 ) : (
                   <>
-                    <h3 className="font-semibold text-lg truncate">
-                      {pkg.packageType || pkg.name}
-                    </h3>
-                    <p className="font-bold text-xl mt-1">₹{pkg.packagePrice}</p>
-                    <span className="text-sm text-gray-600 block mt-1 line-clamp-3">
-                      {pkg.packageDescription}
-                    </span>
-                    {pkg.noOfPeople && (
-                      <p className="text-xs text-gray-500 mt-2">
-                        👥 {pkg.noOfPeople} Person
-                      </p>
-                    )}
+                    <h3 className="font-semibold text-lg truncate">{pkg.packageType}</h3>
+                    <p className="font-bold text-xl">₹{pkg.packagePrice}</p>
+                    <p className="text-sm text-gray-700 line-clamp-3">{pkg.packageDescription}</p>
+                    <p className="text-xs text-gray-500 mt-2">👥 {pkg.noOfPeople} People</p>
                   </>
                 )}
               </div>
@@ -165,4 +150,4 @@ const PujaPackages = ({ pujaPackages = [], handleDelete, handleUpdate, handleCha
   );
 };
 
-export default PujaPackages;
+export default PackagesComponent;

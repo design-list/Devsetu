@@ -18,7 +18,6 @@ const PujaPackages = () => {
         offerings: [{ offerimg: null, title: "", description: "", price: 0, tags: "" }],
     });
 
-    const [editId, setEditId] = useState(null);
     const [addNewPackage, setAddNewPackage] = useState(false);
     const [addNewOffering, setAddNewOffering] = useState(false);
 
@@ -178,7 +177,7 @@ const PujaPackages = () => {
             console.log(`error`, e)
         })
     }
-console.log("formDataformData", formData);
+// console.log("formDataformData", formData);
     return (
         <div className="flex-1 p-1 pb-3 overflow-y-auto max-h-screen scrollbar-hide">
             <div>

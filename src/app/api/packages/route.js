@@ -41,3 +41,50 @@ export async function POST(req) {
     );
   }
 }
+
+
+export async function PUT(req) {
+  try {
+    const body = await req.json();
+
+    if (!body?.id) {
+      return NextResponse.json(
+        { status: "error", message: "Package ID is required" },
+        { status: 400 }
+      );
+    }
+
+    // Find existing record
+    const existingPackage = await commonPujaPackage.findByPk(body.id);
+
+    if (!existingPackage) {
+      return NextResponse.json(
+        { status: "error", message: "Package not found" },
+        { status: 404 }
+      );
+    }
+
+    // Update record
+    await existingPackage.update({
+      packImg: body.packImg,
+      packageType: body.packageType,
+      packageDescription: body.packageDescription,
+      noOfPeople: parseFloat(body.noOfPeople),
+      packagePrice: parseFloat(body.packagePrice),
+    });
+
+    return NextResponse.json({
+      status: 200,
+      message: "Package updated successfully",
+      data: existingPackage,
+    });
+
+  } catch (error) {
+    console.error("Update Error:", error);
+
+    return NextResponse.json(
+      { status: "error", message: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
