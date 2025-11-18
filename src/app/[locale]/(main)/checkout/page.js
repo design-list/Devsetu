@@ -313,7 +313,7 @@ export default function CheckoutPage() {
 
     <section className="min-h-screen bg-gradient-to-br from-[var(--color-accent)]/15 via-[var(--color-background)] to-[var(--color-primary-light)]/10 pt-4 md:py-10 px-4 md:px-10 font-[var(--font-primary)]">
       <BreadcrumbSteps currentStep={4} />
-      <div className="mt-4 md:mt-0 max-w-3xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl p-3 md:p-8 relative overflow-hidden border border-[var(--color-primary-light)]/30">
+      <div className="my-4 md:mt-0 max-w-3xl mx-auto bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl p-3 md:p-8 relative overflow-hidden border border-[var(--color-primary-light)]/30">
         {/* Decorative Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary-light)]/10 to-transparent pointer-events-none rounded-3xl"></div>
 

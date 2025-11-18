@@ -44,8 +44,8 @@ const PujaCart = () => {
       <Container>
       <BreadcrumbSteps currentStep={2} />
 
-        <div className="max-w-5xl m-auto flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 md:mb-2 mt-8 text-center md:text-left">
-          <h3 className="font-secondary text-2xl md:text-3xl font-bold text-[var(--color-primary)] tracking-tight md:mb-4 sm:mb-0">
+        <div className="max-w-5xl m-auto flex flex-col sm:flex-row sm:items-end sm:justify-between mb-4 md:mb-8 mt-12 text-center md:text-left">
+          <h3 className="font-secondary text-2xl md:text-3xl font-bold text-[var(--color-primary)] tracking-tight">
             Add More Offering Items 🪔
           </h3>
           <button
@@ -59,7 +59,7 @@ const PujaCart = () => {
         {/* Grid Layout */}
 
 
-        <div className="grid grid-cols-1 gap-8 max-w-5xl m-auto">
+        <div className="grid grid-cols-1 gap-4 md:gap-8 max-w-5xl m-auto">
           {pujaoffering?.map((off) => {
             const isAdded = allCarts?.add_ons?.some((add) => add.id === off.id);
             const hasTags = off.tags && off.tags.trim() !== "";
@@ -67,8 +67,7 @@ const PujaCart = () => {
             return (
               <div
               key={off.id}
-              className={`group rounded-2xl p-5 shadow-sm border transition-all duration-300 relative overflow-hidden 
-                ${hasTags ? "bg-yellow-50 border-yellow-400 shadow-md" : "bg-white border-gray-100 hover:shadow-lg"}`}
+              className={`group rounded-lg md:rounded-2xl p-3 md:p-5 shadow-sm border transition-all duration-300 relative overflow-hidden ${hasTags ? "bg-yellow-50 border-yellow-400 shadow-md" : "bg-white border-gray-100 hover:shadow-lg"}`}
               >
             
               <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-[var(--color-primary)] to-yellow-400 transition-all duration-300 rounded-2xl"></div>
@@ -87,7 +86,7 @@ const PujaCart = () => {
                       {off.description}
                     </p>
                   </div>
-                   <div className="w-20 md:w-28 h-20 md:h-28 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
+                   <div className="w-24 md:w-28 h-24 md:h-28 rounded-lg md:rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
                     <LazyImage
                       src={off.offerimg}
                       alt={off.title}
@@ -102,7 +101,7 @@ const PujaCart = () => {
                   </span>
 
                   {isAdded ? (
-                    <button className="md:-mt-[24px] mr-2 md:mr-[20px] border border-green-400 text-green-600 text-xs md:text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default notranslate"
+                    <button className="absolute top-[60%] md:top-[80%] right-[9%] md:right-[2%] md:-mt-[24px] mr-2 md:mr-[20px] border border-green-400 text-green-600 text-xs md:text-sm px-1 py-1 rounded-md flex items-center gap-1 bg-green-50 font-normal cursor-default notranslate"
                      translate="no"
                     >
                       <CheckCircle size={14} /> Added
@@ -110,7 +109,7 @@ const PujaCart = () => {
                   ) : (
                     <button
                       onClick={() => handleAddOtherOffers(off)}
-                      className="md:-mt-[24px] mr-2 md:mr-[20px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-xs md:text-sm px-3 py-1.5 rounded-md flex items-center gap-1 bg-orange-50 font-medium hover:bg-orange-50 transition-all z-10 notranslate"
+                      className="absolute top-[60%] md:top-[80%] right-[9%] md:right-[2%] md:-mt-[24px] mr-2 md:mr-[20px] cursor-pointer border border-[var(--color-primary-light)] text-[var(--color-primary)] text-xs md:text-sm p-[4px] md:px-3 md:py-1.5 rounded-md flex items-center gap-[1px] md:gap-1 bg-orange-50 font-medium hover:bg-orange-50 transition-all z-10 notranslate"
                       translate="no"
                     >
                       <Plus size={14} /> Add
@@ -122,12 +121,14 @@ const PujaCart = () => {
           })}
         </div>
 
-         <button
+         <div className="fixed bottom-[0] left-[0] w-full z-50">
+          <button
             onClick={handleRedirect}
-            className="font-secondary block md:hidden bg-[var(--color-primary-light)] hover:bg-[var(--color-primary)] text-white font-semibold py-2 md:py-3 px-5 md:px-8 rounded-lg text-lg shadow-md transition-all duration-300 mt-5 m-auto"
+            className="font-secondary block md:hidden bg-[var(--color-primary-light)] hover:bg-[var(--color-primary)] text-white font-semibold py-2 md:py-3 px-5 md:px-8 md:rounded-lg text-lg shadow-md transition-all duration-300 mt-5 m-auto w-full md:w-auto"
           >
             Next →
           </button>
+         </div>
       </Container>
     </div>
   );

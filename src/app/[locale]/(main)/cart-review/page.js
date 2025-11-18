@@ -115,18 +115,18 @@ const PujaCart = () => {
             onClick={() => setIsOpen(!isOpen)}
           >
             <div className="flex justify-between items-center cursor-pointer">
-              <div className="flex flex-col">
+              <div className="flex flex-row gap-4 items-center">
                 <p className="text-base md:text-lg font-semibold text-[var(--color-dark)]">
                   {allCarts?.package?.productTitle}
                 </p>
-              </div>
-              <button
+                <button
                 onClick={handleRemovePackages}
-                className="absolute top-[22%] md:top-[16%] right-[7%] md:right-[50px] bg-yellow-500 hover:bg-red-600 text-white p-1 md:p-2 rounded-md transition"
+                className="bg-yellow-500 hover:bg-red-600 text-white p-1 md:p-2 rounded-md transition"
               >
                 <Trash2 size={18} />
               </button>
-
+              </div>
+            
               {isOpen ? (
                 <ChevronUp className="w-6 h-6 text-[var(--color-dark)] top-0" />
               ) : (

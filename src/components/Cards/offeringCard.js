@@ -1,5 +1,6 @@
 import { CheckCircle, Plus } from 'lucide-react';
 import React from 'react'
+import LazyImage from '../Atom/LazyImage';
 
 const offeringCard = ({ Offerings, handleAddOtherOffers }) => {
     return (
@@ -17,7 +18,7 @@ const offeringCard = ({ Offerings, handleAddOtherOffers }) => {
 
                         <div className="absolute inset-0 opacity-0 group-hover:opacity-10 bg-gradient-to-br from-[var(--color-primary)] to-yellow-400 transition-all duration-300 rounded-2xl"></div>
 
-                        <div className="flex gap-4 items-start">
+                        <div className="flex gap-2 md:gap-4 items-start">
                             <div className="flex-1">
                                 {hasTags && (
                                     <span className="inline-block bg-yellow-500 text-white text-xs font-semibold px-3 mb-2 py-1 rounded-full shadow">
@@ -31,7 +32,7 @@ const offeringCard = ({ Offerings, handleAddOtherOffers }) => {
                                     {off.description}
                                 </p>
                             </div>
-                            <div className="w-20 md:w-28 h-20 md:h-28 rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
+                            <div className="w-24 md:w-28 h-24 md:h-28 rounded-lg md:rounded-xl overflow-hidden border border-gray-200 flex-shrink-0">
                                 <LazyImage
                                     src={off.offerimg}
                                     alt={off.title}
