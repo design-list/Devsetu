@@ -19,7 +19,7 @@ export default (sequelize, DataTypes) => {
       field: "title",
     },
     aboutArticle: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
       field: "about_article",
     },

@@ -11,7 +11,7 @@ export default (sequelize, DataTypes) => {
         field: "id",
       },
       zodiac_about: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
         field: "zodiac_about",
       },
