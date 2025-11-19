@@ -3,7 +3,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from "../Atom/LazyImage";
-import { formatDate } from "../../../utils/localstorage";
+import { formatDate, isDatePassed } from "../../../utils/localstorage";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
@@ -111,15 +111,15 @@ const PujaCard = ({ pujas, viewmore, PujaName, handlaRedirect, withLang }) => {
                 <Link
                   href={withLang(`/puja/${puja.slug}`)}
                   className="w-full flex items-center justify-center gap-0 
-      bg-gradient-to-t from-[var(--color-primary)] via-[var(--color-primary-light)] to-[var(--color-primary)]
-      text-white font-semibold rounded-lg py-3 px-5
-      shadow-[0_2px_6px_rgba(241,88,34,0.2)]
-      hover:shadow-[0_4px_10px_rgba(241,88,34,0.3)]
-      transition-all duration-300 hover:scale-[1.04]
-      active:translate-y-[1px]
-      relative overflow-hidden mt-4 uppercase"
+                    bg-gradient-to-t from-[var(--color-primary)] via-[var(--color-primary-light)] to-[var(--color-primary)]
+                    text-white font-semibold rounded-lg py-3 px-5
+                    shadow-[0_2px_6px_rgba(241,88,34,0.2)]
+                    hover:shadow-[0_4px_10px_rgba(241,88,34,0.3)]
+                    transition-all duration-300 hover:scale-[1.04]
+                    active:translate-y-[1px]
+                    relative overflow-hidden mt-4 uppercase"
                 >
-                  Participate <ArrowUpRight className="w-5 h-5" />
+                  {!isDatePassed(puja.date) ? <>Participate <ArrowUpRight className="w-5 h-5" /></> : "Puja completed"}
                 </Link>
               </div>
             </div>

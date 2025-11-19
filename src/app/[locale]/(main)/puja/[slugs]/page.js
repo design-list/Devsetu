@@ -40,7 +40,7 @@ import {
   addPackageAction,
   requestClearCartAction,
 } from "@/redux/actions/cartActions";
-import { formatDate } from "../../../../../../utils/localstorage";
+import { formatDate, isDatePassed } from "../../../../../../utils/localstorage";
 import Link from "next/link";
 import Reviews from "@/components/Review";
 import PujaExperience from "@/components/PujaExperience";
@@ -344,8 +344,8 @@ export default function PujaDetailsPage() {
                 className="w-full sm:w-1/2 p-2 md:p-4 bg-[var(--color-primary-light)] text-center cursor-pointer transition hover:bg-[var(--color-primary)] rounded-tl-[10px] sm:rounded-tr-none"
               >
                 <button className="font-secondary w-full text-sm md:text-lg font-bold flex items-center justify-center gap-2">
-                  <Package className="w-5 h-5 text-white" />
-                  <span>Select Puja Package</span>
+                  {!isDatePassed(pujaDetailPage?.date) ? <><Package className="w-5 h-5 text-white" />
+                  <span>Select Puja Package</span> </> : "Puja completed"}
                 </button>
               </Link>
 
@@ -582,7 +582,7 @@ export default function PujaDetailsPage() {
               </h2>
               <PujaPackages
                 pujaPackages={pujaDetailPage?.["pujaPackages"]}
-                onAddToCart={handleAddPackages}
+                onAddToCart={!isDatePassed(pujaDetailPage?.date) ? handleAddPackages : null}
               />
             </Container>
           </section>

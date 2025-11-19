@@ -19,10 +19,13 @@ import Razorpay from "../../../public/icons/razorpay.svg";
 import Container from "@/components/Container";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp, faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import { useWithLang } from "../../../helper/useWithLang";
 
 export default function Footer() {
   // ✅ State for modal open/close
   const [modal, setModal] = useState(null); // "privacy" | "terms" | null
+
+   const withLang = useWithLang();
 
   // ✅ Reusable modal component
   const Modal = ({ title, children }) => (
@@ -109,7 +112,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/about-us"
+                  href={withLang("/about-us")}
                   className="text-sm md:text-base hover:underline"
                 >
                   About Us
@@ -117,7 +120,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/contactus"
+                  href={withLang("/contactus")}
                   className="text-sm md:text-base hover:underline"
                 >
                   Contact Us
@@ -134,7 +137,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/puja"
+                  href={withLang("/puja")}
                   className="text-sm md:text-base hover:underline"
                 >
                   Puja
@@ -142,7 +145,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/chadhava"
+                  href={withLang("/chadhava")}
                   className="text-sm md:text-base hover:underline"
                 >
                   Chadhava

@@ -54,3 +54,15 @@ export const capitalizeWords = (str) => {
     ?.map(w => w[0]?.toUpperCase() || "")
     ?.join("");
 }
+
+
+export function isDatePassed(date) {
+  const givenDate = new Date(date);
+  const today = new Date();
+
+  // remove time portion (compare pure dates)
+  givenDate.setHours(0, 0, 0, 0);
+  today.setHours(0, 0, 0, 0);
+
+  return givenDate < today;
+}

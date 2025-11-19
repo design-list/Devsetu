@@ -5,7 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import LazyImage from "../Atom/LazyImage";
 import Image from "next/image";
-import { formatDate } from "../../../utils/localstorage";
+import { formatDate, isDatePassed } from "../../../utils/localstorage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import Goldenline from "../../../public/icons/goldline.svg";
@@ -125,10 +125,10 @@ function ChadhavaCard({ chadhava, viewmore, handlaRedirect, withLang }) {
               active:translate-y-[1px]
               relative overflow-hidden uppercase text-sm sm:text-base"
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-30 blur-sm pointer-events-none"></span>
+                  {!isDatePassed(card.date) ? <><span className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-30 blur-sm pointer-events-none"></span>
                   <span className="relative z-10 flex items-center gap-2">
                     Book Your Chadhava <ArrowUpRight className="w-4 h-4" />
-                  </span>
+                  </span> </> : "Chadhava completed"}
                 </Link>
               </div>
             </div>

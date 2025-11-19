@@ -242,7 +242,8 @@ export default function CheckoutPage() {
                   phone: `${form.whatsapp}`,
                   name: `${form.name}`,
                   orderId: `${cartRes.data.cart_id}`,
-                  amount: `${finalTotal}`
+                  amount: `${finalTotal}`,
+                  website: `https://www.devasetu.com/en`
                 }
               handleOrderConfimationMsg(msgpayload);
               // success UI

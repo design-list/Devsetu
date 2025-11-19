@@ -4,11 +4,11 @@ import axios from "axios";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { phone, name, orderId, amount } = body;
+    const { phone, name, orderId, amount, website } = body;
 
-    console.log("confirmation on whatsapp", body)
+    // console.log("confirmation on whatsapp", body)
 
-    if (!phone || !name || !orderId || !amount) {
+    if (!phone || !name || !orderId || !amount || !website) {
       return NextResponse.json(
         { success: false, message: "Missing required fields" },
         { status: 400 }
@@ -17,7 +17,7 @@ export async function POST(request) {
 
     // ✅ Replace with your actual AIsensy API Key and Campaign ID
     const apiKey = process.env.AISENSY_API_KEY;
-    const campaignName = "Order_Confirmation_message";
+    const campaignName = "booking_confirmation_msg";
 
     // AIsensy API endpoint
     const url = `${process.env.AISENSY_API_BASE_URL}`;
@@ -28,7 +28,7 @@ export async function POST(request) {
       campaignName,
       destination: phone,
       userName: name,
-      templateParams: [name, orderId, amount],
+      templateParams: [name, orderId, website],
     };
 
     const response = await axios.post(url, payload);
