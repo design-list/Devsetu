@@ -89,7 +89,7 @@ const ChadhavaDetailsPage = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full chadhava-pg">
       <Container>
         <Breadcrumbs pathname={pathname} />
         <div className="bg-white sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-10">
@@ -102,7 +102,7 @@ const ChadhavaDetailsPage = () => {
 
           {/* Right: Content */}
           <div className="flex-1 text-center lg:text-left">
-            <h2 className="font-secondary text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--color-dark)] mb-3 sm:mb-4">
+            <h2 className="font-secondary text-left text-lg sm:text-3xl md:text-4xl font-bold text-[var(--color-dark)] mb-3 sm:mb-4">
               {chadhavaWebDetail?.["title"]}
             </h2>
 
@@ -113,13 +113,14 @@ const ChadhavaDetailsPage = () => {
               </p>
             )}
 
-            <p className="text-lg text-[var(--color-dark)] font-medium mb-4 cursor-pointer">
-              🌟 <span className="font-bold">According to sacred scriptures</span>,{" "}
+            <p className="text-sm text-left md:text-lg text-[var(--color-dark)] font-medium mb-4 cursor-pointer">
+              🌟{" "}
+              <span className="font-bold">According to sacred scriptures</span>,{" "}
               {readMore ? pujaText : shortText}
               {pujaText.length > 150 && (
                 <button
                   onClick={() => setReadMore(!readMore)}
-                  className="text-[var(--color-info)] underline ml-1 font-bold text-base"
+                  className="text-[var(--color-info)] underline ml-1 font-bold text-sm md:text-base"
                 >
                   {readMore ? "Read less" : "Read more"}
                 </button>
@@ -133,21 +134,21 @@ const ChadhavaDetailsPage = () => {
               <a href="#" className="text-blue-600 underline ml-1">Read more</a>
             </p> */}
 
-            <p className="text-[var(--color-dark)] text-base md:text-lg">
+            {/* <p className="text-[var(--color-dark)] text-base md:text-lg">
               Till now{" "}
               <span className="font-secondary font-bold text-base md:text-xl text-[var(--color-primary)]">
                 20,000+ Devotees
               </span>{" "}
               have participated in Chadhava conducted by DevaSetu Chadhava Seva.
-            </p>
+            </p> */}
           </div>
         </div>
 
         {/* Content Sections */}
-        <div className="p-6 max-w-5xl mx-auto my-8 space-y-16">
+        <div className="md:p-6 md:max-w-5xl md:mx-auto my-8 md:space-y-16">
           <div className="max-w-5xl mx-auto">
             {/* Title */}
-            <h1 className="font-secondary text-3xl font-bold text-[var(--color-dark)] mb-6">
+            <h1 className="font-secondary text-xl md:text-3xl font-bold text-[var(--color-dark)] mb-6">
               Choose an offering
             </h1>
 
@@ -155,7 +156,8 @@ const ChadhavaDetailsPage = () => {
 
             <div className="space-y-6">
               {(() => {
-                const chadhavaPackages = chadhavaWebDetail?.["chadhavaPackages"] || [];
+                const chadhavaPackages =
+                  chadhavaWebDetail?.["chadhavaPackages"] || [];
 
                 // Sort logic:
                 const sortedPackages = [...chadhavaPackages].sort((a, b) => {
@@ -167,24 +169,29 @@ const ChadhavaDetailsPage = () => {
                 return sortedPackages.map((item) => (
                   <div
                     key={item.id}
-                    className={`flex items-start gap-4 md:gap-0 justify-between flex-col-reverse md:flex-row w-full md:w-auto rounded-lg border p-4 ${item.highlight
+                    className={`flex items-start gap-2 md:gap-0 justify-between flex-row md:flex-row w-full md:w-auto rounded-lg border p-3 md:p-4 ${
+                      item.highlight
                         ? "bg-gradient-to-r from-pink-50 to-white border-pink-300"
                         : "bg-white border-gray-200"
-                      }`}
+                    }`}
                   >
                     {/* Left Content */}
-                    <div className="md:pr-4" onClick={() => handleShowModal(item)}>
+                    <div
+                      className="md:pr-4"
+                      onClick={() => handleShowModal(item)}
+                    >
                       {item.tags && (
                         <h2
-                          className={`text-base font-medium ${item.tags
+                          className={`text-base font-medium ${
+                            item.tags
                               ? "text-[var(--color-primary)]"
                               : "text-[var(--color-dark)]"
-                            }`}
+                          }`}
                         >
                           {item.tags}
                         </h2>
                       )}
-                      <h2 className="flex items-center font-secondary text-xl font-bold text-[var(--color-dark)] gap-2">
+                      <h2 className="flex items-center font-secondary text-base md:text-xl font-bold text-[var(--color-dark)] gap-2">
                         <span>{item.title}</span>
                         {item.strikePrice > item.price && (
                           <span className="flex items-center gap-1 text-red-500 line-through">
@@ -205,7 +212,7 @@ const ChadhavaDetailsPage = () => {
                     {/* Right Image + Button */}
                     <div className="flex flex-col items-center justify-center w-32 ml-auto">
                       <div
-                        className="w-28 h-28 relative cursor-pointer"
+                        className="w-20 md:w-28 h-20 md:h-28  relative cursor-pointer"
                         onClick={() => handleShowModal(item)}
                       >
                         <LazyImage
@@ -222,9 +229,11 @@ const ChadhavaDetailsPage = () => {
                         );
                         if (matchedAddOn) {
                           return (
-                            <div className="flex items-center border rounded-lg px-2 py-1 -mt-2 z-10">
+                            <div className="flex items-center border rounded-lg bg-white px-2 py-1 -mt-2 z-10">
                               <button
-                                onClick={() => handleQuantityChange(item.id, "decrement")}
+                                onClick={() =>
+                                  handleQuantityChange(item.id, "decrement")
+                                }
                                 className="text-yellow-700 hover:text-yellow-600"
                               >
                                 <Minus size={14} />
@@ -250,7 +259,7 @@ const ChadhavaDetailsPage = () => {
                         return (
                           <button
                             onClick={() => hanldeAddChadhava(item)}
-                            className="cursor-pointer whitespace-nowrap -mt-2 border border-[var(--color-primary)] text-[var(--color-primary)] px-3 py-1 rounded-lg hover:bg-green-50 z-10"
+                            className="text-sm md:text-base cursor-pointer whitespace-nowrap -mt-2 border border-[var(--color-primary)] text-[var(--color-primary)] bg-white px-3 py-1 rounded-lg hover:bg-green-50 z-10"
                           >
                             + Add
                           </button>
@@ -284,7 +293,9 @@ const ChadhavaDetailsPage = () => {
                     </span>
                   </button>
                   {openFaqIndex === i && (
-                    <p className=" text-sm md:text-base mt-2 text-[var(--color-dark)]">{faq.answer}</p>
+                    <p className=" text-sm md:text-base mt-2 text-[var(--color-dark)]">
+                      {faq.answer}
+                    </p>
                   )}
                 </div>
               ))}
@@ -295,12 +306,15 @@ const ChadhavaDetailsPage = () => {
         <div className="">
           {/* Add to Cart Button */}
           {allCarts?.["add_ons"].length > 0 && (
-            <div className="fixed w-full left-0 bottom-0 bg-[var(--color-primary-light)] rounded text-white border-t shadow-md p-4 flex justify-between md:justify-center items-center z-20">
+            <div className="fixed w-full left-0 bottom-0 bg-[var(--color-primary-light)] text-white border-t shadow-md p-2 md:p-4 flex justify-between md:justify-center items-center z-20">
               <div>
-                <p className=" text-base md:text-xl font-medium uppercase">{`${allCarts?.["add_ons"].length} Offerings ₹${allCarts?.["grand_total"]}`}</p>
+                <p className="text-base md:text-xl font-medium">
+                  <span className="font-bold">{allCarts?.add_ons?.length}</span>{" "}
+                  Offerings :- ₹{allCarts?.grand_total}
+                </p>
               </div>
               <button
-                className=" absolute right-0 bg-[var(--color-primary-light)] text-white px-5 py-2 rounded-lg hover:bg-[var(--color-primary)] cursor-pointer"
+                className=" absolute right-0 bg-[var(--color-primary-light)] text-white px-5 py-2 hover:bg-[var(--color-primary)] cursor-pointer"
                 onClick={handlaRedirect}
               >
                 Cart Review →
