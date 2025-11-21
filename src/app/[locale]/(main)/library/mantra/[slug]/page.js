@@ -1,0 +1,125 @@
+"use client";
+
+import LazyImage from "@/components/Atom/LazyImage";
+import Link from "next/link";
+import Api from "../../../../../../../services/fetchApi";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useWithLang } from "../../../../../../../helper/useWithLang";
+
+const api = new Api();
+
+
+const ChalisaDetails = () => {
+
+  const [article, setArticle] = useState(null);
+  const params = useParams();
+  const withLang = useWithLang();
+
+useEffect(() => {
+    const fetchData = async () => {
+      try {
+
+        const data = {
+          category: "mantra",
+          slug: params.slug
+        };
+
+        const res = await api.GetLibraryBySlug(data);
+
+        if (res.status === 200) {
+          console.log("Library Data:", res?.data?.data);
+          setArticle(res.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch Library:", error);
+      }
+    };
+
+    fetchData();
+  }, [params]);
+
+
+  return (
+    <main className="max-w-4xl mx-auto px-6 py-10">
+      
+      {/* Breadcrumb */}
+      <nav className="text-sm text-gray-500 mb-6">
+        <ol className="flex flex-wrap gap-1">
+          <li><Link href="/" className="hover:text-orange-600">Home</Link></li>
+          <span>›</span>
+          <li><Link href={withLang("/library")} className="hover:text-orange-600">Library</Link></li>
+          <span>›</span>
+          <li><span className="text-gray-700 font-medium">{article?.title}</span></li>
+        </ol>
+      </nav>
+
+      {/* Thumbnail */}
+      <div className="py-4 mb-8">
+        <img
+          src={article?.icon}
+          alt={article?.title}
+          className="w-full h-120 object-cover rounded-lg"
+        />
+      </div>
+
+       {/* Title */}
+      <h1 className="text-3xl font-bold mb-4 text-gray-900">
+        {article?.title}
+      </h1>
+
+      {/* Intro Section */}
+      <p className="text-lg text-gray-700 mb-6 whitespace-pre-line leading-relaxed">
+        {article?.introduction}
+      </p>
+
+      {/* Significance Section */}
+      <h2 className="text-2xl font-semibold text-gray-900 mb-3">
+        Significance
+      </h2>
+      <p className="text-gray-700 mb-8 whitespace-pre-line leading-relaxed">
+        {article?.significance}
+      </p>
+
+      {/* ---- Mantra Section Loop ---- */}
+      <h2 className="text-2xl font-semibold text-gray-900 mb-5">
+        Mantras
+      </h2>
+
+      <div className="flex flex-col gap-6">
+        {article?.mantrasList?.map((mantra, index) => (
+          <div key={index} className="p-5 rounded-xl border shadow-sm bg-white">
+            <h3 className="text-xl font-semibold text-orange-600">{mantra.mantraTitle}</h3>
+
+            <p className="text-gray-900 text-lg whitespace-pre-line mt-3 leading-relaxed font-semibold">
+              {mantra.mantraText}
+            </p>
+
+            <p className="text-gray-600 whitespace-pre-line mt-4 italic">
+              Meaning: {mantra.meaning}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer Publish Info */}
+      <div className="mt-10 text-sm text-gray-500">
+        Published by <span className="font-semibold text-gray-700">DevaSetu</span> ·{" "}
+        {new Date(article?.createdAt).toLocaleDateString("en-GB")}
+      </div>
+
+      {/* Share CTA */}
+      <div className="flex gap-4 mt-6">
+        <button className="px-4 py-2 bg-orange-500 text-white text-sm rounded-lg shadow hover:bg-orange-600">
+          Share
+        </button>
+        <button className="px-4 py-2 bg-green-500 text-white text-sm rounded-lg shadow hover:bg-green-600">
+          WhatsApp
+        </button>
+      </div>
+    </main>
+  );
+}
+
+
+export default ChalisaDetails;
